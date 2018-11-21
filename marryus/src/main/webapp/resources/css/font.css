@@ -1,0 +1,9 @@
+
+@font-face {
+  font-family: 'HiMelody';
+  src: url('../fonts/HiMelody-Regular.eot');
+  src: url('../fonts/HiMelody-Regular.woff') format('woff'),
+       url('../fonts/HiMelody-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
