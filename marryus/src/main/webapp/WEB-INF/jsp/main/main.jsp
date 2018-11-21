@@ -16,24 +16,24 @@
         <div class="container">
             <div class="row">
                 <div class="logo col-md-3">
-                    <a href="main.html"><img src="img/logo.png" alt="" class="img-responsive center-block"></a>
+                    <a href="<c:url value="/main/main.do"/>"><img src="<c:url value="/resources/img/logo.png"/>" alt="" class="img-responsive center-block"></a>
                 </div>
                 <nav class="gnb col-md-9">
                     <div class="gnb_top cf">
                         <ul class="cf">
                             <li><a href="#">회원가입</a></li>
                             <li><a href="#" data-toggle="modal" data-target="#loginModal">로그인</a></li>
-                            <li><a href="#">마이페이지</a></li>
+                            <li><a href="<c:url value="/mypage/mywedding.do"/>">마이페이지</a></li>
                             <li><a href="#"><i class="far fa-bell"></i></a></li>
                         </ul>
                     </div>
                     <div class="gnb_bot cf">
                         <ul class="cf">
-                            <li><a href="wedding.html">웨딩홀</a></li>
-                            <li><a href="sdm.html">스&middot;드&middot;메</a></li>
-                            <li><a href="honeymoon.html">허니문</a></li>
-                            <li><a href="ring.html">예물</a></li>
-                            <li><a href="service.html">추가서비스</a></li>
+                            <li><a href="<c:url value="/service/weddingHall.do"/>">웨딩홀</a></li>
+                            <li><a href="#">스&middot;드&middot;메</a></li>
+                            <li><a href="#">허니문</a></li>
+                            <li><a href="#">예물</a></li>
+                            <li><a href="#">추가서비스</a></li>
                         </ul>
                     </div> 
                 </nav>
@@ -44,9 +44,9 @@
     <div id="wrap" class="main">
         <div class="main_visual">
             <div class="bxslider">
-                <div class="item item01" style="background-image: url(img/main_visual01.jpg);"></div>
-                <div class="item item02" style="background-image: url(img/main_visual02.jpg);"></div>
-                <div class="item item03" style="background-image: url(img/main_visual03.jpg);"></div>
+                <div class="item item01" style="background-image: url(<c:url value="/resources/img/"/>main_visual01.jpg);"></div>
+                <div class="item item02" style="background-image: url(<c:url value="/resources/img/"/>main_visual02.jpg);"></div>
+                <div class="item item03" style="background-image: url(<c:url value="/resources/img/"/>main_visual03.jpg);"></div>
             </div>
             <div id="main_visual_pager">
                 <ul>
@@ -84,7 +84,7 @@
                 <div class="col-md-3 infoLeft">
                     <div class="prifile cf">
                         <div class="imgWrap">
-                            <img src="img/seungjae.jpg" alt="" class="img-responsive center-block">
+                            <img src="<c:url value="/resources/"/>img/seungjae.jpg" alt="" class="img-responsive center-block">
                         </div>
                         <dl>
                             <dt>이승재</dt>
@@ -280,7 +280,7 @@
                         <ul class="recommList">
                             <li>
                                 <div class="imgWrap">
-                                    <img src="img/wedding-hall01.jpg" alt="열웨딩홀" title="열웨딩올" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/wedding-hall01.jpg" alt="열웨딩홀" title="열웨딩올" class="img-responsive center-block">
                                 </div>
                                 <div class="textBox">
                                     <dl>
@@ -291,7 +291,7 @@
                             </li>
                             <li>
                                 <div class="imgWrap">
-                                    <img src="img/wedding-hall02.jpg" alt="w 웨딩홀 벡스코점" title="w 웨딩홀 벡스코점" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/wedding-hall02.jpg" alt="w 웨딩홀 벡스코점" title="w 웨딩홀 벡스코점" class="img-responsive center-block">
                                 </div>
                                 <div class="textBox">
                                     <dl>
@@ -302,7 +302,7 @@
                             </li>
                             <li>
                                 <div class="imgWrap">
-                                    <img src="img/wedding-hall03.jpg" alt="메모리스웨딩홀" title="메모리스웨딩홀" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/wedding-hall03.jpg" alt="메모리스웨딩홀" title="메모리스웨딩홀" class="img-responsive center-block">
                                 </div>
                                 <div class="textBox">
                                     <dl>
@@ -313,7 +313,7 @@
                             </li>
                             <li>
                                 <div class="imgWrap">
-                                    <img src="img/wedding-hall04.jpg" alt="아르테스" title="아르테스" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/wedding-hall04.jpg" alt="아르테스" title="아르테스" class="img-responsive center-block">
                                 </div>
                                 <div class="textBox">
                                     <dl>
@@ -324,7 +324,7 @@
                             </li>
                             <li>
                                 <div class="imgWrap">
-                                    <img src="img/wedding-hall05.jpg" alt="누리엔웨딩홀" title="누리엔웨딩홀" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/wedding-hall05.jpg" alt="누리엔웨딩홀" title="누리엔웨딩홀" class="img-responsive center-block">
                                 </div>
                                 <div class="textBox">
                                     <dl>
@@ -444,7 +444,7 @@
                         <ul class="recommList">
                             <li>
                                 <div class="imgWrap">
-                                    <img src="img/studio01.jpg" alt="미학스튜디오" title="미학스튜디오" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/studio01.jpg" alt="미학스튜디오" title="미학스튜디오" class="img-responsive center-block">
                                 </div>
                                 <div class="textBox">
                                     <dl>
@@ -455,7 +455,7 @@
                             </li>
                             <li>
                                 <div class="imgWrap">
-                                    <img src="img/studio03.jpg" alt="TimeTow Studio" title="TimeTow Studio" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/studio03.jpg" alt="TimeTow Studio" title="TimeTow Studio" class="img-responsive center-block">
                                 </div>
                                 <div class="textBox">
                                     <dl>
@@ -466,7 +466,7 @@
                             </li>
                             <li>
                                 <div class="imgWrap">
-                                    <img src="img/studio04.jpg" alt="IDO wedding" title="IDO wedding" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/studio04.jpg" alt="IDO wedding" title="IDO wedding" class="img-responsive center-block">
                                 </div>
                                 <div class="textBox">
                                     <dl>
@@ -477,7 +477,7 @@
                             </li>
                             <li>
                                 <div class="imgWrap">
-                                    <img src="img/dress01.jpg" alt="포스냅" title="포스냅" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/dress01.jpg" alt="포스냅" title="포스냅" class="img-responsive center-block">
                                 </div>
                                 <div class="textBox">
                                     <dl>
@@ -488,7 +488,7 @@
                             </li>
                             <li>
                                 <div class="imgWrap">
-                                    <img src="img/dress03.jpg" alt="마샬브라이드" title="마샬브라이드" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/dress03.jpg" alt="마샬브라이드" title="마샬브라이드" class="img-responsive center-block">
                                 </div>
                                 <div class="textBox">
                                     <dl>
@@ -608,7 +608,7 @@
                         <ul class="recommList">
                             <li>
                                 <div class="imgWrap">
-                                    <img src="img/wedding-hall01.jpg" alt="열웨딩홀" title="열웨딩올" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/wedding-hall01.jpg" alt="열웨딩홀" title="열웨딩올" class="img-responsive center-block">
                                 </div>
                                 <div class="textBox">
                                     <dl>
@@ -619,7 +619,7 @@
                             </li>
                             <li>
                                 <div class="imgWrap">
-                                    <img src="img/wedding-hall02.jpg" alt="w 웨딩홀 벡스코점" title="w 웨딩홀 벡스코점" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/wedding-hall02.jpg" alt="w 웨딩홀 벡스코점" title="w 웨딩홀 벡스코점" class="img-responsive center-block">
                                 </div>
                                 <div class="textBox">
                                     <dl>
@@ -630,7 +630,7 @@
                             </li>
                             <li>
                                 <div class="imgWrap">
-                                    <img src="img/wedding-hall03.jpg" alt="메모리스웨딩홀" title="메모리스웨딩홀" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/wedding-hall03.jpg" alt="메모리스웨딩홀" title="메모리스웨딩홀" class="img-responsive center-block">
                                 </div>
                                 <div class="textBox">
                                     <dl>
@@ -641,7 +641,7 @@
                             </li>
                             <li>
                                 <div class="imgWrap">
-                                    <img src="img/wedding-hall04.jpg" alt="아르테스" title="아르테스" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/wedding-hall04.jpg" alt="아르테스" title="아르테스" class="img-responsive center-block">
                                 </div>
                                 <div class="textBox">
                                     <dl>
@@ -652,7 +652,7 @@
                             </li>
                             <li>
                                 <div class="imgWrap">
-                                    <img src="img/wedding-hall05.jpg" alt="누리엔웨딩홀" title="누리엔웨딩홀" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/wedding-hall05.jpg" alt="누리엔웨딩홀" title="누리엔웨딩홀" class="img-responsive center-block">
                                 </div>
                                 <div class="textBox">
                                     <dl>
@@ -772,7 +772,7 @@
                         <ul class="recommList">
                             <li>
                                 <div class="imgWrap">
-                                    <img src="img/studio01.jpg" alt="미학스튜디오" title="미학스튜디오" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/studio01.jpg" alt="미학스튜디오" title="미학스튜디오" class="img-responsive center-block">
                                 </div>
                                 <div class="textBox">
                                     <dl>
@@ -783,7 +783,7 @@
                             </li>
                             <li>
                                 <div class="imgWrap">
-                                    <img src="img/studio03.jpg" alt="TimeTow Studio" title="TimeTow Studio" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/studio03.jpg" alt="TimeTow Studio" title="TimeTow Studio" class="img-responsive center-block">
                                 </div>
                                 <div class="textBox">
                                     <dl>
@@ -794,7 +794,7 @@
                             </li>
                             <li>
                                 <div class="imgWrap">
-                                    <img src="img/studio04.jpg" alt="IDO wedding" title="IDO wedding" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/studio04.jpg" alt="IDO wedding" title="IDO wedding" class="img-responsive center-block">
                                 </div>
                                 <div class="textBox">
                                     <dl>
@@ -805,7 +805,7 @@
                             </li>
                             <li>
                                 <div class="imgWrap">
-                                    <img src="img/dress01.jpg" alt="포스냅" title="포스냅" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/dress01.jpg" alt="포스냅" title="포스냅" class="img-responsive center-block">
                                 </div>
                                 <div class="textBox">
                                     <dl>
@@ -816,7 +816,7 @@
                             </li>
                             <li>
                                 <div class="imgWrap">
-                                    <img src="img/dress03.jpg" alt="마샬브라이드" title="마샬브라이드" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/dress03.jpg" alt="마샬브라이드" title="마샬브라이드" class="img-responsive center-block">
                                 </div>
                                 <div class="textBox">
                                     <dl>
@@ -936,7 +936,7 @@
                         <ul class="recommList">
                             <li>
                                 <div class="imgWrap">
-                                    <img src="img/studio01.jpg" alt="미학스튜디오" title="미학스튜디오" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/studio01.jpg" alt="미학스튜디오" title="미학스튜디오" class="img-responsive center-block">
                                 </div>
                                 <div class="textBox">
                                     <dl>
@@ -947,7 +947,7 @@
                             </li>
                             <li>
                                 <div class="imgWrap">
-                                    <img src="img/studio03.jpg" alt="TimeTow Studio" title="TimeTow Studio" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/studio03.jpg" alt="TimeTow Studio" title="TimeTow Studio" class="img-responsive center-block">
                                 </div>
                                 <div class="textBox">
                                     <dl>
@@ -958,7 +958,7 @@
                             </li>
                             <li>
                                 <div class="imgWrap">
-                                    <img src="img/studio04.jpg" alt="IDO wedding" title="IDO wedding" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/studio04.jpg" alt="IDO wedding" title="IDO wedding" class="img-responsive center-block">
                                 </div>
                                 <div class="textBox">
                                     <dl>
@@ -969,7 +969,7 @@
                             </li>
                             <li>
                                 <div class="imgWrap">
-                                    <img src="img/dress01.jpg" alt="포스냅" title="포스냅" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/dress01.jpg" alt="포스냅" title="포스냅" class="img-responsive center-block">
                                 </div>
                                 <div class="textBox">
                                     <dl>
@@ -980,7 +980,7 @@
                             </li>
                             <li>
                                 <div class="imgWrap">
-                                    <img src="img/dress03.jpg" alt="마샬브라이드" title="마샬브라이드" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/dress03.jpg" alt="마샬브라이드" title="마샬브라이드" class="img-responsive center-block">
                                 </div>
                                 <div class="textBox">
                                     <dl>
@@ -998,7 +998,7 @@
                         <li class="on">
                             <a href="#">
                                 <div class="imgWrap">
-                                    <img src="img/hall_ico.png" alt="" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/hall_ico.png" alt="" class="img-responsive center-block">
                                 </div>
                                 웨딩홀
                             </a>
@@ -1006,7 +1006,7 @@
                         <li>
                             <a href="#">
                                 <div class="imgWrap">
-                                    <img src="img/dress_ico.png" alt="" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/dress_ico.png" alt="" class="img-responsive center-block">
                                 </div>
                                 스&middot;드&middot;메
                             </a>
@@ -1014,7 +1014,7 @@
                         <li>
                             <a href="#">
                                 <div class="imgWrap">
-                                    <img src="img/honeymoon_ico.png" alt="" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/honeymoon_ico.png" alt="" class="img-responsive center-block">
                                 </div>
                                 허니문
                             </a>
@@ -1022,7 +1022,7 @@
                         <li>
                             <a href="#">
                                 <div class="imgWrap">
-                                    <img src="img/ring_ico.png" alt="" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/ring_ico.png" alt="" class="img-responsive center-block">
                                 </div>
                                 예물
                             </a>
@@ -1030,7 +1030,7 @@
                         <li>
                             <a href="#">
                                 <div class="imgWrap">
-                                    <img src="img/service_ico.png" alt="" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/service_ico.png" alt="" class="img-responsive center-block">
                                 </div>
                                 추가서비스
                             </a>
@@ -1044,7 +1044,7 @@
                 <h2>다녀간 고객님들</h2>
                 <div id="columns">
                     <figure class="wow bounceIn" data-wow-delay="0.5s" >
-                        <img src="img/review01.jpg" class="img-responsive center-block">
+                        <img src="<c:url value="/resources/"/>img/review01.jpg" class="img-responsive center-block">
                         <figcaption>
                             <dl>
                                 <dt>메리어스덕분에 결혼 잘했어요~</dt>
@@ -1053,7 +1053,7 @@
                         </figcaption>
                     </figure>
                     <figure  class="wow bounceIn" data-wow-delay="0.7s" >
-                        <img src="img/review02.jpg" class="img-responsive center-block">
+                        <img src="<c:url value="/resources/"/>img/review02.jpg" class="img-responsive center-block">
                         <figcaption>
                             <dl>
                                 <dt>메리어스덕분에 결혼 잘했어요~</dt>
@@ -1062,7 +1062,7 @@
                         </figcaption>
                     </figure>
                     <figure  class="wow bounceIn" data-wow-delay="0.9s" >
-                        <img src="img/review03.jpg" class="img-responsive center-block">
+                        <img src="<c:url value="/resources/"/>img/review03.jpg" class="img-responsive center-block">
                         <figcaption>
                             <dl>
                                 <dt>메리어스덕분에 결혼 잘했어요~</dt>
@@ -1071,7 +1071,7 @@
                         </figcaption>
                     </figure>
                     <figure  class="wow bounceIn" data-wow-delay="1.1s" >
-                        <img src="img/review04.jpg" class="img-responsive center-block">
+                        <img src="<c:url value="/resources/"/>img/review04.jpg" class="img-responsive center-block">
                         <figcaption>
                             <dl>
                                 <dt>메리어스덕분에 결혼 잘했어요~</dt>
@@ -1080,7 +1080,7 @@
                         </figcaption>
                     </figure>
                     <figure  class="wow bounceIn" data-wow-delay="1.3s" >
-                        <img src="img/review05.jpg" class="img-responsive center-block">
+                        <img src="<c:url value="/resources/"/>img/review05.jpg" class="img-responsive center-block">
                         <figcaption>
                             <dl>
                                 <dt>메리어스덕분에 결혼 잘했어요~</dt>
@@ -1089,7 +1089,7 @@
                         </figcaption>
                     </figure>
                     <figure  class="wow bounceIn" data-wow-delay="1.5s" >
-                        <img src="img/review06.jpg" class="img-responsive center-block">
+                        <img src="<c:url value="/resources/"/>img/review06.jpg" class="img-responsive center-block">
                         <figcaption>
                             <dl>
                                 <dt>메리어스덕분에 결혼 잘했어요~</dt>
@@ -1098,7 +1098,7 @@
                         </figcaption>
                     </figure>
                     <figure  class="wow bounceIn" data-wow-delay="1.7s" >
-                        <img src="img/review07.jpg" class="img-responsive center-block">
+                        <img src="<c:url value="/resources/"/>img/review07.jpg" class="img-responsive center-block">
                         <figcaption>
                             <dl>
                                 <dt>메리어스덕분에 결혼 잘했어요~</dt>
@@ -1107,7 +1107,7 @@
                         </figcaption>
                     </figure>
                     <figure  class="wow bounceIn" data-wow-delay="1.9s" >
-                        <img src="img/review08.jpg" class="img-responsive center-block">
+                        <img src="<c:url value="/resources/"/>img/review08.jpg" class="img-responsive center-block">
                         <figcaption>
                             <dl>
                                 <dt>메리어스덕분에 결혼 잘했어요~</dt>
@@ -1116,7 +1116,7 @@
                         </figcaption>
                     </figure>
                     <figure  class="wow bounceIn" data-wow-delay="2.1s" >
-                        <img src="img/review09.jpg" class="img-responsive center-block">
+                        <img src="<c:url value="/resources/"/>img/review09.jpg" class="img-responsive center-block">
                         <figcaption>
                             <dl>
                                 <dt>메리어스덕분에 결혼 잘했어요~</dt>
@@ -1302,8 +1302,8 @@
       <!--사이드 바-->
       <aside id="sideBar">
           <ul>
-              <li><a href="#"><i class="fas fa-user-edit"></i>마이페이지</a></li>
-              <li><a href="#"><i class="fas fa-headset"></i></i>공지 게시판</a></li>
+              <li><a href="<c:url value="/mypage/mywedding.do"/>"><i class="fas fa-user-edit"></i>마이페이지</a></li>
+              <li><a href="<c:url value="/community/notice.do"/>"><i class="fas fa-headset"></i></i>공지 게시판</a></li>
               <li><a href="#"><i class="fas fa-chalkboard-teacher"></i>후기 게시판</a></li>
               <li><a href="#"><i class="far fa-kiss-wink-heart"></i>신부대기실</a></li>
               <li><a href="#"><i class="far fa-comments"></i>1 : 1 질문</a></li>
