@@ -52,14 +52,32 @@
             <div class="container">
                 <div class="communityTab">
                     <ul>
-                        <li  class="on"><a href="notice.html">공지게시판</a></li>
+                        <li  class="on"><a href="<c:url value='/board/notice/list.do'/>">공지게시판</a></li>
                         <li ><a href="review.html">후기 게시판</a></li>
                         <li ><a href="javascript:void(0);">신부 대기실    </a></li>
                         <li ><a href="javascript:void(0);">1:1 질문</a></li>
                         <li ><a href="javascript:void(0);">FAQ</a></li>
                     </ul>
                     <div class="communityContents">
-                        aa
+                        <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>번호</th>
+                                <th>제목</th>
+                                <th>작성일</th>
+                                <th>조회수</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>제목</td>
+                                <td>작성자</td>
+                                <td>작성일</td>
+                                <td>조회수</td>
+                            </tr>
+                        </tbody>
+                    </table>
                     </div>
                 </div>
             </div>
@@ -68,7 +86,7 @@
     <aside id="sideBar">
         <ul>
             <li><a href="#"><i class="fas fa-user-edit"></i>마이페이지</a></li>
-            <li><a href="#"><i class="fas fa-headset"></i></i>공지 게시판</a></li>
+            <li><a href="<c:url value='/board/notice/list.do'/>"><i class="fas fa-headset"></i></i>공지 게시판</a></li>
             <li><a href="#"><i class="fas fa-chalkboard-teacher"></i>후기 게시판</a></li>
             <li><a href="#"><i class="far fa-kiss-wink-heart"></i>신부대기실</a></li>
             <li><a href="#"><i class="far fa-comments"></i>1 : 1 질문</a></li>
