@@ -14,7 +14,7 @@
                            http://www.springframework.org/schema/aop 
                            http://www.springframework.org/schema/aop/spring-aop.xsd">
                            
-       <context:component-scan base-package="kr.co.assa" />
+       <context:component-scan base-package="kr.co.marryus" />
        
        <!-- aop 관련 태그 추가 : @Aspect, @PointCut, @Before, ... 등을 해석해주는게 autoproxy -->
 	   <aop:aspectj-autoproxy proxy-target-class="true" />

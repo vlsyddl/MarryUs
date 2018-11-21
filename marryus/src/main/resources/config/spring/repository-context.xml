@@ -30,13 +30,13 @@
 	 <!-- spring에서 mybatis를 연결해서 사용하는 설정 -->	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="typeAliasesPackage" value="kr.co.assa.repository.domain" />
+		<property name="typeAliasesPackage" value="kr.co.marryus.repository.domain" />
 		<property name="mapperLocations" value="classpath:config/sqlmap/*.xml" />
 	</bean>   
 	
 	<!-- spring에게 Mapper 인터페이스의 위치를 알려주고 인터페이스에 해당하는 구현객체를 얻는다. -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="kr.co.assa.repository.mapper" />
+		<property name="basePackage" value="kr.co.marryus.repository.mapper" />
 	</bean> 
 	
 	<!-- 트랜잭션 처리 파트 시작.. -->
@@ -52,7 +52,7 @@
 	</tx:advice>
 	
 	<aop:config>
-		<aop:pointcut id="tranPct" expression="execution(public * kr.co.assa..service.*Impl.*(..))" />
+		<aop:pointcut id="tranPct" expression="execution(public * kr.co.marryus..service.*Impl.*(..))" />
 		<!-- 공통기능 클래스와 메서드를 알수 없는 경우에는 aspect를 사용할 수 없다. 
 		<aop:aspect ref="공통기능클래스">
 			<aop:around method="공통기능메서드" pointcut-ref="a"/>
