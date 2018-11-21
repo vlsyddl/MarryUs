@@ -106,7 +106,7 @@ img{
         </div>
         <script>
              setTimeout(function(){
-                window.location.href="main.html"
+                window.location.href="<c:url value="/main/main.do"/>"
              },8000)
         </script>
 </body>
