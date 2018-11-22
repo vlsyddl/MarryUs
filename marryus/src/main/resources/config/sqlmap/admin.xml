@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.marryus.repository.mapper.AdminMapper">
+	<resultMap type="Admin" id="adminMap">
+		<result column="adm_no" property="admNo"/>
+		<result column="adm_id" property="admId"/>
+		<result column="adm_pass" property="admPass"/>
+		<result column="adm_type" property="admType"/>
+		<result column="adm_name" property="admName"/>
+		<result column="adm_ok" property="admOk"/>
+	</resultMap>
+	
+	<select id="selectAdmin" parameterType="Admin" resultMap="adminMap">
+		select * 
+		 from mu_admin
+		where adm_id=#{admId} and adm_pass=#{admPass} and adm_ok = 'Y'
+	</select>
+	
+	<insert id="signUpAdmin" parameterType="Admin">
+		insert into mu_admin(
+			adm_id, adm_pass, adm_name
+		) values (
+			#{admId}, #{admPass}, #{admName}
+		)
+	</insert>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

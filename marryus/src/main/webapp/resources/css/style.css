@@ -1166,6 +1166,116 @@ nav.myPageNav ul li.on a{
     float: right;
     display: inline-block;
 }
+/*mycompany*/
+.myCompany{
+    margin-top: 100px;
+}
+nav.myCompanyNav{
+    padding: 15px 0;
+    border-bottom: 1px solid #333;
+}
+nav.myCompanyNav ul::after{
+    display: block;
+    clear: both;
+    content: '';
+}
+nav.myCompanyNav ul li{
+    display: block;
+    width: 25%;
+    float: left;
+    text-align: center;
+}
+nav.myCompanyNav ul li img{
+    max-width: 50px;
+    margin-bottom: 5px;
+}
+nav.myCompanyNav ul li a{
+    transition: all 0.5s;
+}
+nav.myCompanyNav ul li a:hover{
+    text-shadow: 0px 0px 10px #f99;
+}
+nav.myCompanyNav ul li.on a{
+    text-shadow: 0px 0px 10px #f99;
+}
+.myCompany .info_left{
+    background: url(../img/wedding-hall01.jpg)no-repeat center center/cover;
+    height: 300px;
+}
+.myCompany .info_right{
+    padding: 50px 0;
+    height: 300px;
+}
+.myCompany .info_right .profile{
+    text-align: center;
+}
+.myCompany .info_right .profile .photoBox{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: inline-block;
+    position: relative;
+}
+.myCompany .info_right .profile .photoBox.myPhoto{
+    right: -10px;
+    z-index: 2;
+}
+.myCompany .info_right .profile .photoBox.partnerPhoto{
+    background: #2199e8;
+    left: -10px;
+    z-index: 1;
+}
+.myCompany .info_right .profile .name h2{
+    font-size: 1.5em;
+    margin-top: 30px
+}
+.myCompany .contents01 .infoBox{
+    margin: 30px 0;
+    box-shadow: 10px 10px 10px #d9d9d9;
+}
+.myCompany .contents01 .infoCount{
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}
+.myCompany .contents01 .infoCount ul li{
+    display: block;
+    float: left;
+    width: 33.333%;
+    border-top: 1px dotted #999;
+    border-left: 1px dotted #999;
+    padding: 10px;
+}
+.myCompany .contents01 .infoCount ul li:first-child{
+    border-left: 0;
+}
+.myCompany .contents01 .infoCount ul li dl dt{
+    font-size: 1.2em;
+}
+.myCompany .contents01 .infoCount ul li dl dd{
+    margin-top: 30px;
+    font-size: 1.4em;
+    text-align: right
+}
+.myCompany .contents02{
+    padding: 30px 0;
+}
+.myCompany .contents02 dl{
+    border-radius: 5px;
+    border: 1px solid #d9d9d9;
+    padding: 10px;
+    box-shadow: 10px 10px 10px #d9d9d9;
+}
+.myCompany .contents02 dl dt{
+    font-size: 1.4em; 
+}
+.myCompany .contents02 dl dd{
+    font-size: 1.2em;
+    text-align: right;
+    margin-top: 30px;
+}
+
 /*community*/
 .communityTab{
     padding: 50px 0;
