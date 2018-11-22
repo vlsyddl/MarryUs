@@ -8,10 +8,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
 import kr.co.marryus.board.service.BoardService;
 import kr.co.marryus.repository.domain.Board;
 import kr.co.marryus.repository.domain.Page;
-import kr.co.marryus.repository.domain.PageSearch;
+import kr.co.marryus.repository.domain.Page2;
 import kr.co.marryus.repository.mapper.BoardMapper;
 
 @Controller("kr.co.marryus.board.controller.BoardController")
@@ -48,4 +50,41 @@ public class BoardController {
 		model.addAttribute("list", service.boardList(page));
 		model.addAttribute("count", service.selectBoardCount());
 	}
+	
+	@RequestMapping("/notice/detail.do")
+	public void noticeDetail(Model model, int no) {
+		model.addAttribute("board", service.noticeDetail(no));
+	}
+	
+	
+	
+	@RequestMapping("/notice/category.do")
+	public ModelAndView category(@RequestParam(value = "pageNo", defaultValue = "0") int pageNo,
+			Page2 noticePage) {
+		ModelAndView mav = new ModelAndView("board/notice/list");
+
+		int count = service.categoryCount(noticePage);
+
+		noticePage.setPageNo(pageNo);
+
+		int lastPage = (int) Math.ceil(count / 10d);
+
+		// 페이지 블럭 시작
+		int pageSize = 10;
+		int currTab = (pageNo - 1) / pageSize + 1;
+		// 11번 부터 2페이지가 되는것
+		int beginPage = (currTab - 1) * pageSize + 1;
+		int endPage = currTab * pageSize < lastPage ? currTab * pageSize : lastPage;
+
+		mav.addObject("result", noticePage);
+		mav.addObject("beginPage", beginPage);
+		mav.addObject("endPage", endPage);
+		mav.addObject("lastPage", lastPage);
+		mav.addObject("pageNo", pageNo);
+		mav.addObject("list", service.category(noticePage));
+		mav.addObject("count", service.categoryCount(noticePage));
+
+		return mav;
+	}
+	
 }

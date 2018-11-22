@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.marryus.repository.domain.Board;
 import kr.co.marryus.repository.domain.Page;
+import kr.co.marryus.repository.domain.Page2;
 import kr.co.marryus.repository.mapper.BoardMapper;
 
 @Service
@@ -19,10 +20,28 @@ public class BoardServiceImpl implements BoardService{
 		return mapper.boardList(page);
 		
 	}
+	
 
 	@Override
 	public int selectBoardCount() {
 		return mapper.selectBoardCount();
+	}
+
+	@Override
+	public List<Board> category(Page2 page) {
+		return mapper.categoryList(page);
+	}
+
+	@Override
+	public int categoryCount(Page2 page) {
+		return mapper.categoryCount(page);
+	}
+
+
+	@Override
+	public Board noticeDetail(int no) {
+		mapper.listNoticeUpdateView(no);
+		return mapper.noticeDetailBoard(no);
 	}
 
 

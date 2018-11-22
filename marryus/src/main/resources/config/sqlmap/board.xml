@@ -16,15 +16,58 @@
 	<select id="boardList" parameterType="Page" resultMap="boardMap">
 		select a.*,(select count(*) from mu_board where category = 'nt') as cnt
       from mu_board a
+      where category = 'nt'
       order by board_no desc
 	limit #{begin}, 10
-	
 	</select>
+	
+	<select id="noticeDetailBoard" parameterType="int" resultMap="boardMap">
+		select *
+		from mu_board
+		where board_no = #{boardNo}
+	</select>
+	
+	<update id="listNoticeUpdateView">
+		update mu_board
+		set view_cnt = view_cnt +1
+		where board_no = #{boardNo}
+	</update>
+	
+	
 	
 	<select id="selectBoardCount" resultType="int">
 		select count(*)
 		from mu_board
+		where category = 'nt'
 	</select>
+	
+	<!-- 검색 -->
+	<select id="categoryList" parameterType="Page2" resultMap="boardMap" useCache="false" flushCache="true">
+		select a.*,(select count(*) from mu_board where category = 'nt') as cnt
+		 from mu_board a
+		 <choose>
+			<when test="select=='title'" >
+			where title like concat('%',#{text},'%')
+			</when>
+			<otherwise>
+			where concat(a.title,a.content) like concat('%',#{text},'%')
+			</otherwise>
+		</choose>
+			limit #{begin} , 10
+	</select>
+	
+	<select id="categoryCount" parameterType="Page2" resultType="int">
+		select count(*)
+		from mu_board 
+		<choose>
+			<when test="select=='title' " >
+			where title like concat('%',#{text},'%')
+			</when>
+			<otherwise>
+			where concat(title,content) like concat('%',#{text},'%')
+			</otherwise>
+		</choose>
+</select>
 	
 </mapper>
 
