@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.marryus.repository.mapper.FreeBoardMapper">
+	<resultMap id="boardMap" type="board">
+		<result column="board_no" property="boardNo" />
+		<result column="writer" property="writer" />
+		<result column="title" property="title" />
+		<result column="content" property="content" />
+		<result column="reg_date" property="regDate" />
+		<result column="view_cnt" property="viewCnt"/>
+		<result column="category" property="category" />
+		<result column="answer" property="answer" />
+	</resultMap>
+	
+	<select id="boardList" parameterType="Page" resultMap="boardMap">
+		select a.*,(select count(*) from mu_board where category = 'nt') as cnt
+      from mu_board a
+	limit #{begin}, 10
+	</select>
+	
+	<select id="selectBoardCount" resultType="int">
+		select count(*)
+		from mu_board
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
