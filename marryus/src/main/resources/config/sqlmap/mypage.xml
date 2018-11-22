@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.marryus.repository.mapper.MyPage">
+	<resultMap id="comInfoMap" type="CompanyInfo">
+		<result  property="comInfoNo"   column="com_info_no"/>
+		<result  property="memNo"   column="mem_no"/>
+		<result  property="comInfoConent"   column="com_info_content"/>
+		<result  property="comInfoProfile"   column="com_info_profile"/>
+	</resultMap>
+	
+	
+	<resultMap id="comFileMap" type="CompanyFile">
+		<result  property="comFileNo"   column="com_file_no"/>
+		<result  property="comInfoNo"   column="com_info_no"/>
+		<result  property="comFileName"   column="com_file_name"/>
+		<result  property="comFileOriname"   column="com_file_oriname"/>
+		<result  property="comFilePath"   column="com_file_path"/>
+	</resultMap>
+	
+
+	
+	
+	<!-- 업체 정보 등록, 수정, 삭제시 사용 -->
+	<insert id="insertComInfo" parameterType="int" >
+		insert into mu_company_info(mem_no, com_info_content, com_info_profile) 
+		values(#{memNo}, #{comInfoConent}, #{comInfoProfile})
+	</insert>
+	
+	<update id="updateComInfo" parameterType="int">
+		update mu_comany_info 
+		set com_info_content = #{comInfoConent},
+		com_info_profile = #{comInfoProfile}
+		where com_info_no=#{comInfoNo} 
+	</update>
+	
+	<delete id="deleteComInfo" parameterType="int">
+		delete from mu_comany_info 
+		where com_info_no=#{comInfoNo}
+	</delete>
+	
+	<!-- 업체 정보  파일 등록, 수정, 삭제시 사용 -->
+	<insert id="insertComFile" parameterType="int">
+		insert into mu_company_file(com_info_no, com_file_name, com_file_oriname, com_file_path)
+		values(#{comInfoNo}, #{comFileName}, #{comFileOriname}, #{comFilePath})
+	</insert>
+	
+	<update id="updateComFile" parameterType="int">
+		update mu_comany_file
+		set com_info_no=#{comInfoNo},
+		com_file_name=#{comFileName},
+		com_file_path=#{comFilePath}
+		where com_info_no=#{comInfoNo}
+	</update>
+	
+	<delete id="deleteComFile" parameterType="int">
+		delete from mu_comany_file 
+		where com_info_no=#{comInfoNo}
+	</delete>
+	
+
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
