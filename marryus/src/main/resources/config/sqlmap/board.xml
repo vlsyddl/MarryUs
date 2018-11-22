@@ -16,7 +16,9 @@
 	<select id="boardList" parameterType="Page" resultMap="boardMap">
 		select a.*,(select count(*) from mu_board where category = 'nt') as cnt
       from mu_board a
+      order by board_no desc
 	limit #{begin}, 10
+	
 	</select>
 	
 	<select id="selectBoardCount" resultType="int">
