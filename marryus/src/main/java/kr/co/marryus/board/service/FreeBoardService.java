@@ -7,8 +7,8 @@ import kr.co.marryus.repository.domain.Page;
 
 public interface FreeBoardService {
 	
-	List<Board> boardList(Page page);
-	int selectBoardCount();
-
-	
+	List<Board> freeBoardList(Page page);
+	int selectFreeBoardCount();
+	Board freeBoardDetail(int boardNo);
+	String writeFreeBoard(Board board);
 }

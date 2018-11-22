@@ -13,17 +13,35 @@
 		<result column="answer" property="answer" />
 	</resultMap>
 	
-	<select id="boardList" parameterType="Page" resultMap="boardMap">
-		select a.*,(select count(*) from mu_board where category = 'nt') as cnt
-      from mu_board a
-	limit #{begin}, 10
+	<!-- 자유게시판 페이징 + 리스트 -->
+	<select id="selectFreeBoardList" parameterType="Page" resultMap="boardMap">
+		select @rownum:=@rownum+1 as no, b.*, (select count(*) from mu_board where category = 'fr') as cnt
+		  from mu_board b, (select @rownum:=0) TMP
+		 where category = 'fr'
+		 order by no desc
+		 limit #{begin}, 10
 	</select>
 	
-	<select id="selectBoardCount" resultType="int">
+	<!-- 총 자유게시판 게시글 수  -->
+	<select id="selectFreeBoardCount" resultType="int">
 		select count(*)
-		from mu_board
+		  from mu_board
+		 where category = 'fr'
 	</select>
 	
+	<!-- 자유게시판 상세 -->
+	<select id="selectfreeBoardDetail" parameterType="int" resultMap="boardMap">
+		select *
+		  from mu_board
+		 where category = 'fr'
+		   and board_no = #{boardNo}
+	</select>
+	
+	<!-- 자유게시판 글쓰기 -->
+	<insert id="insertFreeBoard" parameterType="Board">
+		insert into mu_board(title, writer, content, category)
+		values(#{title}, #{writer}, #{content}, 'fr')
+	</insert>
 </mapper>
 
 

@@ -64,57 +64,20 @@
                     <div class="communityContents">
                         <table class="table table-hover">
                             <tr>
-                                <th>번호</th>
-                                <th>제목</th>
-                                <th>작성자</th>
-                                <th>작성일</th>
-                                <th>조회수</th>
+                                <th>문의 제목</th>
+                                <td>
+                                	<input type="text" name="title"/>
+                                </td>
                             </tr>
-						<c:forEach var="b" items="${freeList}">
                             <tr>
-                                <td>${b.no}</td>
-                                <td><a href="detail.do?boardNo=${b.boardNo}">${b.title}</a></td>
-                                <td>${b.writer}</td>
-                                <td><fmt:formatDate value="${b.regDate}" pattern="yyyy-MM-dd hh:mm"/></td>
-                                <td>${b.viewCnt}</td>
+                            	<th>문의 내용</th>
+                            	<td>
+                            		<textarea rows="60" cols="30" name="content"></textarea>
+                            	</td>
                             </tr>
-						</c:forEach>
                     </table>
-		            <div id="writeButton">
-		            	<a href="writeForm.do"><button>글쓰기</button></a>
-		            </div>
+                    <button>작성하기</button>
                     </div>
-                    <ul class="pagination">
-					<li><a
-						<c:choose>
-      <c:when test="${beginPage!=1}">href="list.do?pageNo=${beginPage-1}"</c:when>
-      <c:otherwise>href="#"</c:otherwise>
-	    </c:choose>
-						aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-					</a></li>
-					<c:forEach var="i" begin="${beginPage}" end="${endPage}">
-						<li><a
-							<c:choose>
-   	<c:when test='${requestScope["javax.servlet.forward.request_uri"].substring(20) eq "/category.do"}'>
-    href="<c:url value='category.do?pageNo=${i-1}&select=${result.select}&text=${result.text}' />"
-    </c:when>
-
-    <c:otherwise>
-     href="list.do?pageNo=${i}"
-     </c:otherwise>
-      </c:choose>>
-
-								${i}</a></li>
-					</c:forEach>
-
-					<li><a
-						<c:choose>
-      <c:when test="${endPage != lastPage}"> href="list.do?pageNo=${endPage+1}" </c:when>
-    	<c:otherwise>href="#"</c:otherwise>
-    	</c:choose>
-						aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-					</a></li>
-				</ul>
                 </div>
             </div>
         </section>

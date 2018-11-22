@@ -7,21 +7,31 @@ import org.springframework.stereotype.Service;
 
 import kr.co.marryus.repository.domain.Board;
 import kr.co.marryus.repository.domain.Page;
-import kr.co.marryus.repository.mapper.BoardMapper;
+import kr.co.marryus.repository.mapper.FreeBoardMapper;
 
 @Service
 public class FreeBoardServiceImpl implements FreeBoardService{
 	
 	@Autowired
-	private BoardMapper mapper;
+	private FreeBoardMapper mapper;
 	
-	public List<Board> boardList(Page page){
-		return mapper.boardList(page);
+	public List<Board> freeBoardList(Page page){
+		return mapper.selectFreeBoardList(page);
 	} // boardList
 
 	@Override
-	public int selectBoardCount() {
-		return mapper.selectBoardCount();
+	public int selectFreeBoardCount() {
+		return mapper.selectFreeBoardCount();
 	} // selectBoardCount
 
+	@Override
+	public Board freeBoardDetail(int boardNo) {
+		return mapper.selectFreeBoardDetail(boardNo);
+	}
+
+	@Override
+	public String writeFreeBoard(Board board) {
+		return mapper.insertFreeBoard(board);
+	}
+	
 } // end class
