@@ -13,6 +13,17 @@
 		<result column="answer" property="answer" />
 	</resultMap>
 	
+	<select id="boardList" parameterType="Page" resultMap="boardMap">
+		select a.*,(select count(*) from mu_board where category = 'nt') as cnt
+      from mu_board a
+	limit #{begin}, 10
+	</select>
+	
+	<select id="selectBoardCount" resultType="int">
+		select count(*)
+		from mu_board
+	</select>
+	
 </mapper>
 
 

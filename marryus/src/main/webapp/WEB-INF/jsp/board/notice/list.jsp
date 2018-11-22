@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Marry Us</title>
+<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <c:import url="/common/importCss.jsp"/>
 	 <c:import url="/common/importJs.jsp"/>
     
@@ -60,25 +62,55 @@
                     </ul>
                     <div class="communityContents">
                         <table class="table table-hover">
-                        <thead>
                             <tr>
                                 <th>번호</th>
                                 <th>제목</th>
+                                <th>작성자</th>
                                 <th>작성일</th>
                                 <th>조회수</th>
                             </tr>
-                        </thead>
-                        <tbody>
+						<c:forEach var="b" items="${list}">
                             <tr>
-                                <td>1</td>
-                                <td>제목</td>
-                                <td>작성자</td>
-                                <td>작성일</td>
-                                <td>조회수</td>
+                                <td>${b.boardNo}</td>
+                                <td>${b.title}</td>
+                                <td>${b.writer}</td>
+                                <td>${b.regDate}</td>
+                                <td>${b.viewCnt}</td>
                             </tr>
-                        </tbody>
+						</c:forEach>
                     </table>
                     </div>
+                    <ul class="pagination">
+					<li><a
+						<c:choose>
+      <c:when test="${beginPage!=1}">href="list.do?pageNo=${beginPage-1}"</c:when>
+      <c:otherwise>href="#"</c:otherwise>
+	    </c:choose>
+						aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+					</a></li>
+					<c:forEach var="i" begin="${beginPage}" end="${endPage}">
+						<li><a
+							<c:choose>
+   	<c:when test='${requestScope["javax.servlet.forward.request_uri"].substring(20) eq "/category.do"}'>
+    href="<c:url value='category.do?pageNo=${i-1}&select=${result.select}&text=${result.text}' />"
+    </c:when>
+
+    <c:otherwise>
+     href="list.do?pageNo=${i}"
+     </c:otherwise>
+      </c:choose>>
+
+								${i}</a></li>
+					</c:forEach>
+
+					<li><a
+						<c:choose>
+      <c:when test="${endPage != lastPage}"> href="list.do?pageNo=${endPage+1}" </c:when>
+    	<c:otherwise>href="#"</c:otherwise>
+    	</c:choose>
+						aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+					</a></li>
+				</ul>
                 </div>
             </div>
         </section>
