@@ -37,7 +37,7 @@
 										placeholder="제목을 입력 해 주세요" />
 								</div>
 								<div>
-									<input type="hidden" name="writer" value="${mem.email}" />
+									<input type="hidden" name="writer" value="${user.email}" />
 								</div>
 						    	<textarea name="content" id="smarteditor" rows="10" cols="100" style="width:100%; height:350px;"></textarea>
 							    <div class="form-btn">

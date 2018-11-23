@@ -89,7 +89,7 @@
                     	<ul class="pagination">
 						<li><a
 						<c:choose>
-					      <c:when test="${beginPage!=1}">href="list.do?pageNo=${beginPage-1}"</c:when>
+					      <c:when test="${beginPage!=1}">href="mtomlist.do?pageNo=${beginPage-1}"</c:when>
 					      <c:otherwise>href="#"</c:otherwise>
 					    </c:choose>
 						aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
@@ -102,7 +102,7 @@
 					    </c:when>
 						
 					    <c:otherwise>
-					     href="list.do?pageNo=${i}"
+					     href="mtomlist.do?pageNo=${i}"
 					     </c:otherwise>
 					      </c:choose>>
 
@@ -111,7 +111,7 @@
 
 					<li><a
 						<c:choose>
-					      	<c:when test="${endPage != lastPage}"> href="list.do?pageNo=${endPage+1}" </c:when>
+					      	<c:when test="${endPage != lastPage}"> href="mtomlist.do?pageNo=${endPage+1}" </c:when>
 					    	<c:otherwise>href="#"</c:otherwise>
 				    	</c:choose>
 						aria-label="Next"> <span aria-hidden="true">&raquo;</span>
