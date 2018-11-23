@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kr.co.marryus.repository.domain.General;
 import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.mapper.MemberMapper;
 
@@ -15,9 +16,12 @@ public class MemberController {
 	@Autowired
 	private MemberMapper mapper;
 
+	@RequestMapping("/signupGeneral.do")
+	public void signUpMain() {}
 	/**로그인 
 	 * 
 	 */
+	
 	@RequestMapping("/login.do")
 	public String login(Member member , HttpSession session) throws Exception {
 		
@@ -45,4 +49,20 @@ public class MemberController {
 		return "redirect:main.do";
 	}
 		
+	/**
+	 * 
+	 * 회원가입 일반 
+	 */
+	@RequestMapping("/general.do")
+	public String signUpGeneral(Member member, General general) {
+		//1. Member 등록 
+		mapper.insertMember(member);
+		//2. 회원번호 받기
+		int no = member.getNo();
+		//3.일반회원에 회원번넘버 셋팃
+		general.setGenNo(no);
+		//4.일반회원 등록 
+		mapper.insertGeneral(general);
+		return "redirect:main.do";
+	}
 }

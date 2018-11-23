@@ -21,7 +21,7 @@
                 <nav class="gnb col-md-9">
                     <div class="gnb_top cf">
                         <ul class="cf">
-                            <li><a href="#">회원가입</a></li>
+                            <li><a href="<c:url value='/main/signupGeneral.do' />">회원가입</a></li>
                             <!-- 로그인, 로그아웃 -->
                             
                             <c:if test="${user.email eq null}">

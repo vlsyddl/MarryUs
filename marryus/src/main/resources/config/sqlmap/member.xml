@@ -12,11 +12,11 @@
 		<collection property="company" resultMap="companyMap"/>
 	</resultMap>
 	<resultMap id="generalMap" type="General">
-		<result column="gen_no" property="no" />
-		<result column="gen_name" property="name" />
-		<result column="gen_phone" property="phone" />
-		<result column="gen_birth" property="birth" />
-		<result column="gen_gender" property="gender" />
+		<result column="gen_no" property="genNo" />
+		<result column="gen_name" property="genName" />
+		<result column="gen_phone" property="genPhone" />
+		<result column="gen_birth" property="genBirth" />
+		<result column="gen_gender" property="genGender" />
 	</resultMap>
 	<resultMap id="companyMap" type="Company">
 		<result column="com_no" property="comNo" />
@@ -55,7 +55,7 @@
 	<!-- 회원가입 -->
 	
 	<!-- 1.Member table -->
-	<insert id="insertMember"  useGeneratedKeys="true" keyProperty="no">
+	<insert id="insertMember" parameterType="Member"  useGeneratedKeys="true" keyProperty="no">
 		insert into mu_member 
 		( mem_email, mem_pass, mem_type )
 		values
@@ -63,11 +63,11 @@
 	</insert>
 	
 	<!-- 2.일반회원 -->
-	<insert id="insertGeneral" >
+	<insert id="insertGeneral" parameterType="General" >
 		insert into mu_general 
 		( gen_no, gen_name, gen_birth, gen_phone, gen_gender )
 		values
-		( #{no}, #{name}, #{birth}, #{phone} , #{gender} )
+		( #{genNo}, #{genName}, #{genBirth}, #{genPhone} , #{genGender} )
 	</insert>
 	
 	<!-- 3.기업회원 -->

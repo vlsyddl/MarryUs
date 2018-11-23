@@ -1,0 +1,359 @@
+@charset "UTF-8";
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Lato Regular'), local('Lato-Regular'), url(https://fonts.gstatic.com/s/lato/v14/S6uyw4BMUTPHjx4wWw.ttf) format('truetype');
+}
+/**
+* responsive strategy
+*/
+/**
+* style variables
+*/
+/**
+* style colors
+*/
+/**
+* root style
+*/
+:root,
+html,
+body {
+  font-family: Lato, sans-serif;
+  font-size: 14px;
+  height: 100%;
+  margin: 0;
+}
+/**
+* typography
+*/
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+/**
+* breaths
+*/
+/**
+********************************************
+* Grid layout
+********************************************
+*/
+/**
+* grid container
+*/
+#grid {
+  height: 100%;
+  display: grid;
+}
+@media (max-width: 599px) {
+  #grid {
+    grid-template-rows: 5% auto auto;
+    grid-template-columns: 5% auto 5%;
+  }
+}
+@media (min-width: 600px) and (max-width: 899px) {
+  #grid {
+    grid-template-rows: 5% auto auto;
+    grid-template-columns: 25% auto 25%;
+  }
+}
+@media (min-width: 900px) and (max-width: 1199px) {
+  #grid {
+    grid-template-rows: 5% auto auto;
+    grid-template-columns: 30% auto 30%;
+  }
+}
+@media (min-width: 1200px) and (max-width: 1799px) {
+  #grid {
+    grid-template-rows: 5% auto auto;
+    grid-template-columns: 35% auto 35%;
+  }
+}
+@media (min-width: 1800px) {
+  #grid {
+    grid-template-rows: 5% auto 10%;
+    grid-template-columns: 35% auto 35%;
+  }
+}
+#grid__content {
+  grid-column: 2;
+  grid-row: 2;
+}
+/**
+********************************************
+* Flex components
+********************************************
+*/
+/**
+* button
+*/
+button {
+  -webkit-tap-highlight-color: transparent;
+  background-color: transparent;
+  border: none;
+  border-radius: 2px;
+  transition: all 0.7s cubic-bezier(0.25, 0.8, 0.25, 1);
+  user-select: none;
+  color: rgba(0, 0, 0, 0.87);
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 500;
+  height: 36px;
+  letter-spacing: 0.01em;
+  line-height: 36px;
+  margin: 14px 8px 8px 8px;
+  min-width: 88px;
+  outline: none;
+  overflow: hidden;
+  padding: 0 8px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+button:not([disabled]) {
+  box-shadow: none;
+  cursor: pointer;
+}
+button[disabled] {
+  color: rgba(0, 0, 0, 0.38);
+  pointer-events: none;
+}
+button.raised {
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12);
+  background-color: #fafafa;
+}
+button.raised:active {
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12);
+}
+/**
+* card
+*/
+#card {
+  padding: 8px;
+  background-color: white;
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12);
+  -moz-box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12);
+  -webkit-box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12);
+  transition: box-shadow 0.6s ease;
+}
+@media (min-width: 960px) {
+  #card {
+    padding: 16px;
+  }
+}
+#card:hover {
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+  -moz-box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+  -webkit-box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+}
+/**
+********************************************
+* Form
+********************************************
+*/
+/**
+* form
+*/
+form.form {
+  display: flex;
+  flex-flow: column wrap;
+}
+.form > h1 {
+  text-transform: uppercase;
+  align-self: center;
+}
+.form > .signup__field {
+  flex: 1;
+  min-width: 70%;
+  align-self: center;
+  display: flex;
+  flex-flow: column wrap;
+  padding: 8px;
+}
+.form > .signup__field label {
+  font-size: 12px;
+  font-weight: bold;
+  padding-bottom: 3px;
+}
+.form > .signup__field label::after {
+  content: ':';
+}
+.form > .signup__field input {
+  color: #666666;
+  border-bottom: 1px solid #9E9E9E;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-radius: 5px;
+  outline: none;
+  padding: 0 5px;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  /* For legacy WebKit based browsers */
+  -moz-box-sizing: border-box;
+  /* For legacy (Firefox <29) Gecko based browsers */
+  box-sizing: border-box;
+  min-height: 30px;
+  transition: background 250ms ease-in-out;
+}
+.form > fieldset {
+  flex: auto;
+  flex-flow: column;
+  align-self: center;
+  min-width: 70%;
+  border: none;
+  box-shadow: 0px 0px 0px 2px #E0E0E0;
+  transition: box-shadow 0.6s ease;
+  padding: 10px;
+  margin-top: 20px;
+}
+.form > fieldset legend {
+  display: none;
+}
+.form > fieldset .signup__field {
+  display: flex;
+  flex-flow: column;
+}
+.form > fieldset .signup__field > label,
+.form > fieldset .signup__field > .label,
+.form > fieldset .signup__field > .select-field {
+  flex: auto;
+  align-self: center;
+}
+.form > fieldset .signup__field select {
+  border: none;
+  width: 100%;
+  outline: none;
+  cursor: pointer;
+}
+.form > fieldset .signup__field select:focus {
+  outline-color: #666666;
+  border: 1px solid #666666;
+}
+.form > fieldset .signup__field > .label {
+  font-weight: bold;
+}
+.form > fieldset .signup__field > .select-field,
+.form > fieldset .signup__field > .field__radio-inputs {
+  margin: 12px 0;
+}
+.form > fieldset .signup__field > .field__radio-inputs {
+  flex: auto;
+  align-self: center;
+}
+.form > .signup__amazing {
+  margin-top: 10px;
+  flex: auto;
+  align-self: center;
+}
+.form > .signup__amazing input[type="checkbox"],
+.form > .signup__amazing > label {
+  cursor: pointer;
+}
+.form > .signup__button {
+  flex: auto;
+  align-self: flex-end;
+}
+/**
+********************************************
+* Layout colors
+********************************************
+*/
+/**
+* (default)bride pink color
+*/
+html.bri {
+  animation: fill--bri 2s ease-in-out alternate infinite;
+}
+@keyframes fill--bri {
+  from {
+    background-color: #FFE7EE;
+  }
+  to {
+    background-color: #ffacac;
+  }
+}
+button.bri:hover {
+  background-color: rgba(252, 81, 133, 0.12);
+}
+button.bri:active {
+  background-color: rgba(252, 81, 133, 0.25);
+}
+h1.bri::after {
+  content: '  ❤';
+  margin-left: 5px;
+  color: #FC5185;
+  animation: pulse-bri 2s ease alternate infinite;
+}
+@keyframes pulse-bri {
+  100% {
+    margin-left: 0.5px;
+    color: rgba(252, 81, 133, 0.35);
+  }
+}
+input.bri:hover {
+  border-bottom: 2px solid #FC5185;
+}
+input.bri:focus {
+  background-color: #FFE7EE;
+  border-bottom: 2px solid #FC5185;
+}
+fieldset.bri:hover {
+  box-shadow: 0px 0px 0px 4px #FC5185;
+}
+
+
+/**
+* Groom blue color
+*/
+html.gro {
+  animation: fill--gro 2s ease-in-out alternate infinite;
+}
+@keyframes fill--gro {
+  from {
+    background-color: #e7e7ff;
+  }
+  to {
+    background-color: rgba(58, 140, 247, 0.911);
+  }
+}
+button.gro:hover {
+  background-color: rgba(0, 0, 255, 0.12);
+}
+button.gro:active {
+  background-color: rgba(0, 0, 255, 0.25);
+}
+h1.gro::after {
+  content: '  ❤';
+  margin-left: 5px;
+  color: rgba(58, 140, 247, 0.911);
+  animation: pulse-gro 2s ease alternate infinite;
+}
+@keyframes pulse-gro {
+  100% {
+    margin-left: 0.5px;
+    color: rgba(0, 0, 255, 0.35);
+  }
+}
+input.gro:hover {
+  border-bottom: 2px solid rgba(58, 140, 247, 0.911);
+}
+input.gro:focus {
+  background-color: #e7e7ff;
+  border-bottom: 2px solid rgba(58, 140, 247, 0.911);
+}
+fieldset.gro:hover {
+  box-shadow: 0px 0px 0px 4px rgba(58, 140, 247, 0.911);
+}
+
