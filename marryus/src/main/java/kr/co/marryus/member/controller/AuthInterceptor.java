@@ -1,4 +1,4 @@
-package kr.co.marryus.main.controller;
+package kr.co.marryus.member.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

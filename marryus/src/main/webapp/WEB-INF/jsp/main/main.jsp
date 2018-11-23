@@ -22,7 +22,16 @@
                     <div class="gnb_top cf">
                         <ul class="cf">
                             <li><a href="#">회원가입</a></li>
-                            <li><a href="#" data-toggle="modal" data-target="#loginModal">로그인</a></li>
+                            <!-- 로그인, 로그아웃 -->
+                            
+                            <c:if test="${user.email eq null}">
+                           		 <li><a href="#" data-toggle="modal" data-target="#loginModal">로그인</a></li>
+                            </c:if>
+                             <c:if test="${user.email ne null}">
+                            	 <li><a href="<c:url value='/main/logout.do' />" > 로그아웃</a></li>	
+                            </c:if>
+                            
+                            
                             <li><a href="<c:url value="/mypage/mywedding.do"/>">마이페이지</a></li>
                             <li><a href="#"><i class="far fa-bell"></i></a></li>
                         </ul>
@@ -1157,7 +1166,7 @@
                       <div class="Login-card-container">
                         <section class="Login-card Login-card--login" data-order="1">
                           <h2 class="Login-card__title">Login</h2>
-                          <form>
+                          <form method="post" action="/marryus/main/login.do" name="loginForm">
                     
                             <div class="Form__form-group">
                     
@@ -1166,7 +1175,7 @@
                               </div>
                     
                               <div class="Form__input-group">
-                                <input type="password" name="password" placeholder="Password" class="Form__input Login-card__password-input">
+                                <input type="password" name="pass" placeholder="Password" class="Form__input Login-card__password-input">
                               </div>
                     
                               <div class="Form__input-group">
