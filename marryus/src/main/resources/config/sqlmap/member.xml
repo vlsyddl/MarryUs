@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.marryus.repository.mapper.MemberMapper">
+	<resultMap id="memberMap" type="Member">
+		<result column="mem_no" property="no" />
+		<result column="mem_email" property="email" />
+		<result column="mem_pass" property="pass" />
+		<result column="mem_type" property="type" />
+		<result column="mem_status" property="status" />
+		<collection property="general" resultMap="generalMap" />
+		<collection property="company" resultMap="companyMap"/>
+	</resultMap>
+	<resultMap id="generalMap" type="General">
+		<result column="gen_no" property="no" />
+		<result column="gen_name" property="name" />
+		<result column="gen_phone" property="phone" />
+		<result column="gen_birth" property="birth" />
+		<result column="gen_gender" property="gender" />
+	</resultMap>
+	<resultMap id="companyMap" type="Company">
+		<result column="com_no" property="comNo" />
+		<result column="com_name" property="comName" />
+		<result column="com_addr" property="comAddr" />
+		<result column="com_addr_detail" property="comAddrDetail" />
+		<result column="com_phone" property="comPhone" />
+		<result column="com_type" property="comType" />
+	</resultMap>
+	
+	<!-- 로그인-->
+	
+	<!-- Member -->
+	<select id="login" parameterType="Member" resultMap="memberMap">
+		select *
+		  from mu_member
+		 where mem_email = #{email}
+		   and mem_pass =#{pass}
+	</select>
+	<select id="loginGeneral" parameterType="Member" resultMap="memberMap">
+		select * 
+		  from mu_member 
+		 inner join mu_general
+		    on mem_no = gen_no 
+		 where mem_email = #{email}
+		   and mem_pass =#{pass}
+	</select>
+	<select id="loginCompany" parameterType="Member" resultMap="memberMap">
+		select * 
+		  from mu_member 
+		 inner join mu_company
+		    on mem_no = com_no 
+		 where mem_email = #{email}
+		   and mem_pass =#{pass}
+	</select>
+	<!-- 회원가입 -->
+	
+	<!-- 1.Member table -->
+	<insert id="insertMember"  useGeneratedKeys="true" keyProperty="no">
+		insert into mu_member 
+		( mem_email, mem_pass, mem_type )
+		values
+		( #{email}, #{pass}, #{type} )
+	</insert>
+	
+	<!-- 2.일반회원 -->
+	<insert id="insertGeneral" >
+		insert into mu_general 
+		( gen_no, gen_name, gen_birth, gen_phone, gen_gender )
+		values
+		( #{no}, #{name}, #{birth}, #{phone} , #{gender} )
+	</insert>
+	
+	<!-- 3.기업회원 -->
+	<insert id="insertCompany">
+		insert into mu_company
+		( com_no, com_name, com_addr, com_addr_detail, com_phone, com_type )
+		values
+		( #{no}, #{comName}, #{comAddr}, #{comAddrDetail}, #{comPhone}, #{comType} )
+	</insert>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
