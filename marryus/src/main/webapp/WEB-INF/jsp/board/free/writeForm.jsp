@@ -9,11 +9,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Marry Us</title>
-<link rel="stylesheet"
+	<link rel="stylesheet"
 		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <c:import url="/common/importCss.jsp"/>
 	 <c:import url="/common/importJs.jsp"/>
-    
+	 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="/marryus/resources/se2/js/HuskyEZCreator.js" charset="utf-8"></script>
+	<script type="text/javascript" src="/marryus/resources/se2/sample/js/plugin/hp_SE2M_AttachQuickPhoto.js" charset="utf-8"></script>
+    <style>
+    	#smarteditor {
+    		width: 400px;
+    		margin-top: 10px;
+    		resize: none;
+    	} 
+    </style>
 </head>
 <body>
     <header>
@@ -62,21 +71,29 @@
                         <li ><a href="javascript:void(0);">FAQ</a></li>
                     </ul>
                     <div class="communityContents">
-                        <table class="table table-hover">
-                            <tr>
-                                <th>문의 제목</th>
-                                <td>
-                                	<input type="text" name="title"/>
-                                </td>
-                            </tr>
-                            <tr>
-                            	<th>문의 내용</th>
-                            	<td>
-                            		<textarea rows="60" cols="30" name="content"></textarea>
-                            	</td>
-                            </tr>
-                    </table>
-                    <button>작성하기</button>
+                    	<form id="editorform" action="freeWrite.do" method="post">
+	                        <table class="table table-hover">
+	                            <tr>
+	                                <th>제목</th>
+	                                <td>
+	                                	<input type="text" name="title"/>
+	                                </td>
+	                            </tr>
+	                            <tr>
+	                                <th>작성자</th>
+	                                <td>
+	                                	<input type="text" name="writer" value="${freeDetail.writer}" readonly="readonly"/>
+	                                </td>
+	                            </tr>
+	                            <tr>
+	                            	<th>내용</th>
+	                            	<td>
+	                            		<textarea id="smarteditor" name="content" rows="60" cols="30"></textarea>
+	                            	</td>
+	                            </tr>
+	                    	</table>
+                    		<button id="savebutton">작성하기</button>
+	                    </form>
                     </div>
                 </div>
             </div>
@@ -100,6 +117,8 @@
                 'default_x' : false 				//레이어가 붙는 아이디 
             }
             $('#sideBar').Floater(options);
+         
+         
     </script>
 </body>
 </html>

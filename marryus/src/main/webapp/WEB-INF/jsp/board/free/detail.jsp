@@ -85,7 +85,7 @@
                             </tr>
                     </table>
                     <a href="list.do"><button>목록</button></a>
-                    <button>삭제</button>
+                    <a href="delete.do?boardNo=${freeDetail.boardNo}"><button>삭제</button></a>
                     </div>
                 </div>
             </div>

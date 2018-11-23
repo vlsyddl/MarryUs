@@ -11,4 +11,6 @@ public interface FreeBoardMapper {
 	int selectFreeBoardCount();
 	Board selectFreeBoardDetail(int boardNo);
 	String insertFreeBoard(Board board);
+	void deleteFreeBoard(int boardNo);
+	void updateFreeBoardCnt(int boardNo);
 }

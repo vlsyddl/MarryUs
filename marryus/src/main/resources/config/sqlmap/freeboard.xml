@@ -30,7 +30,7 @@
 	</select>
 	
 	<!-- 자유게시판 상세 -->
-	<select id="selectfreeBoardDetail" parameterType="int" resultMap="boardMap">
+	<select id="selectFreeBoardDetail" parameterType="int" resultMap="boardMap">
 		select *
 		  from mu_board
 		 where category = 'fr'
@@ -39,9 +39,26 @@
 	
 	<!-- 자유게시판 글쓰기 -->
 	<insert id="insertFreeBoard" parameterType="Board">
-		insert into mu_board(title, writer, content, category)
-		values(#{title}, #{writer}, #{content}, 'fr')
+		insert into mu_board(
+			title, writer, content, category
+		)
+		values(
+			#{title}, #{writer}, #{content}, 'fr'
+		)
 	</insert>
+	
+	<!-- 자유게시판 게시글 삭제 -->
+	<delete id="deleteFreeBoard" parameterType="int">
+		delete from mu_board
+		 where board_no = #{boardNo}
+	</delete>
+	
+	<!-- 자유게시판 조회수 증가 -->
+	<update id="updateFreeBoardCnt" parameterType="int">
+		update mu_board
+		   set view_cnt = view_cnt + 1
+		 where board_no = #{boardNo};
+	</update>
 </mapper>
 
 

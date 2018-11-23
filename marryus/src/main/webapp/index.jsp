@@ -9,6 +9,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<c:redirect url="/intro/intro.do"></c:redirect>	
+	<c:redirect url="/intro/intro.do"></c:redirect>
 </body>
 </html>

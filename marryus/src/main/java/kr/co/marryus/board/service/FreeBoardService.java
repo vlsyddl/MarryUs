@@ -11,4 +11,5 @@ public interface FreeBoardService {
 	int selectFreeBoardCount();
 	Board freeBoardDetail(int boardNo);
 	String writeFreeBoard(Board board);
+	void freeBoardDelete(int boardNo);
 }

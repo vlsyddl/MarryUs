@@ -56,4 +56,11 @@ public class FreeBoardController {
 		service.writeFreeBoard(board);
 		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "list.do";
 	}
+	
+	@RequestMapping("/free/delete.do")
+	public String delete(int boardNo) {
+		service.freeBoardDelete(boardNo);
+		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "list.do";
+	}
+	
 }
