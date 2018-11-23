@@ -51,39 +51,74 @@
     <div id="wrap" class="community">
         <div class="sub_visual">
             <div class="titleBox">
-                <h2>공지사항</h2>
-                
+                <h2>1:1질문</h2>     
             </div>
         </div>
         <section class="contents contents01">
             <div class="container">
                 <div class="communityTab">
                     <ul>
-                        <li  class="on"><a href="<c:url value='/board/notice/list.do'/>">공지게시판</a></li>
+                        <li ><a href="<c:url value='/board/notice/list.do'/>">공지게시판</a></li>
                         <li ><a href="review.html">후기 게시판</a></li>
                         <li ><a href="javascript:void(0);">신부 대기실    </a></li>
-                        <li ><a href="javascript:void(0);">1:1 질문</a></li>
+                        <li class="on"><a href="<c:url value='/board/mtom/mtomlist.do'/>">1:1 질문</a></li>
                         <li ><a href="javascript:void(0);">FAQ</a></li>
                     </ul>
-                    <table width="100%">
-        <tr>
-            <td>제목</td>
-            <td><input type="text" id="title" name="title" style="width:650px"/></td>
-        </tr>
-        <tr>
-            <td>내용</td>
-            <td>
-                <textarea rows="10" cols="30" id="ir1" name="content" style="width:650px; height:350px; "></textarea>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <input type="button" id="save" value="저장"/>
-                <input type="button" value="취소"/>
-            </td>
-        </tr>
-</table>
+                    <div class="communityContents">
+                        <table class="table table-hover">
+                            <tr>
+                                <th>번호</th>
+                                <th>제목</th>
+                                <th>작성자</th>
+                                <th>작성일</th>
+                                <th>조회수</th>
+                            </tr>
+                            <c:forEach var="b" items="${list}">
+                            <tr>
+                                <td>${b.no}</td>
+                                <td><a href='mtomdetail.do?no=${b.boardNo}'>${b.title}</a></td>
+                                <td>${b.writer}</td>
+                                <td><fmt:formatDate value="${b.regDate}" pattern="yyyy-MM-dd" /></td>
+                                <td>${b.viewCnt}</td>
+                            </tr>
+						</c:forEach>
+                    </table>
+                    </div>
+                    <nav>
+                    	<div class="text-center">
+                    	<ul class="pagination">
+						<li><a
+						<c:choose>
+					      <c:when test="${beginPage!=1}">href="list.do?pageNo=${beginPage-1}"</c:when>
+					      <c:otherwise>href="#"</c:otherwise>
+					    </c:choose>
+						aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+						</a></li>
+						<c:forEach var="i" begin="${beginPage}" end="${endPage}">
+							<li><a
+							<c:choose>
+					   		<c:when test='${requestScope["javax.servlet.forward.request_uri"].substring(20) eq "/category.do"}'>
+					    	href="<c:url value='category.do?pageNo=${i-1}&select=${result.select}&text=${result.text}' />"
+					    </c:when>
+						
+					    <c:otherwise>
+					     href="list.do?pageNo=${i}"
+					     </c:otherwise>
+					      </c:choose>>
 
+								${i}</a></li>
+					</c:forEach>
+
+					<li><a
+						<c:choose>
+					      	<c:when test="${endPage != lastPage}"> href="list.do?pageNo=${endPage+1}" </c:when>
+					    	<c:otherwise>href="#"</c:otherwise>
+				    	</c:choose>
+						aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+					</a></li>
+					</ul>
+				 </nav>
+				 <a href="mtomwriteForm.do"><button class="btn btn-default">글쓰기</button></a>
 				 </div>
                 </div>
             </div>
@@ -108,7 +143,7 @@
             }
             $('#sideBar').Floater(options);
     </script>
-
+    
    
 </body>
 </html>

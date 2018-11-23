@@ -13,7 +13,11 @@ public interface BoardService {
 	Board noticeDetail(int no);
 	int selectBoardCount();
 	
-
-
-	
+	// 1대1
+	List<Board> mtomList(Page page);
+	Board mtomDetail(int no);
+	int selectMtoMBoardCount();
+	void writeMtomBoard(Board board);
+	void deleteMtoMBoard(int no);
+	void mtomUpdate(Board board);
 }

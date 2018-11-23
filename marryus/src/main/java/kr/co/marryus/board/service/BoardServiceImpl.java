@@ -20,7 +20,6 @@ public class BoardServiceImpl implements BoardService{
 		
 	}
 	
-
 	@Override
 	public int selectBoardCount() {
 		return mapper.selectBoardCount();
@@ -31,6 +30,42 @@ public class BoardServiceImpl implements BoardService{
 		mapper.listNoticeUpdateView(no);
 		return mapper.noticeDetailBoard(no);
 	}
+
+
+	@Override
+	public List<Board> mtomList(Page page) {
+		return mapper.mtomList(page);
+	}
+	
+	@Override
+	public Board mtomDetail(int no) {
+		mapper.listMtoMUpdateView(no);
+		return mapper.mtomDetailBoard(no);
+	}
+
+	@Override
+	public int selectMtoMBoardCount() {
+		return mapper.selectMtoMBoardCount();
+	}
+
+	@Override
+	public void writeMtomBoard(Board board) {
+		 mapper.insertMtom(board);
+	}
+
+	@Override
+	public void deleteMtoMBoard(int no) {
+		mapper.mtomdelete(no);
+		
+	}
+
+	@Override
+	public void mtomUpdate(Board board) {
+		mapper.mtomUpdate(board);
+		
+	}
+
+	
 
 
 }

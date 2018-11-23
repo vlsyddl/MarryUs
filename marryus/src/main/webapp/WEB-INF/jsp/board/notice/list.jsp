@@ -62,7 +62,7 @@
                         <li  class="on"><a href="<c:url value='/board/notice/list.do'/>">공지게시판</a></li>
                         <li ><a href="review.html">후기 게시판</a></li>
                         <li ><a href="javascript:void(0);">신부 대기실    </a></li>
-                        <li ><a href="javascript:void(0);">1:1 질문</a></li>
+                        <li ><a href="<c:url value='/board/mtom/mtomlist.do'/>">1:1 질문</a></li>
                         <li ><a href="javascript:void(0);">FAQ</a></li>
                     </ul>
                     <div class="communityContents">
@@ -76,7 +76,7 @@
                             </tr>
 						<c:forEach var="b" items="${list}">
                             <tr>
-                                <td>${b.boardNo}</td>
+                                <td>${b.no}</td>
                                 <td><a href='detail.do?no=${b.boardNo}'>${b.title}</a></td>
                                 <td>${b.writer}</td>
                                 <td><fmt:formatDate value="${b.regDate}" pattern="yyyy-MM-dd" /></td>

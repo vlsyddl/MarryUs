@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.UrlBasedViewResolver;
+
 
 import kr.co.marryus.board.service.BoardService;
 import kr.co.marryus.repository.domain.Board;
@@ -23,10 +25,6 @@ public class BoardController {
 	private BoardService service;
 	
 	@RequestMapping("/notice/list.do")
-//	public List<Board> boardList(){
-//		List<Board> list = new ArrayList<Board>();
-//		return service.boardList();
-//	}
 	public void boardList(@RequestParam(value = "pageNo", defaultValue = "1") int pageNo, Model model, Board board) throws Exception {
 		Page page = new Page();
 		page.setPageNo(pageNo);
@@ -56,7 +54,63 @@ public class BoardController {
 	}
 	
 	
+	@RequestMapping("/mtom/mtomlist.do")
+	public void mtomList(@RequestParam(value = "pageNo", defaultValue = "1") int pageNo, Model model, Board board) throws Exception {
+		Page page = new Page();
+		page.setPageNo(pageNo);
+
+		int count = service.selectMtoMBoardCount();
+		int lastPage = (int) Math.ceil(count / 10d);
+
+		// 페이지 블럭 시작
+		int pageSize = 10;
+		int currTab = (pageNo - 1) / pageSize + 1;
+		// 11번 부터 2페이지가 되는것
+		int beginPage = (currTab - 1) * pageSize + 1;
+		int endPage = currTab * pageSize < lastPage ? currTab * pageSize : lastPage;
+
+		model.addAttribute("beginPage", beginPage);
+		model.addAttribute("endPage", endPage);
+		model.addAttribute("lastPage", lastPage);
+		model.addAttribute("pageNo", pageNo);
+		// System.out.println(service.listNotice(page).size());
+		model.addAttribute("list", service.mtomList(page));
+		model.addAttribute("count", service.selectMtoMBoardCount());
+	}
 	
+	@RequestMapping("/mtom/mtomdetail.do")
+	public void mtomDetail(Model model, int no) {
+		model.addAttribute("board", service.mtomDetail(no));
+	}
+	
+	@RequestMapping("/mtom/mtomwriteForm.do")
+	public void writeForm() {
+	}
+	
+	@RequestMapping("/mtom/mtomwrite.do")
+	public String write(Board board) {
+		service.writeMtomBoard(board);
+		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "mtomlist.do";
+	}
+	
+	
+	@RequestMapping("/mtom/mtomdelete.do")
+	public String delete(int no) {
+		service.deleteMtoMBoard(no);
+		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "mtomlist.do";
+	}
+	
+	@RequestMapping("/mtom/mtomupdateForm.do")
+	public void updateForm(Model model, int no) {
+		model.addAttribute("board", service.mtomDetail(no));
+	}
+
+	@RequestMapping("/mtom/mtomupdate.do")
+	public String update(Board board) {
+		service.mtomUpdate(board);
+		System.out.println(board);
+		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "mtomlist.do";
+	}
 	
 	
 }
