@@ -1332,3 +1332,146 @@ nav.myCompanyNav ul li.on a{
 .communityContents{
     padding:20px 0px;
 }
+/*챗봇*/
+#chatBot{
+    width: 50px;
+    height: 50px;
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    z-index: 99;
+    background: #ffcaca;
+    transition: all 0.5s; 
+    border-radius: 50%;
+    border: 1px solid #999;
+    cursor: pointer;
+}
+#chatBot *{
+    display: none;
+}
+#chatBot .title{
+    text-align: center;
+    display: block;
+    padding-top: 10px;
+}
+#chatBot .title i{
+    display: inline-block;
+    font-size: 2em;
+}
+#chatBot.on{
+    width: 400px;
+    height: 600px;
+    background: #fff;
+    border-radius: 15px;
+    padding: 30px 15px;
+    border: 1px solid #d9d9d9;
+    box-shadow: 5px 5px 5px #333;
+}
+#chatBot.on *{
+    display: block;
+}
+#chatBot.on .title{
+    display: none;
+}
+#chatBot.on .title i{
+    display: none;
+}
+#chatBot .textWrap{
+    width: 100%;
+    height: 79%;
+    background: #fff4f4;
+    border: 1px solid #aaa;
+    border-radius: 15px;
+    padding: 10px ;
+}
+#chatBot .textWrap .textBox{
+    height: 100%;
+    overflow-y:scroll; 
+    padding-right:15px;
+}
+#chatBot .textWrap .textBox::after{
+    display: block;
+    clear: both;
+    content: '';
+}
+#chatBot .textWrap .textBox >div+div{
+    margin-top: 15px;
+}
+/*chatAdmin*/
+#chatBot .textWrap .textBox .chatAdmin{
+    float: left;
+    width: 80%;
+}
+#chatBot .textWrap .textBox .chatAdmin dl::after{
+    display: block;
+    clear: both;
+    content: '';
+}
+#chatBot .textWrap .textBox .chatAdmin dl dt{
+    float: left;
+    width: 20%;
+}
+#chatBot .textWrap .textBox .chatAdmin dl dt img{
+    max-width: 50px;
+}
+#chatBot .textWrap .textBox .chatAdmin dl dd{
+    float: right;
+    width: 75%;
+    padding: 10px 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+    border: 1px solid #d9d9d9;
+}
+/*chatCustomer*/
+#chatBot .textWrap .textBox .chatCustomer{
+    float: right;
+    width: 80%;
+}
+#chatBot .textWrap .textBox .chatCustomer dl::after{
+    display: block;
+    clear: both;
+    content: '';
+}
+#chatBot .textWrap .textBox .chatCustomer dl dt{
+    float: right;
+    width: 20%;
+}
+#chatBot .textWrap .textBox .chatCustomer dl dt img{
+    max-width: 50px;
+}
+#chatBot .textWrap .textBox .chatCustomer dl dd{
+    float: left;
+    width: 75%;
+    padding: 10px 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+    border: 1px solid #d9d9d9;
+}
+
+#chatBot .inputBox{
+    margin-top: 2%;
+    height: 19%;
+}
+#chatBot .inputBox textarea{
+    height: 100%;
+    width: 80%;
+    float: left;
+    border-radius: 15px;
+}
+#chatBot .inputBox button{
+    height: 100%;
+    width: 19%;
+    float: right;
+    border-radius: 15px;
+    background: #fffeee;
+}
+#chatBot .btnClosed{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+#chatBot .btnClosed i{
+    font-size: 1.6em;
+}

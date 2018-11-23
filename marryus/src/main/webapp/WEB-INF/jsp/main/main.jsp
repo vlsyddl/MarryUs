@@ -1319,6 +1319,41 @@
               <li><a href="#"><i class="far fa-question-circle"></i>FAQ</a></li>
           </ul>
       </aside>
+      <div id="chatBot">
+          <h1 class="title"><i class="fas fa-question"></i></h1>
+          <div class="btnClosed">
+                <a href="#"><i class="fas fa-times"></i></a>
+            </div>
+          <div class="textWrap">
+              <div class="textBox">
+                <!-- <div class="chatAdmin">
+                    <dl>
+                        <dt>
+                            <img src="img/chat_adm.png" alt="" class="img-responsive center-block">
+                        </dt>
+                        <dd>
+                            테스트
+                        </dd>
+                    </dl>
+                </div>
+                <div class="chatCustomer">
+                    <dl>
+                        <dt>
+                            <img src="img/chat_cut.png" alt="" class="img-responsive center-block">
+                        </dt>
+                        <dd>
+                            테스트
+                        </dd>
+                    </dl>
+                </div> -->
+              </div>
+          </div>
+          <div class="inputBox">
+              <textarea name="chatBotInput" style="resize: none;" id="chatBotInput" cols="30"  class="form-control"></textarea>
+              <button class="send">보내기</button>
+          </div>
+          
+      </div>
     <script>
         $(function(){
             new WOW().init();
@@ -1370,6 +1405,80 @@
             //날짜 카운트
            $.fn.CountDownTimer('11/22/2019 00:00 AM'); 
         });
+        $(document).ready(function(){
+            var textBox = $("#chatBot .textWrap .textBox");
+            var inputBox = $("#chatBotInput");
+            var adminBox = '<div class="chatAdmin"><dl><dt><img src="/marryus/resources/img/chat_adm.png" alt="" class="img-responsive center-block"></dt><dd></dd></dl></div>';
+            $("#chatBot .title").click(function(){
+                $("#chatBot").addClass("on")
+                setTimeout(function(){
+                 sendAdmin("안녕하세요 고객님</br>어떤 점이 궁금하신가요?")
+                },1000)
+            })
+            $(".btnClosed").click(function(e){
+                e.preventDefault();
+             setTimeout(function(){
+                 sendAdmin("실시간 상담 을 종료합니다.")
+                },500)
+                setTimeout(function(){
+                 $("#chatBot").removeClass("on")
+                 textBox.html("");
+                },1500)
+            })
+             $("#chatBot").ready(function(){
+                $(".send").click(function(){
+                    sendCustomer();
+                })
+                inputBox.keydown(function(e) {
+                     if(e.keyCode==13){
+                         sendCustomer();
+                     }
+                 });
+            })
+            /*보내기*/
+            function sendCustomer(){
+                var msg = inputBox.val();
+                 textBox.append('<div class="chatCustomer"><dl><dt><img src="/marryus/resources/img/chat_cut.png" alt="" class="img-responsive center-block"></dt><dd>'+msg+'</dd></dl></div>')
+                 inputBox.val("");
+                 textBox.animate({scrollTop: textBox.prop("scrollHeight")}, 500);
+                 reciveBot(msg)
+            }
+            function sendAdmin(){
+                var msg = arguments;
+                for(i=0;i<arguments.length;i++){
+                    (function(x){
+                    setTimeout(function(){
+                     textBox.append('<div class="chatAdmin"><dl><dt><img src="/marryus/resources/img/chat_adm.png" alt="" class="img-responsive center-block"></dt><dd>'+msg[x]+'</dd></dl></div>')
+                     inputBox.val("");
+                     textBox.animate({scrollTop: textBox.prop("scrollHeight")}, 500);
+                    },500*(x+1))
+                    })(i)
+                }   
+            }
+
+           function reciveBot(msg){
+             if ( msg.indexOf('안녕') != -1) {
+                 sendAdmin("안녕하세요 고객님</br>어떤 점이 궁금하신가요?")
+             }else if(msg.indexOf('웨딩')!=-1 ||msg.indexOf('홀')!=-1 ||msg.indexOf('식장')!=-1 ){
+                 sendAdmin("웨딩홀에 관하여 궁금하신가요?</br>담당자를 연결해 드릴게요")
+             }else if(msg.indexOf('스튜디오')!=-1||msg.indexOf('드레스')!=-1||msg.indexOf('메이크업')!=-1||msg.indexOf('메이크 업')!=-1||msg.indexOf('스드메')!=-1||msg.indexOf('스 드 메')!=-1||msg.indexOf('스,드,메')!=-1){
+                 sendAdmin("스튜디오,메이크업,드레스에 관하여 궁금하신가요? </br> 담당자를 연결해 드릴게요. ")
+             }else if(msg.indexOf('허니문')!=-1||msg.indexOf('허니 문')!=-1||msg.indexOf('신혼여행')!=-1||msg.indexOf('신혼 여행')!=-1||msg.indexOf('여행지')!=-1){
+                 sendAdmin("허니문,신혼여행에 관하여 궁금하신가요? </br> 담당자를 연결해 드릴께요")
+             }else if(msg.indexOf('예물')!=-1||msg.indexOf('예단')!=-1){
+                 sendAdmin("예물 예단에 관하여 궁금 하신가요? </br> 담당자를 연결해 드릴게요")
+             }else if(msg.indexOf('프로포즈')!=-1||msg.indexOf('케이터링')!=-1||msg.indexOf('이벤트')!=-1){
+                 sendAdmin("프로포즈,케이터링,이벤트 등이 궁하신가요? </br> 담당자를 연경해 드릴게요")
+             }else if(msg.indexOf('추가서비스')!=-1||msg.indexOf('추가 서비스')!=-1||msg.indexOf('추가')!=-1||msg.indexOf('서비스')!=-1){
+                 sendAdmin("추가서비스에 관하여 궁금하신가요?","추가서비스는 프로포즈 케이터링 이벤트 축가등을 소개해드립니다","추가서비스 담당자를 연결해 드릴까요?")
+             }else if(msg.indexOf('씨발')!=-1||msg.indexOf('시발')!=-1||msg.indexOf('ㅅㅂ')!=-1||msg.indexOf('ㅅ1발')!=-1||msg.indexOf('미친')!=-1||msg.indexOf('병신')!=-1||msg.indexOf('ㅄ')!=-1||msg.indexOf('개새끼')!=-1||msg.indexOf('개새')!=-1||msg.indexOf('ㄳㄲ')!=-1||msg.indexOf('ㄳㅋ')!=-1){
+                 sendAdmin("반사","욕하지마라","나도 욕한다?")
+             }else{
+                 sendAdmin("무슨말인지 잘모르겠어요 ㅠㅠ","웨딩홀,스드메,예물,허니문,추가 서비스등 ","웨딩에 관련된 질문을 해주시면 ","답변해드릴게요")
+
+             }
+           }
+         })
     </script>
 </body>
 </html>

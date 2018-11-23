@@ -138,6 +138,12 @@
 		    <artifactId>spring-jdbc</artifactId>
 		    <version>${spring-framework.version}</version>
 		</dependency>
+		<!-- websocket -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-websocket</artifactId>
+		    <version>${spring-framework.version}</version>
+		</dependency>
 		
 		<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis-spring -->
 		<!-- spring-mybatis 연결해주는 라이브러리 -->
