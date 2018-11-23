@@ -1,5 +1,8 @@
-<!DOCTYPE html>
-<html lang="kr">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,12 +21,12 @@
   
     <style type="text/css">
         .imgs_wrap {
-            width: 1200px;
+            width: 750px;
             margin-top: 50px;
         }
         .imgs_wrap img {
-            max-width: 400px;
-            max-height: 250px
+            max-width: 250px;
+            max-height: 200px
         }
         .x{
            background: white;
@@ -44,8 +47,9 @@
 <body>
  
     <div>
+        <h2><b>이미지 미리보기</b></h2>
         <div class="input_wrap">
-            <a href="javascript:" onclick="fileUploadAction();" class="my_button">file upload</a>
+            <a href="javascript:" onclick="fileUploadAction();" class="my_button">파일 업로드</a>
             <input type="file" id="input_imgs" multiple/>
         </div>
     </div>
@@ -56,65 +60,60 @@
         </div>
     </div>
  
-    <a href="javascript:" class="my_button" onclick="submitAction();">upload</a>
+    <a href="javascript:" class="my_button" onclick="submitAction();">업로드</a>
 
 
 
  <script type="text/javascript">
  
-        // 이미지 정보들을 담을 배열
-        var sel_files = [];
+ var sel_files = [];
  
  
-        $(document).ready(function() {
-            $("#input_imgs").on("change", handleImgFileSelect);
-        }); 
- 
-        function fileUploadAction() {
-            console.log("fileUploadAction");
-            $("#input_imgs").trigger('click');
-        }
- 
-        function handleImgFileSelect(e) {
- 
-            // 이미지 정보들을 초기화
-            sel_files = [];
-            $(".imgs_wrap").empty();
- 
-            var files = e.target.files;
-            var filesArr = Array.prototype.slice.call(files);
- 
-            var index = 0;
-            filesArr.forEach(function(f) {
-                if(!f.type.match("image.*")) {
-                    alert("확장자는 이미지 확장자만 가능합니다.");
-                    return;
-                }
- 
-                sel_files.push(f);
- 
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                	var html = "<div id=\"img_id_"+index+"\"><a class=\"x\" href=\"javascript:void(0);\" onclick=\"deleteImageAction("+index+")\" \">X</a><img onclick=\"reImageAction("+index+")\" src=\"" + e.target.result + "\" data-file='"+f.name+"' class='selProductFile' title='Click to remove'></div>";
-                	
-   
-                	
-                	
-                    $(".imgs_wrap").append(html);
-                    index++;
- 
-                }
-                reader.readAsDataURL(f);
-                
-            });
-            
-        }
+ $(document).ready(function() {
+     $("#input_imgs").on("change", handleImgFileSelect);
+ }); 
+
+ function fileUploadAction() {
+     console.log("fileUploadAction");
+     $("#input_imgs").trigger('click');
+ }
+
+ function handleImgFileSelect(e) {
+
+     // 이미지 정보들을 초기화
+     sel_files = [];
+     $(".imgs_wrap").empty();
+
+     var files = e.target.files;
+     var filesArr = Array.prototype.slice.call(files);
+
+     var index = 0;
+     filesArr.forEach(function(f) {
+         if(!f.type.match("image.*")) {
+             alert("확장자는 이미지 확장자만 가능합니다.");
+             return;
+         }
+
+         sel_files.push(f);
+
+         var reader = new FileReader();
+         reader.onload = function(e) {
+        	 html = "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction("+index+")\" id=\"img_id_"+index+"\"><img src=\"" + e.target.result + "\" data-file='"+f.name+"' class='selProductFile' title='Click to remove'></a>";
+             $(".imgs_wrap").append(html);
+             index++;
+
+         }
+         reader.readAsDataURL(f);
+         
+     });
+ }
+
         
 
         
 
         
-        function deleteImageAction(index) {
+        function deleteImageAction(index) {            
             console.log("index : "+index);
             sel_files.splice(index, 1);
  
@@ -122,7 +121,6 @@
             $(img_id).remove();
  
             console.log(sel_files);
-            console.log(sel_files.length);
         }        
         
         
@@ -134,27 +132,45 @@
 
 
         function submitAction() {            
-            var data = new FormData();
- 
-            for(var i=0, len=sel_files.length; i<len; i++) {
+            var formData = new FormData();
+
+            formData.append("file", sel_files);
+				console.log(sel_files);
+/*             for(var i=0, len=sel_files.length; i<len; i++) {
                 var name = "image_"+i;
                 data.append(name, sel_files[i]);
-                console.log(sel_files[i])
-            }
-            data.append("image_count", sel_files.length);
-           
+            } */
+            //data.append("image_count", sel_files.length);
+ 			console.log(formData);
+           $.ajax({
+        	   url:"./image.do",
+        	   type:"POST",
+        	   processData: false, //쿼리 (데이터 = 값) 형식을 해제하고 문자열? 형태로 보냄
+               contentType: false, // 기본 타입 말고 multipart/form-data로 설정하게
+        	   data: formData
+           }).done(function (data){
+        	   console.log(data);
+        	   console.log("성공");
+           }).fail(function(e){
+        	   console.log("실패");
+        	   console.log(e);
+        	   console.log(e.status);
+           })
  
-            var xhr = new XMLHttpRequest();
+/*             var xhr = new XMLHttpRequest();
             xhr.open("POST","./image.do");
             xhr.onload = function(e) {
                 if(this.status == 200) {
                     console.log("Result : "+e.currentTarget.responseText);
+                    console.log("성공!!!");
                 }
             }
- 
-            xhr.send(data);
+ 			console.log(Fromdata);
+            xhr.send(data); */
  
         }
+
+
 
 </script>
 

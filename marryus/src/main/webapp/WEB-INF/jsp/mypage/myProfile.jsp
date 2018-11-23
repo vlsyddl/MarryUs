@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="/marryus/resources/se2/js/HuskyEZCreator.js" charset="utf-8"></script>
-<script type="text/javascript" src="/marryus/resources/se2/photo_uploader/plugin/hp_SE2M_AttachQuickPhoto.js" charset="utf-8"></script>
+<script type="text/javascript" src="/marryus/resources/se2/sample/js/plugin/hp_SE2M_AttachQuickPhoto.js" charset="utf-8"></script>
 	 <c:import url="/common/importCss.jsp"/>
 	 <c:import url="/common/importJs.jsp"/>
     <style>
@@ -42,18 +42,19 @@
 		 <div id="profile_box">
 	        <div id='profile_img'>
 	        <p id="p1"> 업체 이미지</p>
-	        <a href='<c:url value='/mypage/fileUpload.do'/>' target="_blank" ><img id="profile_image" src="img/chk_ico.png"></a>
+	       <%--  <button onclick="window.open('<c:url value='/mypage/fileUpload.do'/>,'window_name','width=430,height=500,location=no,status=no,scrollbars=yes');">button</button> --%>
+	        <a onclick="window.open('<c:url value='/mypage/fileUpload.do'/>','프로필 이미지','width=800,height=500,location=no,status=no,scrollbars=yes')" target="_blank" ><img id="profile_image" src="img/chk_ico.png"></a>
 	        </div>
 	        <div id="profile_text">
 	        <p id="p1"> 업체 프로필 소개</p>
 	        <textarea name="profile" cols="200" rows="8" style=" width:90%; resize: none; font-size: 18px; " ></textarea>
 	        </div>
 	        <div id="company_info">
-				<form id="modifyForm" action="/board/insertBoard.do" method="post"  enctype="multipart/form-data" acceptcharset="UTF-8">
+				<form id="insertForm" name="comInfoProfile" action="/mypage/insertComInfoProfile.do" method="post"  enctype="multipart/form-data" acceptcharset="UTF-8">
 					<input name="no" id="modify_no" value="" type="hidden">
 					<div class="form-group contentForm">
 	                        <p>업체 소개</p>                      
-	                              <textarea rows="10" cols="30" id="insert_content" name="content" style="width:100%; height:350px; "></textarea>
+	                              <textarea rows="10" cols="30" id="naver_editor" name="content" style="width:100%; height:350px; "></textarea>
 	                </div>
 	                            
 	                                <div class="form-btn">
@@ -89,13 +90,13 @@
 		
 		 nhn.husky.EZCreator.createInIFrame({
 		          oAppRef: oEditors,
-		          elPlaceHolder: area+"_content", //textarea에서 지정한 id와 일치해야 합니다. 
+		          elPlaceHolder: "naver_editor", //textarea에서 지정한 id와 일치해야 합니다. 
 		          //SmartEditor2Skin.html 파일이 존재하는 경로
 		          sSkinURI: "/marryus/resources/se2/SmartEditor2Skin.html",  
 		          htParams : {
 		              // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
 		              bUseToolbar : true,             
-		              // 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
+		              // 입력창 크기 조절바 사용 여부 (  true:사용/ false:사용하지 않음)
 		              bUseVerticalResizer : true,     
 		              // 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
 		              bUseModeChanger : true,         
@@ -105,30 +106,26 @@
 		          
 		          fOnAppLoad : function(){
 		              //기존 저장된 내용의 text 내용을 에디터상에 뿌려주고자 할때 사용
-		              oEditors.getById[area+"_content"].exec("PASTE_HTML", [content]);
+		              oEditors.getById["naver_editor"].exec("PASTE_HTML", [content]);
 		          },
 		          fCreator: "createSEditor2"
 		      });
 
-			 $("#"+area).click(function(){
+			 $("#insert").click(function(){
 				
-				 oEditors.getById[area+"_content"].exec("UPDATE_CONTENTS_FIELD", []);
-				var content = $("#"+area+"_content").val();
+				 oEditors.getById["naver_editor"].exec("UPDATE_CONTENTS_FIELD", []);
+				var content = $("#naver_editor").val();
 				 if($("input[name=title]").val()==""){
 	        	alert("제목을 입력해 주세요")
-	        	$("#"+area+"_title").focus()
+	        	$("#insert_content").focus()
 	        	return;
 	         }
 				if( content == ""  || content == null || content == '&nbsp;' || content == '<p>&nbsp;</p>')  {
 		             alert("내용을 입력해주세요.");
-		             oEditors.getById[area+"_content"].exec("FOCUS"); //포커싱
+		             oEditors.getById["naver_editor"].exec("FOCUS"); //포커싱
 		             return;
 		        }
-	          if(area == "insert"){
-	        	  insertBoard();	  
-	          }else if(area=="modify"){
-	        	  updateBoard();
-	          }
+
 	      });   
 	}
     

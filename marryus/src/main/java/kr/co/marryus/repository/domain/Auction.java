@@ -1,6 +1,7 @@
 package kr.co.marryus.repository.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -12,4 +13,9 @@ public class Auction {
 	private String auctionStatus;
 	private Date auctionSdate;
 	private Date auctionEDate;
+	private int comNo;
+	
+	
+	private List<Tender> tenderList;
+	private String genName;
 }

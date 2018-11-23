@@ -11,6 +11,6 @@ public class Tender {
 	private String tenderStatus;
 	private int tenderBudget;
 	private Date tenderRegdate;
+	private int memNo;
 	
-	private int genNo;
 }

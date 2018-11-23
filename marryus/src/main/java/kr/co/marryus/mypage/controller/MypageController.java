@@ -1,20 +1,27 @@
 package kr.co.marryus.mypage.controller;
 
-import java.util.List;
-import java.util.UUID;
-
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.co.marryus.repository.domain.CompanyFile;
+import kr.co.marryus.mypage.service.MypageService;
+import kr.co.marryus.repository.mapper.MypageMapper;
 
 @Controller("kr.co.marryus.mypage.controller.MypageController")
 @RequestMapping("/mypage")
 public class MypageController {
-
+	
+	
+	@Autowired
+	MypageService service;
+	
+	@Autowired
+	MypageMapper mapper;
+	
 	@RequestMapping("/mywedding.do")
 	public void mywedding() {
 	}
@@ -23,13 +30,23 @@ public class MypageController {
 	public void myProfile() {
 	}
 	
+	
+	@RequestMapping("/insertComInfoProfile.do")
+	public String insertComInfoProfile() {
+		return "/mywedding.do";
+	}
+	
+	
 	@RequestMapping("/fileUpload.do")
 	public void fileUPload() {
 	}
 	
 	@RequestMapping("/image.do")
-	public String image(List<MultipartFile> file, HttpSession session/*, int comInfoNo*/) {
-		for(MultipartFile f:file) {
+	public String image( MultipartFile[] file, HttpSession session/*, int comInfoNo*/) {
+		System.out.println(file.length);
+		System.out.println("이미지 업로드입니다.");
+		/*for(MultipartFile f:file) {
+			System.out.println(f);
 			System.out.println(f.getOriginalFilename());
 		CompanyFile comFile = new CompanyFile();
 		String fileName = f.getOriginalFilename();
@@ -37,11 +54,11 @@ public class MypageController {
 		comFile.setComFileOriname(f.getOriginalFilename());
 		comFile.setComFilePath("img/comProfile");
 		fileName =UUID.randomUUID().toString()+ext;
-		/*comFile.setComInfoNo(comInfoNo);*/
+		//comFile.setComInfoNo(comInfoNo);
 		comFile.setComFileName(fileName);
-		}
+		}*/
 		
-		return "/mywedding.do";
+		return "/fileUpload.do";
 	}
 	
 /*	@RequestMapping("/profile.k")
@@ -59,5 +76,14 @@ public class MypageController {
 		file.transferTo(new File("C:\\app\\tomcat_workspace\\marryus\\img\\profile", Fname));
 		return "success";
 	}*/
+	
+	
+	@RequestMapping("/auctionList.do")
+	public void auctionList(/*HttpSession session*/ Model model) {
+		/*service.selectTender(((Member)session.getAttribute("member")).getMemNo)*/
+        model.addAttribute("autionList",service.selectAuction(10));
+        System.out.println(mapper.selectCompanyMember(10).getComName());
+        System.out.println(mapper.selectGeneralMember(15).getGenName());
+	}
 	
 }

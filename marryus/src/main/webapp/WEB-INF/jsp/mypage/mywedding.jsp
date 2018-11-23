@@ -18,6 +18,9 @@
                 <div class="logo col-md-3">
                      <a href="<c:url value="/main/main.do"/>"><img src="<c:url value="/resources/img/logo.png"/>" alt="" class="img-responsive center-block"></a>
                 </div>
+                
+                
+                
                 <nav class="gnb col-md-9">
                     <div class="gnb_top cf">
                         <ul class="cf">
@@ -46,13 +49,13 @@
             <div class="container">
                     <ul>
                         <li class="on">
-                            <a href="#">
+                            <a href="<c:url value='/mypage/myProfile.do'/>">
                                     <img src="img/hall_ico.png" alt="" class="img-responsive center-block">
                                 My Wedding
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="<c:url value='/mypage/auctionList.do'/>">
                                     <img src="img/chk_ico.png" alt="" class="img-responsive center-block">
                                 Check List
                             </a>
@@ -78,6 +81,10 @@
                     </ul>
             </div>
         </nav>
+        
+        
+        
+        
         <section class="contents contents01">
             <div class="container">
                 <div class="infoBox cf">
@@ -257,11 +264,18 @@
             </div>
         </section>
     </div>
+    
+    
+    
+    
     <footer>
         <div class="container">
             <h3>©2018 MarryUs. All rights reserved.</h3>
         </div>
     </footer>
+    
+    
+    
     <aside id="sideBar">
             <ul>
                 <li><a href="<c:url value="/mypage/mywedding.do"/>"><i class="fas fa-user-edit"></i>마이페이지</a></li>

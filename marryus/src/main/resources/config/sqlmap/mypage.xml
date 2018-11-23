@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.co.marryus.repository.mapper.MyPage">
+<mapper namespace="kr.co.marryus.repository.mapper.MypageMapper">
 	<resultMap id="comInfoMap" type="CompanyInfo">
 		<result  property="comInfoNo"   column="com_info_no"/>
 		<result  property="memNo"   column="mem_no"/>
 		<result  property="comInfoConent"   column="com_info_content"/>
 		<result  property="comInfoProfile"   column="com_info_profile"/>
 	</resultMap>
+	
+	
+
 	
 	
 	<resultMap id="comFileMap" type="CompanyFile">
@@ -18,16 +21,84 @@
 		<result  property="comFilePath"   column="com_file_path"/>
 	</resultMap>
 	
+	
+	<resultMap id="tenderMap" type="Tender">
+		<result property="tenderNo" column="tender_no" />
+		<result property="auctionNo" column="action_no" />
+		<result property="tenderStatus" column="tender_status" />
+		<result property="tenderBudget" column="tender_budget" />
+		<result property="tenderRegdate" column="tender_regdate" />
+	</resultMap>
+	
+	<resultMap id="auctionMap" type="Auction">
+		<result property="auctionNo" column="auction_no" />
+		<result property="memNo" column="mem_no" />
+		<result property="comNo" column="com_no" />
+		<result property="auctionType" column="auction_type" />
+		<result property="auctionStatus" column="auction_status" />
+		<result property="auctionSdate" column="auction_sdate" />
+		<result property="auctionEDate" column="auction_edate" />
+		<result property="genName" column="gen_name" />
+		<collection property="tenderList" column="auction_no" select="selectTenderList"/>
+	</resultMap>
+	
+	
+	
+	
+	
+	<resultMap id="generalMemberMap" type="GeneralMember">
+		<result property="memNo" column="mem_no" />
+		<result property="memEmail" column="mem_email" />
+		<result property="memPass" column="mem_pass" />
+		<result property="memType" column="mem_type" />
+		<result property="memStatus" column="mem_status" />
+		<result property="genName" column="gen_name" />
+		<result property="genPhone" column="gen_phone" />
+		<result property="birth" column="birth" />
+		<result property="genName" column="gen_name" />
+		<result property="genGender" column="gen_gender" />
+	</resultMap>
+	
+	
+	
+	<resultMap id="companyMemberMap" type="CompanyMember">
+		<result property="memNo" column="mem_no" />
+		<result property="memEmail" column="mem_email" />
+		<result property="memPass" column="mem_pass" />
+		<result property="memType" column="mem_type" />
+		<result property="comName" column="mem_status" />
+		<result property="comAddr" column="gen_name" />
+		<result property="comAddrDetail" column="gen_phone" />
+		<result property="comPhone" column="birth" />
+		<result property="comType" column="gen_name" />
+		<result property="comOkay" column="gen_gender" />
+	</resultMap>
+	
+	
+	
+	<select id="selectTenderList" parameterType="int" resultMap="tenderMap"  >
+	select *
+	from mu_tender 
+	where auction_no=#{auctionNo}
+	</select>
+	
+	
+	
+	
+	
+	
 
 	
 	
+
+	
 	<!-- 업체 정보 등록, 수정, 삭제시 사용 -->
-	<insert id="insertComInfo" parameterType="int" >
+	<insert id="insertComInfo" parameterType="CompanyInfo"  >
 		insert into mu_company_info(mem_no, com_info_content, com_info_profile) 
 		values(#{memNo}, #{comInfoConent}, #{comInfoProfile})
 	</insert>
 	
-	<update id="updateComInfo" parameterType="int">
+	<update id="updateComInfo" parameterType="CompanyInfo">
 		update mu_comany_info 
 		set com_info_content = #{comInfoConent},
 		com_info_profile = #{comInfoProfile}
@@ -40,12 +111,12 @@
 	</delete>
 	
 	<!-- 업체 정보  파일 등록, 수정, 삭제시 사용 -->
-	<insert id="insertComFile" parameterType="int">
+	<insert id="insertComFile" parameterType="CompanyFile">
 		insert into mu_company_file(com_info_no, com_file_name, com_file_oriname, com_file_path)
 		values(#{comInfoNo}, #{comFileName}, #{comFileOriname}, #{comFilePath})
 	</insert>
 	
-	<update id="updateComFile" parameterType="int">
+	<update id="updateComFile" parameterType="CompanyFile">
 		update mu_comany_file
 		set com_info_no=#{comInfoNo},
 		com_file_name=#{comFileName},
@@ -57,6 +128,51 @@
 		delete from mu_comany_file 
 		where com_info_no=#{comInfoNo}
 	</delete>
+	
+	
+	<!-- 관리자 경매리스트 -->
+	<select id="selectAuction" resultMap="auctionMap">
+		select * 
+		from mu_auction a, mu_general g
+        where a.mem_no = g.gen_no
+        LIMIT 1 ,3
+	</select>
+
+
+	
+	
+	
+	
+	
+	<select id="selectTenderCnt" parameterType="int" resultType="int">
+		select count(*) as count
+		from(select *
+		from mu_auction) a
+	</select>
+	
+	
+	
+	
+	<!-- 일반회원 정보 수정 -->
+	<select id="selectGeneralMember" parameterType="int" resultMap="generalMemberMap">
+		select *
+		from mu_member m, mu_general g
+		where m.mem_no = g.gen_no
+		and m.mem_no=#{memNo}
+	</select>
+	
+	
+	<!-- 기업회원 정보 수정 -->
+	<select id="selectCompanyMember" parameterType="int" resultMap="companyMemberMap">
+		select *
+		from mu_member m, mu_company c
+		where m.mem_no = c.com_no
+		and m.mem_no=#{memNo}
+	</select>
+	
+	
+	
+	
 	
 
 	
