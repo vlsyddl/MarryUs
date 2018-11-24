@@ -71,11 +71,11 @@
 	</insert>
 	
 	<!-- 3.기업회원 -->
-	<insert id="insertCompany">
+	<insert id="insertCompany" parameterType="Company">
 		insert into mu_company
 		( com_no, com_name, com_addr, com_addr_detail, com_phone, com_type )
 		values
-		( #{no}, #{comName}, #{comAddr}, #{comAddrDetail}, #{comPhone}, #{comType} )
+		( #{comNo}, #{comName}, #{comAddr}, #{comAddrDetail}, #{comPhone}, #{comType} )
 	</insert>
 	
 </mapper>
