@@ -13,7 +13,20 @@
 		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <c:import url="/common/importCss.jsp"/>
 	 <c:import url="/common/importJs.jsp"/>
-    
+	 <script
+	  src="https://code.jquery.com/jquery-3.3.1.js"
+	  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+	  crossorigin="anonymous"></script>
+	  <Style>
+	  	#commentSide > tbody > tr > th {
+	  		width: 150px;
+	  		padding-right: 10px;
+	  	}
+	  	#commentSide > tbody > tr > td {
+	  		width: 150px;
+	  	}
+	  </Style>
+	    
 </head>
 <body>
     <header>
@@ -87,6 +100,10 @@
                     <a href="list.do"><button>목록</button></a>
                     <a href="updateForm.do?boardNo=${freeDetail.boardNo}"><button>수정</button></a>
                     <a href="delete.do?boardNo=${freeDetail.boardNo}"><button>삭제</button></a>
+                    <div id="communityComments">
+	                   	<table id="commentSide" class="table table-hover">
+	                   	</table>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -103,13 +120,37 @@
         </ul>
     </aside>
     <script>
-         var options = {
-                'speed' : 500,				 		//스피드
-                'initTop' : 300, 					//기본top위치
-                'alwaysTop' : false,				// true
-                'default_x' : false 				//레이어가 붙는 아이디 
-            }
-            $('#sideBar').Floater(options);
+//          var options = {
+//                 'speed' : 500,				 		//스피드
+//                 'initTop' : 300, 					//기본top위치
+//                 'alwaysTop' : false,				// true
+//                 'default_x' : false 				//레이어가 붙는 아이디 
+//             }
+//             $('#sideBar').Floater(options);
+	list();
+
+	function list() {
+			$.ajax({
+				url : "<c:url value='/board/free/commentList.json'/>",
+				data : {"boardNo" : "${freeDetail.boardNo}"}
+// 				cache : false
+			})
+			.done(
+				function(result) {
+	
+					var html = "";
+					for(var i = 0; i < result.length; i++) {
+						html += "<tr>"
+						html += "<td>"+result[i].commWriter+"</td>"
+						html += "<td>"+result[i].commContent+"</td>"
+						html += "</tr>"
+						html += "<hr>"
+					}
+					$('#commentSide').html(html);
+			})
+			.fail(function(){ console.log("요청 실패시 호출"); });
+		};
+
     </script>
 </body>
 </html>

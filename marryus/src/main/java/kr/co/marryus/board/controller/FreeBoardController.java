@@ -1,14 +1,18 @@
 package kr.co.marryus.board.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 import kr.co.marryus.board.service.FreeBoardService;
 import kr.co.marryus.repository.domain.Board;
+import kr.co.marryus.repository.domain.Comment;
 import kr.co.marryus.repository.domain.Page;
 
 @Controller("kr.co.marryus.board.controller.FreeBoardController")
@@ -44,6 +48,7 @@ public class FreeBoardController {
 	
 	@RequestMapping("/free/detail.do")
 	public void freeDetail(Model model, int boardNo) {
+		service.updateFreeBoardCnt(boardNo);
 		model.addAttribute("freeDetail", service.freeBoardDetail(boardNo));
 	}
 	
@@ -74,4 +79,9 @@ public class FreeBoardController {
 		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "list.do";
 	}
 	
+	@RequestMapping("/free/commentList.json")
+	@ResponseBody
+	public List<Comment> commentList(int boardNo) throws Exception {
+		return service.freeCommentList(boardNo);
+	}
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.marryus.repository.domain.Board;
+import kr.co.marryus.repository.domain.Comment;
 import kr.co.marryus.repository.domain.Page;
 import kr.co.marryus.repository.mapper.FreeBoardMapper;
 
@@ -26,7 +27,6 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 
 	@Override
 	public Board freeBoardDetail(int boardNo) {
-		mapper.updateFreeBoardCnt(boardNo);
 		return mapper.selectFreeBoardDetail(boardNo);
 	}
 
@@ -44,5 +44,14 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 	public void updateFreeBoard(Board board) {
 		mapper.updateFreeBoard(board);
 	}
-	
+
+	@Override
+	public List<Comment> freeCommentList(int boardNo) {
+		return mapper.selectFreeCommentList(boardNo);
+	}
+
+	@Override
+	public void updateFreeBoardCnt(int boardNo) {
+		mapper.updateFreeBoardCnt(boardNo);
+	}
 } // end class
