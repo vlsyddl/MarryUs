@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.marryus.repository.mapper.ConnectionMapper">
+	<resultMap type="Connection" id="ConnectionMap">
+		<result column="connection_id" property="connectionId"/>	
+		<result column="connection_ip" property="connectionIp"/>	
+		<result column="connection_time" property="connectionTime"/>	
+		<result column="connection_refer" property="connectionRefer"/>	
+		<result column="connection_agent" property="connectionAgent"/>	
+	</resultMap>
+	
+	<insert id="checkConnection" parameterType="Connection">
+        INSERT
+        INTO mu_connection
+        (
+            connection_ip,
+            connection_time,
+            <if test="connectionRefer != null and connectionRefer !=''">
+            connection_refer,
+            </if>
+            connection_agent
+        )
+        VALUES
+        (
+            #{connectionIp},
+            SYSDATETIME,
+            <if test="connectionRefer != null and connectionRefer !=''">
+            #{connectionRefer},
+            </if>
+            #{connectionAgent}
+        )
+    </insert>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
