@@ -63,4 +63,15 @@ public class FreeBoardController {
 		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "list.do";
 	}
 	
+	@RequestMapping("/free/updateForm.do")
+	public void updateForm(Model model, int boardNo) {
+		model.addAttribute("freeDetail", service.freeBoardDetail(boardNo));
+	}
+
+	@RequestMapping("/free/update.do")
+	public String update(Board board) {
+		service.updateFreeBoard(board);
+		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "list.do";
+	}
+	
 }

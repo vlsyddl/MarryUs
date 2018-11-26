@@ -64,24 +64,25 @@
                         <li ><a href="javascript:void(0);">FAQ</a></li>
                     </ul>
                     <div class="communityContents">
-                    	<form id="editorform" action="write.do" method="post">
+                    	<form id="editorform" action="update.do" method="post">
 	                        <table class="table table-hover">
 	                            <tr>
 	                                <th>제목</th>
 	                                <td>
-	                                	<input type="text" name="title"/>
+	                                	<input type="text" name="title" value="${freeDetail.title}"/>
 	                                </td>
 	                            </tr>
 	                            <tr>
 	                                <th>작성자</th>
 	                                <td>
+	                                	<input type="hidden" name="boardNo" value="${freeDetail.boardNo}"/>
 	                                	<input type="text" name="writer" value="${user.email}" readonly="readonly"/>
 	                                </td>
 	                            </tr>
 	                            <tr>
 	                            	<th>내용</th>
 	                            	<td>
-						    			<textarea name="content" id="smarteditor" rows="10" cols="100" style="width:100%; height:350px;"></textarea>
+						    			<textarea name="content" id="smarteditor" rows="10" cols="100" style="width:100%; height:350px;" value="${freeDetail.content}"></textarea>
 	                            	</td>
 	                            </tr>
 	                    	</table>

@@ -31,13 +31,18 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 	}
 
 	@Override
-	public String writeFreeBoard(Board board) {
-		return mapper.insertFreeBoard(board);
+	public void writeFreeBoard(Board board) {
+		mapper.insertFreeBoard(board);
 	}
 
 	@Override
 	public void freeBoardDelete(int boardNo) {
 		mapper.deleteFreeBoard(boardNo);
+	}
+
+	@Override
+	public void updateFreeBoard(Board board) {
+		mapper.updateFreeBoard(board);
 	}
 	
 } // end class

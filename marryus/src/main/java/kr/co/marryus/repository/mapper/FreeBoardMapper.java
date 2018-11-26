@@ -10,7 +10,8 @@ public interface FreeBoardMapper {
 	List<Board> selectFreeBoardList(Page page);
 	int selectFreeBoardCount();
 	Board selectFreeBoardDetail(int boardNo);
-	String insertFreeBoard(Board board);
+	void insertFreeBoard(Board board);
 	void deleteFreeBoard(int boardNo);
 	void updateFreeBoardCnt(int boardNo);
+	void updateFreeBoard(Board board);
 }

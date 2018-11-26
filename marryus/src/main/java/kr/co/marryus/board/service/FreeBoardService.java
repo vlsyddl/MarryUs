@@ -10,6 +10,7 @@ public interface FreeBoardService {
 	List<Board> freeBoardList(Page page);
 	int selectFreeBoardCount();
 	Board freeBoardDetail(int boardNo);
-	String writeFreeBoard(Board board);
+	void writeFreeBoard(Board board);
 	void freeBoardDelete(int boardNo);
+	void updateFreeBoard(Board board);
 }
