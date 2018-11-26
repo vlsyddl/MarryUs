@@ -13,4 +13,7 @@ public class Tender {
 	private Date tenderRegdate;
 	private int memNo;
 	
+    private String genName;
+
+	
 }

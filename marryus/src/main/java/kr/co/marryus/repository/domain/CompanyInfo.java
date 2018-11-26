@@ -2,7 +2,7 @@ package kr.co.marryus.repository.domain;
 
 
 
-import java.util.List;
+
 
 import lombok.Data;
 

@@ -1,11 +1,17 @@
 package kr.co.marryus.repository.domain;
 
+import lombok.Data;
+
+@Data
 public class Page {
 	private String select;
 	private String text;
 	private int pageNo;
 	private int begin;
 	private int end;
+	
+    private int comNo;
+
 
 	public String getSelect() {
 		return select;

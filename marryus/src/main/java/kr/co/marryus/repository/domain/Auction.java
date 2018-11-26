@@ -14,8 +14,6 @@ public class Auction {
 	private Date auctionSdate;
 	private Date auctionEDate;
 	private int comNo;
-	
-	
-	private List<Tender> tenderList;
+
 	private String genName;
 }

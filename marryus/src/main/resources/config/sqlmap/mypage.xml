@@ -5,7 +5,7 @@
 	<resultMap id="comInfoMap" type="CompanyInfo">
 		<result  property="comInfoNo"   column="com_info_no"/>
 		<result  property="memNo"   column="mem_no"/>
-		<result  property="comInfoConent"   column="com_info_content"/>
+        <result  property="comInfoContent"   column="com_info_conent"/>
 		<result  property="comInfoProfile"   column="com_info_profile"/>
 	</resultMap>
 	
@@ -28,6 +28,7 @@
 		<result property="tenderStatus" column="tender_status" />
 		<result property="tenderBudget" column="tender_budget" />
 		<result property="tenderRegdate" column="tender_regdate" />
+        <result property="genName" column="gen_name" />
 	</resultMap>
 	
 	<resultMap id="auctionMap" type="Auction">
@@ -39,7 +40,6 @@
 		<result property="auctionSdate" column="auction_sdate" />
 		<result property="auctionEDate" column="auction_edate" />
 		<result property="genName" column="gen_name" />
-		<collection property="tenderList" column="auction_no" select="selectTenderList"/>
 	</resultMap>
 	
 	
@@ -80,6 +80,7 @@
 	select *
 	from mu_tender 
 	where auction_no=#{auctionNo}
+
 	</select>
 	
 	
@@ -94,13 +95,18 @@
 	
 	<!-- 업체 정보 등록, 수정, 삭제시 사용 -->
 	<insert id="insertComInfo" parameterType="CompanyInfo"  >
+	    <selectKey resultType="int" keyProperty="comInfoNo" order="BEFORE">
+            SELECT MAX(com_info_no)+1 FROM     mu_company_info 
+        </selectKey>    
+	
 		insert into mu_company_info(mem_no, com_info_content, com_info_profile) 
-		values(#{memNo}, #{comInfoConent}, #{comInfoProfile})
+        values(#{memNo}, #{comInfoContent}, #{comInfoProfile})
+
 	</insert>
 	
 	<update id="updateComInfo" parameterType="CompanyInfo">
 		update mu_comany_info 
-		set com_info_content = #{comInfoConent},
+        set com_info_content = #{comInfoContent},
 		com_info_profile = #{comInfoProfile}
 		where com_info_no=#{comInfoNo} 
 	</update>
@@ -131,23 +137,30 @@
 	
 	
 	<!-- 관리자 경매리스트 -->
-	<select id="selectAuction" resultMap="auctionMap">
-		select * 
-		from mu_auction a, mu_general g
-        where a.mem_no = g.gen_no
-        LIMIT 1 ,3
+
+    <select id="selectAuction"  parameterType="Page" resultMap="tenderMap">
+        SELECT tender_regdate, gen_name, tender_status, tender_budget 
+        FROM (select * 
+        from mu_auction a, mu_general g
+        where a.mem_no = g.gen_no) as aa
+        RIGHT JOIN mu_tender t
+        ON aa.auction_no = t.auction_no
+        and  aa.com_no=#{comNo}
+        limit #{begin}, 10
+
 	</select>
 
 
+
+
 	
 	
-	
-	
-	
-	<select id="selectTenderCnt" parameterType="int" resultType="int">
+    <select id="selectAuctionCnt" parameterType="int" resultType="int">
 		select count(*) as count
-		from(select *
-		from mu_auction) a
+        from(select t.tender_no 
+        from mu_auction a, mu_tender t
+        where a.auction_no = t.auction_no
+        and com_no=#{comNo}) a
 	</select>
 	
 	

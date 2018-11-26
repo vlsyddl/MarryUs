@@ -8,6 +8,11 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Page Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+    
     <style>
        * { margin: 0px; padding: 0px; box-sizing: border-box; }
         body {
@@ -16,7 +21,7 @@
             line-height: 3;
         }
 
-        .container-fluid {
+        .c-fluid {
             padding-left: 15px;
             padding-right: 15px;
             margin-left: auto;
@@ -37,7 +42,8 @@
             width: 1000px;
             text-align: center;
         }
-        td, th { padding: 0px; }
+        td, th { padding: 0px; text-align: center;}
+
         .table {
             width: 100%; 
             margin-bottom: 20px;
@@ -53,15 +59,15 @@
             line-height: 1.42;
         } 
 
-        .table-striped > tbody > tr:nth-of-type(odd) {
+        .tb-striped > tbody > tr:nth-of-type(odd) {
             background-color: #f9f9f9; 
         }
         
-        .table-bordered > tbody > tr > td {
+        .tb-bordered > tbody > tr > td {
             border-bottom: 1px solid #ddd;
         }
 
-        .table-bordered > tbody > tr > th{
+        .tb-bordered > tbody > tr > th{
             background: #e9d5d5;
             color: #5c4c4c;
         }
@@ -103,6 +109,11 @@
             border-radius: 3px;
             padding: 3px;
         }
+        
+        
+        nav{
+           text-align: center;   
+        }
 
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -110,30 +121,29 @@
     <script src="main.js"></script>
 </head>
 <body>
-    <table class="table-bordered container-fluid">
+    <table class="tb-bordered c-fluid">
         <tr>
             <th>입찰 신청일</th>
             <th>경매 신청인</th>
             <th>경매 결과</th>
             <th>낙찰액</th>
         </tr>
-        <c:forEach items="${autionList}" var="aution">
-        <c:forEach items="${aution.tenderList}" var="tender">
+        <c:forEach items="${autionList}" var="auction">
         
         <tr>
-            <td><fmt:formatDate value='${tender.tenderRegdate}' pattern='yyyy-MM-dd' /></td>
-            <td>${aution.genName}</td>
+            <td><fmt:formatDate value='${auction.tenderRegdate}' pattern='yyyy-MM-dd' /></td>
+            <td>${auction.genName}</td>
             <td>
             	<c:choose>
-            		<c:when test="${tender.tenderStatus=='done'}"> <span class="redBack textstyle">유찰</span> </c:when>
-            		<c:when test="${tender.tenderStatus=='choo'}"> <span class="blueBack textstyle">낙찰</span> </c:when>
-            		<c:when test="${tender.tenderStatus=='ing'}"> <span class="grayBack textstyle">미정</span> </c:when>
+            		<c:when test="${auction.tenderStatus=='done'}"> <span class="redBack textstyle">유찰</span> </c:when>
+            		<c:when test="${auction.tenderStatus=='choo'}"> <span class="blueBack textstyle">낙찰</span> </c:when>
+            		<c:when test="${auction.tenderStatus=='ing'}"> <span class="grayBack textstyle">미정</span> </c:when>
             	</c:choose>
             </td>
-            <td><fmt:formatNumber type='currency' value='${tender.tenderBudget}' pattern='###,###'/>원</td>
+            <td><fmt:formatNumber type='currency' value='${auction.tenderBudget}' pattern='###,###'/>원</td>
         </tr>
         </c:forEach>
-        </c:forEach>
+
         
         
         
@@ -141,19 +151,25 @@
     
     
   
-		<c:if test="${pageResult.count != 0}">
+		<c:if test="${count != 0}">
 			<nav>
 			  <ul class="pagination">
-			    <li <c:if test="${pageResult.prev eq false}">class="disabled"</c:if> >
-			      <a href="${pageResult.beginPage - 1}" aria-label="Previous">
+			    <li <c:if test="${beginPage==1}">class="disabled"</c:if> >
+			    <c:choose>
+			    	<c:when test="${beginPage!=1}">
+			    		<a href="${pageResult.beginPage - 1}" aria-label="Previous">
+			    	</c:when>
+			    	<c:otherwise><a href="#" aria-label="Previous"></c:otherwise>
+			    </c:choose>
+			      
 			        <span aria-hidden="true">&laquo;</span>
 			      </a>
 			    </li>
-				<c:forEach var="i" begin="${pageResult.beginPage}" end="${pageResult.endPage}">
-					<li <c:if test="${i eq pageResult.pageNo}">class="active"</c:if> >
+				<c:forEach var="i" begin="${beginPage}" end="${endPage}">
+					<li <c:if test="${i eq pageNo}">class="active"</c:if> >
 						<c:choose>
-							<c:when test="${i ne pageResult.pageNo}" >
-								<a href="${i}">${i}</a>
+							<c:when test="${i ne pageNo}" >
+								<a href="auctionList.do?pageNo=${i}">${i}</a>
 							</c:when>
 							<c:otherwise>
 								<a href="#">${i}</a>
@@ -161,9 +177,14 @@
 						</c:choose>
 					</li>
 				</c:forEach>
-			    <li <c:if test="${pageResult.next eq false}">class="disabled"</c:if> >
-			      <a href="${pageResult.endPage + 1}" aria-label="Next">
-			        <span aria-hidden="true">&raquo;</span>
+			    <li <c:if test="${lastPage==endPage}">class="disabled"</c:if> >
+			        <c:choose>
+				    	<c:when test="${lastPage!=endPage}">
+				    		<a href="auctionList.do?pageNo=${pageResult.beginPage + 1}" aria-label="Next">
+				    	</c:when>
+				    	<c:otherwise><a href="#" aria-label="Next"></c:otherwise>
+			    	</c:choose>
+			    	<span aria-hidden="true">&raquo;</span>
 			      </a>
 			    </li>
 			  </ul>

@@ -77,6 +77,13 @@
      console.log("fileUploadAction");
      $("#input_imgs").trigger('click');
  }
+ 
+ 
+ function reImageAction(index) {
+     var img_id = "#img_id_"+index;
+     $(" img[name=re]").removeAttr("name");
+     $(img_id+" img").attr("name","re");
+ }        
 
  function handleImgFileSelect(e) {
 
@@ -98,7 +105,7 @@
 
          var reader = new FileReader();
          reader.onload = function(e) {
-        	 html = "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction("+index+")\" id=\"img_id_"+index+"\"><img src=\"" + e.target.result + "\" data-file='"+f.name+"' class='selProductFile' title='Click to remove'></a>";
+        	 html = "<a href=\"javascript:void(0);\" onclick=\"reImageAction("+index+")\"   onclick=\"deleteImageAction("+index+")\" id=\"img_id_"+index+"\"><img src=\"" + e.target.result + "\" data-file='"+f.name+"' class='selProductFile' title='Click to remove'></a>";
              $(".imgs_wrap").append(html);
              index++;
 
@@ -113,62 +120,7 @@
         
 
         
-        function deleteImageAction(index) {            
-            console.log("index : "+index);
-            sel_files.splice(index, 1);
- 
-            var img_id = "#img_id_"+index;
-            $(img_id).remove();
- 
-            console.log(sel_files);
-        }        
-        
-        
-        function reImageAction(index) {
-            var img_id = "#img_id_"+index;
-            $(" img[name=re]").removeAttr("name");
-            $(img_id+" img").attr("name","re");
-        }        
-
-
-        function submitAction() {            
-            var formData = new FormData();
-
-            formData.append("file", sel_files);
-				console.log(sel_files);
-/*             for(var i=0, len=sel_files.length; i<len; i++) {
-                var name = "image_"+i;
-                data.append(name, sel_files[i]);
-            } */
-            //data.append("image_count", sel_files.length);
- 			console.log(formData);
-           $.ajax({
-        	   url:"./image.do",
-        	   type:"POST",
-        	   processData: false, //쿼리 (데이터 = 값) 형식을 해제하고 문자열? 형태로 보냄
-               contentType: false, // 기본 타입 말고 multipart/form-data로 설정하게
-        	   data: formData
-           }).done(function (data){
-        	   console.log(data);
-        	   console.log("성공");
-           }).fail(function(e){
-        	   console.log("실패");
-        	   console.log(e);
-        	   console.log(e.status);
-           })
- 
-/*             var xhr = new XMLHttpRequest();
-            xhr.open("POST","./image.do");
-            xhr.onload = function(e) {
-                if(this.status == 200) {
-                    console.log("Result : "+e.currentTarget.responseText);
-                    console.log("성공!!!");
-                }
-            }
- 			console.log(Fromdata);
-            xhr.send(data); */
- 
-        }
+   
 
 
 

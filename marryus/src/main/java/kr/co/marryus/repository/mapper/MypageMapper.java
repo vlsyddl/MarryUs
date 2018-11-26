@@ -9,6 +9,8 @@ import kr.co.marryus.repository.domain.CompanyInfo;
 import kr.co.marryus.repository.domain.CompanyMember;
 import kr.co.marryus.repository.domain.GeneralMember;
 import kr.co.marryus.repository.domain.Tender;
+import kr.co.marryus.repository.domain.Page;
+
 
 public interface MypageMapper {
 	
@@ -20,7 +22,9 @@ public interface MypageMapper {
 	public int updateComFile(CompanyFile comFile);
 	public int deleteComFile(int comInfoNo);
 	
-	public List<Auction> selectAuction(int memNo);
+    public List<Tender> selectAuction(Page page);
+    public int selectAuctionCnt(int comNo);
+
 	
 	public GeneralMember selectGeneralMember(int memNo);
 	public CompanyMember selectCompanyMember(int memNo);
