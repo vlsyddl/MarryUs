@@ -26,6 +26,6 @@ public interface BoardMapper {
 	void mtomUpdate(Board board);
 
 	//댓글
-	List<Comment> listComment(int CommNo);
+	List<Comment> listComment(int boardNo);
 
 }

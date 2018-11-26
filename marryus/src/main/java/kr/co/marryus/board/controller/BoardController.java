@@ -119,10 +119,11 @@ public class BoardController {
 	}
 	
 	// 1대1 문의 수정
-	@RequestMapping(value="/listComment.json")
+	@RequestMapping("/mtom/listComment.do")
     @ResponseBody
-    public List<Comment> commentList(int no) throws Exception {
-    	return service.listComment(no);
+    public List<Comment> commentList(int boardNo) throws Exception {
+		System.out.println("boardNo" + boardNo);
+    	return service.listComment(boardNo);
     }
 	
 	

@@ -72,7 +72,6 @@
                     <div class="communityContents">
                         <table class="table table-hover">
                             <tr>
-                                <th>번호</th>
                                 <th>제목</th>
                                 <th>작성자</th>
                                 <th>작성일</th>
@@ -81,7 +80,6 @@
                             <c:forEach var="b" items="${list}" >
                             <tr>
                             <c:if test="${user.email==b.writer}">
-                                <td>${b.no}</td>
                                 <td><a href='mtomdetail.do?no=${b.boardNo}' >${b.title}</a></td>
                                 <td>${b.writer}</td>
                                 <td><fmt:formatDate value="${b.regDate}" pattern="yyyy-MM-dd" /></td>

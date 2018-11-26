@@ -7,7 +7,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script
+	src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 
+<!-- 합쳐지고 최소화된 최신 CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<!-- 부가적인 테마 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <c:import url="/common/importCss.jsp"/>
+	 <c:import url="/common/importJs.jsp"/>
 <style>
 	.title{
 		font-size: 50px;
@@ -89,16 +100,7 @@
 	}
 
 </style>
-<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 
-<!-- 합쳐지고 최소화된 최신 CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<!-- 부가적인 테마 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-<link rel="stylesheet"
-		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <c:import url="/common/importCss.jsp"/>
-	 <c:import url="/common/importJs.jsp"/>
 </head>
 <body>
 	<div id="wrap" class="community">
@@ -137,69 +139,45 @@
                     <a href="mtomdelete.do?no=${board.boardNo}"><button class="btn btn-default">삭제</button></a>
                     </c:if>
 				 </div>
-<!-- 				<div class="commentForm"> -->
-<!--                         <form action="" id="commentForm"> -->
-<!--                             <textarea name="commentInput" id="commentInput" cols="30" rows="5" class="form-control"></textarea> -->
-<!--                             <a href="#" id="commentFormBtn">댓글 남기기</a> -->
-<!--                         </form> -->
-<!--                       <div class="communityContents"> -->
-<!--                     <hr> -->
-<!--                         <p> -->
-<%--                         	<span class="title">${board.title}</span><br> --%>
-<!--                         </p> -->
-<!--                         <p> -->
-<%--                         	<span class="writer">${board.writer}</span><br> --%>
-<%--                         	<span class="date"><fmt:formatDate value="${board.regDate}" pattern="yyyy-MM-dd HH:mm:ss" /></span> --%>
-<!--                         </p> -->
-<!--                         <div class="content"> -->
-<%--                         	${board.content} --%>
-<!--                         </div> -->
-<!--                     </div> -->
-<!--                     </div> -->
+				 <form id='commentForm'>
+          			<textarea name='commentInput' id='commentInput' cols='30' rows='5' class='form-control'></textarea>
+            		<a href='#' id='commentFormBtn'> 댓글 남기기</a>
+            	</form>
+				<div class="commentForm">
+                    </div>
+
+                   
                 </div>
             </div>
 </body>
-<script type="text/javascript">
-
-
-
-
+<script>
+commentList();
 function commentList(boardNo){
 	$.ajax({
-		url: "<c:url value="/listComment.json"/>",
-		data: "boardNo=" + boardNo
+		url: "<c:url value='/board/mtom/listComment.do'/>",
+		data: {"boardNo": "${board.boardNo}"}
 	}).done(function(data){
 		console.log(data)
-		var html='';
+		var html = "";
 		for(var c of data){
-			html += "<div class='commentForm'>"
-            html += "<form id='commentForm'>"
-            html += "<textarea name='commentInput' id='commentInput' cols='30' rows='5' class='form-control'></textarea>"
-            html += "<a href='#' id='commentFormBtn'>" + '댓글 남기기 ' + "</a>"
-            html += "</form>"
+//             html += "<form id='commentForm'>"
+//             html += "<textarea name='commentInput' id='commentInput' cols='30' rows='5' class='form-control'></textarea>"
+//             html += "<a href='#' id='commentFormBtn'>" + '댓글 남기기 ' + "</a>"
+//             html += "</form>"
             html += "<div class='communityContents'>"
-            html +="<hr>"
+            html += "<hr>"
             html += "<p>"
-            html +="</p>"
-            html +="<p>"
-            html += "<span class='writer'>" + c.commWriter + "</span><br>"
-            html += "<span class='date'>" + c.commDate + "pattern='yyyy-MM-dd HH:mm:ss' />"
-            html += "</span>"
-            html +="</p>"
-            html +="<div class='content'>" + c.commContent + "</div>"
-            html +="</div>"
+            html += "</p>"
+            html += "<p>"
+            html += "<span class='commWriter'>" + c.commWriter + "</span><br>"
+            html += "<span class='commDate'>" + c.commDate + "</span>"
+            html += "</p>"
+            html += "<div class='commContent'>" + c.commContent + "</div>"
             html += "</div>"
-			
 		}
-		$(".communityContents"+ boardNo).html(html)
+		$(".commentForm").html(html)
 	});
 };
-
-
-
-
-
-
 
 
 // function commentList(boardNo){

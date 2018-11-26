@@ -13,6 +13,14 @@
 	 <c:import url="/common/importCss.jsp"/>
 	 <c:import url="/common/importJs.jsp"/>
 </head>
+<style>
+	.selectBox{
+		margin-bottom: 10px;
+	}
+	.form-control{
+		width: 102%;
+	}
+</style>
 <body>
 <div id="wrap" class="community">
         <div class="sub_visual">
@@ -33,8 +41,13 @@
                     <div class="communityContents">
 		          		<form action="mtomwrite.do" method="post" id="frm" onsubmit="return doCheck()">
 				                <div class="panel-heading">
-									<input class="form-control" id="title" type="text" name="title"
-										placeholder="제목을 입력 해 주세요" />
+									<input class="form-control" id="title" type="text" name="title" placeholder="제목을 입력 해 주세요" />	
+								</div>
+								<div>
+								비밀글 설정:  <select class="selectBox">
+										 <option value="1" />설정
+									     <option value="2" />설정하지 않음
+										 </select>
 								</div>
 								<div>
 									<input type="hidden" name="writer" value="${user.email}" />

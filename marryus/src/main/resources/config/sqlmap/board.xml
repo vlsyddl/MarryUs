@@ -16,7 +16,7 @@
 	<resultMap id="CommentMap" type="Comment">
 		<result column="comm_no" property="commNo" />
 		<result column="board_no" property="boardNo" />
-		<result column="comm_writetr" property="commWriter" />
+		<result column="comm_writer" property="commWriter" />
 		<result column="comm_content" property="commContent" />
 		<result column="comm_date" property="commDate" />
 	</resultMap>
@@ -66,6 +66,7 @@
 		from mu_board
 		where board_no = #{boardNo}
 	</select>
+	
 	<!-- 조회수 -->
 	<update id="listMtoMUpdateView">
 		update mu_board
@@ -100,13 +101,15 @@
 	
 	
 	
-	<!-- 댓글 -->
+	<!-- 댓글 리스트 -->
 	<select id="listComment" parameterType="int" resultMap="CommentMap">
 		select *
 		  from mu_comment
 		 where board_no= #{boardNo}
-		order by comm_no desc
 	</select>
+	
+	<!-- 질문  등록 -->
+	
 	
 	
 </mapper>

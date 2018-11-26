@@ -24,5 +24,5 @@ public interface BoardService {
 	
 	
 	// 댓글
-	List<Comment> listComment(int no);
+	List<Comment> listComment(int boardNo);
 }

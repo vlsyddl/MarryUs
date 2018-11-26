@@ -68,8 +68,8 @@ public class BoardServiceImpl implements BoardService{
 	
 	// 댓글
 	@Override
-	public List<Comment> listComment(int no) {
-		return mapper.listComment(no);
+	public List<Comment> listComment(int boardNo) {
+		return mapper.listComment(boardNo);
 	}
 
 	
