@@ -15,11 +15,11 @@
 	<div class="container">
 		<div class="one-half left">
 			<h1>Marry Us 일반회원 가입</h1>
-			<a href="<c:url value='/main/signupGeneral.do' />" class="cta">Let's Go</a>
+			<a href="<c:url value='/signup/signupGeneral.do' />" class="cta">Let's Go</a>
 		</div>
 		<div class="one-half right">
 			<h1>Marry Us 업체회원 가입</h1>
-			<a href="<c:url value='/main/signupCompany.do' />" class="cta">Let's Go</a>
+			<a href="<c:url value='/signup/signupCompany.do' />" class="cta">Let's Go</a>
 		</div>
 	</div>
 	<script>
