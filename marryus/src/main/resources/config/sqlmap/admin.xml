@@ -11,6 +11,14 @@
 		<result column="adm_ok" property="admOk"/>
 	</resultMap>
 	
+	<resultMap type="Connection" id="ConnectionMap">
+		<result column="connection_id" property="connectionId"/>	
+		<result column="connection_ip" property="connectionIp"/>	
+		<result column="connection_time" property="connectionTime"/>	
+		<result column="connection_refer" property="connectionRefer"/>	
+		<result column="connection_agent" property="connectionAgent"/>	
+	</resultMap>
+	
 	<select id="selectAdmin" parameterType="Admin" resultMap="adminMap">
 		select * 
 		 from mu_admin
@@ -24,6 +32,16 @@
 			#{admId}, #{admPass}, #{admName}
 		)
 	</insert>
+	
+	<!-- 접속 통계 -->
+	<select id="countConnection" resultType="HashMap">
+		select date_format(connection_time,'%Y-%m-%e') date,count(*) count 
+		 from mu_connection 
+		 group by date 
+		 order by date desc
+		 limit 0,7
+	</select>
+	
 </mapper>
 
 

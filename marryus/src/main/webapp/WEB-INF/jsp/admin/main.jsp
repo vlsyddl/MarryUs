@@ -173,40 +173,62 @@
         </section>
     </div>
     <script>
-
+    	$(function(){
+    		countConnection();
+    	})
+    	var ccCount = new Array();
+    	var ccDate = new Array();
+		function countConnection(){
+			$.ajax({
+				url : "<c:url value="/admin/countConnection.do"/>"
+			}).done(function(data){
+				console.log(data)
+				for(var i = data.length-1;i>=0;i--){
+					ccCount.push(data[i].count)
+					ccDate.push(data[i].date)
+				}
+/* 				for (var b of data){
+					ccCount.push(b.count)
+					ccDate.push(b.date)
+				} */
+				connectionChart(ccDate,ccCount);
+			})
+		}	
         //접속 통계
-        var chart1 = document.getElementById("connectionStatistics");
-        var options ={
-            scales: {
-                yAxes: [{
-                    ticks: {
-                     beginAtZero:true
-                    }
-                }]
-                    },
-                    legend: {
-                display: false
-            },
-        };
-        var dataHospital = {
-            labels: ["11/16","11/17","11/18","11/19","11/20","11/21","11/22"],
-            datasets: [
-                {
-                    fill: false,
-                    lineTension: 0,
-                    backgroundColor : ["red","orange","yellow","green","blue","indigo","purple"],
-                    borderColor: "rgba(255, 19, 56, 0.65)",
-                    data: [100,80,92,57,61,99,60],
-                }
-            ],
-        };
-
-        var hospitalChar = new Chart(chart1, {
-        type: 'bar',
-        data: dataHospital,
-        options: options
-        
-        });
+        function connectionChart(date,count){
+	        var chart1 = document.getElementById("connectionStatistics");
+	        var options ={
+	            scales: {
+	                yAxes: [{
+	                    ticks: {
+	                     beginAtZero:true
+	                    }
+	                }]
+	                    },
+	                    legend: {
+	                display: false
+	            },
+	        };
+	        var dataHospital = {
+	            labels: date,
+	            datasets: [
+	                {
+	                    fill: false,
+	                    lineTension: 0,
+	                    backgroundColor : ["red","orange","yellow","green","blue","indigo","purple"],
+	                    borderColor: "rgba(255, 19, 56, 0.65)",
+	                    data: count,
+	                }
+	            ],
+	        };
+	
+	        var hospitalChar = new Chart(chart1, {
+	        type: 'bar',
+	        data: dataHospital,
+	        options: options
+	        
+	        });
+        }
         // 경매 통계
         var chart2 = document.getElementById("auctionStatistics");
         var options2 ={

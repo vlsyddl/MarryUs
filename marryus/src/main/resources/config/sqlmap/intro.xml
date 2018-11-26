@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.co.marryus.repository.mapper.ConnectionMapper">
+<mapper namespace="kr.co.marryus.repository.mapper.IntroMapper">
 	<resultMap type="Connection" id="ConnectionMap">
 		<result column="connection_id" property="connectionId"/>	
 		<result column="connection_ip" property="connectionIp"/>	
@@ -24,7 +24,7 @@
         VALUES
         (
             #{connectionIp},
-            SYSDATETIME,
+            now(),
             <if test="connectionRefer != null and connectionRefer !=''">
             #{connectionRefer},
             </if>

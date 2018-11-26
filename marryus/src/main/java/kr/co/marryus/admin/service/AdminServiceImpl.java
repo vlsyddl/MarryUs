@@ -1,5 +1,9 @@
 package kr.co.marryus.admin.service;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +28,13 @@ public class AdminServiceImpl implements AdminService {
 	public int signUpAdmin(Admin admin) {
 		// TODO Auto-generated method stub
 		return mapper.signUpAdmin(admin);
+	}
+
+
+	@Override
+	public List countConnection() {
+		// TODO Auto-generated method stub
+		return mapper.countConnection();
 	}
 
 }
