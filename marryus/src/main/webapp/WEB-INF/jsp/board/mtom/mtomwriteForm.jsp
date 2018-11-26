@@ -31,7 +31,7 @@
                         <li ><a href="javascript:void(0);">FAQ</a></li>
                     </ul>
                     <div class="communityContents">
-		          		<form action="mtomwrite.do" method="post" id="frm">
+		          		<form action="mtomwrite.do" method="post" id="frm" onsubmit="return doCheck()">
 				                <div class="panel-heading">
 									<input class="form-control" id="title" type="text" name="title"
 										placeholder="제목을 입력 해 주세요" />
@@ -81,5 +81,17 @@
 	    })
 	})
   
+	
+	
+	
+	function doCheck(){
+			if($("input[name='title']").val()==""){
+				alert("제목을 입력하세요");
+				$("input[name='title']").focus();
+				return false;
+			}
+		}
+	
+	
     </script>
 </html>

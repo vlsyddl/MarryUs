@@ -12,6 +12,17 @@
 		<result column="category" property="category" />
 		<result column="answer" property="answer" />
 	</resultMap>
+	
+	<resultMap id="CommentMap" type="Comment">
+		<result column="comm_no" property="commNo" />
+		<result column="board_no" property="boardNo" />
+		<result column="comm_writetr" property="commWriter" />
+		<result column="comm_content" property="commContent" />
+		<result column="comm_date" property="commDate" />
+	</resultMap>
+	
+	
+	
 	<!-- 공지게시판 리스트(페이징) -->
 	<select id="boardList" parameterType="Page" resultMap="boardMap">
 		select @rownum:=@rownum+1 as no, b.*, (select count(*) from mu_board where category = 'nt') as cnt
@@ -49,13 +60,13 @@
 		 order by no desc
 		 limit #{begin}, 10
 	</select>
-	
+	<!-- 1대1 게시판 상세 -->
 	<select id="mtomDetailBoard" parameterType="int" resultMap="boardMap">
 		select *
 		from mu_board
 		where board_no = #{boardNo}
 	</select>
-	
+	<!-- 조회수 -->
 	<update id="listMtoMUpdateView">
 		update mu_board
 		set view_cnt = view_cnt +1
@@ -67,23 +78,36 @@
 		from mu_board
 		where category = 'mm'
 	</select>
-	
+	<!-- 1대1 질문 글쓰기 -->
 	<insert id="insertMtom" parameterType="board">
 	insert into mu_board(title, writer, content, category)
 		values(#{title}, #{writer}, #{content}, 'mm')
 	</insert>
 	
+	<!-- 1대1 게시판 삭제 -->
 	<delete id="mtomdelete" parameterType="int">
 		delete from mu_board
 		where board_no = #{boardNo}
 	</delete>
 	
+	<!-- 1대1 질문 수정 -->
 	<update id="mtomUpdate" parameterType="board">
 		update mu_board 
 	    	set title = #{title},
 			content = #{content}
 	        where board_no = #{boardNo}
 	</update>
+	
+	
+	
+	<!-- 댓글 -->
+	<select id="listComment" parameterType="int" resultMap="CommentMap">
+		select *
+		  from mu_comment
+		 where board_no= #{boardNo}
+		order by comm_no desc
+	</select>
+	
 	
 </mapper>
 

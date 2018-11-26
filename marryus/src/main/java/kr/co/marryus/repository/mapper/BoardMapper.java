@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import kr.co.marryus.repository.domain.Board;
+import kr.co.marryus.repository.domain.Comment;
 import kr.co.marryus.repository.domain.Page;
 
 
@@ -24,5 +25,7 @@ public interface BoardMapper {
 	void mtomdelete(int no);
 	void mtomUpdate(Board board);
 
+	//댓글
+	List<Comment> listComment(int CommNo);
 
 }

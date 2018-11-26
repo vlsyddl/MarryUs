@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.marryus.repository.domain.Board;
+import kr.co.marryus.repository.domain.Comment;
 import kr.co.marryus.repository.domain.Page;
 import kr.co.marryus.repository.mapper.BoardMapper;
 
@@ -63,6 +64,12 @@ public class BoardServiceImpl implements BoardService{
 	public void mtomUpdate(Board board) {
 		mapper.mtomUpdate(board);
 		
+	}
+	
+	// 댓글
+	@Override
+	public List<Comment> listComment(int no) {
+		return mapper.listComment(no);
 	}
 
 	

@@ -50,7 +50,7 @@
                     <div class="communityContents">
 	                    <form action="mtomupdate.do" method="post" id="frm">
 			                <div class="panel-heading">
-								<input class="form-control" id="title" type="hidden" name="boardNo" value="${board.boardNo}" />
+								<input class="form-control" id="boardNo" type="hidden" name="boardNo" value="${board.boardNo}" />
 								<input class="form-control" id="title" type="text" name="title" value="${board.title}" />
 							</div>
 							<div>

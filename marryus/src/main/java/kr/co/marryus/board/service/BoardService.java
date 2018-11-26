@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import kr.co.marryus.repository.domain.Board;
+import kr.co.marryus.repository.domain.Comment;
 import kr.co.marryus.repository.domain.Page;
 
 
@@ -20,4 +21,8 @@ public interface BoardService {
 	void writeMtomBoard(Board board);
 	void deleteMtoMBoard(int no);
 	void mtomUpdate(Board board);
+	
+	
+	// 댓글
+	List<Comment> listComment(int no);
 }

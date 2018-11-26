@@ -30,7 +30,12 @@
                     <div class="gnb_top cf">
                         <ul class="cf">
                             <li><a href="#">회원가입</a></li>
+                            <c:if test="${user.email eq null}">
                             <li><a href="#" data-toggle="modal" data-target="#loginModal">로그인</a></li>
+                            </c:if>
+                             <c:if test="${user.email ne null}">
+                            	 <li><a href="<c:url value='/main/logout.do' />" > 로그아웃</a></li>	
+                            </c:if>
                             <li><a href="#"><i class="far fa-bell"></i></a></li>
                         </ul>
                     </div>
@@ -73,13 +78,15 @@
                                 <th>작성일</th>
                                 <th>조회수</th>
                             </tr>
-                            <c:forEach var="b" items="${list}">
+                            <c:forEach var="b" items="${list}" >
                             <tr>
+                            <c:if test="${user.email==b.writer}">
                                 <td>${b.no}</td>
-                                <td><a href='mtomdetail.do?no=${b.boardNo}'>${b.title}</a></td>
+                                <td><a href='mtomdetail.do?no=${b.boardNo}' >${b.title}</a></td>
                                 <td>${b.writer}</td>
                                 <td><fmt:formatDate value="${b.regDate}" pattern="yyyy-MM-dd" /></td>
                                 <td>${b.viewCnt}</td>
+                             </c:if>
                             </tr>
 						</c:forEach>
                     </table>
@@ -118,7 +125,7 @@
 					</a></li>
 					</ul>
 				 </nav>
-				 <a href="mtomwriteForm.do"><button class="btn btn-default">글쓰기</button></a>
+				 <a href="mtomwriteForm.do"><button class="btn btn-default" <c:if test="${user == null}">onclick="alert('로그인이 필요합니다.'); return false"</c:if>>글쓰기</button></a>
 				 </div>
                 </div>
             </div>
