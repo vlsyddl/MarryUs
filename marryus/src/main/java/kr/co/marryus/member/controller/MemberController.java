@@ -21,8 +21,7 @@ public class MemberController {
 	/**
 	 *  MemberMapper 멤버 필드
 	 */
-//	@Autowired
-//	private MemberMapper mapper;
+
 	@Autowired
 	private MemberServiceImpl service;
 	

@@ -49,6 +49,7 @@
 		    on mem_no = com_no 
 		 where mem_email = #{email}
 	</select>
+	
 	<!-- 회원가입 -->
 	
 	<!-- 1.Member table -->

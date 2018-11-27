@@ -18,11 +18,7 @@ import kr.co.marryus.repository.domain.Member;
 @Controller("kr.co.marryus.member.controller.SignUpController")
 @RequestMapping("/signup")
 public class SignUpController {
-//	/**
-//	 * mapper 멤버 필드
-//	 */
-//	@Autowired
-//	private MemberMapper mapper;
+
 	/**
 	 * 멤버 service 
 	 */
@@ -74,8 +70,8 @@ public class SignUpController {
 	public String signUpGeneral(Member member, Company company) {
 		//비밀번호암호화 
 		String rawPassword = member.getPass();
-		String encPassword = passwordEncoder.encode(rawPassword);
-		member.setPass(encPassword);
+		
+		member.setPass(passwordEncoder.encode(rawPassword));
 		
 		//1. Member 등록 
 		service.insertMember(member);
