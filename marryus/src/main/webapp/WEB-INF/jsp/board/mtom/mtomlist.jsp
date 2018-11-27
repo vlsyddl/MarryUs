@@ -29,14 +29,19 @@
                 <nav class="gnb col-md-9">
                     <div class="gnb_top cf">
                         <ul class="cf">
-                            <li><a href="#">회원가입</a></li>
-                            <c:if test="${user.email eq null}">
-                            <li><a href="#" data-toggle="modal" data-target="#loginModal">로그인</a></li>
-                            </c:if>
-                             <c:if test="${user.email ne null}">
-                            	 <li><a href="<c:url value='/main/logout.do' />" > 로그아웃</a></li>	
-                            </c:if>
-                            <li><a href="#"><i class="far fa-bell"></i></a></li>
+                           <li><a href="<c:url value='/signup/signupPro.do' />">회원가입</a></li>
+					<!-- 로그인, 로그아웃 -->
+					<c:if test="${user.email eq null}">
+						<li><a href="#" data-toggle="modal" data-target="#loginModal">로그인</a></li>
+					</c:if>
+					<c:if test="${user.email ne null}">
+					
+							<li>${user.name}님이로그인 하셨습니다.</li>
+					
+						<li><a href="<c:url value='/main/logout.do' />"> 로그아웃</a></li>
+					</c:if>
+					<li><a href="<c:url value="/mypage/mywedding.do"/>">마이페이지</a></li>
+					<li><a href="#"><i class="far fa-bell"></i></a></li>
                         </ul>
                     </div>
                     <div class="gnb_bot cf">
@@ -65,7 +70,7 @@
                     <ul>
                         <li ><a href="<c:url value='/board/notice/list.do'/>">공지게시판</a></li>
                         <li ><a href="review.html">후기 게시판</a></li>
-                        <li ><a href="javascript:void(0);">신부 대기실    </a></li>
+                        <li ><a href="<c:url value='/board/free/list.do'/>">신부 대기실    </a></li>
                         <li class="on"><a href="<c:url value='/board/mtom/mtomlist.do'/>">1:1 질문</a></li>
                         <li ><a href="javascript:void(0);">FAQ</a></li>
                     </ul>
@@ -87,6 +92,7 @@
                              </c:if>
                             </tr>
 						</c:forEach>
+
                     </table>
                     </div>
                     <nav>
@@ -134,8 +140,8 @@
             <li><a href="#"><i class="fas fa-user-edit"></i>마이페이지</a></li>
             <li><a href="<c:url value='/board/notice/list.do'/>"><i class="fas fa-headset"></i></i>공지 게시판</a></li>
             <li><a href="#"><i class="fas fa-chalkboard-teacher"></i>후기 게시판</a></li>
-            <li><a href="#"><i class="far fa-kiss-wink-heart"></i>신부대기실</a></li>
-            <li><a href="#"><i class="far fa-comments"></i>1 : 1 질문</a></li>
+            <li><a href="<c:url value='/board/free/list.do'/>"><i class="far fa-kiss-wink-heart"></i>신부대기실</a></li>
+            <li><a href="<c:url value='/board/mtom/mtomlist.do'/>"><i class="far fa-comments"></i>1 : 1 질문</a></li>
             <li><a href="#"><i class="far fa-question-circle"></i>FAQ</a></li>
         </ul>
     </aside>

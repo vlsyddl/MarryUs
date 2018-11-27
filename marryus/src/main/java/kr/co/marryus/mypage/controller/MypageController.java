@@ -89,13 +89,13 @@ public class MypageController {
 	
 	@RequestMapping("/service.do")
 	public void service(Model model) {
-		model.addAttribute("autionList", service.selectComInfoList(10));
+//		model.addAttribute("autionList", service.selectComInfoList(10));
 	}
 	
 	
 	@RequestMapping("/myServiceUpdate.do")
 	public void myServiceUpdate(Model model, int comInfoNo) {
-		model.addAttribute("auctionList", service.selectComInfoDetail(comInfoNo));
+//		model.addAttribute("auctionList", service.selectComInfoDetail(comInfoNo));
 	}
 	
 	

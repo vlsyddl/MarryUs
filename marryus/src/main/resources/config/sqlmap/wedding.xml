@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.maryyus.repository.mapper.WeddingHallMapper">
+		<resultMap id="comInfoMap" type="CompanyInfo">
+		<result  property="comInfoNo"   column="com_info_no"/>
+		<result  property="memNo"   column="mem_no"/>
+        <result  property="comInfoContent"   column="com_info_content"/>
+		<result  property="comInfoProfile"   column="com_info_profile"/>
+		<result  property="comInfoName"   column="com_info_name"/>
+		<result  property="comInfoPhone"   column="com_info_phone"/>
+		<result  property="comInfoAddr"   column="com_info_addr"/>
+		<result  property="comInfoAddrDetail"   column="com_info_addr_detail"/>
+		<result  property="comInfoType"   column="com_info_type"/>
+		<result  property="comInfoOkay"   column="com_info_okay"/>
+		<result  property="comFileName"   column="com_file_name"/>
+		<result  property="comFilePath"   column="com_file_path"/>
+	</resultMap>
+	
+	<select id="weddingList" resultMap="comInfoMap">
+		select *
+		 from mu_company_info
+		order by comInfoNo desc
+	</select>
+	
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

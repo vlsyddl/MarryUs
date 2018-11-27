@@ -103,6 +103,23 @@
 
 </head>
 <body>
+<div class="gnb_top cf">
+				<ul class="cf">
+					<li><a href="<c:url value='/signup/signupPro.do' />">회원가입</a></li>
+					<!-- 로그인, 로그아웃 -->
+					<c:if test="${user.email eq null}">
+						<li><a href="#" data-toggle="modal" data-target="#loginModal">로그인</a></li>
+					</c:if>
+					<c:if test="${user.email ne null}">
+					
+							<li>${user.name}님이로그인 하셨습니다.</li>
+					
+						<li><a href="<c:url value='/main/logout.do' />"> 로그아웃</a></li>
+					</c:if>
+					<li><a href="<c:url value="/mypage/mywedding.do"/>">마이페이지</a></li>
+					<li><a href="#"><i class="far fa-bell"></i></a></li>
+				</ul>
+			</div>
 	<div id="wrap" class="community">
         <div class="sub_visual">
             <div class="titleBox">
