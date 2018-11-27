@@ -38,9 +38,17 @@
                 <nav class="gnb col-md-9">
                     <div class="gnb_top cf">
                         <ul class="cf">
-                            <li><a href="#">회원가입</a></li>
-                            <li><a href="#" data-toggle="modal" data-target="#loginModal">로그인</a></li>
-                            <li><a href="#"><i class="far fa-bell"></i></a></li>
+							<!-- 로그인, 로그아웃 -->
+							<c:if test="${user.email eq null}">
+								<li><a href="<c:url value='/signup/signupPro.do' />">회원가입</a></li>
+								<li><a href="#" data-toggle="modal" data-target="#loginModal">로그인</a></li>
+							</c:if>
+							<c:if test="${user.email ne null}">
+								<li>${user.name}님이로그인 하셨습니다.</li>
+								<li><a href="<c:url value='/main/logout.do' />"> 로그아웃</a></li>
+								<li><a href="<c:url value="/mypage/mywedding.do"/>">마이페이지</a></li>
+							</c:if>
+							<li><a href="#"><i class="far fa-bell"></i></a></li>
                         </ul>
                     </div>
                     <div class="gnb_bot cf">
@@ -71,7 +79,7 @@
                         <li ><a href="<c:url value='/board/notice/list.do'/>">공지게시판</a></li>
                         <li ><a href="review.html">후기 게시판</a></li>
                         <li class="on"><a href="<c:url value='/board/free/list.do'/>">신부 대기실    </a></li>
-                        <li ><a href="javascript:void(0);">1:1 질문</a></li>
+                        <li ><a href="<c:url value='/board/mtom/mtomlist.do'/>">1:1 질문</a></li>
                         <li ><a href="javascript:void(0);">FAQ</a></li>
                     </ul>
                     <div class="communityContents">
@@ -98,8 +106,18 @@
                             </tr>
                     </table>
                     <a href="list.do"><button>목록</button></a>
+                    <c:if test="${user.email==freeDetail.writer}">
                     <a href="updateForm.do?boardNo=${freeDetail.boardNo}"><button>수정</button></a>
                     <a href="delete.do?boardNo=${freeDetail.boardNo}"><button>삭제</button></a>
+                    </c:if>
+                    <div id="writeComment">
+                    	<form id="writeCommentForm" method="post">
+                    		<input type="hidden" name="boardNo" value="${freeDetail.boardNo}" />
+                    		<input type="hidden" name="commWriter" value="${user.email}" />
+	                    	<textarea name='commContent' id='commentWrite' cols='30' rows='7' class='form-control'></textarea>
+	            			<button id="commentFormBtn" type="button">댓글 작성</button>
+                    	</form>
+                    </div>
                     <div id="communityComments">
 	                   	<table id="commentSide" class="table table-hover">
 	                   	</table>
@@ -115,7 +133,7 @@
             <li><a href="<c:url value='/board/notice/list.do'/>"><i class="fas fa-headset"></i></i>공지 게시판</a></li>
             <li><a href="#"><i class="fas fa-chalkboard-teacher"></i>후기 게시판</a></li>
             <li><a href="<c:url value='/board/free/list.do'/>"><i class="far fa-kiss-wink-heart"></i>신부대기실</a></li>
-            <li><a href="#"><i class="far fa-comments"></i>1 : 1 질문</a></li>
+            <li><a href="<c:url value='/board/mtom/mtomlist.do'/>"><i class="far fa-comments"></i>1 : 1 질문</a></li>
             <li><a href="#"><i class="far fa-question-circle"></i>FAQ</a></li>
         </ul>
     </aside>
@@ -128,29 +146,72 @@
 //             }
 //             $('#sideBar').Floater(options);
 	list();
-
+	
 	function list() {
 			$.ajax({
 				url : "<c:url value='/board/free/commentList.json'/>",
-				data : {"boardNo" : "${freeDetail.boardNo}"}
-// 				cache : false
+				data : {"boardNo" : "${freeDetail.boardNo}"},
+				cache : false
 			})
-			.done(
-				function(result) {
-	
+			.done( function(result) {
+					console.log(result);
 					var html = "";
 					for(var i = 0; i < result.length; i++) {
 						html += "<tr>"
+						html += "<input type='hidden' name='commNo' value='"+result[i].commNo+"'  />"
 						html += "<td>"+result[i].commWriter+"</td>"
 						html += "<td>"+result[i].commContent+"</td>"
+						
+						if ( result[i].commWriter == "${user.email}" ) {
+							html += "<td><button onclick='commentUpdate()'>수정</button></td>"
+							html += "<td><button onclick='commentDelete("+result[i].commNo+")'>삭제</button></td>"
+						}
+						
 						html += "</tr>"
-						html += "<hr>"
 					}
 					$('#commentSide').html(html);
 			})
 			.fail(function(){ console.log("요청 실패시 호출"); });
 		};
+		
+		$("#commentFormBtn").click( function(e) {
+			if ($("#commentWrite").val() == "") {
+				alert("댓글을 입력해주세요.");
+				return false;
+			}
+			
+			e.preventDefault();
+			var str = $("#commentWrite").val();
+			str = str.replace(/(?:\r\n|\r|\n)/g, "<br>");
+			$("#commentWrite").val(str);
+			$.ajax({
+				url : "<c:url value='/board/free/commentWrite.json'/>",
+				data : $("#writeCommentForm").serialize(),
+				method : "POST",
+				cache : false
+			}).done( function(result) {
+					$("#commentWrite").val("");
+					list();
+			});
 
+		});
+		
+		function commentDelete(commNo) {
+			$.ajax({
+				url : "<c:url value='/board/free/commentDelete.json'/>",
+				data : { "commNo" : commNo },
+				cache : false
+			}).done( function(result) {
+				list();
+			});
+		};
+		
+		function commentUpdate() {
+			$.ajax({
+				
+			});
+		};
+	
     </script>
 </body>
 </html>

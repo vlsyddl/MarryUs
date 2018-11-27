@@ -16,4 +16,7 @@ public interface FreeBoardMapper {
 	void updateFreeBoardCnt(int boardNo);
 	void updateFreeBoard(Board board);
 	List<Comment> selectFreeCommentList(int boardNo);
+	void insertFreeComment(Comment comment);
+	void deleteFreeComment(int commNo);
+	void updateFreeComment(Comment comment);
 }

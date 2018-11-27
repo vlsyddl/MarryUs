@@ -84,4 +84,22 @@ public class FreeBoardController {
 	public List<Comment> commentList(int boardNo) throws Exception {
 		return service.freeCommentList(boardNo);
 	}
+	
+	@RequestMapping("/free/commentWrite.json")
+	@ResponseBody
+	public void commentWrite(Comment comment) {
+		service.writeFreeComment(comment);
+	}
+	
+	@RequestMapping("/free/commentDelete.json")
+	@ResponseBody
+	public void commentDelete(int commNo) {
+		service.deleteFreeComment(commNo);
+	}
+	
+	@RequestMapping("/free/commentUpdate.json")
+	@ResponseBody
+	public void commentUpdate(Comment comment) {
+		service.updateFreeComment(comment);
+	}
 }

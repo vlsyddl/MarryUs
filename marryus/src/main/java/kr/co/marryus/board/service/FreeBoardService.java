@@ -16,4 +16,7 @@ public interface FreeBoardService {
 	void updateFreeBoard(Board board);
 	void updateFreeBoardCnt(int boardNo);
 	List<Comment> freeCommentList(int boardNo);
+	void writeFreeComment(Comment comment);
+	void deleteFreeComment(int commNo);
+	void updateFreeComment(Comment comment);
 }

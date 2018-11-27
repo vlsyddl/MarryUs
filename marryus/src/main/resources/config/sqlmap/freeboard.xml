@@ -87,4 +87,26 @@
 		  from mu_comment
 		 where board_no = #{boardNo}
 	</select>
+	
+	<!-- 자유게시판 댓글 작성 -->
+	<insert id="insertFreeComment" parameterType="Comment">
+		insert into mu_comment(
+			board_no, comm_writer, comm_content
+		) values (
+			#{boardNo}, #{commWriter}, #{commContent}
+		)
+	</insert>
+	
+	<!-- 자유게시판 댓글 삭제 -->
+	<delete id="deleteFreeComment" parameterType="int">
+		delete from mu_comment
+		 where comm_no = #{commNo}
+	</delete>
+	
+	<!-- 자유게시판 댓글 수정 -->
+	<update id="updateFreeComment" parameterType="Comment">
+		update mu_comment
+		   set comm_content = #{commContent}
+		 where comm_no = #{commNo}
+	</update>
 </mapper>

@@ -54,4 +54,20 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 	public void updateFreeBoardCnt(int boardNo) {
 		mapper.updateFreeBoardCnt(boardNo);
 	}
+
+	@Override
+	public void writeFreeComment(Comment comment) {
+		mapper.insertFreeComment(comment);
+	}
+
+	@Override
+	public void deleteFreeComment(int commNo) {
+		mapper.deleteFreeComment(commNo);
+	}
+
+	@Override
+	public void updateFreeComment(Comment comment) {
+		mapper.updateFreeComment(comment);
+	}
+	
 } // end class
