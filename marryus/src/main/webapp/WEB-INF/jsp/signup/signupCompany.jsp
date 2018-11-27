@@ -11,6 +11,10 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script> 
+ 
+<script src="https://unpkg.com/sweetalert2@latest/dist/sweetalert2.all.js"></script> 
+ 
 </head>
 <body>
 	<div id="grid">
@@ -19,7 +23,7 @@
 
 		<div id="grid__content">
 			<div id="card">
-				<form class="form" action="company.do" method="post">
+				<form name="companyForm" class="form" action="company.do" method="post">
 
 					<h1 id="title">Marry Us 업체회원 가입</h1>
 
@@ -31,23 +35,23 @@
 					</div>
 					<div class="signup__field">
 						<label for="password" class="label">비밀번호</label> <input
-							type="password" name="pass" id="password" class="input-field"
+							type="password" name="pass" id="pass" class="input-field"
 							required>
 					</div>
 					<div class="signup__field">
 						<label for="password" class="label">비밀번호 확인</label> <input
-							type="password" name="passCheck" id="password" class="input-field"
+							type="password" name="pass2" id="pass2" class="input-field"
 							required>
 					</div>
 
 					<div class="signup__field">
 						<label for="com_name" class="label">회사 이름</label> <input
-							type="text" name="comName" id="com_name" class="input-field">
+							type="text" name="comName" id="comName" class="input-field">
 					</div>
 
 					<div class="signup__field">
 						<label for="com_phone" class="label">회사 전화번호</label> <input
-							type="text" name="comPhone" id="com_phone" class="input-field" maxlength="13"
+							type="text" name="comPhone" id="comPhone" class="input-field" maxlength="13"
 							 required>
 					</div>
 
@@ -61,7 +65,7 @@
 					</div>
 					<div class="signup__field">
 						<label for="com_addr_detail" class="label">회사 상세주소</label> <input
-							type="text" name="comAddrDetail" id="com_addr_detail"
+							type="text" name="comAddrDetail" id="comAddrDetail"
 							class="input-field" required>
 					</div>
 
@@ -72,7 +76,7 @@
 							<label class="label" for="comType">대표업종 선택</label>
 							<div class="select-field">
 								<select name="comType" id="comType" class="select-field__menu">
-									<option>업종선택</option>
+									<option	value="">업종선택</option>
 									<option value="v">웨딩홀</option>
 									<option value="s">스튜디오</option>
 									<option value="d">드레스</option>
@@ -87,7 +91,7 @@
 					</fieldset>
 					<input type="hidden" value="mc" name="type" />
 					<div class="signup__button">
-						<button id="submit" class="button" type="submit">Signup</button>
+						<button id="submit" class="button" type="submit" onclick="checkForm()">Signup</button>
 					</div>
 
 				</form>
@@ -157,6 +161,70 @@
 							}
 						}
 					}).open();
+				}
+		
+		// 입력란 비어있는지 체크 하는 함수
+		function checkForm(){
+			var cForm = document.companyForm;
+				// 아이디 입력 체크
+				if(cForm.email.value == ""){
+					swal('이메일을 입력해주세요','','error')
+					cForm.email.focus()
+					return false;
+				}
+				// 비밀번호 입력 체크
+				if(cForm.pass.value == ""){
+					swal('비밀번호를 입력해주세요','','error')
+					cForm.pass.focus()
+					return false;
+				}
+				// 비밀번호 확인 입력란 체크
+				if(cForm.pass2.value == ""){
+					swal('비밀번호 확인을 입력해주세요','','error')
+					cForm.pass2.focus()
+					return false;
+				}
+				// 비밀번호 확인 체크 
+				if(cForm.pass.value != cForm.pass2.value){
+					swal('비밀번호가 다릅니다. 다시입력해주세요.','','error')
+					cForm.pass.focus()
+					cForm.pass.select()
+					
+					cForm.pass2.value = "";
+					return false;
+				}
+				// 회사 이름 입력란 체크 
+				if(cForm.comName.value == ""){
+					swal('회사이름을 입력해주세요','','error')
+					cForm.comName.focus()
+					return false;
+				}
+				// 회사 번호 입력란 체크 
+				if(cForm.comPhone.value == ""){
+					swal('회사전화번호를 입력해주세요','','error')
+					cForm.comPhone.focus()
+					return false;
+				}
+				// 주소 입력란 체크 
+				if(cForm.comAddr.value == ""){
+					swal('주소를 입력해주세요','','error')
+					cForm.comAddr.focus()
+					return false;
+				}
+				// 상세주소 입력란 체크 
+				if(cForm.comAddrDetail.value == ""){
+					swal('상세주소를 입력해주세요','','error')
+					cForm.comAddrDetail.focus()
+					return false;
+				}
+				
+				// 업종 입력란 체크 
+				if(cForm.comType.value == ""){
+					swal('상세주소를 입력해주세요','','error')
+					cForm.comType.focus()
+					return false;
+				}
+				return true;
 		}
 	</script>
 </body>
