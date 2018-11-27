@@ -60,10 +60,9 @@
 		<result property="memPass" column="mem_pass" />
 		<result property="memType" column="mem_type" />
 		<result property="memStatus" column="mem_status" />
-		<result property="genName" column="gen_name" />
-		<result property="genPhone" column="gen_phone" />
+		<result property="memName" column="mem_name" />
+		<result property="memPhone" column="mem_phone" />
 		<result property="birth" column="birth" />
-		<result property="genName" column="gen_name" />
 		<result property="genGender" column="gen_gender" />
 	</resultMap>
 	
@@ -74,10 +73,10 @@
 		<result property="memEmail" column="mem_email" />
 		<result property="memPass" column="mem_pass" />
 		<result property="memType" column="mem_type" />
-		<result property="comName" column="com_name" />
+		<result property="memName" column="mem_name" />
 		<result property="comAddr" column="com_addr" />
 		<result property="comAddrDetail" column="com_addr_detail" />
-		<result property="comPhone" column="com_phone" />
+		<result property="memPhone" column="mem_phone" />
 		<result property="comType" column="com_type" />
 		<result property="comOkay" column="com_okay" />
 	</resultMap>
@@ -203,7 +202,7 @@
 	
 	
 	<!-- 정보 수정 -->
-	<!-- <select id="selectGeneralMember" parameterType="int" resultMap="generalMemberMap">
+	<select id="selectGeneralMember" parameterType="int" resultMap="generalMemberMap">
 		select *
 		from mu_member m, mu_general g
 		where m.mem_no = g.gen_no
@@ -215,15 +214,15 @@
 		update mu_member
 		set mem_pass=#{memPass}
 		where mem_no = #{memNo}
+		and mem_name=#{memName}
+		and mem_phone=#{memPhone}
 	</update>
 	
 	
 	
 	<update id="updateGeneralMember" parameterType="GeneralMember" >
 		update mu_member
-		set gen_name=#{genName}
-		and gen_phone=#{genPhone}
-		and birth=#{birth}
+		set birth=#{birth}
 		where gen_no = #{genNo}
 	</update>
 	
@@ -239,18 +238,16 @@
 	
 	<update id="updateCompanyMember" parameterType="CompanyMember">
 		update mu_member
-		set com_name=#{comName}
-		and com_addr=#{comAddr}
+		set com_addr=#{comAddr}
 		and com_addr_detail=#{comAddrDetail}
-		and com_phone=#{comPhone}
 		and com_type=#{comType}
 		where gen_no = #{genNo}
-	</update> -->
+	</update>
 
 	
 	
 	<!-- 나의 역경매 현황보기(개인) -->
-	<!-- <select id="selectGeneralAuction" parameterType="Auction" resultMap="comInfoMap">
+	<select id="selectGeneralAuction" parameterType="Auction" resultMap="comInfoMap">
 	    select au.*, ci.*
     	from mu_company_info ci
     	right join (select a.auction_type, a.mem_no, a.auction_sdate, a.auction_edate, t.tender_budget, t.tender_regdate
@@ -261,7 +258,7 @@
     	and t.tender_status='choo'
     	and a.mem_no=#{memNo}) au
     	on au.mem_no = ci.mem_no
-	</select> -->
+	</select>
 	
 	
 	

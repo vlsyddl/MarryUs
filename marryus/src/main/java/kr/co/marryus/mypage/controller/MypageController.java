@@ -52,7 +52,9 @@ public class MypageController {
             comFile.setComInfoNo(comInfo.getComInfoNo());
             comFile.setComFileName(fileName);
             service.insertComFile(comFile);
-            f.transferTo(new File("C:\\app\\tomcat_workspace\\marryus\\resources\\img\\comProfile", fileName));
+            f.transferTo(new File("C:\\app\\tomcat_workspace\\marryus\\img\\comProfile", fileName));
+            //C:\Users\eunbee\Documents\MarryUs\marryus\src\main\webapp\img\comProfile
+      /* file.transferTo(new File("C:\\app\\tomcat_workspace\\assa\\img\\profile", Fname));*/
     
         }
         
@@ -89,13 +91,13 @@ public class MypageController {
 	
 	@RequestMapping("/service.do")
 	public void service(Model model) {
-//		model.addAttribute("autionList", service.selectComInfoList(10));
+		model.addAttribute("autionList", service.selectComInfoList(10));
 	}
 	
 	
 	@RequestMapping("/myServiceUpdate.do")
 	public void myServiceUpdate(Model model, int comInfoNo) {
-//		model.addAttribute("auctionList", service.selectComInfoDetail(comInfoNo));
+		model.addAttribute("auctionList", service.selectComInfoDetail(comInfoNo));
 	}
 	
 	
@@ -112,6 +114,19 @@ public class MypageController {
 		service.updateComInfo(comInfo);
 		service.updateComFile(comFile);
 	      return "mypage/service";
+	}
+	
+	
+	
+	@RequestMapping("/generalUpdate.do")
+	public void generalUpdate(/*int memNo,*/ Model model) {
+		model.addAttribute("member",service.selectGeneralMember(10));
+	}
+	
+	
+	@RequestMapping("/companyUpdate.do")
+	public void companyUpdate(/*int memNo,*/ Model model) {
+		model.addAttribute("member",service.selectCompanyMember(1));
 	}
 	
 	

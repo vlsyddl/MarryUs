@@ -42,24 +42,10 @@
         p{
         	text-align: left;
         }
-        
-        table{
-        	width: 800px;
-        }
-        table tr, td{
-        	
-        }
-        table td:first-child {
-			width: 200px;
-		}
-		.highlight{
-			font-size: 20px;
-			font-weight: 700;
-			vertical-align: top;
-		}
     </style>
 </head>
 <body>
+
 <header>
 	<div class="container">
 		<div class="row">
@@ -139,24 +125,19 @@
         </nav>
 	<div id="outer_box">
 		 <div id="profile_box">
-	        <%-- 	        <div id='profile_img'>
-	        <p id="p1"> 업체 이미지</p>
-	        <button onclick="window.open('<c:url value='/mypage/fileUpload.do'/>,'window_name','width=430,height=500,location=no,status=no,scrollbars=yes');">button</button>
-	        <a onclick="window.open('<c:url value='/mypage/fileUpload.do'/>','프로필 이미지','width=800,height=500,location=no,status=no,scrollbars=yes')" target="_blank" ><img id="profile_image" src="img/chk_ico.png"></a>
-	        </div> --%>
 
-	        <form action="/mypage/insertComInfoProfile.do" method="post" id="frm"  enctype="multipart/form-data" acceptcharset="UTF-8">
+	        <form action="/mypage/updateComInfoProfile.do" method="post" id="frm"  enctype="multipart/form-data" acceptcharset="UTF-8">
 	        <table>
 	       	<tr>
-	        	<td class="highlight">업체 이름</td>
-	        	<td><input type="text" name="comInfoName"/></td>
+	        	<td>업체 이름</td>
+	        	<td><input type="text" name="comInfoName" value="${auctionList[0].comInfoName}"/></td>
 	        </tr>
 	       	<tr>
-	        	<td class="highlight">서비스 카테소리</td>
+	        	<td>서비스 카테소리</td>
 	        	<td>
 	        	<select name="comInfoType" id="comInfoType" class="select-field__menu">
 									<option>업종선택</option>
-									<option value="v">웨딩홀</option>
+									<option value="v" >웨딩홀</option>
 									<option value="s">스튜디오</option>
 									<option value="d">드레스</option>
 									<option value="m">메이크업</option>
@@ -167,25 +148,25 @@
 				</td>
 	        </tr>
 	        <tr>
-	        	<td class="highlight">연락처</td>
-	        	<td><input type="text" name="comInfoPhone"/></td>
+	        	<td>연락처</td>
+	        	<td><input type="text" name="comInfoPhone" value="${auctionList[0].comInfoPhone}"/></td>
 	        </tr>
 	        
 	        
 	        <tr>
-	        	<td class="highlight">주소</td>
+	        	<td>주소</td>
 	        	<td><label for="com_phone" class="label">회사 주소</label> <input
-							type="text" id="sample4_postcode" placeholder="우편번호"> <input
+							type="text" id="sample4_postcode" placeholder="우편번호" > <input
 							type="text" name="comInfoAddr" id="sample4_roadAddress"
-							placeholder="도로명주소"> <input type="button"
-							onclick="address()" value="우편번호 찾기"><br> <span
+							placeholder="도로명주소" value="${auctionList[0].comInfoAddr}"> <input type="button"
+							onclick="address()" value="우편번호 찾기" ><br> <span
 							id="guide" style="color: #999"></span></td>
 	        </tr>
 	        <tr>
-	        	<td class="highlight">회사 상세주소</td>
+	        	<td>회사 상세주소</td>
 	        	<td><label for="com_addr_detail" class="label">회사 상세주소</label> <input
 							type="text" name="comInfoAddrDetail" id="com_addr_detail"
-							class="input-field" required></td>
+							class="input-field" required value="${auctionList[0].comInfoAddrDetail}"></td>
 	        </tr>
 	        
 	        
@@ -195,16 +176,16 @@
 	        
 	        
 	        <tr>
-	        	<td class="highlight"> 업체 소개</td>
-	        	<td><textarea name="comInfoProfile" cols="200" rows="8" style=" width:90%; resize: none; font-size: 18px; " ></textarea></td>
+	        	<td> 업체 소개</td>
+	        	<td><textarea name="comInfoProfile" cols="200" rows="8" style=" width:90%; resize: none; font-size: 18px; " >${auctionList[0].comInfoProfile}</textarea></td>
 	        </tr>
 			<tr>
 				
-					<td class="highlight"><input name="memNo" id=memNo value="10" type="hidden">	서비스 소개</td>  				
-					<td><textarea name="comInfoContent" id="smarteditor" rows="10" cols="100" style="width:100%; height:350px;"></textarea></td>
+					<td><input name="memNo" id=memNo value="10" type="hidden">	서비스 소개</td>  				
+					<td><textarea name="comInfoContent" id="smarteditor" rows="10" cols="100" style="width:800px; height:350px;">${auctionList[0].comInfoContent}</textarea></td>
 			</tr>
 			<tr>
-				<td class="highlight"><a href="javascript:" onclick="fileUploadAction();" class="my_button" >업체 이미지 등록</a></td>
+				<td><a href="javascript:" onclick="fileUploadAction();" class="my_button">업체 이미지 등록</a></td>
 				<td>
 				   <div class="input_wrap">
 				   		<input type="file" id="input_imgs" multiple/>
@@ -223,10 +204,11 @@
 	       
 	    </div>
     </div>
-    
-    
-    
     </div>
+    
+    
+    
+    
     <script>
     $(function(){
 	    //전역변수선언

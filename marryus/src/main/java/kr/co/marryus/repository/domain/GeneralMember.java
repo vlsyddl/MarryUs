@@ -9,8 +9,8 @@ public class GeneralMember {
 	private String memPass;
 	private String memType;
 	private String memStatus;
-	private String genName;
-	private String genPhone;
+	private String memName;
+	private String memPhone;
 	private String birth;
 	private String genGender;
 	

@@ -39,7 +39,12 @@
         
  		a:visited, a:hover, a:link { color: black; text-decoration: none;}
 
- 
+ 		        table{
+        	width: 600px;
+        }
+        table td:first-child {
+			width: 200px;
+		}
     </style>
  
 </head>

@@ -73,7 +73,6 @@ public class MyPageServiceImpl implements MypageService{
 
     @Override
     public GeneralMember selectGeneralMember(int memNo) {
-        // TODO Auto-generated method stub
         return mapper.selectGeneralMember(memNo);
     }
 
@@ -84,4 +83,24 @@ public class MyPageServiceImpl implements MypageService{
        
     }
 
+
+	@Override
+	public List<CompanyInfo> selectComInfoList(int memNo) {
+		return mapper.selectComInfoList(memNo);
+	}
+
+
+	@Override
+	public List<CompanyInfo> selectComInfoDetail(int comInfoNo) {
+		return mapper.selectComInfoDetail(comInfoNo);
+	}
+
+
+	@Override
+	public CompanyInfo selectGeneralAuction(Auction auction) {
+		return mapper.selectGeneralAuction(auction);
+	}
+
+
+	
 }
