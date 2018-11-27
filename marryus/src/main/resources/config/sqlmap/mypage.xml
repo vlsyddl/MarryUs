@@ -5,8 +5,16 @@
 	<resultMap id="comInfoMap" type="CompanyInfo">
 		<result  property="comInfoNo"   column="com_info_no"/>
 		<result  property="memNo"   column="mem_no"/>
-        <result  property="comInfoContent"   column="com_info_conent"/>
+        <result  property="comInfoContent"   column="com_info_content"/>
 		<result  property="comInfoProfile"   column="com_info_profile"/>
+		<result  property="comInfoName"   column="com_info_name"/>
+		<result  property="comInfoPhone"   column="com_info_phone"/>
+		<result  property="comInfoAddr"   column="com_info_addr"/>
+		<result  property="comInfoAddrDetail"   column="com_info_addr_detail"/>
+		<result  property="comInfoType"   column="com_info_type"/>
+		<result  property="comInfoOkay"   column="com_info_okay"/>
+		<result  property="comFileName"   column="com_file_name"/>
+		<result  property="comFilePath"   column="com_file_path"/>
 	</resultMap>
 	
 	
@@ -66,12 +74,12 @@
 		<result property="memEmail" column="mem_email" />
 		<result property="memPass" column="mem_pass" />
 		<result property="memType" column="mem_type" />
-		<result property="comName" column="mem_status" />
-		<result property="comAddr" column="gen_name" />
-		<result property="comAddrDetail" column="gen_phone" />
-		<result property="comPhone" column="birth" />
-		<result property="comType" column="gen_name" />
-		<result property="comOkay" column="gen_gender" />
+		<result property="comName" column="com_name" />
+		<result property="comAddr" column="com_addr" />
+		<result property="comAddrDetail" column="com_addr_detail" />
+		<result property="comPhone" column="com_phone" />
+		<result property="comType" column="com_type" />
+		<result property="comOkay" column="com_okay" />
 	</resultMap>
 	
 	
@@ -84,23 +92,37 @@
 	</select>
 	
 	
-	
-	
-	
-	
+
 
 	
 	
 
 	
 	<!-- 업체 정보 등록, 수정, 삭제시 사용 -->
+	<select id="selectComInfoList"  parameterType="int" resultMap="comInfoMap">
+		select *
+		from mu_company_info ci right join mu_company_file cf
+        on ci.com_info_no = cf.com_info_no
+        where ci.mem_no=#{memNo}
+        and cf.com_file_repr = 'Y'
+	</select>
+	
+	
+	<select id="selectComInfoDetail" parameterType="int" resultMap="comInfoMap">
+		select *
+		from mu_company_info ci right join mu_company_file cf
+        on ci.com_info_no = cf.com_info_no
+        where ci.com_info_no=#{comInfoNo}
+	</select>
+	
+	
 	<insert id="insertComInfo" parameterType="CompanyInfo"  >
 	    <selectKey resultType="int" keyProperty="comInfoNo" order="BEFORE">
             SELECT MAX(com_info_no)+1 FROM     mu_company_info 
         </selectKey>    
 	
-		insert into mu_company_info(mem_no, com_info_content, com_info_profile) 
-        values(#{memNo}, #{comInfoContent}, #{comInfoProfile})
+		insert into mu_company_info(mem_no, com_info_content, com_info_profile, com_info_name, com_info_phone,com_info_addr, com_info_addr_detail, com_info_type) 
+        values(#{memNo}, #{comInfoContent}, #{comInfoProfile}, #{comInfoName}, #{comInfoPhone},#{comInfoAddr}, #{comInfoAddrDetail}, #{comInfoType})
 
 	</insert>
 	
@@ -108,6 +130,12 @@
 		update mu_comany_info 
         set com_info_content = #{comInfoContent},
 		com_info_profile = #{comInfoProfile}
+		com_info_name=#{comInfoName},
+		com_info_phone=#{comInfoPhone},
+		com_info_addr=#{comInfoAddr},
+		com_info_addr_detail=#{comInfoAddrDetail},
+		com_info_type=#{comInfoType},
+		com_info_okay=#{comInfoOkay}
 		where com_info_no=#{comInfoNo} 
 	</update>
 	
@@ -117,6 +145,15 @@
 	</delete>
 	
 	<!-- 업체 정보  파일 등록, 수정, 삭제시 사용 -->
+	
+	
+	<select id="selectComFileDetail" parameterType="int" resultMap="comInfoMap">
+		select *
+		from mu_company_file
+		where com_info_no=#{comInfoNo}
+	</select>
+	
+	
 	<insert id="insertComFile" parameterType="CompanyFile">
 		insert into mu_company_file(com_info_no, com_file_name, com_file_oriname, com_file_path)
 		values(#{comInfoNo}, #{comFileName}, #{comFileOriname}, #{comFilePath})
@@ -147,7 +184,6 @@
         ON aa.auction_no = t.auction_no
         and  aa.com_no=#{comNo}
         limit #{begin}, 10
-
 	</select>
 
 
@@ -166,8 +202,8 @@
 	
 	
 	
-	<!-- 일반회원 정보 수정 -->
-	<select id="selectGeneralMember" parameterType="int" resultMap="generalMemberMap">
+	<!-- 정보 수정 -->
+	<!-- <select id="selectGeneralMember" parameterType="int" resultMap="generalMemberMap">
 		select *
 		from mu_member m, mu_general g
 		where m.mem_no = g.gen_no
@@ -175,13 +211,57 @@
 	</select>
 	
 	
-	<!-- 기업회원 정보 수정 -->
+	<update id="updateMember" parameterType="Member" >
+		update mu_member
+		set mem_pass=#{memPass}
+		where mem_no = #{memNo}
+	</update>
+	
+	
+	
+	<update id="updateGeneralMember" parameterType="GeneralMember" >
+		update mu_member
+		set gen_name=#{genName}
+		and gen_phone=#{genPhone}
+		and birth=#{birth}
+		where gen_no = #{genNo}
+	</update>
+	
+	
+
+
 	<select id="selectCompanyMember" parameterType="int" resultMap="companyMemberMap">
 		select *
 		from mu_member m, mu_company c
 		where m.mem_no = c.com_no
 		and m.mem_no=#{memNo}
 	</select>
+	
+	<update id="updateCompanyMember" parameterType="CompanyMember">
+		update mu_member
+		set com_name=#{comName}
+		and com_addr=#{comAddr}
+		and com_addr_detail=#{comAddrDetail}
+		and com_phone=#{comPhone}
+		and com_type=#{comType}
+		where gen_no = #{genNo}
+	</update> -->
+
+	
+	
+	<!-- 나의 역경매 현황보기(개인) -->
+	<!-- <select id="selectGeneralAuction" parameterType="Auction" resultMap="comInfoMap">
+	    select au.*, ci.*
+    	from mu_company_info ci
+    	right join (select a.auction_type, a.mem_no, a.auction_sdate, a.auction_edate, t.tender_budget, t.tender_regdate
+    	from mu_auction a
+    	right join mu_tender t
+    	on a.auction_no = t.auction_no
+    	where a.auction_type=#{auction_type}
+    	and t.tender_status='choo'
+    	and a.mem_no=#{memNo}) au
+    	on au.mem_no = ci.mem_no
+	</select> -->
 	
 	
 	
