@@ -3,21 +3,31 @@ package kr.co.marryus.member.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import kr.co.marryus.repository.domain.Member;
-import kr.co.marryus.repository.mapper.MemberMapper;
 
+import kr.co.marryus.member.service.MemberServiceImpl;
+import kr.co.marryus.repository.domain.Member;
+
+/**
+ * 로그인  controller
+ * @author suzie
+ *
+ */
 @Controller("kr.co.marryus.member.controller.MemberController")
 @RequestMapping("/main")
 public class MemberController {
 	/**
 	 *  MemberMapper 멤버 필드
 	 */
+//	@Autowired
+//	private MemberMapper mapper;
 	@Autowired
-	private MemberMapper mapper;
-
+	private MemberServiceImpl service;
+	
+	@Autowired
+	PasswordEncoder passwordEncoder;
 	
 	/**로그인 
 	 * 
@@ -25,26 +35,41 @@ public class MemberController {
 	
 	@RequestMapping("/login.do")
 	public String login(Member member , HttpSession session) throws Exception {
+		// 비밀번호 암호화
+		String rawPassword = member.getPass();
 		
-		Member mem=mapper.login(member);
+		System.out.println("rawPassword||"+rawPassword);
 		
-		System.out.println("로그인 되었습니다.");
-		System.out.println("아이디:" + mem.getEmail());
-		System.out.println("비밀번호:" + mem.getPass());
-		System.out.println("회원타입:" + mem.getType());
-		String type=mem.getType();
-		String mg = "mg";
+		member=service.login(member);
 		
-		if(type.equals(mg)) {
-			System.out.println("일반");
-			mem = mapper.loginGeneral(member);
+		String encodedPassword = member.getPass();
 		
+		
+		// 비밀번호 암호화
+		if(passwordEncoder.matches(rawPassword, encodedPassword)) {
+			System.out.println("로그인 되었습니다.");
+			System.out.println("아이디:" + member.getEmail());
+			System.out.println("비밀번호:" + member.getPass());
+			System.out.println("회원타입:" + member.getType());
+			String type=member.getType();
+			String mg = "mg";
+			
+			if(type.equals(mg)) {
+				System.out.println("일반");
+				member = service.loginGeneral(member);
+				
+			}else {
+				System.out.println("기업");
+				member = service.loginCompany(member);
+			}
+			
+			session.setAttribute("user", member);
 		}else {
-			System.out.println("기업");
-			mem = mapper.loginCompany(member);
+			
+			System.out.println("계정정보 불일치");
 		}
+		
 
-		session.setAttribute("user", mem);
 		return "redirect:main.do";
 	}
 	

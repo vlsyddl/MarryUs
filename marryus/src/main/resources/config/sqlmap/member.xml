@@ -34,7 +34,6 @@
 		select *
 		  from mu_member
 		 where mem_email = #{email}
-		   and mem_pass =#{pass}
 	</select>
 	<select id="loginGeneral" parameterType="Member" resultMap="memberMap">
 		select * 
@@ -42,7 +41,6 @@
 		 inner join mu_general
 		    on mem_no = gen_no 
 		 where mem_email = #{email}
-		   and mem_pass =#{pass}
 	</select>
 	<select id="loginCompany" parameterType="Member" resultMap="memberMap">
 		select * 
@@ -50,7 +48,6 @@
 		 inner join mu_company
 		    on mem_no = com_no 
 		 where mem_email = #{email}
-		   and mem_pass =#{pass}
 	</select>
 	<!-- 회원가입 -->
 	
