@@ -31,8 +31,8 @@ public class MypageController {
 	public void mywedding() {
 	}
 	
-	@RequestMapping("/myProfile.do")
-	public void myProfile() {
+	@RequestMapping("/myService.do")
+	public void myService() {
 		
 	}
 	
@@ -40,6 +40,7 @@ public class MypageController {
     @RequestMapping("/insertComInfo.do")
     public String insertComInfoProfile(CompanyInfo comInfo, MultipartFile[] file, HttpSession session) throws Exception{
         service.insertComInfo(comInfo);
+        System.out.println(comInfo.getComInfoContent());
         
         for(MultipartFile f:file) {
             CompanyFile comFile = new CompanyFile();
@@ -52,6 +53,7 @@ public class MypageController {
             comFile.setComFileName(fileName);
             service.insertComFile(comFile);
             f.transferTo(new File("C:\\app\\tomcat_workspace\\marryus\\resources\\img\\comProfile", fileName));
+    
         }
         
         
@@ -71,7 +73,6 @@ public class MypageController {
         int pageSize=10;
         int lastPage = (int) Math.ceil(service.selectAuctionCnt(10) / 10d);
         int currTab = (pageNo - 1) / pageSize + 1;
-        System.out.println(service.selectAuctionCnt(10)+":::::::::"+lastPage+":::::::"+currTab);
 
         Page page = new Page();
         page.setComNo(10);
@@ -86,4 +87,33 @@ public class MypageController {
         
 	}
 	
+	@RequestMapping("/service.do")
+	public void service(Model model) {
+		model.addAttribute("autionList", service.selectComInfoList(10));
+	}
+	
+	
+	@RequestMapping("/myServiceUpdate.do")
+	public void myServiceUpdate(Model model, int comInfoNo) {
+		model.addAttribute("auctionList", service.selectComInfoDetail(comInfoNo));
+	}
+	
+	
+	
+	@RequestMapping("/myServiceDelete.do")
+	public String myServiceDelete(Model model, int comInfoNo) {
+	service.deleteComInfo(comInfoNo);
+    return "mypage/service";
+	}
+	
+	
+	@RequestMapping("/updateComInfoProfile.do")
+	public String updateComInfoProfile(CompanyInfo comInfo, CompanyFile comFile) {
+		service.updateComInfo(comInfo);
+		service.updateComFile(comFile);
+	      return "mypage/service";
+	}
+	
+	
+
 }
