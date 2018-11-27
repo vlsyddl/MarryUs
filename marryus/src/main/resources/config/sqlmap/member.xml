@@ -8,22 +8,20 @@
 		<result column="mem_pass" property="pass" />
 		<result column="mem_type" property="type" />
 		<result column="mem_status" property="status" />
+		<result column="mem_name" property="name" />
+		<result column="mem_phone" property="phone" />
 		<collection property="general" resultMap="generalMap" />
 		<collection property="company" resultMap="companyMap"/>
 	</resultMap>
 	<resultMap id="generalMap" type="General">
 		<result column="gen_no" property="genNo" />
-		<result column="gen_name" property="genName" />
-		<result column="gen_phone" property="genPhone" />
 		<result column="gen_birth" property="genBirth" />
 		<result column="gen_gender" property="genGender" />
 	</resultMap>
 	<resultMap id="companyMap" type="Company">
 		<result column="com_no" property="comNo" />
-		<result column="com_name" property="comName" />
 		<result column="com_addr" property="comAddr" />
 		<result column="com_addr_detail" property="comAddrDetail" />
-		<result column="com_phone" property="comPhone" />
 		<result column="com_type" property="comType" />
 	</resultMap>
 	
@@ -55,25 +53,25 @@
 	<!-- 1.Member table -->
 	<insert id="insertMember" parameterType="Member"  useGeneratedKeys="true" keyProperty="no">
 		insert into mu_member 
-		( mem_email, mem_pass, mem_type )
+		( mem_email, mem_pass, mem_type , mem_name, mem_phone)
 		values
-		( #{email}, #{pass}, #{type} )
+		( #{email}, #{pass}, #{type}, #{name}, #{phone} )
 	</insert>
 	
 	<!-- 2.일반회원 -->
 	<insert id="insertGeneral" parameterType="General" >
 		insert into mu_general 
-		( gen_no, gen_name, gen_birth, gen_phone, gen_gender )
+		( gen_no, gen_birth, gen_gender )
 		values
-		( #{genNo}, #{genName}, #{genBirth}, #{genPhone} , #{genGender} )
+		( #{genNo}, #{genBirth} , #{genGender} )
 	</insert>
 	
 	<!-- 3.기업회원 -->
 	<insert id="insertCompany" parameterType="Company">
 		insert into mu_company
-		( com_no, com_name, com_addr, com_addr_detail, com_phone, com_type )
+		( com_no, com_addr, com_addr_detail, com_type )
 		values
-		( #{comNo}, #{comName}, #{comAddr}, #{comAddrDetail}, #{comPhone}, #{comType} )
+		( #{comNo}, #{comAddr}, #{comAddrDetail}, #{comType} )
 	</insert>
 	
 </mapper>

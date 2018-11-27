@@ -9,6 +9,8 @@ public class Member {
 	private String pass;
 	private String type;
 	private String status;
+	private String name;
+	private String phone;
 	// collection
 	private General general;
 	private Company company;

@@ -46,12 +46,12 @@
 
 					<div class="signup__field">
 						<label for="com_name" class="label">회사 이름</label> <input
-							type="text" name="comName" id="comName" class="input-field">
+							type="text" name="name" id="name" class="input-field">
 					</div>
 
 					<div class="signup__field">
 						<label for="com_phone" class="label">회사 전화번호</label> <input
-							type="text" name="comPhone" id="comPhone" class="input-field" maxlength="13"
+							type="text" name="phone" id="phone" class="input-field" maxlength="13"
 							 required>
 					</div>
 
@@ -194,15 +194,15 @@
 					return false;
 				}
 				// 회사 이름 입력란 체크 
-				if(cForm.comName.value == ""){
+				if(cForm.name.value == ""){
 					swal('회사이름을 입력해주세요','','error')
-					cForm.comName.focus()
+					cForm.name.focus()
 					return false;
 				}
 				// 회사 번호 입력란 체크 
-				if(cForm.comPhone.value == ""){
+				if(cForm.phone.value == ""){
 					swal('회사전화번호를 입력해주세요','','error')
-					cForm.comPhone.focus()
+					cForm.phone.focus()
 					return false;
 				}
 				// 주소 입력란 체크 

@@ -8,6 +8,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>Marry Us</title>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <c:import url="/common/importCss.jsp"/>
 <c:import url="/common/importJs.jsp"/>
 <c:import url="/common/webSocket.jsp"/>
@@ -30,14 +32,9 @@
 						<li><a href="#" data-toggle="modal" data-target="#loginModal">로그인</a></li>
 					</c:if>
 					<c:if test="${user.email ne null}">
-						<!-- 일반회원 로그인 했을 때  -->
-						<c:if test="${user.type eq 'mg'}">
-							<li>${user.general.genName}님이로그인 하셨습니다.</li>
-						</c:if>
-						<!-- 기업회원 로그인 했을 때  -->
-						<c:if test="${user.type eq 'mc'}">
-							<li>${user.company.comName}님이로그인 하셨습니다.</li>
-						</c:if>
+					
+							<li>${user.name}님이로그인 하셨습니다.</li>
+					
 						<li><a href="<c:url value='/main/logout.do' />"> 로그아웃</a></li>
 					</c:if>
 					<li><a href="<c:url value="/mypage/mywedding.do"/>">마이페이지</a></li>
@@ -973,11 +970,11 @@
 							class="Login-navigation__link" data-goto="Login-card--login">Login</a>
 						</li>
 						<li class="Login-navigation__list-item"><a
-							class="Login-navigation__link" data-goto="Login-card--register">Register</a>
+							class="Login-navigation__link" data-goto="Login-card--register">비밀번호를 잊으셨나요?</a>
 						</li>
-						<li class="Login-navigation__list-item"><a
+						<!-- <li class="Login-navigation__list-item"><a
 							class="Login-navigation__link" data-goto="Login-card--connect">Connect
-								directly</a></li>
+								directly</a></li> -->
 					</ul>
 					</nav>
 
@@ -1013,8 +1010,8 @@
 						<section
 							class="Login-card Login-card--register Login-card--hidden"
 							data-order="2">
-						<h2 class="Login-card__title">Register</h2>
-						<form>
+						<h2 class="Login-card__title">비밀번호 찾기</h2>
+						<form name="findPassForm" action="#" method="post">
 
 							<div class="Form__form-group">
 
@@ -1023,19 +1020,15 @@
 										class="Form__input Login-card__email-input">
 								</div>
 
-								<div class="Form__input-group">
-									<input type="password" name="password" placeholder="Password"
+								<!-- <div class="Form__input-group">
+									<input type="text" name="genName" placeholder="Password"
 										class="Form__input Login-card__password-input">
-								</div>
+								</div> -->
+
+								
 
 								<div class="Form__input-group">
-									<input type="password" name="password_repeat"
-										placeholder="Repeat password"
-										class="Form__input Login-card__password-input">
-								</div>
-
-								<div class="Form__input-group">
-									<input type="submit" value="Register"
+									<input type="submit" value="비밀번호 찾기" onclick="chceckEmail()"
 										class="Form__button Login-card__submit-button">
 								</div>
 
@@ -1044,13 +1037,26 @@
 						</form>
 						</section>
 
-						<section class="Login-card Login-card--connect Login-card--hidden"
+						<%-- <section class="Login-card Login-card--connect Login-card--hidden"
 							data-order="3">
 						<h2 class="Login-card__title">Connect directly</h2>
 						<code># TODO</code> </section>
-					</div>
+					</div> --%>
 					</main>
-
+				<!-- 네이버아이디로로그인 버튼 노출 영역 -->
+				<!-- 	
+					  <div id="naver_id_login"></div>
+					  //네이버아이디로로그인 버튼 노출 영역
+					  <script type="text/javascript">
+					  	var naver_id_login = new naver_id_login("80pYiQzDzkdBypcTxTyp", "http://localhost:8000/marryus/main/main.do");
+					  	var state = naver_id_login.getUniqState();
+					  	naver_id_login.setButton("white", 2,40);
+					  	naver_id_login.setDomain("YOUR_SERVICE_URL");
+					  	naver_id_login.setState(state);
+					  	naver_id_login.setPopup();
+					  	naver_id_login.init_naver_id_login();
+					  </script>
+				-->
 					<footer class="Login-footer"> Made with <i
 						class="fa fa-heart"></i> </footer>
 				</div>
@@ -1122,7 +1128,7 @@
 							</ol>
 							<div id="next-page" alt="Kiwi standing on oval"></div>
 							<div class="error-message"></div>
-
+			
 						</form>
 						<h1 id="wf"
 							style="opacity: 0; width: 600px; margin-top: 1.1em; display: none; margin-bottom: 1em">Thank
@@ -1322,6 +1328,19 @@
 								}
 							}
 						})
+			//모달 - 로그인폼 ckeck 함수들			
+			function chceckEmail(){
+        	
+        	var fpform= document.findPassForm;
+        	
+        		if(fpform.email.value==""){
+        			fpform.email.focus()
+        			alert("이메일을 입력해주세요");
+        			return false;
+        		}
+        		
+        		return true;
+       		}
 	</script>
 </body>
 </html>

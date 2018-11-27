@@ -4,12 +4,10 @@ import lombok.Data;
 
 @Data
 public class Company {
-	int comNo;
-	String comName;
-	String comAddr;
-	String comAddrDetail;
-	String comPhone;
-	String comType;
-	String comOkay;
+	private int comNo;
+	private String comAddr;
+	private String comAddrDetail;
+	private String comType;
+	private String comOkay;
 
 }

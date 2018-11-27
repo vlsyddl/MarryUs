@@ -7,7 +7,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="<c:url value="/resources/css/signupGeneral.css"/>">
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script> 
+ 
+<script src="https://unpkg.com/sweetalert2@latest/dist/sweetalert2.all.js"></script> 
 </head>
 <body>
 
@@ -28,7 +30,7 @@
       
               <div class="signup__field">
                 <label for="last_name" class="label">이름</label>
-                <input type="text" name="genName" id="genName" class="input-field" placeholder="이름을 입력해주세요.">
+                <input type="text" name="name" id="name" class="input-field" placeholder="이름을 입력해주세요.">
               </div>
 
               <div class="signup__field">
@@ -43,7 +45,7 @@
       
               <div class="signup__field">
                     <label for="last_name" class="label">핸드폰 번호</label>
-                    <input type="text" name="genPhone" id="genPhone" class="input-field" placeholder="ex)01012346087" required>
+                    <input type="text" name="phone" id="phone" class="input-field" placeholder="ex)01012346087" required>
               </div>
               <div class="signup__field">
                     <label for="last_name" class="label">생년월일</label>
@@ -56,7 +58,7 @@
                 <div class="signup__field" style="margin-top:12px;">
                   <label class="label" for="gen_gender">신부님이세요? 신랑님이세요?</label>
                   <div class="select-field">
-                    <select name="genGender" id="genGender" class="select-field__menu">
+                    <select name="genGender" id=gen_gender class="select-field__menu">
                       <option name="genGender" value="bri">신부님</option>
                       <option name="genGender" value="gro">신랑님</option>
                     </select>
@@ -117,37 +119,37 @@ function updateColors() {
 		var gForm = document.generalForm;
 			// 아이디 입력 체크
 			if(gForm.email.value == ""){
-				alert("이메일을 입력하세요.")
+				swal('아이디를 입력해주세요','','error')
 				gForm.email.focus()
 				return false;
 			}
 			//  이름 입력란 체크 
-			if(cForm.genName.value == ""){
-				alert("이름을 입력하세요.")
-				cForm.genName.focus()
+			if(gForm.name.value == ""){
+				swal('이름을 입력해주세요','','error')
+				gForm.name.focus()
 				return false;
 			}
 			// 비밀번호 입력 체크
 			if(gForm.pass.value == ""){
-				alert("비밀번호를 입력하세요.")
+				swal('비밀번호를 입력해주세요','','error')
 				gForm.pass.focus()
 				return false;
 			}
 			// 비밀번호 확인 입력란 체크
 			if(gForm.pass2.value == ""){
-				alert("패스워드 확인을 입력하세요.")
+				swal('비밀번호확인을 입력해주세요','','error')
 				gForm.pass2.focus()
 				return false;
 			}
 			// 핸드폰번호 입력란 체크 
-			if(gForm.genPhone.value == ""){
-				alert("핸드폰 번호를 입력하세요.")
-				gForm.genPhone.focus()
+			if(gForm.phone.value == ""){
+				swal('핸드폰번호를 입력해주세요','','error')
+				gForm.phone.focus()
 				return false;
 			}
 			// 생년월일 입력란 체크 
 			if(gForm.genBirth.value == ""){
-				alert("생년월일을 입력하세요.")
+				swal('생년월일을 입력해주세요','','error')
 				gForm.genBirth.focus()
 				return false;
 			}
@@ -155,7 +157,7 @@ function updateColors() {
 			
 			// 비밀번호 확인 체크 
 			if(gForm.pass.value != gForm.pass2.value){
-				alert("입력된 패스워드가 다릅니다. ")
+				swal('비밀번혼가 달라요','다시입력해주세요','error')
 				gForm.pass.focus()
 				gForm.pass.select()
 				
