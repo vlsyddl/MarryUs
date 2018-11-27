@@ -20,106 +20,126 @@
     <c:import url="/common/importCss.jsp"/>
 	 <c:import url="/common/importJs.jsp"/>
 <style>
-	.title{
-		font-size: 50px;
-	}
-	.content{
-		border: 1px solid black;
-		width: 1140px;
-		font-size: 30px;
-	.detailFooter{
-	    padding: 10px 0;
-	}
-	.commentForm{
-		border-bottom: 1px solid #d9d9d9;
-		padding: 10px 0;
-	}
-	.commentForm:after{
-		display: block;
-		content:'';
-		clear: both;
-	}
-	#commentFormBtn{
-		display: block;
-		float: right;
-		width: 100px;
-		padding: 10px;
-		text-align: center;
-		border: 1px solid #333;
-		border-radius: 4px;	
-		margin-top: 10px;
-		transition: all 0.5s;
-	}
-	#commentFormBtn:hover{
-		background: #acd2dd;
-		color: #fff;
-	}
-	.commentBox .commentHead:after{
-	    display: block;
-	    clear: both;
-	    content: "";
-	}
-	.commentBox .commentHead .infoBox{
-	    float: left;
-	}
-	.commentBox .commentHead .infoBox dl >*{
-	    display: inline-block;
-	}
+ 	.title{ 
+		font-size: 50px; 
+ 	} 
+	.content{ 
+ 		border: 1px solid black; 
+		width: 1140px; 
+		font-size: 30px; 
+	.detailFooter{ 
+ 	    padding: 10px 0; 
+	} 
+ 	.commentForm{ 
+ 		border-bottom: 1px solid #d9d9d9; 
+ 		padding: 10px 0; 
+	} 
+ 	.commentForm:after{ 
+		display: block; 
+		content:''; 
+		clear: both; 
+	} 
+ 	#commentFormBtn{ 
+ 		display: block; 
+ 		float: right; 
+		width: 100px; 
+ 		padding: 10px; 
+ 		text-align: center; 
+ 		border: 1px solid #333; 
+ 		border-radius: 4px;	 
+ 		margin-top: 10px; 
+ 		transition: all 0.5s; 
+ 	} 
+ 	#commentFormBtn:hover{ 
+ 		background: #acd2dd; 
+	color: #fff; 
+ 	} 
+ 	.commentBox .commentHead:after{ 
+ 	    display: block; 
+ 	    clear: both; 
+	    content: ""; 
+	} 
+ 	.commentBox .commentHead .infoBox{ 
+	    float: left; 
+	} 
+ 	.commentBox .commentHead .infoBox dl >*{ 
+ 	    display: inline-block; */
+	} 
 	
-	.commentBox .commentHead .btnBox{
-	    float: right;
-	}
+ 	.commentBox .commentHead .btnBox{ 
+ 	    float: right; 
+ 	} 
 	
-	.commentList li{
-	    border-bottom: 1px solid #d9d9d9;
-	    padding: 10px 0;
-	}
-	.detailBtnBox:after{
-	    display: block;
-	    clear: both;
-	    content: "";
-	}
-	.detailBtnBox .btnLeft{
-	    float: left;
-	}
-	.detailBtnBox .btnRight{
-	    float: right;
-	}
-	.detailBtnBox a{
-	    display: inline-block;
-	    border: 1px solid #333;
-	    width: 80px;
-	    border-radius: 4px;
-	    text-align: center;
-	    padding: 5px 0;
-	    transition: all 0.5s;
-	}
-	.detailBtnBox a:hover{
-		background: #acd2dd;
-		color: #fff;
-	}
+	.commentList li{ 
+	    border-bottom: 1px solid #d9d9d9; 
+    	padding: 10px 0; 
+ 	} 
+	.detailBtnBox:after{ 
+ 	    display: block; 
+ 	    clear: both; 
+ 	    content: ""; 
+ 	} 
+ 	.detailBtnBox .btnLeft{ 
+ 	    float: left; 
+ 	} 
+ 	.detailBtnBox .btnRight{ 
+ 	    float: right; 
+ 	} 
+	.detailBtnBox a{ 
+ 	    display: inline-block; 
+	    border: 1px solid #333; 
+ 	    width: 80px; 
+ 	    border-radius: 4px; 
+ 	    text-align: center; 
+ 	    padding: 5px 0; 
+ 	    transition: all 0.5s; 
+ 	} 
+ 	.detailBtnBox a:hover{ 
+ 		background: #acd2dd; 
+ 		color: #fff; 
+ 	} 
 
 </style>
 
 </head>
 <body>
-<div class="gnb_top cf">
+	<header>
+	<div class="container">
+		<div class="row">
+			<div class="logo col-md-3">
+				<a href="<c:url value="/main/main.do"/>"><img
+					src="<c:url value="/resources/img/logo.png"/>" alt=""
+					class="img-responsive center-block"></a>
+			</div>
+			<nav class="gnb col-md-9">
+			<div class="gnb_top cf">
 				<ul class="cf">
-					<li><a href="<c:url value='/signup/signupPro.do' />">회원가입</a></li>
 					<!-- 로그인, 로그아웃 -->
 					<c:if test="${user.email eq null}">
+						<li><a href="<c:url value='/signup/signupPro.do' />">회원가입</a></li>
 						<li><a href="#" data-toggle="modal" data-target="#loginModal">로그인</a></li>
 					</c:if>
 					<c:if test="${user.email ne null}">
-					
-							<li>${user.name}님이로그인 하셨습니다.</li>
-					
+						<li>${user.name}님이로그인 하셨습니다.</li>
 						<li><a href="<c:url value='/main/logout.do' />"> 로그아웃</a></li>
+						<li><a href="<c:url value="/mypage/mywedding.do"/>">마이페이지</a></li>
 					</c:if>
-					<li><a href="<c:url value="/mypage/mywedding.do"/>">마이페이지</a></li>
 					<li><a href="#"><i class="far fa-bell"></i></a></li>
 				</ul>
 			</div>
+			<div class="gnb_bot cf">
+				<ul class="cf">
+					<li><a href="<c:url value="/service/weddingHall.do"/>">웨딩홀</a></li>
+					<li><a href="#">스&middot;드&middot;메</a></li>
+					<li><a href="#">허니문</a></li>
+					<li><a href="#">예물</a></li>
+					<li><a href="#">추가서비스</a></li>
+				</ul>
+			</div>
+			</nav>
+		</div>
+	</div>
+	<span class="gnbBar"></span> </header>
 	<div id="wrap" class="community">
         <div class="sub_visual">
             <div class="titleBox">
