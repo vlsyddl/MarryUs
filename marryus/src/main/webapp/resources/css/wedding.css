@@ -41,7 +41,7 @@
 	.card-image > img {
 	display: block;
 	width: 100%;
-	opacity: 0; /* visually hide the img element */
+/* 	opacity: 0; visually hide the img element */
 	}
 	
 	.card-image.is-loaded {

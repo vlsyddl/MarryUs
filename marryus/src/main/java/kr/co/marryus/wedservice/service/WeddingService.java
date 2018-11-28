@@ -1,15 +1,12 @@
-package kr.co.marryus.repository.mapper;
+package kr.co.marryus.wedservice.service;
 
 import java.util.List;
 
 import kr.co.marryus.repository.domain.CompanyInfo;
 import kr.co.marryus.repository.domain.Page;
 
-public interface WeddingHallMapper {
+public interface WeddingService {
 	
-	List<CompanyInfo> weddingList(Page page);
+	List<CompanyInfo> WeddingList(Page page);
 	int selectWeddingCount();
-	
-	
-	
 }

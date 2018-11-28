@@ -80,6 +80,7 @@
                                 <th>제목</th>
                                 <th>작성자</th>
                                 <th>작성일</th>
+                                <th>답변 여부</th>
                                 <th>조회수</th>
                             </tr>
                             <c:forEach var="b" items="${list}" >
@@ -88,6 +89,7 @@
                                 <td><a href='mtomdetail.do?no=${b.boardNo}' >${b.title}</a></td>
                                 <td>${b.writer}</td>
                                 <td><fmt:formatDate value="${b.regDate}" pattern="yyyy-MM-dd" /></td>
+                                <td>${b.answer}</td>
                                 <td>${b.viewCnt}</td>
                              </c:if>
                             </tr>
