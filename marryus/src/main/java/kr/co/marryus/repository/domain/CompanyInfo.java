@@ -27,8 +27,8 @@ public class CompanyInfo {
 	
 	
 	private String aucionType;
-	private Date auction_sdate;
-	private Date auction_edate;
+	private Date auctionSdate;
+	private Date auctionEdate;
 	private int tenderBudget;
 	private Date tenderRegdate;
 	

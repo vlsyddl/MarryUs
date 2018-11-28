@@ -261,9 +261,9 @@
         			</div>
 			        <div class="imgs_wraps">
 			            <c:forEach var="f" items="${files}" varStatus="status">
-			            	<span id=`img_box_${file.comFileNo}` class="db_imgs">
+			            	<span id="img_box_${f.comFileNo}" class="db_imgs">
 			            		<img src="<c:url value="/${f.comFilePath}/${f.comFileName}"/>" data-file="${f.comFileNo}"  class='selProductFiles' title='주의! 삭제된 사진은 복구가 불가능 합니다.'/>
-			            		<a href="javascript:void(0);"  onclick="deleteImagesActions(${file.comFileNo})" class="x" id=`img_box_${file.comFileNo}`>X</a>
+			            		<a href="javascript:void(0);"  onclick="deleteImagesActions(${f.comFileNo})" class="x" class="img_box_${f.comFileNo}">X</a>
 			            	</span>
 			            </c:forEach>
 			        </div>
@@ -360,14 +360,14 @@
     
     function deleteImagesAction(index) { 
     	
-    	
-        console.log("index : "+index);
-        sel_files.splice(index, 1);
+
+       console.log("index : "+index);
+       sel_files.splice(index, 1);
 
         var img_box = "#img_box_"+index;
         $(img_box).remove();
 
-        console.log(sel_files);
+        //console.log(sel_files);
     }   
     
     
@@ -387,13 +387,14 @@
     	
     	
     	
-        console.log("index : "+index);
-        sel_files.splice(index, 1);
+        //console.log("index : "+index);
+        //sel_files.splice(index, 1);
 
         var img_box = "#img_box_"+index;
+        console.log(img_box);
         $(img_box).remove();
-
-        console.log(sel_files);
+		console.log("세부사진")
+        //console.log(sel_files);
     }
     
     

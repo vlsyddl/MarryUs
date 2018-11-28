@@ -202,26 +202,14 @@ public class MypageController {
 	}
 	
 	@RequestMapping("/validMember.do")
-	public String validMember(Member member, String prePass, Model model) {
+	public void validMember(Member member, String prePass, Model model) {
 		System.out.println(member.getEmail());
 		Member mem=memService.login(member);
 		if(passwordEncoder.matches(prePass, mem.getPass())) {
-			model.addAttribute("result","sussece");
-			System.out.println(mem.getType());
-			if(mem.getType()=="mg") {
-				return "/generalUpdate.do";
-			}else if(mem.getType()=="mc") {
-				return "/companyUpdate.do";
-			}
-		}else { model.addAttribute("result","fail"); 
-			model.addAttribute("result","sussece");
-			if(mem.getType()=="mg") {
-				return "/generalUpdateForm.do";
-			}else if(mem.getType()=="mc") {
-				return "/companyUpdateForm.do";
-			}
+			model.addAttribute("result","success");
+		}else {
+			model.addAttribute("result","fail");
 		}
-		return null;
 	}
 }
 

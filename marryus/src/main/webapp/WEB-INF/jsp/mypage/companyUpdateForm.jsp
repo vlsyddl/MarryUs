@@ -28,7 +28,7 @@
 			<nav class="gnb col-md-9">
 			<div class="gnb_top cf">
 				<ul class="cf">
-					<li><a href="<c:url value='/signup/signupPro.do' />">회원가입</a></li>
+					<li><a href="<c:url value='companyUpdate.do' />">회원가입</a></li>
 					<!-- 로그인, 로그아웃 -->
 					<c:if test="${user.email eq null}">
 						<li><a href="#" data-toggle="modal" data-target="#loginModal">로그인</a></li>
@@ -100,33 +100,34 @@
 
 		<div id="grid__content">
 			<div id="card">
-				<form class="form" action="company.do" method="post">
+				<form class="form" action="validMember.do" method="post">
 
 					<h1 id="title">Marry Us 업체회원 가입</h1>
 
 
 
 					<div class="signup__field">
-						<label for="com_name" class="label">회사 이름</label> <input
-							type="text" name="comName" id="com_name" class="input-field" value="${member.memName}">
+						<label for="com_name" class="label">회사 이름</label> 
+						<input type="text" name="memName" id="com_name" class="input-field" value="${member.memName}">
+						<input type="text" name="email" id="mem_email" class="input-field" value="${member.memEmail}">
 					</div>
 					
 					
 					
 					<div class="signup__field">
 						<label for="password" class="label">비밀번호</label> <input
-							type="password" name="pass" id="password" class="input-field"
+							type="password" name="prePass" id="password" class="input-field"
 							required>
 					</div>
 					<div class="signup__field">
 						<label for="password" class="label">새 비밀번호</label> <input
 							type="password" name="pass" id="password" class="input-field"
-							required>
+							>
 					</div>
 					<div class="signup__field">
 						<label for="password" class="label">새 비밀번호 확인</label> <input
 							type="password" name="passCheck" id="password" class="input-field"
-							required>
+							>
 					</div>
 
 					<div class="signup__field">
@@ -137,7 +138,6 @@
 
 					<div class="signup__field">
 						<label for="com_phone" class="label">회사 주소</label> <input
-							type="text" id="sample4_postcode" placeholder="우편번호"> <input
 							type="text" name="comAddr" id="sample4_roadAddress"
 							placeholder="도로명주소" value="${member.comAddr}"> <input type="button"
 							onclick="address()" value="우편번호 찾기"><br> <span

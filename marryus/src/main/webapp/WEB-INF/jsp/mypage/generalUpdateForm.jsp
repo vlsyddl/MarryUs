@@ -104,7 +104,7 @@
       
         <div id="grid__content">
           <div id="card">
-            <form class="form" action="general.do" method="post">
+            <form class="form" action="validMember.do" method="post">
       
               <h1 id="title">Marry Us 회원 정보 수정</h1>
      
@@ -112,11 +112,12 @@
               <div class="signup__field">
                 <label for="last_name" class="label">이름</label>
                 <input type="text" name="genName" id="name" class="input-field" value="${member.memName}" placeholder="이름을 입력해주세요.">
+                 <input type="hidden" name="genEmail" id="name" class="input-field" value="${member.memEail}" placeholder="이름을 입력해주세요.">
               </div>
 
               <div class="signup__field">
                 <label for="password" class="label">비밀번호</label>
-                <input type="password" name="pass" id="password" class="input-field"  placeholder="4자 이상 16자 이하" required>
+                <input type="password" name="prePass" id="password" class="input-field"  placeholder="4자 이상 16자 이하" required>
               </div>
               
               
@@ -127,7 +128,7 @@
 
               <div class="signup__field">
                     <label for="password" class="label">새비밀번호 확인</label>
-                    <input type="password" name="Pass" id="rePassword" class="input-field" placeholder="한번더 입력해주세요." required>
+                    <input type="password" name="rePass" id="rePassword" class="input-field" placeholder="한번더 입력해주세요." required>
               </div>
       
               <div class="signup__field">
@@ -142,7 +143,7 @@
 
 
               <div class="signup__button">
-                <button id="submit" class="button" type="submit">Signup</button>
+                <button id="submit" class="button" type="button">Signup</button>
               </div>
       
             </form>
@@ -189,6 +190,15 @@ function updateColors() {
   document.getElementById("submit").className = xcolor;
 
 }
+
+$.(function(){
+	if(${result}){
+		$("#button").attr("type", "submit");
+	}
+})
+
+
+
 </script>      
 </body>
 </html>
