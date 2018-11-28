@@ -15,12 +15,13 @@ import kr.co.marryus.repository.domain.Auction;
 public interface MypageService {
 
 	public List<CompanyInfo> selectComInfoList(int memNo);
-	public List<CompanyInfo> selectComInfoDetail(int comInfoNo);
+	public CompanyInfo selectComInfoDetail(CompanyInfo comInfo);
 	public int insertComInfo(CompanyInfo comInfo);
 	public int updateComInfo(CompanyInfo comInfo);
 	public int deleteComInfo(int comInfoNo);
 	
-
+	public List<CompanyFile> selectComFiles(CompanyInfo comInfo);
+	public CompanyFile selectComFile(CompanyInfo comInfo);
 	public int insertComFile(CompanyFile comFile);
 	public int updateComFile(CompanyFile comFile);
 	public int deleteComFile(int comInfoNo);

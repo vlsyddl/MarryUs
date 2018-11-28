@@ -8,6 +8,12 @@
 <title>Insert title here</title>
     <c:import url="/common/importCss.jsp"/>
 	 <c:import url="/common/importJs.jsp"/>
+	<style>
+		.label{
+			color: black;
+			font-size: 10px;
+		}
+	</style>
 </head>
 <body>
 
@@ -98,65 +104,67 @@
 
 					<h1 id="title">Marry Us 업체회원 가입</h1>
 
+
+
 					<div class="signup__field">
-						<label for="email" class="label">아이디(이메일)</label> <input
-							type="email" name="email" id="Email" class="input-field"
-							autofocus>
-					<div class="input-field" id="checkMsg"></div>
+						<label for="com_name" class="label">회사 이름</label> <input
+							type="text" name="comName" id="com_name" class="input-field" value="${member.memName}">
 					</div>
+					
+					
+					
 					<div class="signup__field">
 						<label for="password" class="label">비밀번호</label> <input
 							type="password" name="pass" id="password" class="input-field"
 							required>
 					</div>
 					<div class="signup__field">
-						<label for="password" class="label">비밀번호 확인</label> <input
+						<label for="password" class="label">새 비밀번호</label> <input
+							type="password" name="pass" id="password" class="input-field"
+							required>
+					</div>
+					<div class="signup__field">
+						<label for="password" class="label">새 비밀번호 확인</label> <input
 							type="password" name="passCheck" id="password" class="input-field"
 							required>
 					</div>
 
 					<div class="signup__field">
-						<label for="com_name" class="label">회사 이름</label> <input
-							type="text" name="comName" id="com_name" class="input-field">
-					</div>
-
-					<div class="signup__field">
 						<label for="com_phone" class="label">회사 전화번호</label> <input
 							type="text" name="comPhone" id="com_phone" class="input-field" maxlength="13"
-							 required>
+							 required value="${member.memPhone}">
 					</div>
 
 					<div class="signup__field">
 						<label for="com_phone" class="label">회사 주소</label> <input
 							type="text" id="sample4_postcode" placeholder="우편번호"> <input
 							type="text" name="comAddr" id="sample4_roadAddress"
-							placeholder="도로명주소"> <input type="button"
+							placeholder="도로명주소" value="${member.comAddr}"> <input type="button"
 							onclick="address()" value="우편번호 찾기"><br> <span
 							id="guide" style="color: #999"></span>
 					</div>
 					<div class="signup__field">
-						<label for="com_addr_detail" class="label">회사 상세주소</label> <input
-							type="text" name="comAddrDetail" id="com_addr_detail"
+						<label for="com_addr_detail" class="label" >회사 상세주소</label> <input
+							type="text" name="comAddrDetail" id="com_addr_detail" value="${member.comAddrDetail}"
 							class="input-field" required>
 					</div>
 
 					<fieldset>
-						<legend>Favorites</legend>
 
 						<div class="signup__field" style="margin-top: 12px;">
 							<label class="label" for="comType">대표업종 선택</label>
-							<div class="select-field">
+							<span class="select-field">
 								<select name="comType" id="comType" class="select-field__menu">
 									<option>업종선택</option>
-									<option value="v">웨딩홀</option>
-									<option value="s">스튜디오</option>
-									<option value="d">드레스</option>
-									<option value="m">메이크업</option>
-									<option value="h">허니문</option>
-									<option value="j">예물</option>
-									<option value="e">기타</option>
+									<option value="v"${member.comType == 'v' ? 'selected="selected"' : '' } >웨딩홀</option>
+									<option value="s" ${member.comType == 's' ? 'selected="selected"' : '' }>스튜디오</option>
+									<option value="d" ${member.comType == 'd' ? 'selected="selected"' : '' }>드레스</option>
+									<option value="m" ${member.comType == 'm' ? 'selected="selected"' : '' }>메이크업</option>
+									<option value="h" ${member.comType == 'h' ? 'selected="selected"' : '' }>허니문</option>
+									<option value="j" ${member.comType == 'j' ? 'selected="selected"' : '' }>예물</option>
+									<option value="e" ${member.comType == 'e' ? 'selected="selected"' : '' }>기타</option>
 								</select>
-							</div>
+							</span>
 						</div>
 
 					</fieldset>

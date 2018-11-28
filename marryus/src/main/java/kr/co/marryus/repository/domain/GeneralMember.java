@@ -11,7 +11,7 @@ public class GeneralMember {
 	private String memStatus;
 	private String memName;
 	private String memPhone;
-	private String birth;
+	private String genBirth;
 	private String genGender;
 	
 }

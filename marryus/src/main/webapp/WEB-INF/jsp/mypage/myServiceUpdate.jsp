@@ -42,10 +42,66 @@
         p{
         	text-align: left;
         }
+        
+        table{
+        	width: 1200px;
+        }
+        table tr, td{
+        	border-collapse: collapse;
+        	border: 3.2px solid #f1d5e3;
+        	padding: 20px 15px;
+        }
+        table td:first-child {
+			width: 170px;
+		}
+		.highlight{
+			font-size: 20px;
+			font-weight: 700;
+			vertical-align: top;
+		}
+		
+		.x{	font-size: 20px;
+			position: relative;
+			left: -12px;
+			top : -185px;
+			background: black;
+			color: white;
+		}
+		.selProductFiles{
+			width: 300px;
+			height: 200px;
+		}
+		
+		.xx{	font-size: 20px;
+			position: relative;
+			left: -12px;
+			top : -390px;
+			background: black;
+			color: white;
+		}
+		
+		.selProductFile{
+		   width: 500px;
+		   height: 400px;
+		}
+		.label{
+			color: black;
+			font-size: 20px;
+			font-weight: 700;
+		}
+		.hidden{
+			display: hidden;
+		}
+		input, select{
+			height: 26px;
+		}
+		.btn{
+			background: #d4deec;
+			margin-top: 20px;
+		}
     </style>
 </head>
 <body>
-
 <header>
 	<div class="container">
 		<div class="row">
@@ -126,47 +182,44 @@
 	<div id="outer_box">
 		 <div id="profile_box">
 
-	        <form action="/mypage/updateComInfoProfile.do" method="post" id="frm"  enctype="multipart/form-data" acceptcharset="UTF-8">
+	        <form action="/mypage/insertComInfoProfile.do" method="post" id="frm"  enctype="multipart/form-data" acceptcharset="UTF-8">
 	        <table>
 	       	<tr>
-	        	<td>업체 이름</td>
-	        	<td><input type="text" name="comInfoName" value="${auctionList[0].comInfoName}"/></td>
+	        	<td class="highlight">업체 이름</td>
+	        	<td><input type="text" name="comInfoName" value="${auctionList.comInfoName}"/>
+	        	<input type="hidden" name="comInfoNo" value="${auctionList.comInfoNo}"/></td>
 	        </tr>
 	       	<tr>
-	        	<td>서비스 카테소리</td>
+	        	<td class="highlight">서비스 카테소리</td>
 	        	<td>
 	        	<select name="comInfoType" id="comInfoType" class="select-field__menu">
-									<option>업종선택</option>
-									<option value="v" >웨딩홀</option>
-									<option value="s">스튜디오</option>
-									<option value="d">드레스</option>
-									<option value="m">메이크업</option>
-									<option value="h">허니문</option>
-									<option value="j">예물</option>
-									<option value="e">기타</option>
+					<option>업종선택</option>
+					<option value="v"${auctionList.comInfoType == 'v' ? 'selected="selected"' : '' } >웨딩홀</option>
+					<option value="s" ${auctionList.comInfoType == 's' ? 'selected="selected"' : '' }>스튜디오</option>
+					<option value="d" ${auctionList.comInfoType == 'd' ? 'selected="selected"' : '' }>드레스</option>
+					<option value="m" ${auctionList.comInfoType == 'm' ? 'selected="selected"' : '' }>메이크업</option>
+					<option value="h" ${auctionList.comInfoType == 'h' ? 'selected="selected"' : '' }>허니문</option>
+					<option value="j" ${auctionList.comInfoType == 'j' ? 'selected="selected"' : '' }>예물</option>
+					<option value="e" ${auctionList.comInfoType == 'e' ? 'selected="selected"' : '' }>기타</option>
 				</select>
 				</td>
 	        </tr>
 	        <tr>
-	        	<td>연락처</td>
-	        	<td><input type="text" name="comInfoPhone" value="${auctionList[0].comInfoPhone}"/></td>
+	        	<td class="highlight">연락처</td>
+	        	<td><input type="text" name="comInfoPhone" value="${auctionList.comInfoPhone}"/></td>
 	        </tr>
 	        
 	        
 	        <tr>
-	        	<td>주소</td>
-	        	<td><label for="com_phone" class="label">회사 주소</label> <input
-							type="text" id="sample4_postcode" placeholder="우편번호" > <input
-							type="text" name="comInfoAddr" id="sample4_roadAddress"
-							placeholder="도로명주소" value="${auctionList[0].comInfoAddr}"> <input type="button"
-							onclick="address()" value="우편번호 찾기" ><br> <span
-							id="guide" style="color: #999"></span></td>
+	        	<td class="highlight">회사 주소</td>
+	        	<td>
+	        	<input type="text" id="sample4_postcode" placeholder="우편번호"> 
+	        	<input type="text" name="comInfoAddr" id="sample4_roadAddress" placeholder="도로명주소" value="${auctionList.comInfoAddr}" > 
+	        	<input type="button" onclick="address()" value="우편번호 찾기" size="50"><br> <span id="guide" style="color: #999"></span></td>
 	        </tr>
 	        <tr>
-	        	<td>회사 상세주소</td>
-	        	<td><label for="com_addr_detail" class="label">회사 상세주소</label> <input
-							type="text" name="comInfoAddrDetail" id="com_addr_detail"
-							class="input-field" required value="${auctionList[0].comInfoAddrDetail}"></td>
+	        	<td class="highlight">회사 상세주소</td>
+	        	<td><input type="text" name="comInfoAddrDetail" id="com_addr_detail" class="input-field" value="${auctionList.comInfoAddrDetail}" required></td>
 	        </tr>
 	        
 	        
@@ -176,39 +229,59 @@
 	        
 	        
 	        <tr>
-	        	<td> 업체 소개</td>
-	        	<td><textarea name="comInfoProfile" cols="200" rows="8" style=" width:90%; resize: none; font-size: 18px; " >${auctionList[0].comInfoProfile}</textarea></td>
+	        	<td class="highlight"> 업체 소개</td>
+	        	<td><textarea name="comInfoProfile" cols="200" rows="8" style=" width:90%; resize: none; font-size: 18px; " >${auctionList.comInfoProfile}</textarea></td>
 	        </tr>
 			<tr>
 				
-					<td><input name="memNo" id=memNo value="10" type="hidden">	서비스 소개</td>  				
-					<td><textarea name="comInfoContent" id="smarteditor" rows="10" cols="100" style="width:800px; height:350px;">${auctionList[0].comInfoContent}</textarea></td>
+					<td class="highlight"><input name="memNo" id=memNo value="10" type="hidden">	서비스 소개</td>  				
+					<td><textarea name="comInfoContent" id="smarteditor" rows="10" cols="100" style="width:100%; height:350px;">${auctionList.comInfoContent}</textarea></td>
 			</tr>
 			<tr>
-				<td><a href="javascript:" onclick="fileUploadAction();" class="my_button">업체 이미지 등록</a></td>
+				<td class="highlight"><a href="javascript:" onclick="fileUploadAction();" class="my_button highlight" >업체 대표  이미지</a></td>
 				<td>
 				   <div class="input_wrap">
-				   		<input type="file" id="input_imgs" multiple/>
+				   		<input type="file" id="input_img" name="file"/>
         			</div>
 			        <div class="imgs_wrap">
-			            <img id="img" />
+			            <c:if test="${not empty file.comFileNo}">
+			            	<span id='img_rep' class="db_img">
+			            		<img src="<c:url value="/${file.comFilePath}/${file.comFileName}"/>" data-file="${file.comFileNo}" class='selProductFile' title='Click to remove'/>
+			            		<a href="javascript:void(0);"  onclick="deleteImageAction(${file.comFileNo})" class="xx" >X</a>
+			            	</span>
+			            </c:if>
+			        </div>
+				</td>
+			</tr>
+			<tr>
+				<td class="highlight"><a href="javascript:" onclick="filesUploadAction();" class="my_button highlight" >업체 이미지 등록</a></td>
+				<td>
+				   <div class="input_wraps">
+				   		<input type="file" id="input_imgs" multiple/>
+        			</div>
+			        <div class="imgs_wraps">
+			            <c:forEach var="f" items="${files}" varStatus="status">
+			            	<span id=`img_box_${file.comFileNo}` class="db_imgs">
+			            		<img src="<c:url value="/${f.comFilePath}/${f.comFileName}"/>" data-file="${f.comFileNo}"  class='selProductFiles' title='주의! 삭제된 사진은 복구가 불가능 합니다.'/>
+			            		<a href="javascript:void(0);"  onclick="deleteImagesActions(${file.comFileNo})" class="x" id=`img_box_${file.comFileNo}`>X</a>
+			            	</span>
+			            </c:forEach>
 			        </div>
 				</td>
 			</tr>
 			</table>
 				</form>		
 				<div class="form-btn">
-	                 <a href="#" class="cancle">취소</a>
-	                 <a href="#" class="save" id="savebutton">등록</a>
+	                 <a href="#" class="cancle btn">취소</a>
+	                 <a href="#" class="save btn" id="savebutton">수정</a>
 	            </div>
 	       
 	    </div>
     </div>
+    
+    
+    
     </div>
-    
-    
-    
-    
     <script>
     $(function(){
 	    //전역변수선언
@@ -239,11 +312,12 @@
  	        //$("#editorform").submit();
  	       	var formData = new FormData(document.getElementById('frm'));
  			for(let file of sel_files) {
- 	           formData.append("file", file);
+ 	           formData.append("files", file);
  	        } 
+ 		   		formData.append("file", $("input[name=file]")[0].files[0]);
  			
  			 $.ajax({
- 		    	   url:"/marryus/mypage/insertComInfo.do",
+ 		    	   url:"insertComInfo.do",
  		    	   type:"POST",
  		    	   processData: false, //쿼리 (데이터 = 값) 형식을 해제하고 문자열? 형태로 보냄
  		           contentType: false, // 기본 타입 말고 multipart/form-data로 설정하게
@@ -264,43 +338,95 @@
     
     
     var sel_files = [];
+
     
     
     $(document).ready(function() {
-        $("#input_imgs").on("change", handleImgFileSelect);
+        $("#input_imgs").on("change", handleImgsFileSelect);
+        $("#input_img").on("change", handleImgFileSelect);
     }); 
 
-    function fileUploadAction() {
-        console.log("fileUploadAction");
+    function filesUploadAction() {
+        console.log("filesUploadAction");
         $("#input_imgs").trigger('click');
     }
     
     
- 
+    function fileUploadAction() {
+        console.log("fileUploadAction");
+        $("#input_img").trigger('click');
+    }
     
     
-    function reImageAction(index) {
-        var img_id = "#img_id_"+index;
-        $(" img[name=re]").removeAttr("name");
-        $(img_id+" img").attr("name","re");
-    }        
-    
-    
-    function deleteImageAction(index) {            
+    function deleteImagesAction(index) { 
+    	
+    	
         console.log("index : "+index);
         sel_files.splice(index, 1);
 
-        var img_id = "#img_id_"+index;
-        $(img_id).remove();
+        var img_box = "#img_box_"+index;
+        $(img_box).remove();
 
         console.log(sel_files);
-    }        
+    }   
+    
+    
+    function deleteImagesActions(index){
+    	console.log(index);
+    	if(index){
+    		$.ajax({
+    			url : "deleteImg.do",
+    			data: {"comInfoNo" : index},
+				type : "POST"
+    		}).done(function(){
+    			console.log("대표사진"+index+"번째가 삭제됨...")
+    		}).fail(function(){
+    			console.log("실패함....")
+    		});
+    	}
+    	
+    	
+    	
+        console.log("index : "+index);
+        sel_files.splice(index, 1);
 
+        var img_box = "#img_box_"+index;
+        $(img_box).remove();
+
+        console.log(sel_files);
+    }
+    
+    
+    function deleteImageAction(index) {   
+    	console.log("대표사진....")
+    	if(index){
+    		$.ajax({
+    			url : "deleteImg.do",
+    			data: {"comInfoNo" : index},
+				type : "POST"
+    		}).done(function(){
+    			console.log("대표사진"+index+"번째가 삭제됨...")
+    		});
+    	}
+    	$(".imgs_wrap").empty();
+    	rep_file ="";
+    }
+    
+    
     function handleImgFileSelect(e) {
-
-        // 이미지 정보들을 초기화
-        sel_files = [];
-        $(".imgs_wrap").empty();
+    	$(".imgs_wrap").empty();
+    	rep_file ="";
+    	var rep_file= $("input[name=file]")[0].files[0];
+    	var reader = new FileReader();
+    	 reader.onload= function (e) {
+    		 html2 = "<span id='img_rep'><img src=\"" + e.target.result + "\" data-file='"+rep_file.name+"' class='selProductFile' title='Click to remove'/><a href=\"javascript:void(0);\"  onclick=\"deleteImageAction()\" class=\"xx\" >X</a></span>";
+             $(".imgs_wrap").append(html2);
+    	 }
+    	 
+    	 
+    	 reader.readAsDataURL($("input[name=file]")[0].files[0]);
+    }
+    function handleImgsFileSelect(e) {
 
         var files = e.target.files;
         var filesArr = Array.prototype.slice.call(files);
@@ -314,14 +440,15 @@
 
             sel_files.push(f);
 
-            var reader = new FileReader();
-            reader.onload = function(e) {
-           	 html = "<a href=\"javascript:void(0);\" onclick=\"reImageAction("+index+")\" oncontextmenu=\"deleteImageAction("+index+")\" id=\"img_id_"+index+"\"><img src=\"" + e.target.result + "\" data-file='"+f.name+"' class='selProductFile' title='Click to remove'></a>";
-                $(".imgs_wrap").append(html);
+            var readers = new FileReader();
+            readers.onload = function(e) {
+           //html = "<a href=\"javascript:void(0);\" onclick=\"reImageAction("+index+")\" oncontextmenu=\"deleteImageAction("+index+")\" id=\"img_id_"+index+"\"><img src=\"" + e.target.result + "\" data-file='"+f.name+"' class='selProductFile' title='Click to remove'></a>";
+           	 html = "<span id=\"img_box_"+index+"\"><img src=\"" + e.target.result + "\" data-file='"+f.name+"' class='selProductFiles' title='Click to remove'/><a href=\"javascript:void(0);\"  onclick=\"deleteImagesAction("+index+")\" class=\"x\" id=\"img_id_"+index+"\">X</a></span>";
+                $(".imgs_wraps").append(html);
                 index++;
 
             }
-            reader.readAsDataURL(f);
+            readers.readAsDataURL(f);
             
         });
     }
@@ -329,10 +456,7 @@
     
     
 
-        document.addEventListener("contextmenu", function(e){
-          e.preventDefault();
-        });
-        
+
         
         
         

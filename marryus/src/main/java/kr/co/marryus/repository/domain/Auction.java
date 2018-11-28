@@ -15,5 +15,5 @@ public class Auction {
 	private Date auctionEDate;
 	private int comNo;
 
-	private String genName;
+	private String memName;
 }

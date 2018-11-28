@@ -75,13 +75,13 @@
                             </a>
                         </li>
                         <li>
-                            <a href="<c:url value='/mypage/generalUpdate.do'/>">
+                            <a href="<c:url value='/mypage/generalUpdateForm.do'/>">
                                 <img src="img/budget_ico.png" alt="" class="img-responsive center-block">
                                 Budget Spent
                             </a>
                         </li>
                         <li>
-                            <a href="<c:url value='/mypage/companyUpdate.do'/>">
+                            <a href="<c:url value='/mypage/companyUpdateForm.do'/>">
                                 <img src="img/bookmark_ico.png" alt="" class="img-responsive center-block">
                                 Bookmark
                             </a>

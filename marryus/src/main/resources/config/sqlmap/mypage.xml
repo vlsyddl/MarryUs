@@ -27,6 +27,7 @@
 		<result  property="comFileName"   column="com_file_name"/>
 		<result  property="comFileOriname"   column="com_file_oriname"/>
 		<result  property="comFilePath"   column="com_file_path"/>
+		<result  property="comFileRepr"   column="com_file_repr"/>
 	</resultMap>
 	
 	
@@ -36,7 +37,7 @@
 		<result property="tenderStatus" column="tender_status" />
 		<result property="tenderBudget" column="tender_budget" />
 		<result property="tenderRegdate" column="tender_regdate" />
-        <result property="genName" column="gen_name" />
+        <result property="memName" column="mem_name" />
 	</resultMap>
 	
 	<resultMap id="auctionMap" type="Auction">
@@ -47,7 +48,7 @@
 		<result property="auctionStatus" column="auction_status" />
 		<result property="auctionSdate" column="auction_sdate" />
 		<result property="auctionEDate" column="auction_edate" />
-		<result property="genName" column="gen_name" />
+		<result property="memName" column="mem_name" />
 	</resultMap>
 	
 	
@@ -62,7 +63,7 @@
 		<result property="memStatus" column="mem_status" />
 		<result property="memName" column="mem_name" />
 		<result property="memPhone" column="mem_phone" />
-		<result property="birth" column="birth" />
+		<result property="genBirth" column="gen_birth" />
 		<result property="genGender" column="gen_gender" />
 	</resultMap>
 	
@@ -107,11 +108,11 @@
 	</select>
 	
 	
-	<select id="selectComInfoDetail" parameterType="int" resultMap="comInfoMap">
+	<select id="selectComInfoDetail" parameterType="CompanyInfo" resultMap="comInfoMap">
 		select *
-		from mu_company_info ci right join mu_company_file cf
-        on ci.com_info_no = cf.com_info_no
-        where ci.com_info_no=#{comInfoNo}
+		from mu_company_info
+        where com_info_no=#{comInfoNo}
+        and mem_no=#{memNo}
 	</select>
 	
 	
@@ -146,16 +147,29 @@
 	<!-- 업체 정보  파일 등록, 수정, 삭제시 사용 -->
 	
 	
-	<select id="selectComFileDetail" parameterType="int" resultMap="comInfoMap">
+	<select id="selectComFiles" parameterType="CompanyInfo" resultMap="comFileMap">
 		select *
-		from mu_company_file
-		where com_info_no=#{comInfoNo}
+		from mu_company_file cf, mu_company_info ci
+		where ci.com_info_no=cf.com_info_no
+        and com_file_repr='N'
+        and ci.mem_no=#{memNo}
+        and ci.com_info_no=#{comInfoNo}
+	</select>
+	
+	
+	<select id="selectComFile" parameterType="CompanyInfo" resultMap="comFileMap">
+		select *
+		from mu_company_file cf, mu_company_info ci
+		where ci.com_info_no=cf.com_info_no
+        and com_file_repr='Y'
+        and ci.mem_no=#{memNo}
+        and ci.com_info_no=#{comInfoNo}
 	</select>
 	
 	
 	<insert id="insertComFile" parameterType="CompanyFile">
-		insert into mu_company_file(com_info_no, com_file_name, com_file_oriname, com_file_path)
-		values(#{comInfoNo}, #{comFileName}, #{comFileOriname}, #{comFilePath})
+		insert into mu_company_file(com_info_no, com_file_name, com_file_oriname, com_file_path, com_file_repr)
+		values(#{comInfoNo}, #{comFileName}, #{comFileOriname}, #{comFilePath}, #{comFileRepr})
 	</insert>
 	
 	<update id="updateComFile" parameterType="CompanyFile">
@@ -166,22 +180,23 @@
 		where com_info_no=#{comInfoNo}
 	</update>
 	
-	<delete id="deleteComFile" parameterType="int">
-		delete from mu_comany_file 
-		where com_info_no=#{comInfoNo}
+	<delete id="deleteComFile" parameterType="Integer">
+		delete from mu_company_file 
+		where com_file_no=#{comFileNo}
 	</delete>
 	
 	
 	<!-- 관리자 경매리스트 -->
 
     <select id="selectAuction"  parameterType="Page" resultMap="tenderMap">
-        SELECT tender_regdate, gen_name, tender_status, tender_budget 
-        FROM (select * 
-        from mu_auction a, mu_general g
-        where a.mem_no = g.gen_no) as aa
+        SELECT tender_regdate, tender_status, tender_budget, aa.mem_name
+        FROM (select m.mem_name mem_name, a.mem_no mem_no, a.auction_no auction_no
+        from mu_auction a, mu_member m
+        where a.mem_no = m.mem_no
+        ) as aa
         RIGHT JOIN mu_tender t
         ON aa.auction_no = t.auction_no
-        and  aa.com_no=#{comNo}
+        where t.mem_no=#{memNo}
         limit #{begin}, 10
 	</select>
 

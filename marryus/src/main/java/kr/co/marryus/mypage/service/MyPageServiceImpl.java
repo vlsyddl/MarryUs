@@ -66,7 +66,6 @@ public class MyPageServiceImpl implements MypageService{
 
     @Override
     public int deleteComFile(int comInfoNo) {
-        // TODO Auto-generated method stub
         return mapper.deleteComFile(comInfoNo);
     }
 
@@ -85,21 +84,40 @@ public class MyPageServiceImpl implements MypageService{
 
 
 	@Override
-	public List<CompanyInfo> selectComInfoList(int memNo) {
+	public List<CompanyInfo> selectComInfoList(int memNo){
 		return mapper.selectComInfoList(memNo);
 	}
-
-
-	@Override
-	public List<CompanyInfo> selectComInfoDetail(int comInfoNo) {
-		return mapper.selectComInfoDetail(comInfoNo);
+	
+	@Override	
+	public CompanyInfo selectComInfoDetail(CompanyInfo comInfo){
+		return mapper.selectComInfoDetail(comInfo);
 	}
+
+
+
 
 
 	@Override
 	public CompanyInfo selectGeneralAuction(Auction auction) {
 		return mapper.selectGeneralAuction(auction);
 	}
+
+
+	@Override
+	public List<CompanyFile> selectComFiles(CompanyInfo comInfo) {
+		return mapper.selectComFiles(comInfo);
+	}
+
+
+	@Override
+	public CompanyFile selectComFile(CompanyInfo comInfo) {
+		return mapper.selectComFile(comInfo);
+	}
+
+
+
+
+
 
 
 	

@@ -16,8 +16,26 @@
 	}
 	table tr, table td{
 		border-collapse: collapse;
+		vertical-align: middle;
+	}
+	
+	.table_outer>td{
 		border: 1px solid black;
 	}
+	.title{
+		font-size: 20px;
+		font-weight: 800;
+	}
+	.subtitle{
+		font-size: 15px;
+		font-weight: 500;
+	}
+	.InsertProfile>td{
+		font-size: 50px;
+		font-weight: 800;
+		border: 3px dashed black;
+	}
+	
 
 
 </style>
@@ -86,13 +104,13 @@
                             </a>
                         </li>
                         <li>
-                            <a href="<c:url value='/mypage/generalUpdate.do'/>">
+                            <a href="<c:url value='/mypage/generalUpdateForm.do'/>">
                                 <img src="img/budget_ico.png" alt="" class="img-responsive center-block">
                                 Budget Spent
                             </a>
                         </li>
                         <li>
-                            <a href="<c:url value='/mypage/companyUpdate.do'/>">
+                            <a href="<c:url value='/mypage/companyUpdateForm.do'/>">
                                 <img src="img/bookmark_ico.png" alt="" class="img-responsive center-block">
                                 Bookmark
                             </a>
@@ -102,25 +120,35 @@
         </nav>
 	<c:forEach var="auction" items="${autionList}">
 	<a >
-	<table onClick="location.href=`http://localhost:8000/marryus/mypage/myServiceUpdate.do?comInfoNo=${auction.comInfoNo}`" style="cursor:pointer;"">
+	<table onClick="location.href=`http://localhost:8000/marryus/mypage/myServiceUpdate.do?memNo=10&comInfoNo=${auction.comInfoNo}`" style="cursor:pointer;" calss="table_outer">
 		<tr>
 			<td><img src="<c:url value="/${auction.comFilePath}/${auction.comFileName}"/>" width="150px" height="100px"/></td>
-			<td><table><tr><td>${auction.comInfoName}</td></tr>
-			<tr><td>
+			<td><table><tr><td class="title">${auction.comInfoName}</td></tr>
+			<tr><td class="subtitle">
 			<c:choose>
 				<c:when test="${auction.comInfoType=='v'}">웨딩홀</c:when>
 				<c:when test="${auction.comInfoType=='s'}">스튜디오</c:when>
-				<c:when test="${auction.comInfoType=='d'}">>드레스</c:when>
+				<c:when test="${auction.comInfoType=='d'}">드레스</c:when>
 				<c:when test="${auction.comInfoType=='m'}">메이크업</c:when>
 				<c:when test="${auction.comInfoType=='h'}">허니문</c:when>
 				<c:when test="${auction.comInfoType=='j'}">예물</c:when>
 				<c:when test="${auction.comInfoType=='e'}">기타</c:when>
 			</c:choose>
-			</td></tr></table></td>
+			</td></tr>
+			</table>
+			</td>
 		</tr>
 	</table>
 	</a>
 	</c:forEach>
+	<a>
+	<table onClick="location.href=`http://localhost:8000/marryus/mypage/myService.do`" style="cursor:pointer;" class="InsertProfile">
+		<tr>
+			<td style="font-size: 50px; font-weight: 800;">+</td>
+		<tr>
+	</table>
+	</a>
+	
 	</div>
 </body>
 </html>

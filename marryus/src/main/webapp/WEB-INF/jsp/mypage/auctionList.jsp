@@ -11,12 +11,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    
+        <c:import url="/common/importCss.jsp"/>
+	 <c:import url="/common/importJs.jsp"/>
     
     <style>
        * { margin: 0px; padding: 0px; box-sizing: border-box; }
         body {
-            font-size: 17px;
             color: #333;
             line-height: 3;
         }
@@ -56,7 +56,6 @@
             padding: 8px;
             vertical-align: top;
             border-top: 1px solid #ddd;
-            line-height: 1.42;
         } 
 
         .tb-striped > tbody > tr:nth-of-type(odd) {
@@ -65,11 +64,15 @@
         
         .tb-bordered > tbody > tr > td {
             border-bottom: 1px solid #ddd;
+            font-size: 18px;
+            line-height: 2.3;
         }
 
         .tb-bordered > tbody > tr > th{
             background: #e9d5d5;
             color: #5c4c4c;
+            font-size: 20px;
+            line-height: 2.5;
         }
 
         .table-hover > tbody > tr:hover {
@@ -209,7 +212,7 @@
         
         <tr>
             <td><fmt:formatDate value='${auction.tenderRegdate}' pattern='yyyy-MM-dd' /></td>
-            <td>${auction.genName}</td>
+            <td>${auction.memName}</td>
             <td>
             	<c:choose>
             		<c:when test="${auction.tenderStatus=='done'}"> <span class="redBack textstyle">유찰</span> </c:when>

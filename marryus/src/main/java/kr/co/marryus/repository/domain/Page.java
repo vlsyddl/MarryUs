@@ -10,7 +10,7 @@ public class Page {
 	private int begin;
 	private int end;
 	
-    private int comNo;
+    private int memNo;
 
 
 	public String getSelect() {

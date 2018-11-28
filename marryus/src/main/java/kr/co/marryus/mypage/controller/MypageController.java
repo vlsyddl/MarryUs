@@ -38,11 +38,11 @@ public class MypageController {
 	
 	
     @RequestMapping("/insertComInfo.do")
-    public String insertComInfoProfile(CompanyInfo comInfo, MultipartFile[] file, HttpSession session) throws Exception{
+    public String insertComInfoProfile(CompanyInfo comInfo, MultipartFile[] files, MultipartFile file, HttpSession session) throws Exception{
         service.insertComInfo(comInfo);
         System.out.println(comInfo.getComInfoContent());
         
-        for(MultipartFile f:file) {
+        for(MultipartFile f:files) {
             CompanyFile comFile = new CompanyFile();
             String fileName = f.getOriginalFilename();
             String ext = fileName.substring(fileName.indexOf("."),fileName.length());
@@ -51,6 +51,7 @@ public class MypageController {
             comFile.setComFilePath("img/comProfile");
             comFile.setComInfoNo(comInfo.getComInfoNo());
             comFile.setComFileName(fileName);
+            comFile.setComFileRepr("N");
             service.insertComFile(comFile);
             f.transferTo(new File("C:\\app\\tomcat_workspace\\marryus\\img\\comProfile", fileName));
             //C:\Users\eunbee\Documents\MarryUs\marryus\src\main\webapp\img\comProfile
@@ -58,6 +59,19 @@ public class MypageController {
     
         }
         
+        if(!file.isEmpty()) {
+           CompanyFile comFile = new CompanyFile();
+           String fileName = file.getOriginalFilename();
+           String ext = fileName.substring(fileName.indexOf("."),fileName.length());
+           fileName =UUID.randomUUID().toString()+ext;
+           comFile.setComFileOriname(file.getOriginalFilename());
+           comFile.setComFilePath("img/comProfile");
+           comFile.setComInfoNo(comInfo.getComInfoNo());
+           comFile.setComFileName(fileName);
+           comFile.setComFileRepr("Y");
+           service.insertComFile(comFile);
+           file.transferTo(new File("C:\\app\\tomcat_workspace\\marryus\\img\\comProfile", fileName));
+        }
         
         return "mypage/myProfile";
     }
@@ -77,7 +91,7 @@ public class MypageController {
         int currTab = (pageNo - 1) / pageSize + 1;
 
         Page page = new Page();
-        page.setComNo(10);
+        page.setMemNo(10);
         page.setPageNo(pageNo);
         
         
@@ -96,8 +110,10 @@ public class MypageController {
 	
 	
 	@RequestMapping("/myServiceUpdate.do")
-	public void myServiceUpdate(Model model, int comInfoNo) {
-		model.addAttribute("auctionList", service.selectComInfoDetail(comInfoNo));
+	public void myServiceUpdate(Model model, CompanyInfo comInfo) {
+		model.addAttribute("auctionList", service.selectComInfoDetail(comInfo));
+		model.addAttribute("file", service.selectComFile(comInfo));
+		model.addAttribute("files", service.selectComFiles(comInfo));
 	}
 	
 	
@@ -118,17 +134,35 @@ public class MypageController {
 	
 	
 	
+	@RequestMapping("/generalUpdateForm.do")
+	public void generalUpdateForm(/*int memNo,*/ Model model) {
+		model.addAttribute("member",service.selectGeneralMember(1));
+	}
+	
+	
+	@RequestMapping("/companyUpdateForm.do")
+	public void companyUpdateForm(/*int memNo,*/ Model model) {
+		model.addAttribute("member",service.selectCompanyMember(10));
+	}
+	
+	
 	@RequestMapping("/generalUpdate.do")
-	public void generalUpdate(/*int memNo,*/ Model model) {
-		model.addAttribute("member",service.selectGeneralMember(10));
+	public void generalUpdate( Model model) {
+		
 	}
 	
 	
 	@RequestMapping("/companyUpdate.do")
-	public void companyUpdate(/*int memNo,*/ Model model) {
-		model.addAttribute("member",service.selectCompanyMember(1));
+	public void companyUpdate( Model model) {
+		
 	}
 	
 	
+	@RequestMapping("/deleteImg.do")
+	public void deleteImg(Integer comInfoNo) {
+		System.out.println((int)comInfoNo);
+		service.deleteComFile(comInfoNo);
+	}
+
 
 }

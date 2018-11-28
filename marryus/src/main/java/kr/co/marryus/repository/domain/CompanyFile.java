@@ -9,4 +9,5 @@ public class CompanyFile {
 	private String comFileName;
 	private String comFileOriname;
 	private String comFilePath;
+	private String comFileRepr;
 }

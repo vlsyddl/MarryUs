@@ -6,9 +6,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-
     <c:import url="/common/importCss.jsp"/>
 	 <c:import url="/common/importJs.jsp"/>
+	<style>
+		.label{
+			color: black;
+			font-size: 10px;
+		}
+	</style>
+
 </head>
 <body>
 
@@ -104,13 +110,13 @@
      
       
               <div class="signup__field">
-                <label for="last_name" class="label">이름${member}${member.memName}</label>
+                <label for="last_name" class="label">이름</label>
                 <input type="text" name="genName" id="name" class="input-field" value="${member.memName}" placeholder="이름을 입력해주세요.">
               </div>
 
               <div class="signup__field">
                 <label for="password" class="label">비밀번호</label>
-                <input type="password" name="pass" id="password" class="input-field" placeholder="4자 이상 16자 이하" required>
+                <input type="password" name="pass" id="password" class="input-field"  placeholder="4자 이상 16자 이하" required>
               </div>
               
               
@@ -121,16 +127,16 @@
 
               <div class="signup__field">
                     <label for="password" class="label">새비밀번호 확인</label>
-                    <input type="password" name="Pass" id="password" class="input-field" placeholder="한번더 입력해주세요." required>
+                    <input type="password" name="Pass" id="rePassword" class="input-field" placeholder="한번더 입력해주세요." required>
               </div>
       
               <div class="signup__field">
                     <label for="last_name" class="label">핸드폰 번호</label>
-                    <input type="text" name="genPhone" id="gen_phone" class="input-field" placeholder="ex)01012346087" required>
+                   <input type="text" name="genPhone" id="gen_phone" class="input-field" value="${member.memPhone}" iplaceholder="ex)01012346087" required>
               </div>
               <div class="signup__field">
                     <label for="last_name" class="label">생년월일</label>
-                    <input type="text" name="genBirth" id="gen_birth" class="input-field" placeholder="ex)19900619" required>
+                    <input type="text" name="genBirth" id="gen_birth" class="input-field" value="${member.genBirth}" placeholder="ex)19900619" required>
               </div>
               <input type="hidden" value="mg" name="type"/>
 
