@@ -1,5 +1,6 @@
 package kr.co.marryus.mypage.controller;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,13 +9,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.co.marryus.member.service.MemberService;
 import kr.co.marryus.mypage.service.MypageService;
 import java.io.File;
 import java.util.UUID;
 import org.springframework.web.bind.annotation.RequestParam;
 import kr.co.marryus.repository.domain.CompanyFile;
 import kr.co.marryus.repository.domain.CompanyInfo;
+import kr.co.marryus.repository.domain.CompanyMember;
+import kr.co.marryus.repository.domain.GeneralMember;
+import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.Page;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 
@@ -22,9 +28,17 @@ import kr.co.marryus.repository.domain.Page;
 @RequestMapping("/mypage")
 public class MypageController {
 	
+	@Autowired
+	ServletContext context;
 	
 	@Autowired
 	MypageService service;
+	
+	@Autowired
+	MemberService memService;
+	
+	@Autowired
+	PasswordEncoder passwordEncoder;
 	
 
 	@RequestMapping("/mywedding.do")
@@ -36,12 +50,54 @@ public class MypageController {
 		
 	}
 	
+
 	
+	@RequestMapping("/fileUpload.do")
+	public void fileUPload() {
+	}
+	
+	
+	
+	/** 입찰 현황 보기 */
+	@RequestMapping("/auctionList.do")
+    public void auctionList(HttpSession session, Model model, @RequestParam(value = "pageNo", defaultValue = "1") int pageNo) {
+        int pageSize=10;
+        int lastPage = (int) Math.ceil(service.selectAuctionCnt(((Member)session.getAttribute("user")).getNo()) / 10d);
+        int currTab = (pageNo - 1) / pageSize + 1;
+
+        Page page = new Page();
+        page.setMemNo(((Member)session.getAttribute("user")).getNo());
+        page.setPageNo(pageNo);
+        
+        
+        model.addAttribute("autionList",service.selectAuction(page));
+        model.addAttribute("beginPage", ((currTab - 1) * pageSize + 1));
+        model.addAttribute("endPage", currTab * pageSize < lastPage ? currTab * pageSize : lastPage);
+        model.addAttribute("lastPage", (int) Math.ceil(service.selectAuctionCnt(((Member)session.getAttribute("user")).getNo()) / 10d));
+        model.addAttribute("pageNo", pageNo);
+        
+	}
+	
+	
+	
+	
+	/**한 기업의 업체 리스트 */
+	@RequestMapping("/service.do")
+	public void service(HttpSession session, Model model) {
+		model.addAttribute("autionList", service.selectComInfoList(((Member)session.getAttribute("user")).getNo()));
+	}
+	
+	
+	/** 업체 정보 올리기  */
     @RequestMapping("/insertComInfo.do")
     public String insertComInfoProfile(CompanyInfo comInfo, MultipartFile[] files, MultipartFile file, HttpSession session) throws Exception{
         service.insertComInfo(comInfo);
         System.out.println(comInfo.getComInfoContent());
         
+        String imgPath = context.getRealPath("/img/comProfile");
+        File filePath = new File(imgPath);
+        if(filePath.exists()==false) {
+        	filePath.mkdirs();}
         for(MultipartFile f:files) {
             CompanyFile comFile = new CompanyFile();
             String fileName = f.getOriginalFilename();
@@ -53,9 +109,8 @@ public class MypageController {
             comFile.setComFileName(fileName);
             comFile.setComFileRepr("N");
             service.insertComFile(comFile);
-            f.transferTo(new File("C:\\app\\tomcat_workspace\\marryus\\img\\comProfile", fileName));
-            //C:\Users\eunbee\Documents\MarryUs\marryus\src\main\webapp\img\comProfile
-      /* file.transferTo(new File("C:\\app\\tomcat_workspace\\assa\\img\\profile", Fname));*/
+            f.transferTo(new File(imgPath, fileName));
+
     
         }
         
@@ -70,61 +125,14 @@ public class MypageController {
            comFile.setComFileName(fileName);
            comFile.setComFileRepr("Y");
            service.insertComFile(comFile);
-           file.transferTo(new File("C:\\app\\tomcat_workspace\\marryus\\img\\comProfile", fileName));
+           file.transferTo(new File(imgPath, fileName));
         }
         
         return "mypage/myProfile";
     }
 	
 	
-	@RequestMapping("/fileUpload.do")
-	public void fileUPload() {
-	}
-	
-	
-	
-
-	@RequestMapping("/auctionList.do")
-    public void auctionList(/*HttpSession session*/ Model model, @RequestParam(value = "pageNo", defaultValue = "1") int pageNo) {
-        int pageSize=10;
-        int lastPage = (int) Math.ceil(service.selectAuctionCnt(10) / 10d);
-        int currTab = (pageNo - 1) / pageSize + 1;
-
-        Page page = new Page();
-        page.setMemNo(10);
-        page.setPageNo(pageNo);
-        
-        
-        model.addAttribute("autionList",service.selectAuction(page));
-        model.addAttribute("beginPage", ((currTab - 1) * pageSize + 1));
-        model.addAttribute("endPage", currTab * pageSize < lastPage ? currTab * pageSize : lastPage);
-        model.addAttribute("lastPage", (int) Math.ceil(service.selectAuctionCnt(10) / 10d));
-        model.addAttribute("pageNo", pageNo);
-        
-	}
-	
-	@RequestMapping("/service.do")
-	public void service(Model model) {
-		model.addAttribute("autionList", service.selectComInfoList(10));
-	}
-	
-	
-	@RequestMapping("/myServiceUpdate.do")
-	public void myServiceUpdate(Model model, CompanyInfo comInfo) {
-		model.addAttribute("auctionList", service.selectComInfoDetail(comInfo));
-		model.addAttribute("file", service.selectComFile(comInfo));
-		model.addAttribute("files", service.selectComFiles(comInfo));
-	}
-	
-	
-	
-	@RequestMapping("/myServiceDelete.do")
-	public String myServiceDelete(Model model, int comInfoNo) {
-	service.deleteComInfo(comInfoNo);
-    return "mypage/service";
-	}
-	
-	
+	/** 업체 서비스 정보 올리기 */
 	@RequestMapping("/updateComInfoProfile.do")
 	public String updateComInfoProfile(CompanyInfo comInfo, CompanyFile comFile) {
 		service.updateComInfo(comInfo);
@@ -134,35 +142,92 @@ public class MypageController {
 	
 	
 	
+	/** 업체 서비스 정보 수정하기*/
+	@RequestMapping("/myServiceUpdate.do")
+	public void myServiceUpdate(Model model, CompanyInfo comInfo) {
+		model.addAttribute("auctionList", service.selectComInfoDetail(comInfo));
+		model.addAttribute("file", service.selectComFile(comInfo));
+		model.addAttribute("files", service.selectComFiles(comInfo));
+	}
+	
+	
+	/** 업체 서비스 정보 삭제하기*/
+	@RequestMapping("/myServiceDelete.do")
+	public String myServiceDelete(Model model, int comInfoNo) {
+	service.deleteComInfo(comInfoNo);
+    return "mypage/service";
+	}
+	
+	/** 업체 서비스 파일 삭제하기 */
+	@RequestMapping("/deleteImg.do")
+	public void deleteImg(Integer comInfoNo) {
+		System.out.println((int)comInfoNo);
+		int no =service.deleteComFile(comInfoNo);
+		System.out.println(no==1 ? "성공" : "실패");
+	}
+	
+	
+	
 	@RequestMapping("/generalUpdateForm.do")
-	public void generalUpdateForm(/*int memNo,*/ Model model) {
-		model.addAttribute("member",service.selectGeneralMember(1));
+	public void generalUpdateForm(HttpSession session,  Model model) {
+		model.addAttribute("member",service.selectGeneralMember(((Member)session.getAttribute("user")).getNo()));
 	}
 	
 	
 	@RequestMapping("/companyUpdateForm.do")
-	public void companyUpdateForm(/*int memNo,*/ Model model) {
-		model.addAttribute("member",service.selectCompanyMember(10));
+	public void companyUpdateForm(HttpSession session,  Model model) {
+		model.addAttribute("member",service.selectCompanyMember(((Member)session.getAttribute("user")).getNo()));
 	}
 	
 	
 	@RequestMapping("/generalUpdate.do")
-	public void generalUpdate( Model model) {
-		
+	public String generalUpdate( CompanyMember comMem, Member member, String prePass) {
+		if(member.getPass().isEmpty()) {
+			member.setPass(prePass);
+		}
+		service.updateCompanyMember(comMem);
+		service.updateMember(member);
+		return "/generalUpdateForm.do";
 	}
 	
 	
 	@RequestMapping("/companyUpdate.do")
-	public void companyUpdate( Model model) {
-		
+	public String companyUpdate( GeneralMember genMem, Member member, String prePass) {
+		if(member.getPass().isEmpty()) {
+			member.setPass(prePass);
+		}
+		service.updateGeneralMember(genMem);
+		service.updateMember(member);
+		return "/companyUpdateForm.do";
 	}
 	
-	
-	@RequestMapping("/deleteImg.do")
-	public void deleteImg(Integer comInfoNo) {
-		System.out.println((int)comInfoNo);
-		service.deleteComFile(comInfoNo);
+	@RequestMapping("/validMember.do")
+	public String validMember(Member member, String prePass, Model model) {
+		System.out.println(member.getEmail());
+		Member mem=memService.login(member);
+		if(passwordEncoder.matches(prePass, mem.getPass())) {
+			model.addAttribute("result","sussece");
+			System.out.println(mem.getType());
+			if(mem.getType()=="mg") {
+				return "/generalUpdate.do";
+			}else if(mem.getType()=="mc") {
+				return "/companyUpdate.do";
+			}
+		}else { model.addAttribute("result","fail"); 
+			model.addAttribute("result","sussece");
+			if(mem.getType()=="mg") {
+				return "/generalUpdateForm.do";
+			}else if(mem.getType()=="mc") {
+				return "/companyUpdateForm.do";
+			}
+		}
+		return null;
 	}
-
-
 }
+
+
+	
+	
+
+
+
