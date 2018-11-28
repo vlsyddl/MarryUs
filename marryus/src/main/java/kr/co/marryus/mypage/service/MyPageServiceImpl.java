@@ -11,6 +11,7 @@ import kr.co.marryus.repository.domain.CompanyFile;
 import kr.co.marryus.repository.domain.CompanyInfo;
 import kr.co.marryus.repository.domain.CompanyMember;
 import kr.co.marryus.repository.domain.GeneralMember;
+import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.Page;
 import kr.co.marryus.repository.domain.Tender;
 
@@ -112,6 +113,24 @@ public class MyPageServiceImpl implements MypageService{
 	@Override
 	public CompanyFile selectComFile(CompanyInfo comInfo) {
 		return mapper.selectComFile(comInfo);
+	}
+
+
+	@Override
+	public int updateMember(Member member) {
+		return mapper.updateMember(member);
+	}
+
+
+	@Override
+	public int updateGeneralMember(GeneralMember genMem) {
+		return mapper.updateGeneralMember(genMem);
+	}
+
+
+	@Override
+	public int updateCompanyMember(CompanyMember comMem) {
+		return mapper.updateCompanyMember(comMem);
 	}
 
 
