@@ -14,6 +14,7 @@ import kr.co.marryus.board.service.FreeBoardService;
 import kr.co.marryus.repository.domain.Board;
 import kr.co.marryus.repository.domain.Comment;
 import kr.co.marryus.repository.domain.Page;
+import kr.co.marryus.repository.domain.Recomm;
 
 @Controller("kr.co.marryus.board.controller.FreeBoardController")
 @RequestMapping("/board")
@@ -101,5 +102,29 @@ public class FreeBoardController {
 	@ResponseBody
 	public void commentUpdate(Comment comment) {
 		service.updateFreeComment(comment);
+	}
+	
+	@RequestMapping("/free/recommCheck.json")
+	@ResponseBody
+	public int recommCheck(Recomm recomm) {
+		return service.checkFreeRecomm(recomm);
+	}
+	
+	@RequestMapping("/free/recommCount.json")
+	@ResponseBody
+	public int recommCount(int boardNo) {
+		return service.selectFreeRecommCount(boardNo);
+	}
+	
+	@RequestMapping("/free/recomm.json")
+	@ResponseBody
+	public void recomm(Recomm recomm) {
+		service.insertFreeRecomm(recomm);
+	}
+	
+	@RequestMapping("/free/recommCancle.json")
+	@ResponseBody
+	public void recommCancle(Recomm recomm) {
+		service.deleteFreeRecomm(recomm);
 	}
 }

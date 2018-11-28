@@ -21,7 +21,7 @@
 		<result column="comm_date" property="commDate"/>
 	</resultMap>
 	
-	<resultMap id="recomMap" type="Recom">
+	<resultMap id="recommMap" type="Recomm">
 		<result column="board_no" property="boardNo"/>
 		<result column="mem_no" property="memNo"/>
 	</resultMap>
@@ -109,4 +109,35 @@
 		   set comm_content = #{commContent}
 		 where comm_no = #{commNo}
 	</update>
+	
+	<!-- 자유게시판 게시글 추천 여부 확인 -->
+	<select id="selectCheckRecomm" parameterType="Recomm" resultType="int">
+		select count(*)
+		  from mu_recomm
+		 where board_no = #{boardNo}
+		   and mem_no = #{memNo}
+	</select>
+	
+	<!-- 자유게시판 게시글의 추천 수 확인 -->
+	<select id="selectFreeBoardRecomm" parameterType="int" resultType="int">
+		select count(*)
+		  from mu_recomm
+		 where board_no = #{boardNo}
+	</select>
+	
+	<!-- 자유게시판 게시글 추천하기(조건: 추천을 안했을 때)-->
+	<insert id="insertFreeBoardRecomm" parameterType="Recomm">
+		insert into mu_recomm(
+			board_no, mem_no
+		) values (
+			#{boardNo}, #{memNo}
+		)
+	</insert>
+	
+	<!-- 자유게시판 게시글 추천 취소하기(조건: 추천을 한 상태일 때) -->
+	<delete id="deleteFreeBoardRecomm" parameterType="Recomm">
+		delete from mu_recomm
+		 where board_no = #{boardNo}
+		   and mem_no = #{memNo}
+	</delete>
 </mapper>

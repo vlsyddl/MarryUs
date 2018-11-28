@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import kr.co.marryus.repository.domain.Board;
 import kr.co.marryus.repository.domain.Comment;
 import kr.co.marryus.repository.domain.Page;
+import kr.co.marryus.repository.domain.Recomm;
 import kr.co.marryus.repository.mapper.FreeBoardMapper;
 
 @Service
@@ -68,6 +69,26 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 	@Override
 	public void updateFreeComment(Comment comment) {
 		mapper.updateFreeComment(comment);
+	}
+
+	@Override
+	public int checkFreeRecomm(Recomm recomm) {
+		return mapper.selectCheckRecomm(recomm);
+	}
+
+	@Override
+	public int selectFreeRecommCount(int boardNo) {
+		return mapper.selectFreeBoardRecomm(boardNo);
+	}
+
+	@Override
+	public void insertFreeRecomm(Recomm recomm) {
+		mapper.insertFreeBoardRecomm(recomm);
+	}
+
+	@Override
+	public void deleteFreeRecomm(Recomm recomm) {
+		mapper.deleteFreeBoardRecomm(recomm);
 	}
 	
 } // end class

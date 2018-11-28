@@ -5,6 +5,7 @@ import java.util.List;
 import kr.co.marryus.repository.domain.Board;
 import kr.co.marryus.repository.domain.Comment;
 import kr.co.marryus.repository.domain.Page;
+import kr.co.marryus.repository.domain.Recomm;
 
 public interface FreeBoardMapper {
 	
@@ -19,4 +20,8 @@ public interface FreeBoardMapper {
 	void insertFreeComment(Comment comment);
 	void deleteFreeComment(int commNo);
 	void updateFreeComment(Comment comment);
+	int selectCheckRecomm(Recomm recomm);
+	int selectFreeBoardRecomm(int boardNo);
+	void insertFreeBoardRecomm(Recomm recomm);
+	void deleteFreeBoardRecomm(Recomm recomm);
 }

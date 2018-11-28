@@ -5,6 +5,7 @@ import java.util.List;
 import kr.co.marryus.repository.domain.Board;
 import kr.co.marryus.repository.domain.Comment;
 import kr.co.marryus.repository.domain.Page;
+import kr.co.marryus.repository.domain.Recomm;
 
 public interface FreeBoardService {
 	
@@ -19,4 +20,8 @@ public interface FreeBoardService {
 	void writeFreeComment(Comment comment);
 	void deleteFreeComment(int commNo);
 	void updateFreeComment(Comment comment);
+	int checkFreeRecomm(Recomm recomm);
+	int selectFreeRecommCount(int boardNo);
+	void insertFreeRecomm(Recomm recomm);
+	void deleteFreeRecomm(Recomm recomm);
 }

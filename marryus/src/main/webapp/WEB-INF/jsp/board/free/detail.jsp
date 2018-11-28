@@ -25,6 +25,11 @@
 	  	#commentSide > tbody > tr > td {
 	  		width: 150px;
 	  	}
+	  	#commContent {
+	  		width: 200px;
+	  		height: 50px;
+    		resize: none;
+	  	}
 	  </Style>
 	    
 </head>
@@ -101,6 +106,10 @@
                             	<td>${freeDetail.viewCnt}</td>
                             </tr>
                             <tr>
+                            	<th>추천수</th>
+                            	<td id="recommCnt">0</td>
+                            </tr>
+                            <tr>
                             	<th>내용</th>
                             	<td>${freeDetail.content}</td>
                             </tr>
@@ -110,6 +119,7 @@
                     <a href="updateForm.do?boardNo=${freeDetail.boardNo}"><button>수정</button></a>
                     <a href="delete.do?boardNo=${freeDetail.boardNo}"><button>삭제</button></a>
                     </c:if>
+                    <a id="recomm"><button id="recommBtn">추천</button></a>
                     <div id="writeComment">
                     	<form id="writeCommentForm" method="post">
                     		<input type="hidden" name="boardNo" value="${freeDetail.boardNo}" />
@@ -145,6 +155,9 @@
 //                 'default_x' : false 				//레이어가 붙는 아이디 
 //             }
 //             $('#sideBar').Floater(options);
+	var recommCheckCnt;
+	var userNo = "${user.no}";
+	
 	list();
 	
 	function list() {
@@ -154,16 +167,16 @@
 				cache : false
 			})
 			.done( function(result) {
-					console.log(result);
 					var html = "";
 					for(var i = 0; i < result.length; i++) {
-						html += "<tr>"
+						html += "<tr id='comm"+result[i].commNo+"'>"
 						html += "<input type='hidden' name='commNo' value='"+result[i].commNo+"'  />"
 						html += "<td>"+result[i].commWriter+"</td>"
+// 						html += "<td id='"+result[i].commNo+"'>"+result[i].commContent+"<td>"
 						html += "<td>"+result[i].commContent+"</td>"
 						
 						if ( result[i].commWriter == "${user.email}" ) {
-							html += "<td><button onclick='commentUpdate()'>수정</button></td>"
+							html += "<td><button onclick='commentUpdate("+JSON.stringify(result[i])+")'>수정</button></td>"
 							html += "<td><button onclick='commentDelete("+result[i].commNo+")'>삭제</button></td>"
 						}
 						
@@ -206,12 +219,91 @@
 			});
 		};
 		
-		function commentUpdate() {
-			$.ajax({
+		function commentUpdate(comm) {
+			var content = "";
+			var html = "";
+				html += "<input type='hidden' name='commNo' value='"+comm.commNo+"'/>"
+				html += "<td>"+comm.commWriter+"</td>"
+				html += "<td id='commContent"+comm.commNo+"'>"+
+						"<textarea id='commContent' name='commContent' cols='30' rows='10'>"+comm.commContent+"</textarea></td>"
+				html += "<td><button id='thisUpdate'>수정</button></td>"
+					
+			$("#comm"+comm.commNo+"").html(html);
+			
+			$("#thisUpdate").click(function () {
 				
+				$.ajax({
+					url : "<c:url value='/board/free/commentUpdate.json' />",
+					data : {
+						"commContent" : $("#commContent").val(),
+						"commNo" : comm.commNo
+					},
+					cache : false
+				}).done(function () {
+					list();
+				});
+			});
+			
+		};
+		
+		function recommCheck() {
+			$.ajax({
+				url : "<c:url value='/board/free/recommCheck.json' />",
+				data : {
+					"boardNo" : "${freeDetail.boardNo}",
+					"memNo" : userNo
+				},
+				cache : false
+			}).done(function (result) {
+				if (result == 0) {
+					$('#recommBtn').text("추천할거면 눌러봐 ^^");
+				} else {
+					$('#recommBtn').text("이미 추천했어. 취소할거면 눌러 ^^");
+				}
+				recommCheckCnt = result;
 			});
 		};
-	
+		
+		recommCheck();
+		
+		function recommCnt() {
+			$.ajax({
+				url : "<c:url value='/board/free/recommCount.json' />",
+				data : "boardNo=${freeDetail.boardNo}",
+				cache : false
+			}).done(function (result) {
+				$('#recommCnt').html(result);
+			});
+		};
+		recommCnt();
+
+		$("#recomm").click(function () {
+				var recommUrl = "recomm";
+				
+				if (recommCheckCnt == 1) {
+					recommUrl = "recommCancle";
+				}
+			$.ajax({
+				url : "/marryus/board/free/"+ recommUrl + ".json",
+				data : {
+					"boardNo" : "${freeDetail.boardNo}",
+					"memNo" : userNo
+				},
+				cache : false
+			}).done(function (result) {
+				if (recommCheckCnt == 0) {
+					alert("추천되었습니다.");
+					recommCheckCnt = 1;
+					$('#recommBtn').text("이미 추천했어. 취소할거면 눌러 ^^");
+				} else {
+					alert("추천이 취소되었습니다.");
+					recommCheckCnt = 0;
+					$('#recommBtn').text("추천할거면 눌러봐 ^^");
+				}
+				recommCnt();
+			});
+		});
+		
     </script>
 </body>
 </html>

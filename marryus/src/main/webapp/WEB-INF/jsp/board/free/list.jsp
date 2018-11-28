@@ -11,6 +11,12 @@
     <title>Marry Us</title>
 <link rel="stylesheet"
 		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<!-- 합쳐지고 최소화된 최신 CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<!-- 부가적인 테마 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <c:import url="/common/importCss.jsp"/>
 	 <c:import url="/common/importJs.jsp"/>
     
@@ -93,37 +99,37 @@
 		            </div>
                     </div>
                     <ul class="pagination">
-					<li><a
-						<c:choose>
-      <c:when test="${beginPage!=1}">href="list.do?pageNo=${beginPage-1}"</c:when>
-      <c:otherwise>href="#"</c:otherwise>
-	    </c:choose>
-						aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-					</a></li>
-					<c:forEach var="i" begin="${beginPage}" end="${endPage}">
 						<li><a
-							<c:choose>
-   	<c:when test='${requestScope["javax.servlet.forward.request_uri"].substring(20) eq "/category.do"}'>
-    href="<c:url value='category.do?pageNo=${i-1}&select=${result.select}&text=${result.text}' />"
-    </c:when>
-
-    <c:otherwise>
-     href="list.do?pageNo=${i}"
-     </c:otherwise>
-      </c:choose>>
-
-								${i}</a></li>
-					</c:forEach>
-
-					<li><a
-						<c:choose>
-      <c:when test="${endPage != lastPage}"> href="list.do?pageNo=${endPage+1}" </c:when>
-    	<c:otherwise>href="#"</c:otherwise>
-    	</c:choose>
-						aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-					</a></li>
-				</ul>
-                </div>
+											<c:choose>
+					      <c:when test="${beginPage!=1}">href="list.do?pageNo=${beginPage-1}"</c:when>
+					      <c:otherwise>href="#"</c:otherwise>
+						    </c:choose>
+											aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+										</a></li>
+										<c:forEach var="i" begin="${beginPage}" end="${endPage}">
+											<li><a
+												<c:choose>
+					   	<c:when test='${requestScope["javax.servlet.forward.request_uri"].substring(20) eq "/category.do"}'>
+					    href="<c:url value='category.do?pageNo=${i-1}&select=${result.select}&text=${result.text}' />"
+					    </c:when>
+					
+					    <c:otherwise>
+					     href="list.do?pageNo=${i}"
+					     </c:otherwise>
+					      </c:choose>>
+					
+													${i}</a></li>
+										</c:forEach>
+					
+										<li><a
+											<c:choose>
+					      <c:when test="${endPage != lastPage}"> href="list.do?pageNo=${endPage+1}" </c:when>
+					    	<c:otherwise>href="#"</c:otherwise>
+					    	</c:choose>
+											aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+										</a></li>
+					</ul>
+               		</div>
             </div>
         </section>
     </div>
