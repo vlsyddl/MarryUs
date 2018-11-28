@@ -51,4 +51,16 @@ public interface MemberService {
 	 */
 	void insertCompany(Company company);
 
+	/**
+	 * 비밀번호 찾기 - 아이디 check
+	 * @param member
+	 * @return
+	 */
+	Member findId(Member member);
+	
+	/**
+	 * 새로운 비밀번호 업데이트 
+	 * @param member
+	 */
+	void updateNewPass(Member member);
 }

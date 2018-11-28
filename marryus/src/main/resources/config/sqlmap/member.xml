@@ -74,6 +74,21 @@
 		( #{comNo}, #{comAddr}, #{comAddrDetail}, #{comType} )
 	</insert>
 	
+	
+	<!-- 비밀번호 찾기  -->
+	<!-- 아이디 이름 매치  -->
+	<select id="findId" parameterType="Member" resultMap="memberMap" >
+		select *
+		  from mu_member
+		 where mem_email = #{email}
+		   and mem_name = #{name} 
+	</select>
+	<!-- 새비밀번호 변경하기  -->
+	<update id="updateNewPass" parameterType="Member" >
+		 update mu_member 
+	    	set mem_pass = #{pass}
+		  where mem_email= #{email}
+	</update>
 </mapper>
 
 

@@ -196,7 +196,16 @@
 			<artifactId>spring-security-web</artifactId>
 			<version>5.1.1.RELEASE</version>
 		</dependency>
-		
+
+		<!-- Email 전송을 위한 라이브러리 -->
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-email -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-email</artifactId>
+			<version>1.5</version>
+		</dependency>
+
+
 	</dependencies>
 
 

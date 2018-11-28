@@ -967,26 +967,26 @@
 
 						<section
 							class="Login-card Login-card--register Login-card--hidden"
-							data-order="2">
+							data-order="2" id="checkIdCard">
 						<h2 class="Login-card__title">비밀번호 찾기</h2>
-						<form name="findPassForm" action="#" method="post">
+						<form action="findPass.do" method="post">
 
 							<div class="Form__form-group">
 
 								<div class="Form__input-group">
-									<input type="text" name="email" placeholder="E-mail address"
+									<input  type="text" name="email" placeholder="E-mail address"
 										class="Form__input Login-card__email-input">
 								</div>
 
-								<!-- <div class="Form__input-group">
-									<input type="text" name="genName" placeholder="Password"
+						<!-- 		<div class="Form__input-group">
+									<input id="passname" type="text" name="name" placeholder="이름"
 										class="Form__input Login-card__password-input">
 								</div> -->
 
-								
+							
 
 								<div class="Form__input-group">
-									<input type="submit" value="비밀번호 찾기" onclick="chceckEmail()"
+									<input  id="checkEmailnName" type="submit" value="비밀번호 찾기"
 										class="Form__button Login-card__submit-button">
 								</div>
 
@@ -1274,7 +1274,7 @@
 							}
 						})
 			//모달 - 로그인폼 ckeck 함수들			
-			function chceckEmail(){
+		/* 	function chceckEmail(){
         	
         	var fpform= document.findPassForm;
         	
@@ -1285,7 +1285,29 @@
         		}
         		
         		return true;
-       		}
+       		} */
+        
+        
+        /* 	$("#checkEmailnName").click(function(){
+        		
+        	
+        	alert("클릭");
+        	checkID();
+        
+    		
+       		 }); */
+      	
+        	/* function checkID(){
+        		alert("ajax시작전");
+        		$.ajax({
+        			url : "/marryus/main/matchEmailnName.json",
+        			type: "post",
+        			data: $("#findPassForm").serialize()
+        		}).done(function(result){
+        			alert()
+        		 	$("#checkEmailnName").html(); 
+        		});
+        	}  */
 	</script>
 </body>
 </html>

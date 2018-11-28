@@ -80,4 +80,22 @@ public class MemberServiceImpl implements MemberService{
 		mapper.insertCompany(company);
 	}
 
+	/**
+	 * 비밀번호 찾는 로직 - 이메일+이름
+	 */
+	@Override
+	public Member findId(Member member) {
+		
+		return mapper.findId(member);
+	}
+
+	/**
+	 * 새로운 비밀번호 업데이트하기 
+	 */
+	@Override
+	public void updateNewPass(Member member) {
+		mapper.updateNewPass(member);
+		
+	}
+
 }
