@@ -1,6 +1,7 @@
 package kr.co.marryus.admin.controller;
 
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,8 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 import kr.co.marryus.admin.service.AdminService;
 import kr.co.marryus.repository.domain.Admin;
+import kr.co.marryus.repository.domain.Board;
+import kr.co.marryus.repository.domain.Member;
 
 @Controller("kr.co.marryus.admin.controller.AdminController")
 @RequestMapping("/admin")
@@ -69,5 +72,29 @@ public class AdminController {
 	@ResponseBody
 	public List countConnection(){
 		return service.countConnection();
+	}
+	
+	@RequestMapping("/noAnswerBoard.do")
+	@ResponseBody
+	public List<Board> selectNoAnswerBoard(){
+		return service.selectNoAnswerBoard();
+	}
+	
+	@RequestMapping("/countMember.do")
+	@ResponseBody
+	public HashMap<String,Object> countMemberO(){
+		return service.memberCount();
+	}
+	
+	@RequestMapping("/countAuction.do")
+	@ResponseBody
+	public HashMap<String,Object> countAuction(){
+		return service.auctoinCount();
+	}
+	
+	@RequestMapping("/noAgreeMember.do")
+	@ResponseBody
+	public List<Member> noAgreeMember(){
+		return service.noAgreeMember();
 	}
 }

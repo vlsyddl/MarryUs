@@ -19,12 +19,50 @@
 		<result column="connection_agent" property="connectionAgent"/>	
 	</resultMap>
 	
+	<resultMap id="boardMap" type="Board">
+		<result column="board_no" property="boardNo" />
+		<result column="writer" property="writer" />
+		<result column="title" property="title" />
+		<result column="content" property="content" />
+		<result column="reg_date" property="regDate" />
+		<result column="view_cnt" property="viewCnt"/>
+		<result column="category" property="category" />
+		<result column="answer" property="answer" />
+	</resultMap>
+	
+	<resultMap id="memberMap" type="Member">
+		<result column="mem_no" property="no" />
+		<result column="mem_email" property="email" />
+		<result column="mem_pass" property="pass" />
+		<result column="mem_type" property="type" />
+		<result column="mem_status" property="status" />
+		<result column="mem_name" property="name" />
+		<result column="mem_phone" property="phone" />
+		<collection property="general" resultMap="generalMap" />
+		<collection property="company" resultMap="companyMap"/>
+	</resultMap>
+	
+	<resultMap id="generalMap" type="General">
+		<result column="gen_no" property="genNo" />
+		<result column="gen_birth" property="genBirth" />
+		<result column="gen_gender" property="genGender" />
+	</resultMap>
+	
+	<resultMap id="companyMap" type="Company">
+		<result column="com_no" property="comNo" />
+		<result column="com_addr" property="comAddr" />
+		<result column="com_addr_detail" property="comAddrDetail" />
+		<result column="com_type" property="comType" />
+	</resultMap>
+	
+	<!-- admin check -->
 	<select id="selectAdmin" parameterType="Admin" resultMap="adminMap">
 		select * 
 		 from mu_admin
 		where adm_id=#{admId} and adm_pass=#{admPass} and adm_ok = 'Y'
 	</select>
 	
+	<!-- 관리자 회원가입 -->
 	<insert id="signUpAdmin" parameterType="Admin">
 		insert into mu_admin(
 			adm_id, adm_pass, adm_name
@@ -42,6 +80,42 @@
 		 limit 0,7
 	</select>
 	
+	<!-- 답변안된 게시판 -->
+	<select id="selectNoAnswerBoard" resultMap="boardMap">
+		select * 
+		 from mu_board 
+		where category = 'mm' and answer = 'n'
+		order by board_no desc
+		limit 0 ,5
+	</select>
+	
+	<!-- 회원수 -->
+	<select id="memberCount" resultType="HashMap">
+		select (select count(*) from mu_member where mem_type = 'mc') company,
+		(select count(*) from mu_member where mem_type = 'mg') general ,
+        (select count(*)from mu_member) total
+	</select>
+	
+	<!-- 분야별 경매리스트 -->
+	<select id="auctoinCount" resultType="HashMap">
+		select  (select count(*) from mu_auction where auction_type = 'v') weddingHall,
+		(select count(*) from mu_auction where auction_type = 's') studio,
+        (select count(*) from mu_auction where auction_type = 'd') dress,
+        (select count(*) from mu_auction where auction_type = 'm') makeUp,
+        (select count(*) from mu_auction where auction_type = 'h') honeyMoon,
+        (select count(*) from mu_auction where auction_type = 'j') jewelry,
+        (select count(*) from mu_auction where auction_type = 'e') etc;
+	</select>
+	
+	<!-- 승인 안된 회원 -->
+	<select id="noAgreeMember" resultMap="memberMap">
+		select * 
+		from mu_member m
+		inner join mu_company c
+		on m.mem_no = c.com_no
+		where com_okay ='n'
+		limit 0, 5
+	</select>
 </mapper>
 
 

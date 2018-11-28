@@ -77,17 +77,16 @@
                     승인이 필요한 회원                    
                 </h3>
                 <div class="tableWrap">
-                    <table class="table">
+                    <table class="table noAgreeMember">
                         <colgroup>
-                            <col width="30%">
+                            <col width="10%">
                             <col width="*">
                             <col width="10%">
                         </colgroup>
                         <thead>
                             <tr>
+                                <th>회원번호</th>
                                 <th>아이디</th>
-                                <th>회원 타입</th>
-                                <th>가입일</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -126,7 +125,7 @@
                     답변 안된 질문                    
                 </h3>
                 <div class="tableWrap">
-                    <table class="table">
+                    <table class="table noAnswerBoard">
                             <colgroup>
                                 <col width="10%">
                                 <col width="*">
@@ -136,35 +135,12 @@
                             <tr>
                                 <th>글번호</th>
                                 <th>제목</th>
+                                <th>작성자</th>
                                 <th>작성일</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>10</td>
-                                <td>글제목</td>
-                                <td>2018.11.22</td>
-                            </tr>
-                            <tr>
-                                <td>10</td>
-                                <td>글제목</td>
-                                <td>2018.11.22</td>
-                            </tr>
-                            <tr>
-                                <td>10</td>
-                                <td>글제목</td>
-                                <td>2018.11.22</td>
-                            </tr>
-                            <tr>
-                                <td>10</td>
-                                <td>글제목</td>
-                                <td>2018.11.22</td>
-                            </tr>
-                            <tr>
-                                <td>10</td>
-                                <td>글제목</td>
-                                <td>2018.11.22</td>
-                            </tr>
+                           
                         </tbody>
                     </table>
 
@@ -175,9 +151,19 @@
     <script>
     	$(function(){
     		countConnection();
+    		noAnswerBoard();
+    		countMember();
+    		countAuction();
+    		noAgreeMember();
     	})
-    	var ccCount = new Array();
-    	var ccDate = new Array();
+    	
+    	var ccCount = new Array(); //일자별 접속자 수
+    	var ccDate = new Array(); // 일주일
+    	
+    	var mgCount; //일반회원 수
+    	var mcCount; //기업회원 수
+		var memberArray ; //토탈 회원수 
+    	//접속자 체크
 		function countConnection(){
 			$.ajax({
 				url : "<c:url value="/admin/countConnection.do"/>"
@@ -187,13 +173,42 @@
 					ccCount.push(data[i].count)
 					ccDate.push(data[i].date)
 				}
-/* 				for (var b of data){
-					ccCount.push(b.count)
-					ccDate.push(b.date)
-				} */
 				connectionChart(ccDate,ccCount);
 			})
 		}	
+		//회원수 체크
+		function countMember(){
+			$.ajax({
+				url : "<c:url value="/admin/countMember.do"/>"
+			}).done(function(data){
+				console.log(data)
+				memberChart(data.total,data.general,data.company)
+			})
+		}
+		//분야별 경매 체크
+		function countAuction(){
+			$.ajax({
+				url : "<c:url value="/admin/countAuction.do"/>"
+			}).done(function(data){
+				console.log(data)
+				auctionChart(data);
+			})
+		}
+		//회원 체크
+		function noAgreeMember(){
+			$.ajax({
+				url : "<c:url value="/admin/noAgreeMember.do"/>"
+			}).done(function(data){
+				var html;
+				for( b of data){
+					html+="<tr>"
+					html+="<td>"+b.no+"</td>"
+					html+="<td>"+b.email+"</td>"
+					html+="</tr>"
+				}
+				$(".noAgreeMember > tbody").html(html)
+			})
+		}
         //접속 통계
         function connectionChart(date,count){
 	        var chart1 = document.getElementById("connectionStatistics");
@@ -230,80 +245,131 @@
 	        });
         }
         // 경매 통계
-        var chart2 = document.getElementById("auctionStatistics");
-        var options2 ={
-           
-            legend:{
-              position:'bottom'
-            }
-        };
-        var dataAuction = {
-            labels: ["웨딩홀","스드메","허니문","예물","추가서비스"],
-            datasets: [
-                {
-                    fill: false,
-                    lineTension: 0,
-                    backgroundColor : ["red","orange","yellow","green","blue"],
-                    borderWidth:0,
-                    data: [100,80,92,57,61],
-                }
-            ],
-            options: {
-                scales: {
-                    yAxes: [{
-                      stacked: true
-                    }]
-                }
-            }
-        };
-
-        var auctionChar = new Chart(chart2, {
-        type: 'pie',
-        data: dataAuction,
-        options: options2
-        
-        });
+        function auctionChart(data){        	
+	        var chart2 = document.getElementById("auctionStatistics");
+	        var options2 ={
+	           
+	            legend:{
+	              position:'bottom'
+	            }
+	        };
+	        var dataAuction = {
+	            labels: ["웨딩홀","스드메","허니문","예물","추가서비스"],
+	            datasets: [
+	                {
+	                    fill: false,
+	                    lineTension: 0,
+	                    backgroundColor : ["red","orange","yellow","green","blue"],
+	                    borderWidth:0,
+	                    data: [data.weddingHall,data.studio,data.dress,data.jewelry,data.etc],
+	                }
+	            ],
+	            options: {
+	                scales: {
+	                    yAxes: [{
+	                      stacked: true
+	                    }]
+	                }
+	            }
+	        };
+	
+	        var auctionChar = new Chart(chart2, {
+	        type: 'pie',
+	        data: dataAuction,
+	        options: options2
+	        
+	        });
+        }
         // 유저 통계
-        Chart.defaults.global.barPercentage = 0.1
-        var chart3 = document.getElementById("userStatistics");
-        var options3 ={
-            scales: {
-                yAxes: [{
-                    ticks: {
-                     beginAtZero:true
-                    }
-                }]
-                    },
-                    legend: {
-                display: false
-            },
-        };
-        var dataUser = {
-            labels: ["총 회원수","일반회원","기업회원"],
-            datasets: [
-                {
-                    fill: false,
-                    lineTension: 0,
-                    backgroundColor : ["red","orange","yellow"],
-                    borderWidth:0,
-                    data: [100,80,92,1]
-                },
-            ],
-            options3: {
-                scales: {
-                    yAxes: [{
-                      stacked: true
-                    }]
-                }
-            }
-        };
-
-        var usetChar = new Chart(chart3, {
-        type: 'horizontalBar',
-        data: dataUser,
-        options: options3
+        function memberChart(total,general,company){
+	        	
+	        Chart.defaults.global.barPercentage = 0.1
+	        var chart3 = document.getElementById("userStatistics");
+	        var options3 ={
+	            scales: {
+	                yAxes: [{
+	                    ticks: {
+	                     beginAtZero:true
+	                    }
+	                }]
+	                    },
+	                    legend: {
+	                display: false
+	            },
+	        };
+	        var dataUser = {
+	            labels: ["총 회원수","일반회원","기업회원"],
+	            datasets: [
+	                {
+	                    fill: false,
+	                    lineTension: 0,
+	                    backgroundColor : ["red","orange","yellow"],
+	                    borderWidth:0,
+	                    data: [total,general,company,1]
+	                },
+	            ],
+	            options3: {
+	                scales: {
+	                    yAxes: [{
+	                      stacked: true
+	                    }]
+	                }
+	            }
+	        };
+	
+	        var usetChar = new Chart(chart3, {
+	        type: 'horizontalBar',
+	        data: dataUser,
+	        options: options3
+	        
+	        });
+        }
         
-        });
+        Date.prototype.format = function(f) {
+            if (!this.valueOf()) return " ";
+         
+            var weekName = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
+            var d = this;
+             
+            return f.replace(/(yyyy|yy|MM|dd|E|hh|mm|ss|a\/p)/gi, function($1) {
+                switch ($1) {
+                    case "yyyy": return d.getFullYear();
+                    case "yy": return (d.getFullYear() % 1000).zf(2);
+                    case "MM": return (d.getMonth() + 1).zf(2);
+                    case "dd": return d.getDate().zf(2);
+                    case "E": return weekName[d.getDay()];
+                    case "HH": return d.getHours().zf(2);
+                    case "hh": return ((h = d.getHours() % 12) ? h : 12).zf(2);
+                    case "mm": return d.getMinutes().zf(2);
+                    case "ss": return d.getSeconds().zf(2);
+                    case "a/p": return d.getHours() < 12 ? "오전" : "오후";
+                    default: return $1;
+                }
+            });
+        };
+         
+        String.prototype.string = function(len){var s = '', i = 0; while (i++ < len) { s += this; } return s;};
+        String.prototype.zf = function(len){return "0".string(len - this.length) + this;};
+        Number.prototype.zf = function(len){return this.toString().zf(len);};
+
+        function noAnswerBoard(){
+        	$.ajax({
+        		url : "<c:url value="/admin/noAnswerBoard.do"/>"
+        	}).done(function(data){
+        		var html;
+        		
+        		console.log(data)
+        		for(b of data){
+					html +="<tr>"
+					html +="<td>"+b.boardNo+"</td>"
+                    html +="<td>"+b.title+"</td>"    
+                    html +="<td>"+b.writer+"</td>"    
+                    html +="<td>"+new Date(b.regDate).format("yyyy-MM-dd")+"</td>"
+					html +="</tr>"        			
+        		}
+        		$(".noAnswerBoard > tbody").html(html)
+        	})
+        }
     </script>
 </body>
 </html>
