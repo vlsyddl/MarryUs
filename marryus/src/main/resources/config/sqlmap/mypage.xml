@@ -180,7 +180,7 @@
 		where com_info_no=#{comInfoNo}
 	</update>
 	
-	<delete id="deleteComFile" parameterType="Integer">
+	<delete id="deleteComFile" parameterType="int">
 		delete from mu_company_file 
 		where com_file_no=#{comFileNo}
 	</delete>
@@ -231,6 +231,7 @@
 		where mem_no = #{memNo}
 		and mem_name=#{memName}
 		and mem_phone=#{memPhone}
+		where gen_no = #{genNo}
 	</update>
 	
 	
