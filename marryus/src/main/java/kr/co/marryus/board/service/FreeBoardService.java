@@ -6,6 +6,7 @@ import kr.co.marryus.repository.domain.Board;
 import kr.co.marryus.repository.domain.Comment;
 import kr.co.marryus.repository.domain.Page;
 import kr.co.marryus.repository.domain.Recomm;
+import kr.co.marryus.repository.domain.Search;
 
 public interface FreeBoardService {
 	
@@ -24,4 +25,6 @@ public interface FreeBoardService {
 	int selectFreeRecommCount(int boardNo);
 	void insertFreeRecomm(Recomm recomm);
 	void deleteFreeRecomm(Recomm recomm);
+	List<Board> freeSearch(Search search);
+	int selectFreeSearchCount(Search search);
 }

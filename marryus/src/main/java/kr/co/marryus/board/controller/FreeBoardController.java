@@ -15,6 +15,7 @@ import kr.co.marryus.repository.domain.Board;
 import kr.co.marryus.repository.domain.Comment;
 import kr.co.marryus.repository.domain.Page;
 import kr.co.marryus.repository.domain.Recomm;
+import kr.co.marryus.repository.domain.Search;
 
 @Controller("kr.co.marryus.board.controller.FreeBoardController")
 @RequestMapping("/board")
@@ -31,7 +32,7 @@ public class FreeBoardController {
 		// 총 게시글 수 표시
 		int count = service.selectFreeBoardCount();
 		int lastPage = (int) Math.ceil(count / 10d);
-
+		
 		// 페이지 블럭 시작
 		int pageSize = 10;
 		int currTab = (pageNo - 1) / pageSize + 1;
@@ -126,5 +127,27 @@ public class FreeBoardController {
 	@ResponseBody
 	public void recommCancle(Recomm recomm) {
 		service.deleteFreeRecomm(recomm);
+	}
+	
+	@RequestMapping("/free/search.json")
+	@ResponseBody
+	public List<Board> search(@RequestParam(value = "pageNo", defaultValue = "1") int pageNo, Model model, Search search) throws Exception {
+		// 총 게시글 수 표시
+		int count = service.selectFreeSearchCount(search);
+		int lastPage = (int) Math.ceil(count / 10d);
+		
+		// 페이지 블럭 시작
+		int pageSize = 10;
+		int currTab = (pageNo - 1) / pageSize + 1;
+		// 11번 부터 2페이지가 되는것
+		int beginPage = (currTab - 1) * pageSize + 1;
+		int endPage = currTab * pageSize < lastPage ? currTab * pageSize : lastPage;
+		System.out.println(service.freeSearch(search));
+		model.addAttribute("beginPage", beginPage);
+		model.addAttribute("endPage", endPage);
+		model.addAttribute("lastPage", lastPage);
+		model.addAttribute("pageNo", pageNo);
+		model.addAttribute("search", service.freeSearch(search));
+		return service.freeSearch(search);
 	}
 }

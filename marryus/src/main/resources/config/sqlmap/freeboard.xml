@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.co.marryus.repository.mapper.FreeBoardMapper">
+<mapper namespace="kr.co.marryus.repository.mapper.ReviewBoardMapper">
 	<resultMap id="boardMap" type="Board">
 		<result column="board_no" property="boardNo" />
 		<result column="writer" property="writer" />
@@ -140,4 +140,53 @@
 		 where board_no = #{boardNo}
 		   and mem_no = #{memNo}
 	</delete>
+	<!-- 자유게시판 검색 -->
+	<select id="selectFreeSearch" parameterType="Search" resultMap="boardMap">
+		select @rownum:=@rownum+1 as no, b.*, (select count(*) from mu_board where category = 'fr') as cnt
+		  from mu_board b, (select @rownum:=0) TMP
+		 where category = 'fr'
+		 <if test="type != ''" >
+		 	<choose>
+		 		<when test="type==1">
+		 			and title like concat('%', #{content}, '%')
+		 		</when>
+		 		<when test="type==2">
+		 			and content like concat('%', #{content}, '%')
+		 		</when>
+		 		<when test="type==3">
+		 			and writer like concat('%', #{content}, '%')
+		 		</when>
+		 		<otherwise>
+		 			and title like concat('%', #{content}, '%')
+		 			and content like concat('%', #{content}, '%')
+		 		</otherwise>
+	 		</choose>
+		 </if>
+		 order by no desc
+		 limit #{begin}, 10
+	</select>
+	
+	<!-- 자유게시판 검색된 글 수 -->
+	<select id="selectFreeSearchCnt" parameterType="Search" resultType="int">
+		select count(*)
+		  from mu_board
+		 where category = 'fr'
+		 <if test="type != ''">
+		 	<choose>
+		 		<when test="type==1">
+		 			and title like concat('%', #{content}, '%')
+		 		</when>
+		 		<when test="type==2">
+		 			and content like concat('%', #{content}, '%')
+		 		</when>
+		 		<when test="type==3">
+		 			and writer like concat('%', #{content}, '%')
+		 		</when>
+		 		<otherwise>
+		 			and title like concat('%', #{content}, '%')
+		 			and content like concat('%', #{content}, '%')
+		 		</otherwise>
+		 	</choose>
+		 </if>
+	</select>
 </mapper>

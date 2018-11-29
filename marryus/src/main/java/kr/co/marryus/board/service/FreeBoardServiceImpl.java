@@ -9,6 +9,7 @@ import kr.co.marryus.repository.domain.Board;
 import kr.co.marryus.repository.domain.Comment;
 import kr.co.marryus.repository.domain.Page;
 import kr.co.marryus.repository.domain.Recomm;
+import kr.co.marryus.repository.domain.Search;
 import kr.co.marryus.repository.mapper.FreeBoardMapper;
 
 @Service
@@ -89,6 +90,16 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 	@Override
 	public void deleteFreeRecomm(Recomm recomm) {
 		mapper.deleteFreeBoardRecomm(recomm);
+	}
+
+	@Override
+	public List<Board> freeSearch(Search search) {
+		return mapper.selectFreeSearch(search);
+	}
+
+	@Override
+	public int selectFreeSearchCount(Search search) {
+		return mapper.selectFreeSearchCnt(search);
 	}
 	
 } // end class
