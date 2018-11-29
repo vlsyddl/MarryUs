@@ -40,8 +40,8 @@
         </div>
         <nav>
             <ul>
-                <li class="active"><a href="#"><i class="fas fa-th-large"></i> Main</a></li>
-                <li><a href="#"><i class="fas fa-list"></i> Boarad</a></li>
+                <li class="active"><a href="<c:url value="/admin//main.do" />"><i class="fas fa-th-large"></i> Main</a></li>
+                <li><a href="<c:url value="/admin/board.do" />"><i class="fas fa-list"></i> Boarad</a></li>
                 <c:if test="${admin.admType eq 'sadm'}">
                 	<li><a href="#"><i class="fas fa-user-cog"></i> User</a></li>
                 </c:if>

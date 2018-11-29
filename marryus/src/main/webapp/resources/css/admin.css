@@ -124,3 +124,164 @@
 #connectionStatistics{
     padding: 30px;
 }
+
+.contentsTab{
+       background: #fff;
+    padding: 50px 30px;
+    border-radius: 20px;
+    box-shadow: 10px 10px 10px #333;
+}
+.contentsTab > ul:after{
+    display: block;
+    content: "";
+    clear: both;
+}
+.contentsTab > ul > li{
+    display: block;
+    float: left;
+    position: relative;
+}
+.contentsTab > ul > li::before{
+    position: absolute;
+    width: 0%;
+    top: 0;
+    left: 0;
+    height: 2px;
+    background: #0971ce;
+    content: '';
+    display: block;
+    transition: all 0.2s;
+}
+.contentsTab > ul > li:hover::before,.contentsTab > ul > li.on::before{
+    width: 100%;
+}
+.contentsTab > ul > li::after{
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    background: #d9d9d9;
+    content: '';
+    display: block;
+    transition: all 0.2s;
+}
+.contentsTab > ul > li:hover::after,.contentsTab > ul > li.on::after{
+    width: 0%;
+}
+.contentsTab > ul > li >a{
+    display: block;
+    text-align: center;
+    padding: 15px 0;
+    border-left: 1px solid #d9d9d9;
+    border-top: 1px solid #d9d9d9;
+}
+.contentsTab > ul > li:last-child >a{
+    border-right: 1px solid #d9d9d9;
+}
+.tabContents{padding:20px 0px;}
+.tabContents >div{
+    display: block;
+}
+.tabContents >div:after{
+    display: block;
+    content: '';
+    clear: both;
+}
+.tabContents >div.on{
+    display: block;
+}
+table.table.list > thead > tr > th{
+    background: #55608f;
+    color: #fff;
+    text-align: center;
+}
+table.table.list > tbody > tr > td{
+    text-align:  center;
+    padding: 12px 0;
+}
+table.table.list > tbody > tr > td> a{
+    display: block;
+    width: 100%;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+}
+table.table.list > tbody > tr:last-child > td{
+	border-bottom: 1px solid #d9d9d9;
+}
+.pagination > li > a >span{
+    padding: 2px 0;
+    display: inline-block;
+}
+.searchWrap{
+    margin: auto;
+    width: 100%;
+    max-width: 	400px;
+}
+.searchWrap:after{
+	display: block;
+	clear: both;
+	content: '';
+}
+.searchWrap >form> *{
+    display: block;
+    float: left;
+}
+.searchWrap select{
+	width: 20%;
+	border-radius: 4px 0 0 4px;
+	border-right: 0;
+}
+.searchWrap input{
+	width: 70%;
+	border-radius: 0;
+}
+.searchWrap span{
+	width: 10%;
+}
+.searchWrap span button{
+	padding-top: 9px;
+	padding-bottom: 9px;
+}
+.writeBtn{
+    display: block;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    padding: 5px 10px;
+   float: right;
+   transition: all 0.5s;
+}
+.writeBtn:hover{
+	background: #acd2dd;
+	color: #fff;
+}
+
+.modal-dialog{
+	width: 800px;
+}
+.form-group label{
+	display: block;
+	margin-bottom: 10px;
+}
+.detailTitle{
+	font-size: 1.4em;
+	border-bottom: 1px solid #d9d9d9;
+}
+.detailContent{
+	min-height:300px;
+}
+.detailAnswer,.insertAnswer,.modifyAnswer{
+	padding: 30px 0;
+	border-top:2px solid #000;
+}
+.detailAnswer >.btnBox,.insertAnswer>.btnBox,.modifyAnswer>.btnBox{
+	margin-top: 15px;
+	text-align: right;
+}
+.detailAnswer >.btnBox >a,.insertAnswer>.btnBox >a,.modifyAnswer>.btnBox >a{
+	display: inline-block;
+	border: 1px solid #333;
+	padding: 5px 10px;
+}

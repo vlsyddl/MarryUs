@@ -55,6 +55,13 @@
 		<result column="com_type" property="comType" />
 	</resultMap>
 	
+	<resultMap type="Answer" id="answerMap">
+		<result column="question_no" property="questionNo"/>
+		<result column="answer_no" property="answerNo"/>
+		<result column="content" property="content"/>
+	</resultMap>
+
+	
 	<!-- admin check -->
 	<select id="selectAdmin" parameterType="Admin" resultMap="adminMap">
 		select * 
@@ -116,6 +123,85 @@
 		where com_okay ='n'
 		limit 0, 5
 	</select>
+	
+	<!-- 게시판 목록 -->
+	<select id="boardList" parameterType="SearchForm" resultMap="boardMap">
+		select * 
+		from mu_board
+		where category = #{category}
+		  <if test="content != 'null'">
+	 	      and ${type} like CONCAT('%',#{content},'%')
+	 	   </if>
+		 order by board_no desc
+		 limit #{begin}, 10
+	</select>
+	
+	<!-- 전체 게시물의 수 (조건에 맞는)-->
+	<select id="boardCount" parameterType="SearchForm" resultType="int">
+		select count(*)
+		from mu_board 
+		where category = #{category}
+		<if test="content != 'null'">
+	 	      and ${type} like CONCAT('%',#{content},'%')
+	 	   </if>
+	</select>
+	<!-- 게시물 디테일 -->
+	<select id="boardDetail" parameterType="int" resultMap="boardMap">
+		select * 
+		 from mu_board
+		where board_no = #{boardNo}
+	</select>
+	
+	<!-- 게시물 등록 -->
+	<insert id="boardInsert" parameterType="Board">
+		insert into mu_board (
+			title, writer, content, category
+		) values(
+			#{title}, #{writer}, #{content},#{category}
+		)
+	</insert>
+	
+	<!-- 게시판 삭젠 -->
+	<delete id="boardDelete" parameterType="int">
+		delete from mu_board
+		 where board_no = #{boardNo}
+	</delete>
+	
+	<!-- 게시판 수정 -->
+	<update id="boardUpdate" parameterType="Board">
+		UPDATE mu_board
+		 SET title = #{title},content = #{content}
+		WHERE board_no =  #{boardNo}
+	</update>
+	
+	<!-- 1:1 답변 등록 -->
+	<insert id="answerInsert" parameterType="Answer">
+		insert into mu_answer(
+			question_no, content
+		) values(
+			#{questionNo}, #{content}
+		)
+	</insert>
+	
+	<!-- 1:1 답변 디테일 -->
+	<select id="answerDetail" parameterType="int" resultMap="answerMap">
+		select * 
+		 from mu_answer
+		where question_no = #{questionNo}
+	</select>
+	
+	<!-- 1:1 답변 수정 -->
+	<update id="answerUpdate" parameterType="Answer">
+		UPDATE mu_answer
+		 SET content = #{content}
+		WHERE answer_no =  #{answerNo}
+	</update>
+	
+	<!-- 1:1 답변 삭젠 -->
+	<delete id="answerDelete" parameterType="int">
+		delete from mu_answer
+		 where answer_no = #{answerNo}
+	</delete>
 </mapper>
 
 
