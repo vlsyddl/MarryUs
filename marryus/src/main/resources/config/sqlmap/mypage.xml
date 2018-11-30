@@ -65,6 +65,7 @@
 		<result property="memPhone" column="mem_phone" />
 		<result property="genBirth" column="gen_birth" />
 		<result property="genGender" column="gen_gender" />
+		<result property="genNo" column="gen_no" />
 	</resultMap>
 	
 	
@@ -80,6 +81,7 @@
 		<result property="memPhone" column="mem_phone" />
 		<result property="comType" column="com_type" />
 		<result property="comOkay" column="com_okay" />
+		<result property="comNo" column="com_no" />
 	</resultMap>
 	
 	
@@ -105,7 +107,10 @@
         on ci.com_info_no = cf.com_info_no
         where ci.mem_no=#{memNo}
         and cf.com_file_repr = 'Y'
+        and com_info_type in('v','s','d','m','h','j','e')
+        order by field(com_info_type,'v','s','d','m','h','j','e')
 	</select>
+										
 	
 	
 	<select id="selectComInfoDetail" parameterType="CompanyInfo" resultMap="comInfoMap">
@@ -127,9 +132,9 @@
 	</insert>
 	
 	<update id="updateComInfo" parameterType="CompanyInfo">
-		update mu_comany_info 
+		update mu_company_info 
         set com_info_content = #{comInfoContent},
-		com_info_profile = #{comInfoProfile}
+		com_info_profile = #{comInfoProfile},
 		com_info_name=#{comInfoName},
 		com_info_phone=#{comInfoPhone},
 		com_info_addr=#{comInfoAddr},
@@ -140,7 +145,7 @@
 	</update>
 	
 	<delete id="deleteComInfo" parameterType="int">
-		delete from mu_comany_info 
+		delete from mu_company_info 
 		where com_info_no=#{comInfoNo}
 	</delete>
 	
@@ -172,13 +177,6 @@
 		values(#{comInfoNo}, #{comFileName}, #{comFileOriname}, #{comFilePath}, #{comFileRepr})
 	</insert>
 	
-	<update id="updateComFile" parameterType="CompanyFile">
-		update mu_comany_file
-		set com_info_no=#{comInfoNo},
-		com_file_name=#{comFileName},
-		com_file_path=#{comFilePath}
-		where com_info_no=#{comInfoNo}
-	</update>
 	
 	<delete id="deleteComFile" parameterType="int">
 		delete from mu_company_file 
@@ -189,13 +187,12 @@
 	<!-- 관리자 경매리스트 -->
 
     <select id="selectAuction"  parameterType="Page" resultMap="tenderMap">
-        SELECT tender_regdate, tender_status, tender_budget, aa.mem_name
-        FROM (select m.mem_name mem_name, a.mem_no mem_no, a.auction_no auction_no
-        from mu_auction a, mu_member m
-        where a.mem_no = m.mem_no
-        ) as aa
-        RIGHT JOIN mu_tender t
-        ON aa.auction_no = t.auction_no
+               select *
+        from mu_member m
+        inner join mu_auction a
+        on a.mem_no = m.mem_no
+        inner join mu_tender t
+        ON a.auction_no = t.auction_no
         where t.mem_no=#{memNo}
         limit #{begin}, 10
 	</select>
@@ -224,27 +221,6 @@
 		and m.mem_no=#{memNo}
 	</select>
 	
-	
-	<update id="updateMember" parameterType="Member" >
-		update mu_member
-		set mem_pass=#{memPass}
-		where mem_no = #{memNo}
-		and mem_name=#{memName}
-		and mem_phone=#{memPhone}
-		where gen_no = #{genNo}
-	</update>
-	
-	
-	
-	<update id="updateGeneralMember" parameterType="GeneralMember" >
-		update mu_member
-		set birth=#{birth}
-		where gen_no = #{genNo}
-	</update>
-	
-	
-
-
 	<select id="selectCompanyMember" parameterType="int" resultMap="companyMemberMap">
 		select *
 		from mu_member m, mu_company c
@@ -252,13 +228,34 @@
 		and m.mem_no=#{memNo}
 	</select>
 	
-	<update id="updateCompanyMember" parameterType="CompanyMember">
+	
+	<update id="updateMember" parameterType="Member" >
 		update mu_member
+		set mem_pass=#{pass}
+		and mem_name=#{name}
+		and mem_phone=#{phone}
+		where mem_no = #{no}
+	</update>
+	
+	<update id="updateGeneralMember" parameterType="GeneralMember" >
+		update mu_company
+		set birth=#{birth}
+		where gen_no = #{genNo}
+	</update>
+	
+	<update id="updateCompanyMember" parameterType="CompanyMember">
+		update mu_company
 		set com_addr=#{comAddr}
 		and com_addr_detail=#{comAddrDetail}
 		and com_type=#{comType}
-		where gen_no = #{genNo}
+		where com_no = #{comNo}
 	</update>
+	
+	
+
+
+
+	
 
 	
 	

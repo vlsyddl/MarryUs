@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 import kr.co.marryus.member.service.MemberService;
 import kr.co.marryus.mypage.service.MypageService;
@@ -90,9 +91,12 @@ public class MypageController {
 	
 	/** 업체 정보 올리기  */
     @RequestMapping("/insertComInfo.do")
-    public String insertComInfoProfile(CompanyInfo comInfo, MultipartFile[] files, MultipartFile file, HttpSession session) throws Exception{
-        service.insertComInfo(comInfo);
-        System.out.println(comInfo.getComInfoContent());
+    public void insertComInfoProfile(CompanyInfo comInfo, MultipartFile[] files, MultipartFile file, HttpSession session) throws Exception{
+        if(comInfo.getType().equals("insert")) {
+    	service.insertComInfo(comInfo);
+        }else if(comInfo.getType().equals("update")){
+    	service.updateComInfo(comInfo);
+        }
         
         String imgPath = context.getRealPath("/img/comProfile");
         File filePath = new File(imgPath);
@@ -127,22 +131,13 @@ public class MypageController {
            service.insertComFile(comFile);
            file.transferTo(new File(imgPath, fileName));
         }
-        
-        return "mypage/myProfile";
     }
 	
 	
-	/** 업체 서비스 정보 올리기 */
-	@RequestMapping("/updateComInfoProfile.do")
-	public String updateComInfoProfile(CompanyInfo comInfo, CompanyFile comFile) {
-		service.updateComInfo(comInfo);
-		service.updateComFile(comFile);
-	      return "mypage/service";
-	}
+
 	
 	
-	
-	/** 업체 서비스 정보 수정하기*/
+	/** 업체 서비스 정보 수정하기(작성글 보기)*/
 	@RequestMapping("/myServiceUpdate.do")
 	public void myServiceUpdate(Model model, CompanyInfo comInfo) {
 		model.addAttribute("auctionList", service.selectComInfoDetail(comInfo));
@@ -161,9 +156,7 @@ public class MypageController {
 	/** 업체 서비스 파일 삭제하기 */
 	@RequestMapping("/deleteImg.do")
 	public void deleteImg(Integer comInfoNo) {
-		System.out.println((int)comInfoNo);
-		int no =service.deleteComFile(comInfoNo);
-		System.out.println(no==1 ? "성공" : "실패");
+		service.deleteComFile(comInfoNo);
 	}
 	
 	
@@ -181,35 +174,34 @@ public class MypageController {
 	
 	
 	@RequestMapping("/generalUpdate.do")
-	public String generalUpdate( CompanyMember comMem, Member member, String prePass) {
-		if(member.getPass().isEmpty()) {
-			member.setPass(prePass);
-		}
-		service.updateCompanyMember(comMem);
+	public void generalUpdate( GeneralMember genMem, Member member, String prePass) {
+			if(member.getPass().isEmpty()) {
+				member.setPass(prePass);
+			}
+		service.updateGeneralMember(genMem);
 		service.updateMember(member);
-		return "/generalUpdateForm.do";
 	}
+	
 	
 	
 	@RequestMapping("/companyUpdate.do")
-	public String companyUpdate( GeneralMember genMem, Member member, String prePass) {
-		if(member.getPass().isEmpty()) {
-			member.setPass(prePass);
-		}
-		service.updateGeneralMember(genMem);
+	public void companyUpdate( CompanyMember comMem, Member member, String prePass) {
+			if(member.getPass().isEmpty()) {
+				member.setPass(prePass);
+			}
+		
 		service.updateMember(member);
-		return "/companyUpdateForm.do";
+		service.updateCompanyMember(comMem);
 	}
 	
 	@RequestMapping("/validMember.do")
-	public void validMember(Member member, String prePass, Model model) {
-		System.out.println(member.getEmail());
+	public String validMember(Member member, String prePass, Model model) {
 		Member mem=memService.login(member);
 		if(passwordEncoder.matches(prePass, mem.getPass())) {
-			model.addAttribute("result","success");
-		}else {
-			model.addAttribute("result","fail");
+			System.out.println("성공.....");
+			return "success";
 		}
+			return "fail";
 	}
 }
 

@@ -32,4 +32,6 @@ public class CompanyInfo {
 	private int tenderBudget;
 	private Date tenderRegdate;
 	
+	private String Type;
+	
 }

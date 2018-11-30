@@ -182,12 +182,13 @@
 	<div id="outer_box">
 		 <div id="profile_box">
 
-	        <form action="/mypage/insertComInfoProfile.do" method="post" id="frm"  enctype="multipart/form-data" acceptcharset="UTF-8">
+	        <form action=<c:url value="insertComInfo.do"/>  method="post" id="frm"  enctype="multipart/form-data" acceptcharset="UTF-8">
 	        <table>
 	       	<tr>
 	        	<td class="highlight">업체 이름</td>
 	        	<td><input type="text" name="comInfoName" value="${auctionList.comInfoName}"/>
-	        	<input type="hidden" name="comInfoNo" value="${auctionList.comInfoNo}"/></td>
+	        	<input type="hidden" name="comInfoNo" value="${auctionList.comInfoNo}"/>
+	        	<input type="hidden" name="type" value="update"/></td>
 	        </tr>
 	       	<tr>
 	        	<td class="highlight">서비스 카테소리</td>
@@ -272,7 +273,7 @@
 			</table>
 				</form>		
 				<div class="form-btn">
-	                 <a href="#" class="cancle btn">취소</a>
+	                 <a href=<c:url value="myServiceDelete.do?comInfoNo=${auctionList.comInfoNo}"/> class="cancle btn">삭제</a>
 	                 <a href="#" class="save btn" id="savebutton">수정</a>
 	            </div>
 	       
@@ -315,21 +316,18 @@
  	           formData.append("files", file);
  	        } 
  		   		formData.append("file", $("input[name=file]")[0].files[0]);
- 			
- 			 $.ajax({
+  			 $.ajax({
  		    	   url:"insertComInfo.do",
  		    	   type:"POST",
  		    	   processData: false, //쿼리 (데이터 = 값) 형식을 해제하고 문자열? 형태로 보냄
  		           contentType: false, // 기본 타입 말고 multipart/form-data로 설정하게
  		    	   data: formData
  		       }).done(function (data){
- 		    	   console.log(data);
- 		    	   console.log("성공");
+ 		    	   alert("정보 수정이 완료되었습니다.");
+ 		    	  location.href ="service.do"
  		       }).fail(function(e){
- 	        	   console.log("실패");
- 	        	   console.log(e);
- 	        	   console.log(e.status);
- 	           })
+ 	        	   alert("정보 수정 중 오류가 발생했습니다.");
+ 	           }) 
  	       	
 	    })
 	})

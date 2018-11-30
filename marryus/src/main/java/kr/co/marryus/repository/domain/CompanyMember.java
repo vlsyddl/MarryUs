@@ -10,9 +10,10 @@ public class CompanyMember {
 	private String memType;
 	private String memStatus;
 	private String memName;
+	private String memPhone;
 	private String comAddr;
 	private String comAddrDetail;
-	private String memPhone;
 	private String comType;
 	private String comOkay;
+	private int comNo;
 }

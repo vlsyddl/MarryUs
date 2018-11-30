@@ -13,5 +13,6 @@ public class GeneralMember {
 	private String memPhone;
 	private String genBirth;
 	private String genGender;
+	private int genNo;
 	
 }

@@ -186,7 +186,8 @@
 	        <table>
 	       	<tr>
 	        	<td class="highlight">업체 이름</td>
-	        	<td><input type="text" name="comInfoName"/></td>
+	        	<td><input type="text" name="comInfoName"/>
+	        	<input type="hidden" name="type" value="insert"/></td>
 	        </tr>
 	       	<tr>
 	        	<td class="highlight">서비스 카테소리</td>
@@ -304,21 +305,21 @@
  	           formData.append("files", file);
  	        } 
  		   		formData.append("file", $("input[name=file]")[0].files[0]);
- 			
- 			 $.ajax({
- 		    	   url:"/marryus/mypage/insertComInfo.do",
- 		    	   type:"POST",
- 		    	   processData: false, //쿼리 (데이터 = 값) 형식을 해제하고 문자열? 형태로 보냄
- 		           contentType: false, // 기본 타입 말고 multipart/form-data로 설정하게
- 		    	   data: formData
- 		       }).done(function (data){
- 		    	   console.log(data);
- 		    	   console.log("성공");
- 		       }).fail(function(e){
- 	        	   console.log("실패");
- 	        	   console.log(e);
- 	        	   console.log(e.status);
- 	           })
+ 		   		
+ 		   		
+ 		   		
+ 	  			 $.ajax({
+ 	 		    	   url:"insertComInfo.do",
+ 	 		    	   type:"POST",
+ 	 		    	   processData: false, //쿼리 (데이터 = 값) 형식을 해제하고 문자열? 형태로 보냄
+ 	 		           contentType: false, // 기본 타입 말고 multipart/form-data로 설정하게
+ 	 		    	   data: formData
+ 	 		       }).done(function (data){
+ 	 		    	   alert("서비스 작성이 완료되었습니다.");
+ 	 		    	  location.href ="service.do"
+ 	 		       }).fail(function(e){
+ 	 	        	   alert("서비스 수정 중 오류가 발생했습니다.");
+ 	 	           }) 
  	       	
 	    })
 	})
