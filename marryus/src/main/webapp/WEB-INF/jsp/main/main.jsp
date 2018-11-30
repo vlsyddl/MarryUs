@@ -41,7 +41,7 @@
 			</div>
 			<div class="btnBox">
 				<a href="#" data-toggle="modal" data-target="#planingModal"
-					class="mainBtn"> 나만의 웨딩 플래닝 </a>
+					id="weddingPlanBtn" class="mainBtn"> 나만의 웨딩 플래닝 </a>
 			</div>
 			<div class="deadLine">
 				<ul>
@@ -143,6 +143,7 @@
 				</div>
 			</div>
 		</div>
+		<!-- 역경매 현황 -->
 		<section class="contents contents01">
 		<div class="container">
 			<ul class="statusList">
@@ -151,9 +152,10 @@
 					<div class="row">
 						<div class="col-md-6">
 							<h5 class="v-roll-title">
+								<input type="hidden" id="auctionStatusIng" name="auctionStatus" value="ing" />
 								<a href="#">입찰중 역경매</a>
 							</h5>
-							<ul class="v-roll">
+							<ul class="v-roll" id="vAuctionList">
 								<li><span class="w18"><span>입찰중</span></span> <span
 									class="w18">이O재</span> <span class="w28">서울시 강동구</span> <span
 									class="w18">D-21일</span> <span class="w18">접수중</span></li>
@@ -179,6 +181,7 @@
 						</div>
 						<div class="col-md-6">
 							<h5 class="v-roll-title">
+							<input type="hidden" id="auctionStatusDone" name="auctionStatus" value="done" />
 								<a href="#">입찰중 역경매</a>
 							</h5>
 							<ul class="v-roll">
@@ -277,6 +280,7 @@
 					<div class="row">
 						<div class="col-md-6">
 							<h5 class="v-roll-title">
+							<input type="hidden" id="auctionStatus" name="auctionStatus" value="ing" />
 								<a href="#">입찰중 역경매</a>
 							</h5>
 							<ul class="v-roll">
@@ -305,6 +309,7 @@
 						</div>
 						<div class="col-md-6">
 							<h5 class="v-roll-title">
+							
 								<a href="#">입찰중 역경매</a>
 							</h5>
 							<ul class="v-roll">
@@ -403,6 +408,7 @@
 					<div class="row">
 						<div class="col-md-6">
 							<h5 class="v-roll-title">
+							<input type="hidden" id="auctionStatus" name="auctionStatus" value="ing" />
 								<a href="#">입찰중 역경매</a>
 							</h5>
 							<ul class="v-roll">
@@ -529,6 +535,7 @@
 					<div class="row">
 						<div class="col-md-6">
 							<h5 class="v-roll-title">
+							<input type="hidden" id="auctionStatus" name="auctionStatus" value="ing" />
 								<a href="#">입찰중 역경매</a>
 							</h5>
 							<ul class="v-roll">
@@ -655,6 +662,7 @@
 					<div class="row">
 						<div class="col-md-6">
 							<h5 class="v-roll-title">
+							<input type="hidden" id="auctionStatus" name="auctionStatus" value="ing" />
 								<a href="#">입찰중 역경매</a>
 							</h5>
 							<ul class="v-roll">
@@ -778,38 +786,43 @@
 				</li>
 			</ul>
 			<!--현황리스트 끝-->
-
+		
 			<div class="statusIndi">
 				<ul>
-					<li class="on"><a href="#">
+					<li class="on"><a href="#" id="weddingHallList">
 							<div class="imgWrap">
 								<img src="<c:url value="/resources/"/>img/hall_ico.png" alt=""
 									class="img-responsive center-block">
 							</div> 웨딩홀
+							  <input type="hidden" id="auctionType" name="auctionType" value="v">
 					</a></li>
-					<li><a href="#">
+					<li><a href="#" id="sdmList">
 							<div class="imgWrap">
 								<img src="<c:url value="/resources/"/>img/dress_ico.png" alt=""
 									class="img-responsive center-block">
 							</div> 스&middot;드&middot;메
+							  <input type="hidden" id="auctionType2" name="auctionType" value="smd">
 					</a></li>
-					<li><a href="#">
+					<li><a href="#" id="honeyMoonList">
 							<div class="imgWrap">
 								<img src="<c:url value="/resources/"/>img/honeymoon_ico.png"
 									alt="" class="img-responsive center-block">
 							</div> 허니문
+							  <input type="hidden" id="auctionType3" name="auctionType" value="h">
 					</a></li>
-					<li><a href="#">
+					<li><a href="#" id="jewelryList">
 							<div class="imgWrap">
 								<img src="<c:url value="/resources/"/>img/ring_ico.png" alt=""
 									class="img-responsive center-block">
 							</div> 예물
+							  <input type="hidden" id="auctionType4" name="auctionType" value="j">
 					</a></li>
-					<li><a href="#">
+					<li><a href="#" id="extraList">
 							<div class="imgWrap">
 								<img src="<c:url value="/resources/"/>img/service_ico.png"
 									alt="" class="img-responsive center-block">
 							</div> 추가서비스
+							  <input type="hidden" id="auctionType5" name="auctionType" value="e">
 					</a></li>
 				</ul>
 			</div>
@@ -956,7 +969,7 @@
 								</div>
 
 								<div class="Form__input-group">
-									<input type="submit" value="Login"
+									<input id="loginBo" type="submit" value="Login"
 										class="Form__button Login-card__submit-button">
 								</div>
 
@@ -1032,57 +1045,70 @@
 					<div class="planingContainer">
 						<div class="navigation">
 							<ol>
-								<li><a href="#" data-ref="name">Name</a></li>
-								<li><a href="#" data-ref="uname">Username</a></li>
-								<li><a href="#" data-ref="email">Email</a></li>
-								<li><a href="#" data-ref="viewpswd">Password</a></li>
-								<li><a href="#" data-ref="phone">Phone</a></li>
+								<li><a href="#" data-ref="planPartner">partner</a></li>
+								<li><a href="#" data-ref="planPlace">place</a></li>
+								<li><a href="#" data-ref="planWedDate">wedDate</a></li>
+								<li><a href="#" data-ref="planVenue">venue</a></li>
+								<li><a href="#" data-ref="planSdm">sdm</a></li>
+								<li><a href="#" data-ref="planHoneyMoon">honeyMoon</a></li>
+								<li><a href="#" data-ref="planJewelry">jewelry</a></li>
+								<li><a href="#" data-ref="planVisitor">visitor</a></li>
+								<li><a href="#" data-ref="planMeal">meal</a></li>
+								<li><a href="#" data-ref="planBudget">budget</a></li>
 							</ol>
 						</div>
-						<form id="sign-form" class="sign-form">
+						<form action="submitWeddingPlan.do" method="post" id="sign-form" class="sign-form">
+							<!-- 로그인했을때 세션에 담기 회원번호 hidden 으로 받기  -->
+							<input type="hidden" name="memNo" value="${user.no}"/>
 							<ol class="questions">
-								<li><span><label for="name">Hi, What is your
-											Name?</label></span> <input class="active" id="name" name="name" type="text"
-									placeholder="Enter your full name" autofocus /></li>
-								<li><span><label for="uname">& what shall we
-											call you?</label></span> <input id="uname" name="username" type="text"
-									placeholder="Enter a username" autofocus /></li>
-								<li><span><label for="email">Enter you email</label></span>
-									<input id="email" name="email" type="text" placeholder="Email"
-									autofocus /></li>
-								<li><span><label for="password">Choose a
-											password</label></span> <input id="viewpswd" name="password" type="text"
-									placeholder="this your password" /> <input id="password"
-									name="password" type="password"
-									placeholder="make sure you dont forget" autofocus /> <span
-									id="show-pwd" class="view"></span></li>
-								<li><span><label for="phone">Enter your
-											phone number</label></span> <select name="countryCode" class="country">
-										<option data-countryCode="GB" value="91">(+91) INDIA </option>
-										<option data-countryCode="GB" value="44">(+44) UK </option>
-										<option data-countryCode="US" value="1">(+1) USA </option>
-										<optgroup label="Other countries">
-											<option data-countryCode="DZ" value="213"> (+213)Algeria</option>
-											<option data-countryCode="AD" value="376"> (+376) Andorra</option>
-											<option data-countryCode="AO" value="244">(+244) Angola </option>
-											<option data-countryCode="AI" value="1264"> (+1264) Anguilla</option>
-											<option data-countryCode="AG" value="1268">(+1268) Antigua &amp; Barbuda </option>
-											<option data-countryCode="AR" value="54">(+54) Argentina </option>
-											<option data-countryCode="AM" value="374"> (+374) Armenia</option>
-											<option data-countryCode="AW" value="297">(+297) Aruba </option>
-											<option data-countryCode="AU" value="61"> (+61) Australia</option>
-											<option data-countryCode="AT" value="43">(+43) Austria </option>
-											<option data-countryCode="AZ" value="994"> (+994) Azerbaijan</option>
-											<option data-countryCode="BS" value="1242">(+1242)Bahamas </option>
-										</optgroup>
-								</select> <input id="phone" name="phone" type="text" autofocus /></li>
-								<li><p
-										style="margin-top: 45px; font-size: 32pt; float: right">
-										<a href="#" style="color: white; text-decoration: none"
-											id="signup">sign up</a>
-									</p></li>
-
-
+								<li>
+									<span><label for="planPartner">안녕하세요? 예비 신랑/신부님의 이름을 알 수 있을까요?</label></span> 
+									<input class="active" id="planPartner" name="planPartner" type="text" placeholder="Enter your partner name" autofocus />
+								</li>
+								<li>
+									<span><label for="planPlace">결혼식은 어느 지역에서 하실 예정이신가요~?</label></span> 
+									<input id="planPlace" name="planPlace" type="text" placeholder="Enter palce" autofocus />
+								</li>
+								<li>
+									<span><label for="planWedDate">결혼식 예정일을 알수 있을까요~?</label></span>
+									<input id="planWedDate" name="planWedDate" type="text" placeholder="Weeding date?" autofocus />
+								</li>
+								<li>
+									<span><label for="planVenue">웨딩홀/장소는 예약하셨나요?</label></span>
+									<input id="planVenue" name="planVenue" type="text" placeholder="Are you reserved wedding hall?" autofocus />
+								</li>
+								<li>
+									<span><label for="planSdm">스드메 예약</label></span>
+									<input id="planSdm" name="planSdm" type="text" placeholder="booking Studio/Dress/MakeUp??" autofocus />
+								</li>
+								<li>
+									<span><label for="planHoneyMoon">허니문</label></span>
+									<input id="planHoneyMoon" name="planHoneyMoon" type="text" placeholder="Have you decided honey moon place?" autofocus />
+								</li>
+								<li>
+									<span><label for="planJewelry">예물</label></span>
+									<input id="planJewelry" name="planJewelry" type="text" placeholder="Are you reserved wedding hall?" autofocus />
+								</li>
+								<li>
+									<span><label for="planVisitor">하객수</label></span>
+									<input id="planVisitor" name="planVisitor" type="text" placeholder="how many ?" autofocus />
+								</li>
+								<li>
+									<span><label for="planMeal">한명당 예상 식대?!</label></span>
+									<input id="planMeal" name="planMeal" type="text" placeholder="how much?" autofocus />
+								</li>
+								<li>
+									<span><label for="planBudget">예산</label></span>
+									<input id="planBudget" name="planBudget" type="text" placeholder="how much?" autofocus />
+								</li>
+								
+								<!-- submit 버튼 -->
+								<li>
+									<p style="margin-top: 45px; font-size: 32pt; float: right">
+										<input type="submit" style="color: white; text-decoration: none" id="signup" value="Submit" />
+										<!-- <a href="#" style="color: white; text-decoration: none" id="signup">sign up</a> -->
+									</p>
+								</li>
 							</ol>
 							<div id="next-page" alt="Kiwi standing on oval"></div>
 							<div class="error-message"></div>
@@ -1144,6 +1170,7 @@
           </div>
           
       </div>
+    
     <script>
 		
         $(function(){
@@ -1270,9 +1297,141 @@
                  sendAdmin("무슨말인지 잘모르겠어요 ㅠㅠ","웨딩홀,스드메,예물,허니문,추가 서비스등 ","웨딩에 관련된 질문을 해주시면 ","답변해드릴게요")
 
 
-								}
-							}
-						})
+						}
+					}
+				})
+		/*
+		
+			로딩되자마자 웨딩홀 역경매 정보 불러오기 
+		
+		*/
+		
+		$(document).ready(function(){
+			var auctionType = $("#auctionType").val();
+			var auctionStatusIng = $("#auctionStatusIng").val();
+			var auctionStatusDone = $("auctionStatusDone").val();
+			$.ajax({
+				url:"/marryus/main/auctionList.json",
+				data:"auctionType="+auctionType+"&auctionStatus="+auctionStatusIng  ,
+				type:"post"
+			}).done(function(result){
+				console.log(result);
+				for(var i = 0 ; i<result.length ; i++){
+					console.log("auctionNo"+result[i].auctionNo);
+					
+				}
+			});
+			$.ajax({
+				url: "/marryus/main/auctionList.json",
+				data:"auctionType="+auctionType+"&auctionStatus="+auctionStatusDone ,
+				type:"post"
+			}).done(function(result){
+				console.log(result);
+			});
+		});
+		// 입찰 현황 버튼 클릭시 
+		/*
+			input type hidden값으로 버튼이 눌때마다 auctionType 버튼의 값이 넘어오게 했다.
+			 내가 옥션 현황에 필요한게 
+			 *auctionType
+			 *auctionStatus 
+			 위 두개의 값인디 ...
+			 뽑아야 하는 값은 [입찰중, 이름, 지역?(지역)..??, 끝나는 날짜(디데이로 계산), 접수중]
+		*/
+        $("#weddingHallList").click(function(){
+        	var hall = $("#auctionType").val();
+        	var auctionStatus = $("#auctionStatus").val();
+        	console.log(hall);
+        	console.log(auctionStatus);
+        	$.ajax({
+				url:"/marryus/main/auctionList.json",
+				data:"auctionType="+hall+"&auctionStatus="+auctionStatus  ,
+				type:"post"
+			}).done(function(result){
+				console.log(result);
+				var data="";
+				for(var i = 0 ; i<result.length ; i++){
+					$("#vAuctionList").html(data);
+					data +="<h2>"+result[i].auctionNo+"</h2>";
+
+				}
+			});
+        	
+        });
+        $("#sdmList").click(function(){
+        	var sdm = $("#auctionType2").val();
+        	var auctionStatus = $("#auctionStatus").val();
+        	console.log(sdm);
+        	console.log(auctionStatus);
+        	$.ajax({
+				url:"/marryus/main/auctionList.json",
+				data:"auctionType="+sdm+"&auctionStatus="+auctionStatus  ,
+				type:"post"
+			}).done(function(result){
+				console.log(result);
+				for(var i = 0 ; i<result.length ; i++){
+					console.log("auctionNo"+result[i].auctionNo);
+					
+				}
+			});
+        	
+        });
+        $("#honeyMoonList").click(function(){
+        	var honeyMoon = $("#auctionType3").val();
+        	var auctionStatus = $("#auctionStatus").val();
+        	console.log(honeyMoon);
+        	console.log(auctionStatus);
+        	$.ajax({
+				url:"/marryus/main/auctionList.json",
+				data:"auctionType="+honeyMoon+"&auctionStatus="+auctionStatus  ,
+				type:"post"
+			}).done(function(result){
+				console.log(result);
+				for(var i = 0 ; i<result.length ; i++){
+					console.log("auctionNo"+result[i].auctionNo);
+					
+				}
+			});
+        	
+        });
+        $("#jewelryList").click(function(){
+        	var jewelry = $("#auctionType4").val();
+        	var auctionStatus = $("#auctionStatus").val();
+        	console.log(jewelry);
+        	console.log(auctionStatus);
+        	$.ajax({
+				url:"/marryus/main/auctionList.json",
+				data:"auctionType="+jewelry+"&auctionStatus="+auctionStatus  ,
+				type:"post"
+			}).done(function(result){
+				console.log(result);
+				for(var i = 0 ; i<result.length ; i++){
+					console.log("auctionNo"+result[i].auctionNo);
+					
+				}
+			});
+        	
+        });
+        $("#extraList").click(function(){
+        	var extra = $("#auctionType5").val();
+        	var auctionStatus = $("#auctionStatus").val();
+        	console.log(extra);
+        	console.log(auctionStatus);
+        	$.ajax({
+				url:"/marryus/main/auctionList.json",
+				data:"auctionType="+extra+"&auctionStatus="+auctionStatus  ,
+				type:"post"
+			}).done(function(result){
+				console.log(result);
+				for(var i = 0 ; i<result.length ; i++){
+					console.log("auctionNo"+result[i].auctionNo);
+					
+				}
+			});
+        	
+        });
+        
+        
 			//모달 - 로그인폼 ckeck 함수들			
 		/* 	function chceckEmail(){
         	
