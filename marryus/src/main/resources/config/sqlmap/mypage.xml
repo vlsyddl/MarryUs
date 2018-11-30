@@ -38,6 +38,7 @@
 		<result property="tenderBudget" column="tender_budget" />
 		<result property="tenderRegdate" column="tender_regdate" />
         <result property="memName" column="mem_name" />
+        <result property="memNo" column="mem_no" />
 	</resultMap>
 	
 	<resultMap id="auctionMap" type="Auction">
@@ -207,7 +208,7 @@
         from(select t.tender_no 
         from mu_auction a, mu_tender t
         where a.auction_no = t.auction_no
-        and com_no=#{comNo}) a
+        and t.mem_no=#{memNo}) a
 	</select>
 	
 	
