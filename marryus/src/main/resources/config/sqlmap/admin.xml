@@ -145,6 +145,15 @@
 	 	      and ${type} like CONCAT('%',#{content},'%')
 	 	   </if>
 	</select>
+	
+	<!-- FAQ 목록 및 디테일 -->
+	<select id="faqList" resultMap="boardMap">
+		select * 
+		from mu_board
+		where category = 'fq'
+		order by board_no desc
+	</select>
+	
 	<!-- 게시물 디테일 -->
 	<select id="boardDetail" parameterType="int" resultMap="boardMap">
 		select * 
@@ -153,7 +162,7 @@
 	</select>
 	
 	<!-- 게시물 등록 -->
-	<insert id="boardInsert" parameterType="Board">
+	<insert id="boardInsert" parameterType="Board" >
 		insert into mu_board (
 			title, writer, content, category
 		) values(
@@ -182,6 +191,13 @@
 			#{questionNo}, #{content}
 		)
 	</insert>
+	
+	<!-- 답변여부 변경 -->
+	<update id="answerStatUpdate" parameterType="int">
+		UPDATE mu_board
+		 SET answer = 'y'
+		WHERE board_no =  #{boardNo}
+	</update>
 	
 	<!-- 1:1 답변 디테일 -->
 	<select id="answerDetail" parameterType="int" resultMap="answerMap">

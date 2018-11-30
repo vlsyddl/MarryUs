@@ -213,6 +213,8 @@ public class AdminController {
 	public String answerInsert(Answer answer) {
 		String result = "";
 		if(service.answerInsert(answer)==1) {
+			System.out.println(answer);
+			service.answerStatUpdate(answer.getQuestionNo());
 			result = "success";
 		}else {
 			result = "fail";
@@ -249,5 +251,11 @@ public class AdminController {
 			result = "fail";
 		}
 		return result;
+	}
+	
+	@RequestMapping("/faqList.do")
+	@ResponseBody
+	public List<Board> faqList(){
+		return service.faqList();
 	}
 }

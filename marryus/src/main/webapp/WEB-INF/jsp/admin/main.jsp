@@ -43,7 +43,7 @@
                 <li class="active"><a href="<c:url value="/admin//main.do" />"><i class="fas fa-th-large"></i> Main</a></li>
                 <li><a href="<c:url value="/admin/board.do" />"><i class="fas fa-list"></i> Boarad</a></li>
                 <c:if test="${admin.admType eq 'sadm'}">
-                	<li><a href="#"><i class="fas fa-user-cog"></i> User</a></li>
+                	<li><a href="<c:url value="/admin/user.do"/>"><i class="fas fa-user-cog"></i> User</a></li>
                 </c:if>
                 <li><a href="#"><i class="fas fa-gift"></i> Event</a></li>
             </ul>
@@ -254,14 +254,14 @@
 	            }
 	        };
 	        var dataAuction = {
-	            labels: ["웨딩홀","스드메","허니문","예물","추가서비스"],
+	            labels: ["웨딩홀","스튜디오","드레스","메이크업","허니문","예물","추가서비스"],
 	            datasets: [
 	                {
 	                    fill: false,
 	                    lineTension: 0,
-	                    backgroundColor : ["red","orange","yellow","green","blue"],
+	                    backgroundColor : ["red","orange","yellow","green","blue","indigo","purple"],
 	                    borderWidth:0,
-	                    data: [data.weddingHall,data.studio,data.dress,data.jewelry,data.etc],
+	                    data: [data.weddingHall,data.studio,data.dress,data.makeUp,data.honeyMoon,data.jewelry,data.etc],
 	                }
 	            ],
 	            options: {

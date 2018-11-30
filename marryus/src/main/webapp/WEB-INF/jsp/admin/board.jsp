@@ -44,7 +44,7 @@
                 <li><a href="<c:url value="/admin/main.do" />"><i class="fas fa-th-large"></i> Main</a></li>
                 <li class="active"><a href="<c:url value="/admin/board.do" />"><i class="fas fa-list"></i> Boarad</a></li>
                 <c:if test="${admin.admType eq 'sadm'}">
-                	<li><a href="#"><i class="fas fa-user-cog"></i> User</a></li>
+                	<li><a href="<c:url value="/admin/user.do"/>"><i class="fas fa-user-cog"></i> User</a></li>
                 </c:if>
                 <li><a href="#"><i class="fas fa-gift"></i> Event</a></li>
             </ul>
@@ -98,6 +98,41 @@
                                 </span>
                                </form>
                           </div>
+                    </div>
+                    <div class="tab2" style="display:none;">
+                    	<div class="faqWrap">
+                    		<dl>
+                    			<dt class="title on">
+                    				<a href="#">
+                    					title
+                    				</a>
+                    			</dt>
+                    			<dd class="content" style="display: block;">
+                    				content
+                    			</dd>
+                    		</dl>
+                    		<dl>
+                    			<dt class="title">
+                    				<a href="#">
+                    					title
+                    				</a>
+                    			</dt>
+                    			<dd class="content">
+                    				content
+                    			</dd>
+                    		</dl>
+                    		<dl>
+                    			<dt class="title">
+                    				<a href="#">
+                    					title
+                    				</a>
+                    			</dt>
+                    			<dd class="content">
+                    				content
+                    			</dd>
+                    		</dl>
+                    	</div>
+                    	  <a href="#" class="writeBtn">글쓰기</a>
                     </div>
                 </div>
             </div>
@@ -227,6 +262,13 @@
 	//탭 클릭시 게시판 리로드    
      $(".contentsTab > ul >li").click(function(){
         var target = $(this).data("target")
+        $(".tab1").show()
+        $(".tab2").hide()
+        if(target=="fq"){
+	    	$(".tab1").hide()
+	    	$(".tab2").show()
+	    	callFaq()
+        }
         $(".contentsTab > ul >li").removeClass("on")
         $(this).addClass("on")
         $(".table.list").data("category",target);
@@ -448,6 +490,7 @@
 			if(data=="success"){
 				alert("답변이 등록되었습니다.")
 				$('#detailModal').modal('hide')
+				callBoard(1)
 			}else{
 				alert("답변 등록이 실패하였습니다.</br>다시 확인해 주세요")
 			}
@@ -493,7 +536,34 @@
 		})
 	}
 	
-    	
+   	//faq 호출
+   	function callFaq(){
+   		$.ajax({
+   			url: "/marryus/admin/faqList.do",
+   		}).done(function(data){
+   			var html="";
+   			if(data.length==0){
+   				html +="<h2>등록된 FAQ가 없습니다</h2>"
+   			}else{
+   				for( var b of data){
+   	   				html+="<dl>"
+   	   				html+="<dt><a href='#'>"+b.title+"</a></dt>"
+   	   				html+="<dd>"+b.content+"</dd>"
+   	   				html+="</dl>"
+   	   			}
+   			}
+   			$(".faqWrap").html(html)
+   			$(".faqWrap dl").eq(0).find("dt").addClass("on")
+   			$(".faqWrap dl").eq(0).find("dd").css({"display":"block"})
+   			$(".faqWrap dl dt a").click(function(e){
+				e.preventDefault();
+				$(".faqWrap dl dt").removeClass("on")
+				$(this).parent().addClass("on")
+				$(".faqWrap dl dd").slideUp(300)
+				$(this).parent().siblings("dd").slideDown(300)
+			})
+   		})
+   	}
     	//게시판 수정
     	
 	//스마트에디터 호출

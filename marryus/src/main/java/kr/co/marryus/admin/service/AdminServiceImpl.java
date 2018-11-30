@@ -138,7 +138,21 @@ public class AdminServiceImpl implements AdminService {
 		return mapper.answerDelete(answerNo);
 	}
 
-	
 
+	@Override
+	public int answerStatUpdate(int boardNo) {
+		// TODO Auto-generated method stub
+		return mapper.answerStatUpdate(boardNo);
+	}
+
+
+	@Override
+	public List<Board> faqList() {
+		// TODO Auto-generated method stub
+		return mapper.faqList();
+	}
+
+	
+	
 
 }

@@ -28,5 +28,6 @@ public interface AdminMapper {
 	Answer answerDetail(int questionNo);
 	int answerUpdate(Answer answer);
 	int answerDelete(int answerNo);
-	
+	int answerStatUpdate(int boardNo);
+	List<Board> faqList();
 }

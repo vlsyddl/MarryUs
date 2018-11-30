@@ -377,3 +377,13 @@ $(document).ready(function(){
       };
   })(jQuery);
 })
+$(document).ready(function(){
+
+	$(".faqWrap dl dt a").click(function(e){
+		e.preventDefault();
+		$(".faqWrap dl dt").removeClass("on")
+		$(this).parent().addClass("on")
+		$(".faqWrap dl dd").slideUp(300)
+		$(this).parent().siblings("dd").slideDown(300)
+	})
+})
