@@ -54,9 +54,9 @@ public interface MemberService {
 	/**
 	 * 비밀번호 찾기 - 아이디 check
 	 * @param member
-	 * @return
+	 * @return int
 	 */
-	Member findId(Member member);
+	int findId(Member member);
 	
 	/**
 	 * 새로운 비밀번호 업데이트 

@@ -77,8 +77,8 @@
 	
 	<!-- 비밀번호 찾기  -->
 	<!-- 아이디 이름 매치  -->
-	<select id="findId" parameterType="Member" resultMap="memberMap" >
-		select *
+	<select id="findId" parameterType="Member" resultType="int" >
+		select count(*)
 		  from mu_member
 		 where mem_email = #{email}
 		   and mem_name = #{name} 

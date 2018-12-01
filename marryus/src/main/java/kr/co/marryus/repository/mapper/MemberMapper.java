@@ -20,6 +20,6 @@ public interface MemberMapper {
 	void insertCompany(Company company);
 	
 	//비밀번호 찾기
-	Member findId(Member member);
+	int findId(Member member);
 	void updateNewPass(Member member);
 }

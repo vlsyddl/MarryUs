@@ -16,6 +16,7 @@
 </head>
 <body>
 	<c:import url="/common/importHeader.jsp" />
+	
 	<div id="wrap" class="main">
 		<div class="main_visual">
 			<div class="bxslider">
@@ -45,7 +46,7 @@
 			</div>
 			<div class="deadLine">
 				<ul>
-					<li><a href="#">오O진님의 입찰건이 3일 남았습니다</a></li>
+					<li><a href="#">${auction}오O진님의 입찰건이 3일 남았습니다</a></li>
 					<li><a href="#">오O진님의 입찰건이 3일 남았습니다</a></li>
 					<li><a href="#">오O진님의 입찰건이 3일 남았습니다</a></li>
 					<li><a href="#">오O진님의 입찰건이 3일 남았습니다</a></li>
@@ -155,7 +156,8 @@
 								<input type="hidden" id="auctionStatusIng" name="auctionStatus" value="ing" />
 								<a href="#">입찰중 역경매</a>
 							</h5>
-							<ul class="v-roll" id="vAuctionList">
+							<ul class="v-roll">
+							
 								<li><span class="w18"><span>입찰중</span></span> <span
 									class="w18">이O재</span> <span class="w28">서울시 강동구</span> <span
 									class="w18">D-21일</span> <span class="w18">접수중</span></li>
@@ -177,7 +179,8 @@
 								<li><span class="w18"><span>입찰중</span></span> <span
 									class="w18">이O재</span> <span class="w28">서울시 강동구</span> <span
 									class="w18">D-21일</span> <span class="w18">접수중</span></li>
-							</ul>
+							
+							</ul> 
 						</div>
 						<div class="col-md-6">
 							<h5 class="v-roll-title">
@@ -283,6 +286,7 @@
 							<input type="hidden" id="auctionStatus" name="auctionStatus" value="ing" />
 								<a href="#">입찰중 역경매</a>
 							</h5>
+						<div>
 							<ul class="v-roll">
 								<li><span class="w18"><span>입찰중</span></span> <span
 									class="w18">이O재</span> <span class="w28">서울시 강동구</span> <span
@@ -307,6 +311,8 @@
 									class="w18">D-21일</span> <span class="w18">접수중</span></li>
 							</ul>
 						</div>
+						
+					</div>
 						<div class="col-md-6">
 							<h5 class="v-roll-title">
 							
@@ -801,7 +807,9 @@
 								<img src="<c:url value="/resources/"/>img/dress_ico.png" alt=""
 									class="img-responsive center-block">
 							</div> 스&middot;드&middot;메
-							  <input type="hidden" id="auctionType2" name="auctionType" value="smd">
+							  <input type="hidden" id="auctionType2" name="auctionType" value="s">
+							  <input type="hidden" id="auctionType7" name="auctionType" value="d">
+							  <input type="hidden" id="auctionType8" name="auctionType" value="m">
 					</a></li>
 					<li><a href="#" id="honeyMoonList">
 							<div class="imgWrap">
@@ -926,8 +934,10 @@
 			</div>
 		</div>
 		</section>
+		
 		<c:import url="/common/importFooter.jsp" />
 	</div>
+	
 	<!--모달-->
 	<!-- 로그인 -->
 	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog"
@@ -982,25 +992,44 @@
 							class="Login-card Login-card--register Login-card--hidden"
 							data-order="2" id="checkIdCard">
 						<h2 class="Login-card__title">비밀번호 찾기</h2>
-						<form action="findPass.do" method="post">
+						<form id="findPassForm" action="findPass.do"  method="post">
 
 							<div class="Form__form-group">
 
 								<div class="Form__input-group">
-									<input  type="text" name="email" placeholder="E-mail address"
+									<input  type="text" id="passemail" name="email" placeholder="E-mail address"
 										class="Form__input Login-card__email-input">
 								</div>
 
-						<!-- 		<div class="Form__input-group">
+								<div class="Form__input-group">
 									<input id="passname" type="text" name="name" placeholder="이름"
 										class="Form__input Login-card__password-input">
-								</div> -->
-
-							
-
-								<div class="Form__input-group">
-									<input  id="checkEmailnName" type="submit" value="비밀번호 찾기"
+								</div> 
+								<div  class="Form__input-group" id="checkEmailnName">
+									<input   type="button" value="아이디 체크" 
 										class="Form__button Login-card__submit-button">
+								</div>
+									
+							<!-- 아이디가 있으므로 아이디 찾기로 감!-->
+								<div class="Form__input-group" id="nextStep" style="display: none">
+									<div class="Form__input-group">
+										<input  type="text" id="passemail" name="email" placeholder="E-mail address"
+										class="Form__input Login-card__email-input">
+									</div>
+									<div class="Form__input-group">
+									 	<input   type="submit" value="비밀번호 찾기"
+											class="Form__button Login-card__submit-button">
+									</div>
+								</div>
+							<!-- 아이디가 없으므로 회원가입으로 진행  -->
+								<div class="Form__input-group" id="goToSignUp" style="display: none">
+									<div>
+										<h1>저희의 회원이 되어주세요 : )</h1>
+									</div>
+									<div class="Form__input-group">
+									 	<input   type="button" value="Marry Us 회원가입하기" onclick="gotoSignUp()"
+											class="Form__button Login-card__submit-button">
+									</div>
 								</div>
 
 							</div>
@@ -1300,11 +1329,11 @@
 						}
 					}
 				})
-		/*
-		
-			로딩되자마자 웨딩홀 역경매 정보 불러오기 
-		
-		*/
+/**********************************************************************************
+ 	역경매 
+      	 
+      	
+**********************************************************************************/
 		
 		$(document).ready(function(){
 			var auctionType = $("#auctionType").val();
@@ -1321,13 +1350,7 @@
 					
 				}
 			});
-			$.ajax({
-				url: "/marryus/main/auctionList.json",
-				data:"auctionType="+auctionType+"&auctionStatus="+auctionStatusDone ,
-				type:"post"
-			}).done(function(result){
-				console.log(result);
-			});
+			
 		});
 		// 입찰 현황 버튼 클릭시 
 		/*
@@ -1343,18 +1366,31 @@
         	var auctionStatus = $("#auctionStatus").val();
         	console.log(hall);
         	console.log(auctionStatus);
+		
         	$.ajax({
 				url:"/marryus/main/auctionList.json",
 				data:"auctionType="+hall+"&auctionStatus="+auctionStatus  ,
 				type:"post"
 			}).done(function(result){
-				console.log(result);
-				var data="";
+			
+				
+			/* 	
+				
 				for(var i = 0 ; i<result.length ; i++){
-					$("#vAuctionList").html(data);
-					data +="<h2>"+result[i].auctionNo+"</h2>";
-
+					$(".v-roll-title").append(
+						"<ul class='v-roll'>"
+						+"<li style='float: none; list-style: none; position: relative;' aria-hidden='false'>"
+						+"<span class='w18'>"+result[i].auctionNo+"</span>"
+						+"<span class='w18'>"+result[i].memNo+"</span>"
+						+"</li>"
+					); 
 				}
+					*/
+					
+				
+				
+					
+				
 			});
         	
         });
@@ -1431,42 +1467,41 @@
         	
         });
         
+        // 
+       
+/**********************************************************************************
+ 	비밀번호 찾기 
+      	1. 아이디와 이름을 검색해서 회원인지 여부 회원이 아닐시  회원가입 유도 
+      	2. 회원이 맞을시아이디 비번 찾도록 유도 
+**********************************************************************************/
+       $("#checkEmailnName").on('click',function(e){
+    	   
+    	    var email = $("#passemail").val()
+        	var name = $("#passname").val()
+       	$.ajax({
+       		url:"/marryus/main/checkID.json",
+       		data:"email="+email+"&name="+name
+       	}).done(function(result){
+       		if(result==1){
+       			alert("회원입니다. 이메일 인증을 진행해주세요")
+       			  e.preventDefault()
+       			$("#findPassForm").html($("#nextStep").html());
+       		}else{
+       			alert("Marry Us 회원이 아닙니다. 회원가입먼저 진행해주세요.")
+       			 e.preventDefault()
+       			$("#findPassForm").html($("#goToSignUp").html());
+       		}
+    	   
+       	});
+       });
         
-			//모달 - 로그인폼 ckeck 함수들			
-		/* 	function chceckEmail(){
-        	
-        	var fpform= document.findPassForm;
-        	
-        		if(fpform.email.value==""){
-        			fpform.email.focus()
-        			alert("이메일을 입력해주세요");
-        			return false;
-        		}
-        		
-        		return true;
-       		} */
-        
-        
-        /* 	$("#checkEmailnName").click(function(){
-        		
-        	
-        	alert("클릭");
-        	checkID();
-        
-    		
-       		 }); */
-      	
-        	/* function checkID(){
-        		alert("ajax시작전");
-        		$.ajax({
-        			url : "/marryus/main/matchEmailnName.json",
-        			type: "post",
-        			data: $("#findPassForm").serialize()
-        		}).done(function(result){
-        			alert()
-        		 	$("#checkEmailnName").html(); 
-        		});
-        	}  */
+       
+      function gotoSignUp(){
+    	  location.href = 'http://localhost:8000/marryus/signup/signupPro.do';
+      }
+      
+      
+
 	</script>
 </body>
 </html>

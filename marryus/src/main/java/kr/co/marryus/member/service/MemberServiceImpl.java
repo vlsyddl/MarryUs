@@ -84,7 +84,7 @@ public class MemberServiceImpl implements MemberService{
 	 * 비밀번호 찾는 로직 - 이메일+이름
 	 */
 	@Override
-	public Member findId(Member member) {
+	public int findId(Member member) {
 		
 		return mapper.findId(member);
 	}

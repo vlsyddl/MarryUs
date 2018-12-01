@@ -164,4 +164,15 @@ public class MemberController {
 		return "redirect:main.do";
 				
 	}
+	
+	@RequestMapping("/checkID.json")
+	@ResponseBody
+	public int checkID(Member member) throws Exception {
+		/*
+		 	서비스를 실행해서 아이디와 이름으로 검색 해서 결과값이 
+		 	"0" 이면 아디이가 없다는거고 , "1"이면 존재한다는 이야기 
+		 */
+		int check = service.findId(member);
+		return check;
+	}
 }
