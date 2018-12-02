@@ -21,6 +21,7 @@ import kr.co.marryus.repository.domain.Board;
 import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.PageResult;
 import kr.co.marryus.repository.domain.SearchForm;
+import kr.co.marryus.repository.domain.SearchUser;
 
 @Controller("kr.co.marryus.admin.controller.AdminController")
 @RequestMapping("/admin")
@@ -154,24 +155,38 @@ public class AdminController {
 	@RequestMapping("/board.do")
 	public void board() {}
 	
+	/**
+	 * 게시판 리스트 통합
+	 * @param searchForm
+	 * @return
+	 */
 	@RequestMapping("/boardList.do")
 	@ResponseBody
 	public HashMap<String,Object> boardList(SearchForm searchForm){
 		HashMap<String, Object> listMap = new HashMap();
 		List<Board> list = service.boardList(searchForm);
-		System.out.println(list.toString());
 		listMap.put("list", list);
 		listMap.put("pageResult",new PageResult(searchForm.getPageNo(),service.boardCount(searchForm),10,5));
 		
 		return listMap;
 	}
 	
+	/**
+	 * 게시판 디테일
+	 * @param boardNo
+	 * @return
+	 */
 	@RequestMapping("/boardDetail.do")
 	@ResponseBody
 	public Board boardDetail(int boardNo) {
 		return service.boardDetail(boardNo);
 	}
 	
+	/**
+	 * 게시판 입력
+	 * @param board
+	 * @return
+	 */
 	@RequestMapping("/boardInsert.do")
 	@ResponseBody
 	public String boardInsert(Board board) {
@@ -184,6 +199,11 @@ public class AdminController {
 		return result;
 	}
 	
+	/**
+	 * 게시판 삭제
+	 * @param boardNo
+	 * @return
+	 */
 	@RequestMapping("/boardDelete.do")
 	@ResponseBody
 	public String boardDelete(int boardNo) {
@@ -196,6 +216,11 @@ public class AdminController {
 		return result;
 	}
 	
+	/**
+	 * 게시판 수정
+	 * @param board
+	 * @return
+	 */
 	@RequestMapping("/boardUpdate.do")
 	@ResponseBody
 	public String boardUpdate(Board board) {
@@ -208,12 +233,16 @@ public class AdminController {
 		return result;
 	}
 	
+	/**
+	 * 답글 입력
+	 * @param answer
+	 * @return
+	 */
 	@RequestMapping("/answerInsert.do")
 	@ResponseBody
 	public String answerInsert(Answer answer) {
 		String result = "";
 		if(service.answerInsert(answer)==1) {
-			System.out.println(answer);
 			service.answerStatUpdate(answer.getQuestionNo());
 			result = "success";
 		}else {
@@ -222,17 +251,26 @@ public class AdminController {
 		return result;
 	}
 	
+	/**
+	 * 답글 디테일
+	 * @param questionNo
+	 * @return
+	 */
 	@RequestMapping("/answerDetail.do")
 	@ResponseBody
 	public Answer answerDetail(int questionNo) {
 		return service.answerDetail(questionNo);
 	}
 	
+	/**
+	 * 답글 수정
+	 * @param answer
+	 * @return
+	 */
 	@RequestMapping("/answerUpdate.do")
 	@ResponseBody
 	public String answerUpdate(Answer answer) {
 		String result = "";
-		System.out.println(answer);
 		if(service.answerUpdate(answer)==1) {
 			result = "success";
 		}else {
@@ -241,6 +279,11 @@ public class AdminController {
 		return result;
 	}
 	
+	/**
+	 * 답글 삭제
+	 * @param answerNo
+	 * @return
+	 */
 	@RequestMapping("/answerDelete.do")
 	@ResponseBody
 	public String answerDelete(int answerNo) {
@@ -253,9 +296,27 @@ public class AdminController {
 		return result;
 	}
 	
+	/**
+	 * faq 리스트
+	 * @return
+	 */
 	@RequestMapping("/faqList.do")
 	@ResponseBody
 	public List<Board> faqList(){
 		return service.faqList();
+	}
+	
+	@RequestMapping("/user.do")
+	public void user() {}
+	
+	@RequestMapping("/userList.do")
+	@ResponseBody
+	public HashMap<String,Object> userList(SearchUser searchUser){
+		HashMap<String, Object> listMap = new HashMap();
+		List<Member> list = service.userList(searchUser);
+		listMap.put("list", list);
+		listMap.put("pageResult",new PageResult(searchUser.getPageNo(),service.userCount(searchUser),10,5));
+		
+		return listMap;
 	}
 }

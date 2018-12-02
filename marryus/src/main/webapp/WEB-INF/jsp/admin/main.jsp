@@ -12,32 +12,23 @@
 	 <c:import url="/common/importJs.jsp"/>
     <link rel="stylesheet" href="<c:url value="/resources/css/admin.css"/>">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
-
 </head>
 <body>
+	<c:choose>
+		<c:when test="${empty admin }">
+			<script>
+				alert("로그인후 이용가능합니다")
+				window.location.href="/marryus/admin/index.do"
+			</script>		
+		</c:when>
+		<c:otherwise>
+			<script>			
+				 alert("${admin.admName}님 환영합니다")
+			</script>
+		</c:otherwise>
+	</c:choose>
     <aside id="gnb">
-        <div class="profile">
-            <span class="name"><c:out value="${admin.admName}"/></span>
-            <script>
-            	$(document).ready(function(){
-            		var type = "${admin.admType}";
-                	
-                	var grant;
-                	if(type=='sadm'){
-    					grant = "최고관리자";      		
-                	}else{
-                		grant = "일반관리자";
-                	}
-                	$(".grant").html(grant);
-            	})
-            	
-            </script>
-            <span class="grant"></span>
-            <div class="btnBox">
-                <a href="#" class="modify">Modify</a>
-                <a href="<c:url value="/admin/logout.do"/>" class="logout">Log Out</a>
-            </div>
-        </div>
+        <c:import url="/common/importAdminHeader.jsp"/>
         <nav>
             <ul>
                 <li class="active"><a href="<c:url value="/admin//main.do" />"><i class="fas fa-th-large"></i> Main</a></li>

@@ -314,3 +314,13 @@ table.table.list > tbody > tr:last-child > td{
 .faqWrap dl dt.on{
 	background: #aaccff;
 }
+
+.user .table thead tr th{
+    text-align: center;
+}
+.user .table tbody tr td{
+    text-align: center;
+}
+.user .table tbody tr td:nth-child(2){
+    text-align: left;
+}

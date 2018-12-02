@@ -17,28 +17,7 @@
 </head>
 <body>
     <aside id="gnb">
-        <div class="profile">
-            <span class="name"><c:out value="${admin.admName}"/></span>
-            <script>
-            	$(document).ready(function(){
-            		var type = "${admin.admType}";
-                	
-                	var grant;
-                	if(type=='sadm'){
-    					grant = "최고관리자";      		
-                	}else{
-                		grant = "일반관리자";
-                	}
-                	$(".grant").html(grant);
-            	})
-            	
-            </script>
-            <span class="grant"></span>
-            <div class="btnBox">
-                <a href="#" class="modify">Modify</a>
-                <a href="<c:url value="/admin/logout.do"/>" class="logout">Log Out</a>
-            </div>
-        </div>
+        <c:import url="/common/importAdminHeader.jsp"/>
         <nav>
             <ul>
                 <li><a href="<c:url value="/admin/main.do" />"><i class="fas fa-th-large"></i> Main</a></li>

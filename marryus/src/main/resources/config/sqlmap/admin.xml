@@ -53,6 +53,7 @@
 		<result column="com_addr" property="comAddr" />
 		<result column="com_addr_detail" property="comAddrDetail" />
 		<result column="com_type" property="comType" />
+		<result column="com_okay" property="comOkay" />
 	</resultMap>
 	
 	<resultMap type="Answer" id="answerMap">
@@ -218,6 +219,35 @@
 		delete from mu_answer
 		 where answer_no = #{answerNo}
 	</delete>
+	
+	<select id="userList" parameterType="SearchUser" resultMap="memberMap">
+		select * 
+		 from mu_member
+		 <if test='memType == "mc"'>
+		 	inner join mu_company
+			 on mem_no = com_no
+		 </if>
+	 		where mem_type= #{memType}
+		 <if test="content != 'null'">
+	 	      and ${type} like CONCAT('%',#{content},'%')
+	 	   </if>
+		 order by mem_no desc
+		 limit #{begin}, 10
+	</select>
+	
+	<!-- 전체 게시물의 수 (조건에 맞는)-->
+	<select id="userCount" parameterType="SearchUser" resultType="int">
+		select count(*) 
+		 from mu_member
+		 <if test='memType == "mc"'>
+		 	inner join mu_company
+			 on mem_no = com_no
+		 </if>
+		where mem_type= #{memType}
+		<if test="content != 'null'">
+	 	      and ${type} like CONCAT('%',#{content},'%')
+	 	   </if>
+	</select>
 </mapper>
 
 

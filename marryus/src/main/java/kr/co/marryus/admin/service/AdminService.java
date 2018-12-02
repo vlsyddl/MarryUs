@@ -8,6 +8,7 @@ import kr.co.marryus.repository.domain.Answer;
 import kr.co.marryus.repository.domain.Board;
 import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.SearchForm;
+import kr.co.marryus.repository.domain.SearchUser;
 
 public interface AdminService {
 	Admin selectAdmin(Admin admin);
@@ -29,4 +30,6 @@ public interface AdminService {
 	int answerDelete(int answerNo);
 	int answerStatUpdate(int boardNo);
 	List<Board> faqList();
+	List<Member> userList(SearchUser searchUser);
+	int userCount(SearchUser searchUser);
 }

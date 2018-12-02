@@ -11,6 +11,7 @@ import kr.co.marryus.repository.domain.Answer;
 import kr.co.marryus.repository.domain.Board;
 import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.SearchForm;
+import kr.co.marryus.repository.domain.SearchUser;
 import kr.co.marryus.repository.mapper.AdminMapper;
 
 @Service
@@ -152,6 +153,21 @@ public class AdminServiceImpl implements AdminService {
 		return mapper.faqList();
 	}
 
+
+	@Override
+	public List<Member> userList(SearchUser searchUser) {
+		// TODO Auto-generated method stub
+		return mapper.userList(searchUser);
+	}
+
+
+	@Override
+	public int userCount(SearchUser searchUser) {
+		// TODO Auto-generated method stub
+		return mapper.userCount(searchUser);
+	}
+
+	
 	
 	
 

@@ -8,6 +8,7 @@ import kr.co.marryus.repository.domain.Answer;
 import kr.co.marryus.repository.domain.Board;
 import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.SearchForm;
+import kr.co.marryus.repository.domain.SearchUser;
 
 public interface AdminMapper {
 
@@ -30,4 +31,6 @@ public interface AdminMapper {
 	int answerDelete(int answerNo);
 	int answerStatUpdate(int boardNo);
 	List<Board> faqList();
+	List<Member> userList(SearchUser searchUser);
+	int userCount(SearchUser searchUser);
 }
