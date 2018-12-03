@@ -6,6 +6,7 @@ import java.util.List;
 import kr.co.marryus.repository.domain.Admin;
 import kr.co.marryus.repository.domain.Answer;
 import kr.co.marryus.repository.domain.Board;
+import kr.co.marryus.repository.domain.Company;
 import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.SearchForm;
 import kr.co.marryus.repository.domain.SearchUser;
@@ -33,4 +34,9 @@ public interface AdminMapper {
 	List<Board> faqList();
 	List<Member> userList(SearchUser searchUser);
 	int userCount(SearchUser searchUser);
+	List<Admin> admList(SearchUser searchUser);
+	int admCount(SearchUser searchUser);
+	int userStatusUpdate(Company company);
+	int adminStatusUpdate(Admin admin);
+	int adminTypeUpdate(Admin admin);
 }

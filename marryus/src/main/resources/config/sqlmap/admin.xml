@@ -220,6 +220,7 @@
 		 where answer_no = #{answerNo}
 	</delete>
 	
+	<!-- 유저리스트(검색어에 따른) -->
 	<select id="userList" parameterType="SearchUser" resultMap="memberMap">
 		select * 
 		 from mu_member
@@ -235,7 +236,7 @@
 		 limit #{begin}, 10
 	</select>
 	
-	<!-- 전체 게시물의 수 (조건에 맞는)-->
+	<!-- 전체 유저의 수 (조건에 맞는)-->
 	<select id="userCount" parameterType="SearchUser" resultType="int">
 		select count(*) 
 		 from mu_member
@@ -248,6 +249,49 @@
 	 	      and ${type} like CONCAT('%',#{content},'%')
 	 	   </if>
 	</select>
+	
+	<!-- 관리자 리스트 (조건에 맞는) -->
+	<select id="admList" parameterType="SearchUser" resultMap="adminMap">
+		select * 
+		 from mu_admin
+	 		where 1 = 1
+		 <if test="content != 'null'">
+	 	      and ${type} like CONCAT('%',#{content},'%')
+	 	   </if>
+		 order by adm_no desc
+		 limit #{begin}, 10
+	</select>
+	
+	<!-- 전체 관리자의 수 (조건에 맞는)-->
+	<select id="admCount" parameterType="SearchUser" resultType="int">
+		select count(*) 
+		 from mu_admin
+		where 1= 1
+		<if test="content != 'null'">
+	 	      and ${type} like CONCAT('%',#{content},'%')
+	 	   </if>
+	</select>
+	
+	<!-- 회원 승인 -->
+	<update id="userStatusUpdate" parameterType="Company">
+		UPDATE mu_company
+		 SET com_okay = #{comOkay}
+		WHERE com_no =  #{comNo}
+	</update>
+	
+	<!-- 관리자 승인 -->
+	<update id="adminStatusUpdate" parameterType="Admin">
+		UPDATE mu_admin
+		 SET adm_ok = #{admOk}
+		WHERE adm_no =  #{admNo}
+	</update>
+	
+	<!-- 관리자 등급 -->
+	<update id="adminTypeUpdate" parameterType="Admin">
+		UPDATE mu_admin
+		 SET adm_type = #{admType}
+		WHERE adm_no =  #{admNo}
+	</update>
 </mapper>
 
 

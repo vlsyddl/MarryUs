@@ -18,6 +18,7 @@ import kr.co.marryus.admin.service.AdminService;
 import kr.co.marryus.repository.domain.Admin;
 import kr.co.marryus.repository.domain.Answer;
 import kr.co.marryus.repository.domain.Board;
+import kr.co.marryus.repository.domain.Company;
 import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.PageResult;
 import kr.co.marryus.repository.domain.SearchForm;
@@ -318,5 +319,52 @@ public class AdminController {
 		listMap.put("pageResult",new PageResult(searchUser.getPageNo(),service.userCount(searchUser),10,5));
 		
 		return listMap;
+	}
+	
+	@RequestMapping("/admList.do")
+	@ResponseBody
+	public HashMap<String,Object> admList(SearchUser searchUser){
+		HashMap<String, Object> listMap = new HashMap();
+		List<Admin> list = service.admList(searchUser);
+		listMap.put("list", list);
+		listMap.put("pageResult",new PageResult(searchUser.getPageNo(),service.admCount(searchUser),10,5));
+		
+		return listMap;
+	}
+	
+	@RequestMapping("/userStatusUpdate.do")
+	@ResponseBody
+	public String userStatusUpdate(Company company) {
+		String result = "";
+		if(service.userStatusUpdate(company)==1) {
+			result = "success";
+		}else {
+			result = "fail";
+		}
+		return result;
+	}
+	
+	@RequestMapping("/adminStatusUpdate.do")
+	@ResponseBody
+	public String adminStatusUpdate(Admin admin) {
+		String result = "";
+		if(service.adminStatusUpdate(admin)==1) {
+			result = "success";
+		}else {
+			result = "fail";
+		}
+		return result;
+	}
+
+	@RequestMapping("/adminTypeUpdate.do")
+	@ResponseBody
+	public String adminTypeUpdate(Admin admin) {
+		String result = "";
+		if(service.adminTypeUpdate(admin)==1) {
+			result = "success";
+		}else {
+			result = "fail";
+		}
+		return result;
 	}
 }

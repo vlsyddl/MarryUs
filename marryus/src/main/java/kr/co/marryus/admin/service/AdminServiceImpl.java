@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import kr.co.marryus.repository.domain.Admin;
 import kr.co.marryus.repository.domain.Answer;
 import kr.co.marryus.repository.domain.Board;
+import kr.co.marryus.repository.domain.Company;
 import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.SearchForm;
 import kr.co.marryus.repository.domain.SearchUser;
@@ -165,6 +166,41 @@ public class AdminServiceImpl implements AdminService {
 	public int userCount(SearchUser searchUser) {
 		// TODO Auto-generated method stub
 		return mapper.userCount(searchUser);
+	}
+
+
+	@Override
+	public List<Admin> admList(SearchUser searchUser) {
+		// TODO Auto-generated method stub
+		return mapper.admList(searchUser);
+	}
+
+
+	@Override
+	public int admCount(SearchUser searchUser) {
+		// TODO Auto-generated method stub
+		return mapper.admCount(searchUser);
+	}
+
+
+	@Override
+	public int userStatusUpdate(Company company) {
+		// TODO Auto-generated method stub
+		return mapper.userStatusUpdate(company);
+	}
+
+
+	@Override
+	public int adminStatusUpdate(Admin admin) {
+		// TODO Auto-generated method stub
+		return mapper.adminStatusUpdate(admin);
+	}
+
+
+	@Override
+	public int adminTypeUpdate(Admin admin) {
+		// TODO Auto-generated method stub
+		return mapper.adminTypeUpdate(admin);
 	}
 
 	
