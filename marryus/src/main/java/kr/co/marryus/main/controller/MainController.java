@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.marryus.main.service.MainServiceImpl;
@@ -29,7 +31,14 @@ public class MainController {
 	 * main 페이지 호출
 	 */
 	@RequestMapping("/main.do")
-	public void loginMain( ) {}
+	public Model loginMain(Auction auction,Model model ) {
+		System.out.println("auction status||"+auction.getAuctionStatus());
+		System.out.println("auction type||"+auction.getAuctionType());
+		
+		model.addAttribute("auction", service.selectActionlist(auction));
+		return model;
+		
+	}
 	
 	/**
 	 * 나만의 웨딩 플랜 데이터 입력 메소드 
@@ -43,14 +52,18 @@ public class MainController {
 		return "redirect:main.do";
 	}
 	
-	@RequestMapping("/auctionList.json")
+	
+	/**
+	 * 역경매 현황 리스트 !!
+	 * @param auction
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/auctionList.json",  method= RequestMethod.POST)
 	@ResponseBody
 	public List<Auction> auctionList(Auction auction) throws Exception{
-		System.out.println("auction status||"+auction.getAuctionStatus());
-		System.out.println("auction type||"+auction.getAuctionType());
-		List<Auction> auctionList=service.selectActionlist(auction);
+		return service.auctionList(auction);
 		
-		return auctionList;
 	}
 	
 	

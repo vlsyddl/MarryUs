@@ -29,4 +29,11 @@ public interface MainService {
 	 * @return
 	 */
 	List<Auction> selectActionlist(Auction auction);
+	
+	/**
+	 *역경매 리스트 불러오기 2 
+	 * @param auction
+	 * @return
+	 */
+	List<Auction> auctionList(Auction auction);
 }

@@ -15,6 +15,6 @@ public interface MainMapper {
 	
 	//역경매 리스트 
 	List<Auction> selectActionlist(Auction auction);
-
-
+	//역경매 리스트 
+	List<Auction> auctionList(Auction auction);
 }

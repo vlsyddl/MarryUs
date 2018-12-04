@@ -151,9 +151,8 @@
 				<li>
 					<h2>웨딩홀 경매 현황</h2>
 					<div class="row">
-						<div class="col-md-6">
+						<div class="col-md-6" id="venueAuctionIng">
 							<h5 class="v-roll-title">
-								<input type="hidden" id="auctionStatusIng" name="auctionStatus" value="ing" />
 								<a href="#">입찰중 역경매</a>
 							</h5>
 							<ul class="v-roll">
@@ -182,9 +181,8 @@
 							
 							</ul> 
 						</div>
-						<div class="col-md-6">
+						<div class="col-md-6" id="venueAuctionDone">
 							<h5 class="v-roll-title">
-							<input type="hidden" id="auctionStatusDone" name="auctionStatus" value="done" />
 								<a href="#">입찰중 역경매</a>
 							</h5>
 							<ul class="v-roll">
@@ -281,9 +279,8 @@
 				<li>
 					<h2>스&middot;드&middot;메 경매 현황</h2>
 					<div class="row">
-						<div class="col-md-6">
+						<div class="col-md-6" id="sdmAuctionIng">
 							<h5 class="v-roll-title">
-							<input type="hidden" id="auctionStatus" name="auctionStatus" value="ing" />
 								<a href="#">입찰중 역경매</a>
 							</h5>
 						<div>
@@ -313,9 +310,8 @@
 						</div>
 						
 					</div>
-						<div class="col-md-6">
+						<div class="col-md-6" id="sdmAuctionDone">
 							<h5 class="v-roll-title">
-							
 								<a href="#">입찰중 역경매</a>
 							</h5>
 							<ul class="v-roll">
@@ -412,9 +408,8 @@
 				<li>
 					<h2>허니문 경매 현황</h2>
 					<div class="row">
-						<div class="col-md-6">
+						<div class="col-md-6" id="honeyAuctionIng">
 							<h5 class="v-roll-title">
-							<input type="hidden" id="auctionStatus" name="auctionStatus" value="ing" />
 								<a href="#">입찰중 역경매</a>
 							</h5>
 							<ul class="v-roll">
@@ -441,7 +436,7 @@
 									class="w18">D-21일</span> <span class="w18">접수중</span></li>
 							</ul>
 						</div>
-						<div class="col-md-6">
+						<div class="col-md-6" id="honeyAuctionDone">
 							<h5 class="v-roll-title">
 								<a href="#">입찰중 역경매</a>
 							</h5>
@@ -539,9 +534,8 @@
 				<li>
 					<h2>예물 경매 현황</h2>
 					<div class="row">
-						<div class="col-md-6">
+						<div class="col-md-6" id="jewelryAuctionIng">
 							<h5 class="v-roll-title">
-							<input type="hidden" id="auctionStatus" name="auctionStatus" value="ing" />
 								<a href="#">입찰중 역경매</a>
 							</h5>
 							<ul class="v-roll">
@@ -568,7 +562,7 @@
 									class="w18">D-21일</span> <span class="w18">접수중</span></li>
 							</ul>
 						</div>
-						<div class="col-md-6">
+						<div class="col-md-6" id="jewelryAuctionDone">
 							<h5 class="v-roll-title">
 								<a href="#">입찰중 역경매</a>
 							</h5>
@@ -666,9 +660,8 @@
 				<li>
 					<h2>추가서비스 경매 현황</h2>
 					<div class="row">
-						<div class="col-md-6">
+						<div class="col-md-6" id="eventAuctionIng">
 							<h5 class="v-roll-title">
-							<input type="hidden" id="auctionStatus" name="auctionStatus" value="ing" />
 								<a href="#">입찰중 역경매</a>
 							</h5>
 							<ul class="v-roll">
@@ -695,7 +688,7 @@
 									class="w18">D-21일</span> <span class="w18">접수중</span></li>
 							</ul>
 						</div>
-						<div class="col-md-6">
+						<div class="col-md-6" id="eventAuctionDone">
 							<h5 class="v-roll-title">
 								<a href="#">입찰중 역경매</a>
 							</h5>
@@ -837,6 +830,8 @@
 			<!--현황리스트페이져-->
 		</div>
 		</section>
+		
+		<!-- 후기 -->
 		<section class="contents contents02">
 		<div class="container">
 			<h2>다녀간 고객님들</h2>
@@ -1090,17 +1085,25 @@
 							<!-- 로그인했을때 세션에 담기 회원번호 hidden 으로 받기  -->
 							<input type="hidden" name="memNo" value="${user.no}"/>
 							<ol class="questions">
+							<c:if test="${user.general.genGender == 'bri'}">
 								<li>
-									<span><label for="planPartner">안녕하세요? 예비 신랑/신부님의 이름을 알 수 있을까요?</label></span> 
+									<span><label for="planPartner">안녕하세요? 예비 신랑님의 이름을 알 수 있을까요?</label></span> 
 									<input class="active" id="planPartner" name="planPartner" type="text" placeholder="Enter your partner name" autofocus />
 								</li>
+							</c:if>
+							<c:if test="${user.general.genGender == 'gro'}">
+								<li>
+									<span><label for="planPartner">안녕하세요? 예비 신부님의 이름을 알 수 있을까요?</label></span> 
+									<input class="active" id="planPartner" name="planPartner" type="text" placeholder="Enter your partner name" autofocus />
+								</li>
+							</c:if>
 								<li>
 									<span><label for="planPlace">결혼식은 어느 지역에서 하실 예정이신가요~?</label></span> 
 									<input id="planPlace" name="planPlace" type="text" placeholder="Enter palce" autofocus />
 								</li>
 								<li>
 									<span><label for="planWedDate">결혼식 예정일을 알수 있을까요~?</label></span>
-									<input id="planWedDate" name="planWedDate" type="text" placeholder="Weeding date?" autofocus />
+									<input id="planWedDate" name="planWedDate" type="date" placeholder="Weeding date?" autofocus />
 								</li>
 								<li>
 									<span><label for="planVenue">웨딩홀/장소는 예약하셨나요?</label></span>
@@ -1331,7 +1334,7 @@
 				})
 /**********************************************************************************
  	역경매 
-      	 
+      	 ver1. 미완
       	
 **********************************************************************************/
 		
@@ -1341,56 +1344,122 @@
 			var auctionStatusDone = $("auctionStatusDone").val();
 			$.ajax({
 				url:"/marryus/main/auctionList.json",
-				data:"auctionType="+auctionType+"&auctionStatus="+auctionStatusIng  ,
+				data:"auctionType="+auctionType,
 				type:"post"
 			}).done(function(result){
-				console.log(result);
-				for(var i = 0 ; i<result.length ; i++){
-					console.log("auctionNo"+result[i].auctionNo);
-					
-				}
+				//ing
+				$("#venueAuctionIng").html(
+				 		"<h5 class='v-roll-title'>"
+				 		+"<a href='#'>입찰중 역경매</a></h5>"
+				 		+"<div class='bx-wrapper' style='max-width: 100%;'>"
+				 		+"<div class='bx-viewport' aria-live='polite' style='width: 100%; overflow: hidden; position: relative; height: 190px;'>"
+				 		+"<ul class='v-roll' id='vIngAcution' style='width: auto; position: relative; transition-duration: 3s; transform: translate3d(0px, -228px, 0px);'>"
+				 		
+				 	); 
+					for(var i = 0 ; i<result.length ; i++){
+						if(result[i].auctionStatus == "ing"){
+							$("#vIngAcution").append(
+							
+							"<li style='float: none; list-style: none; position: relative;' aria-hidden='false' class='bx-clone' aria-hidden='true'>"
+							+"<span class='w18'>"+result[i].auctionNo+"</span>"
+							+"<span class='w18'>"+result[i].memNo+"</span>"
+							+"<span class='w18'>"+result[i].member.name+"</span>"
+							+"</li>"
+							); 
+							
+						}
+					} 
+					//done
+				/* 	$("#venueAuctionDone").html(
+					 		"<h5 class='v-roll-title'>"
+					 		+"<a href='#'>입찰중 역경매</a></h5>"
+					 		+"<div class='bx-wrapper' style='max-width: 100%;'>"
+					 		+"<div class='bx-viewport' aria-live='polite' style='width: 100%; overflow: hidden; position: relative; height: 190px;'>"
+					 		+"<ul class='v-roll' id='vDoneAcution'>"
+					 		
+					 ); 
+					for(var i = 0 ; i<result.length ; i++){
+						if(result[i].auctionStatus == "done"){
+							$("#vDoneAcution").append(
+							
+							"<li style='float: none; list-style: none; position: relative;' aria-hidden='false'>"
+							+"<span class='w18'>"+result[i].auctionNo+"</span>"
+							+"<span class='w18'>"+result[i].memNo+"</span>"
+							+"<span class='w18'>"+result[i].member.name+"</span>"
+							+"</li>"
+							); 
+							
+						}
+					}  */
 			});
 			
 		});
 		// 입찰 현황 버튼 클릭시 
 		/*
-			input type hidden값으로 버튼이 눌때마다 auctionType 버튼의 값이 넘어오게 했다.
-			 내가 옥션 현황에 필요한게 
-			 *auctionType
-			 *auctionStatus 
-			 위 두개의 값인디 ...
-			 뽑아야 하는 값은 [입찰중, 이름, 지역?(지역)..??, 끝나는 날짜(디데이로 계산), 접수중]
+			auctioType만 보내서 auctionStatus는 다 가져와서 
+			뿌려줄때 ing 와  done을 걸러 보기 
+			
+			- issue script.. 잘안먹는데 ..? 이건 어떻게 해결하지??
 		*/
         $("#weddingHallList").click(function(){
         	var hall = $("#auctionType").val();
         	var auctionStatus = $("#auctionStatus").val();
         	console.log(hall);
-        	console.log(auctionStatus);
 		
         	$.ajax({
 				url:"/marryus/main/auctionList.json",
-				data:"auctionType="+hall+"&auctionStatus="+auctionStatus  ,
+				data:"auctionType="+hall ,
 				type:"post"
 			}).done(function(result){
-			
-				
-			/* 	
-				
+				console.log(result)
+				//ing
+		 		$("#venueAuctionIng").html(
+			 		"<h5 class='v-roll-title'>"
+			 		+"<a href='#'>입찰중 역경매</a></h5>"
+			 		+"<div class='bx-wrapper' style='max-width: 100%;'>"
+			 		+"<div class='bx-viewport' aria-live='polite' style='width: 100%; overflow: hidden; position: relative; height: 190px;'>"
+			 		+"<ul class='v-roll' id='vIngAcution'>"
+			 		
+			 	); 
 				for(var i = 0 ; i<result.length ; i++){
-					$(".v-roll-title").append(
-						"<ul class='v-roll'>"
-						+"<li style='float: none; list-style: none; position: relative;' aria-hidden='false'>"
+					if(result[i].auctionStatus == "ing"){
+						$("#vIngAcution").append(
+						
+						"<li style='float: none; list-style: none; position: relative;' aria-hidden='false'>"
 						+"<span class='w18'>"+result[i].auctionNo+"</span>"
 						+"<span class='w18'>"+result[i].memNo+"</span>"
+						+"<span class='w18'>"+result[i].member.name+"</span>"
 						+"</li>"
-					); 
-				}
-					*/
-					
+						); 
+						
+					}
+				} 
+				 
+				//done
+				$("#venueAuctionDone").html(
+				 		"<h5 class='v-roll-title'>"
+				 		+"<a href='#'>입찰중 역경매</a></h5>"
+				 		+"<div class='bx-wrapper' style='max-width: 100%;'>"
+				 		+"<div class='bx-viewport' aria-live='polite' style='width: 100%; overflow: hidden; position: relative; height: 190px;'>"
+				 		+"<ul class='v-roll' id='vDoneAcution'>"
+				 		
+				 ); 
+				for(var i = 0 ; i<result.length ; i++){
+					if(result[i].auctionStatus == "done"){
 				
-				
-					
-				
+						$("#vDoneAcution").append(
+						
+						"<li style='float: none; list-style: none; position: relative;' aria-hidden='false'>"
+						+"<span class='w18'>"+result[i].auctionNo+"</span>"
+						+"<span class='w18'>"+result[i].memNo+"</span>"
+						+"<span class='w18'>"+result[i].member.name+"</span>"
+						+"<span class='w18'>"+result[i].auctionStatus+"</span>"
+						+"</li>"
+						); 
+						
+					}
+				} 
+
 			});
         	
         });
@@ -1401,14 +1470,50 @@
         	console.log(auctionStatus);
         	$.ajax({
 				url:"/marryus/main/auctionList.json",
-				data:"auctionType="+sdm+"&auctionStatus="+auctionStatus  ,
+				data:"auctionType="+sdm  ,
 				type:"post"
 			}).done(function(result){
-				console.log(result);
+				//ing
+				$("#sdmAuctionIng").html(
+			 		"<h5 class='v-roll-title'>"
+			 		+"<a href='#'>입찰중 역경매</a></h5>"
+			 		+"<div class='bx-wrapper' style='max-width: 100%;'>"
+			 		+"<div class='bx-viewport' aria-live='polite' style='width: 100%; overflow: hidden; position: relative; height: 190px;'>"
+			 		+"<ul class='v-roll' id='sdmIngAcution'>"
+			 		
+			 	); 
 				for(var i = 0 ; i<result.length ; i++){
-					console.log("auctionNo"+result[i].auctionNo);
-					
+					$("#sdmIngAcution").append(
+						"<li style='float: none; list-style: none; position: relative;' aria-hidden='false'>"
+						+"<span class='w18'>입찰중</span>"
+						+"<span class='w18'>"+result[i].memNo+"</span>"
+						+"<span class='w18'>"+result[i].member.name+"</span>"
+						+"</li>"
+					); 
+				} 
+				//done
+				$("#sdmAuctionDone").html(
+				 		"<h5 class='v-roll-title'>"
+				 		+"<a href='#'>입찰중 역경매</a></h5>"
+				 		+"<div class='bx-wrapper' style='max-width: 100%;'>"
+				 		+"<div class='bx-viewport' aria-live='polite' style='width: 100%; overflow: hidden; position: relative; height: 190px;'>"
+				 		+"<ul class='v-roll' id='sdmDoneAcution'>"
+				 		
+				 ); 
+				for(var i = 0 ; i<result.length ; i++){
+					if(result[i].auctionStatus == "done"){
+						$("#sdmDoneAcution").append(
+						
+						"<li style='float: none; list-style: none; position: relative;' aria-hidden='false'>"
+						+"<span class='w18'>"+result[i].auctionNo+"</span>"
+						+"<span class='w18'>"+result[i].memNo+"</span>"
+						+"<span class='w18'>"+result[i].member.name+"</span>"
+						+"</li>"
+						); 
+						
+					}
 				}
+				
 			});
         	
         });
@@ -1419,14 +1524,51 @@
         	console.log(auctionStatus);
         	$.ajax({
 				url:"/marryus/main/auctionList.json",
-				data:"auctionType="+honeyMoon+"&auctionStatus="+auctionStatus  ,
+				data:"auctionType="+honeyMoon  ,
 				type:"post"
 			}).done(function(result){
-				console.log(result);
+				//ing
+				$("#honeyAuctionIng").html(
+			 		"<h5 class='v-roll-title'>"
+			 		+"<a href='#'>입찰중 역경매</a></h5>"
+			 		+"<div class='bx-wrapper' style='max-width: 100%;'>"
+			 		+"<div class='bx-viewport' aria-live='polite' style='width: 100%; overflow: hidden; position: relative; height: 190px;'>"
+			 		+"<ul class='v-roll' id='hIngAcution'>"
+			 		
+			 	); 
 				for(var i = 0 ; i<result.length ; i++){
-					console.log("auctionNo"+result[i].auctionNo);
-					
+					$("#hIngAcution").append(
+		
+						"<li style='float: none; list-style: none; position: relative;' aria-hidden='false'>"
+						+"<span class='w18'>"+result[i].auctionNo+"</span>"
+						+"<span class='w18'>"+result[i].memNo+"</span>"
+						+"<span class='w18'>"+result[i].member.name+"</span>"
+						+"</li>"
+					); 
+				} 
+				//done
+				$("#honeyAuctionDone").html(
+				 		"<h5 class='v-roll-title'>"
+				 		+"<a href='#'>입찰중 역경매</a></h5>"
+				 		+"<div class='bx-wrapper' style='max-width: 100%;'>"
+				 		+"<div class='bx-viewport' aria-live='polite' style='width: 100%; overflow: hidden; position: relative; height: 190px;'>"
+				 		+"<ul class='v-roll' id='hDoneAcution'>"
+				 		
+				 ); 
+				for(var i = 0 ; i<result.length ; i++){
+					if(result[i].auctionStatus == "done"){
+						$("#hDoneAcution").append(
+						
+						"<li style='float: none; list-style: none; position: relative;' aria-hidden='false'>"
+						+"<span class='w18'>"+result[i].auctionNo+"</span>"
+						+"<span class='w18'>"+result[i].memNo+"</span>"
+						+"<span class='w18'>"+result[i].member.name+"</span>"
+						+"</li>"
+						); 
+						
+					}
 				}
+				
 			});
         	
         });
@@ -1437,13 +1579,49 @@
         	console.log(auctionStatus);
         	$.ajax({
 				url:"/marryus/main/auctionList.json",
-				data:"auctionType="+jewelry+"&auctionStatus="+auctionStatus  ,
+				data:"auctionType="+jewelry  ,
 				type:"post"
 			}).done(function(result){
-				console.log(result);
+				//ing
+				$("#jewelryAuctionIng").html(
+			 		"<h5 class='v-roll-title'>"
+			 		+"<a href='#'>입찰중 역경매</a></h5>"
+			 		+"<div class='bx-wrapper' style='max-width: 100%;'>"
+			 		+"<div class='bx-viewport' aria-live='polite' style='width: 100%; overflow: hidden; position: relative; height: 190px;'>"
+			 		+"<ul class='v-roll' id='jIngAcution'>"
+			 		
+			 	); 
 				for(var i = 0 ; i<result.length ; i++){
-					console.log("auctionNo"+result[i].auctionNo);
-					
+					$("#jIngAcution").append(
+		
+						"<li style='float: none; list-style: none; position: relative;' aria-hidden='false'>"
+						+"<span class='w18'>"+result[i].auctionNo+"</span>"
+						+"<span class='w18'>"+result[i].memNo+"</span>"
+						+"<span class='w18'>"+result[i].member.name+"</span>"
+						+"</li>"
+					); 
+				} 
+				//done
+				$("#jewelryAuctionDone").html(
+				 		"<h5 class='v-roll-title'>"
+				 		+"<a href='#'>입찰중 역경매</a></h5>"
+				 		+"<div class='bx-wrapper' style='max-width: 100%;'>"
+				 		+"<div class='bx-viewport' aria-live='polite' style='width: 100%; overflow: hidden; position: relative; height: 190px;'>"
+				 		+"<ul class='v-roll' id='jDoneAcution'>"
+				 		
+				 ); 
+				for(var i = 0 ; i<result.length ; i++){
+					if(result[i].auctionStatus == "done"){
+						$("#jDoneAcution").append(
+						
+						"<li style='float: none; list-style: none; position: relative;' aria-hidden='false'>"
+						+"<span class='w18'>"+result[i].auctionNo+"</span>"
+						+"<span class='w18'>"+result[i].memNo+"</span>"
+						+"<span class='w18'>"+result[i].member.name+"</span>"
+						+"</li>"
+						); 
+						
+					}
 				}
 			});
         	
@@ -1455,13 +1633,49 @@
         	console.log(auctionStatus);
         	$.ajax({
 				url:"/marryus/main/auctionList.json",
-				data:"auctionType="+extra+"&auctionStatus="+auctionStatus  ,
+				data:"auctionType="+extra  ,
 				type:"post"
 			}).done(function(result){
-				console.log(result);
+				//ing
+				$("#eventAuctionIng").html(
+			 		"<h5 class='v-roll-title'>"
+			 		+"<a href='#'>입찰중 역경매</a></h5>"
+			 		+"<div class='bx-wrapper' style='max-width: 100%;'>"
+			 		+"<div class='bx-viewport' aria-live='polite' style='width: 100%; overflow: hidden; position: relative; height: 190px;'>"
+			 		+"<ul class='v-roll' id='eIngAcution'>"
+			 		
+			 	); 
 				for(var i = 0 ; i<result.length ; i++){
-					console.log("auctionNo"+result[i].auctionNo);
-					
+					$("#eIngAcution").append(
+		
+						"<li style='float: none; list-style: none; position: relative;' aria-hidden='false'>"
+						+"<span class='w18'>"+result[i].auctionNo+"</span>"
+						+"<span class='w18'>"+result[i].memNo+"</span>"
+						+"<span class='w18'>"+result[i].member.name+"</span>"
+						+"</li>"
+					); 
+				} 
+				//done
+				$("#eventAuctionDone").html(
+				 		"<h5 class='v-roll-title'>"
+				 		+"<a href='#'>입찰중 역경매</a></h5>"
+				 		+"<div class='bx-wrapper' style='max-width: 100%;'>"
+				 		+"<div class='bx-viewport' aria-live='polite' style='width: 100%; overflow: hidden; position: relative; height: 190px;'>"
+				 		+"<ul class='v-roll' id='eDoneAcution'>"
+				 		
+				 ); 
+				for(var i = 0 ; i<result.length ; i++){
+					if(result[i].auctionStatus == "done"){
+						$("#eDoneAcution").append(
+						
+						"<li style='float: none; list-style: none; position: relative;' aria-hidden='false'>"
+						+"<span class='w18'>"+result[i].auctionNo+"</span>"
+						+"<span class='w18'>"+result[i].memNo+"</span>"
+						+"<span class='w18'>"+result[i].member.name+"</span>"
+						+"</li>"
+						); 
+						
+					}
 				}
 			});
         	

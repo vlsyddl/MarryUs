@@ -47,4 +47,10 @@ public class MainServiceImpl implements MainService{
 		
 		return mapper.selectActionlist(auction);
 	}
+
+	@Override
+	public List<Auction> auctionList(Auction auction) {
+		
+		return mapper.auctionList(auction);
+	}
 }
