@@ -145,7 +145,6 @@
 		select @rownum:=@rownum+1 as no, b.*, (select count(*) from mu_board where category = 'fr') as cnt
 		  from mu_board b, (select @rownum:=0) TMP
 		 where category = 'fr'
-		 <if test="type != ''" >
 		 	<choose>
 		 		<when test="type==1">
 		 			and title like concat('%', #{content}, '%')
@@ -161,7 +160,6 @@
 		 			and content like concat('%', #{content}, '%')
 		 		</otherwise>
 	 		</choose>
-		 </if>
 		 order by no desc
 		 limit #{begin}, 10
 	</select>
@@ -171,7 +169,6 @@
 		select count(*)
 		  from mu_board
 		 where category = 'fr'
-		 <if test="type != ''">
 		 	<choose>
 		 		<when test="type==1">
 		 			and title like concat('%', #{content}, '%')
@@ -187,6 +184,5 @@
 		 			and content like concat('%', #{content}, '%')
 		 		</otherwise>
 		 	</choose>
-		 </if>
 	</select>
 </mapper>

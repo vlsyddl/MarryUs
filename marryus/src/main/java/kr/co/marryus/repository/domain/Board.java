@@ -17,4 +17,5 @@ public class Board {
 	private String answer;
 	
 	private Attach attach;
+	private Search search;
 }

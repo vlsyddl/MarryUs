@@ -248,17 +248,17 @@ public class ReviewBoardController {
 		// 총 게시글 수 표시
 		int count = service.selectReviewSearchCount(search);
 		int lastPage = (int) Math.ceil(count / 10d);
-		System.out.println("count=============="+count);
-		System.out.println("lastPage=============="+lastPage);
 		// 페이지 블럭 시작
 		int pageSize = 10;
 		int currTab = (pageNo - 1) / pageSize + 1;
-		System.out.println("pageNo =============="+pageNo);
-		System.out.println("pagesize =============="+pageSize);
 		// 11번 부터 2페이지가 되는것
 		int beginPage = (currTab - 1) * pageSize + 1;
 		int endPage = currTab * pageSize < lastPage ? currTab * pageSize : lastPage;
 		System.out.println("service.reviewSearch(search) ============ " + service.reviewSearch(search));
+		System.out.println("beginPage ============ " + beginPage);
+		System.out.println("endPage ============ " + endPage);
+		System.out.println("lastPage ============ " + lastPage);
+		System.out.println("pageNo ============ " + pageNo);
 		model.addAttribute("beginPage", beginPage);
 		model.addAttribute("endPage", endPage);
 		model.addAttribute("lastPage", lastPage);
@@ -266,4 +266,5 @@ public class ReviewBoardController {
 		model.addAttribute("search", service.reviewSearch(search));
 		return service.reviewSearch(search);
 	}
+	
 }

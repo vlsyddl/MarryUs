@@ -76,8 +76,8 @@
 										<c:forEach var="i" begin="${beginPage}" end="${endPage}">
 											<li><a
 												<c:choose>
-												   	<c:when test='${requestScope["javax.servlet.forward.request_uri"].substring(20) eq "/category.do"}'>
-												    href="<c:url value='category.do?pageNo=${i-1}&select=${result.select}&text=${result.text}' />"
+												   	<c:when test='${requestScope["javax.servlet.forward.request_uri"].substring(20) eq "/search.json"}'>
+												    href="<c:url value='/board/free/search.json?pageNo=${i-1}&type=${result.type}&content=${result.content}' />"
 												    </c:when>
 												
 												    <c:otherwise>
@@ -100,7 +100,6 @@
 			            <form id="searchForm" method="post">
 			            	<div id="search">
 			            		<select name="type">
-			            			<option value="">선택</option>
 			            			<option value="1">제목</option>
 			            			<option value="2">내용</option>
 			            			<option value="3">글쓴이</option>

@@ -13,6 +13,7 @@
 		<result column="category" property="category" />
 		<result column="answer" property="answer" />
 		<collection property="attach" resultMap="attachMap"/>
+		<collection property="search" resultMap="searchMap"/>
 	</resultMap>
 	
 	<resultMap id="attachMap" type="Attach">
@@ -29,6 +30,15 @@
 		<result column="comm_content" property="commContent"/>
 		<result column="comm_date" property="commDate"/>
 	</resultMap>
+	
+	<resultMap id="searchMap" type="Search">
+		<result column="type" property="type"/>
+		<result column="content" property="content"/>
+		<result column="pageNo" property="page_no"/>
+		<result column="begin" property="begin"/>
+		<result column="end" property="end"/>
+	</resultMap>
+	
 	
 	<!-- 후기게시판 페이징 + 리스트 -->
 	<select id="selectReviewBoardList" parameterType="Page" resultMap="boardMap">
@@ -172,7 +182,7 @@
 	
 	<!-- 자유게시판 검색 -->
 	<select id="selectReviewSearch" parameterType="Search" resultMap="boardMap">
-		select @rownum:=@rownum+1 as no, title, writer, content, date_format(reg_date, '%Y-%m-%d') as reg_date
+		select @rownum:=@rownum+1 as no, b.*
 		  from mu_board b, (select @rownum:=0) TMP
 		 where category = 'rv'
 		 	<choose>
