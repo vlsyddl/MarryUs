@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.co.marryus.repository.mapper.WeddingHallMapper">
+<mapper namespace="kr.co.marryus.repository.mapper.HoneymoonMapper">
 	<resultMap id="comInfoMap" type="CompanyInfo">
 		<result  property="comInfoNo"   column="com_info_no"/>
 		<result  property="memNo"   column="mem_no"/>
@@ -37,15 +37,11 @@
 		<result property="memName" column="mem_name" />
 	</resultMap>
 	
-	<resultMap id="venueMap" type="Venue">
+	<resultMap id="honeymoonMap" type="Honeymoon">
 		<result property="auctionNo" column="auction_no" />
-		<result property="weddingVenue" column="wedding_venue" />
-		<result property="weddingDate" column="wedding_date" />
-		<result property="weddingTime" column="wedding_time" />
-		<result property="weddingType" column="wedding_type" />
-		<result property="weddingVistor" column="wedding_vistor" />
-		<result property="weddingWish" column="wedding_wish" />
-		<result property="weddingBudget" column="wedding_budget" />
+		<result property="honeyPlace" column="honey_place" />
+		<result property="honeyDate" column="honey_date" />
+		<result property="honeyHope" column="honey_hope" />
 	</resultMap>
 	
 <!-- 	<select id="weddingList" parameterType="Page" resultMap="comInfoMap"> -->
@@ -56,12 +52,12 @@
 <!-- 		 limit #{begin}, 10 -->
 <!-- 	</select> -->
 	
-	<select id="weddingList" parameterType="Page" resultMap="comInfoMap">
+	<select id="honeymoonList" parameterType="Page" resultMap="comInfoMap">
 		select  f.com_file_name, f.com_file_path, f.com_file_oriname, i.com_info_no, i.com_info_name, i.com_info_addr, i.com_info_profile
 		 from mu_company_file f
 		inner join mu_company_info i
 		 on f.com_info_no = i.com_info_no
-		 where i.com_info_type = 'v'
+		 where i.com_info_type = 'h'
 		 and com_file_repr='Y'
 		 order by i.com_info_no desc
 		 limit #{begin}, 12
@@ -88,10 +84,10 @@
 	
 	
 
-	<select id="selectWeddingCount" resultType="int">
+	<select id="selectHoneymoonCount" resultType="int">
 		select count(*)
 		from mu_company_info
-		where com_info_type = 'v'
+		where com_info_type = 'h'
 	</select>
 	
 	
@@ -99,7 +95,7 @@
 	<select id="auctionList" parameterType="Page" resultMap="auctionMap">
 		select @rownum:=@rownum+1 as no, a.*	 
 		from mu_auction a, (select @rownum:=0) TMP
-		 where a.auction_type = 'v'
+		 where a.auction_type = 'h'
 		 order by a.auction_no desc
 		 limit #{begin}, 10
 	</select>
@@ -107,7 +103,7 @@
 	<select id="selectAuctionCount" resultType="int">
 		select count(*)
 		from mu_auction
-		where auction_type = 'v'
+		where auction_type = 'h'
 	</select>
 	
 	
@@ -117,26 +113,18 @@
 	
 	
 	
-	<insert id="weddingAuction" parameterType="Venue">
+	<insert id="honeymoonAuction" parameterType="Honeymoon">
 		insert into mu_venue(
 					auction_no,
-					wedding_venue, 
-					wedding_date,
-					wedding_time,
-					wedding_type,
-					wedding_vistor,
-					wedding_wish,
-					wedding_budget
+					honey_place, 
+					honey_date,
+					honey_hope
 				)
 			values(
 					#{auctionNo},
-					#{weddingVenue},
-					#{weddingDate},
-					#{weddingTime},
-					#{weddingType},
-					#{weddingVistor},
-					#{weddingWish},
-					#{weddingBudget}
+					#{honeyPlace},
+					#{honeyDate},
+					#{honeyHope}
 			)
 	</insert>
 	

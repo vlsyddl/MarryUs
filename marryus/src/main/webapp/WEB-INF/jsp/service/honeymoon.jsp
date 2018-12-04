@@ -55,9 +55,9 @@
                     </div>
                     <div class="gnb_bot cf">
                         <ul class="cf">
-                            <li class="on"><a href="<c:url value="/service/weddingHall.do"/>">웨딩홀</a></li>
-                            <li><a href="#">스&middot;드&middot;메</a></li>
-                            <li><a href="<c:url value="/service/weddingHall.do"/>">허니문</a></li>
+                            <li ><a href="<c:url value="/service/weddingHall.do"/>">웨딩홀</a></li>
+                            <li><a href="#" class='mm-item'>스&middot;드&middot;메</a></li>
+                            <li class="on"><a href="#">허니문</a></li>
                             <li><a href="#">예물</a></li>
                             <li><a href="#">추가서비스</a></li>
                         </ul>
@@ -70,9 +70,9 @@
     <div id="wrap" class="wedding">
         <div class="sub_visual">
             <div class="titleBox">
-                <h2>웨딩홀</h2>
+                <h2>허니문</h2>
                 <p>
-                    웨딩홀 &middot; 스몰웨딩 &middot; 셀프웨딩
+                    하와이 &middot; 괌 &middot; 한라산
                 </p>
             </div>
         </div>
@@ -104,13 +104,12 @@
 						    </div>
                     	<div>
 		                      <ul class="card-list">
-		                     <c:forEach var="w" items="${weddinigList}">
 			                    <li class="card">
-			                        <a href="#" class="card-image"   data-toggle="modal"  data-target=".bs-example-modal-lg"  ><img src="/marryus/img/comProfile/${w.comFileName}"  /></a>
-			                        <a>${w.comInfoName}</a>
+			                        <a href="#" class="card-image"   data-toggle="modal"  data-target=".bs-example-modal-lg"  ><img src="/marryus/img/comProfile/사진"  /></a>
+			                        <a>업체이름</a>
 			                        <a class="card-description" >
-			                            <h2>${w.comInfoAddr}</h2>
-			                            <p>${w.comInfoAddrDetail}</p>
+			                            <h2>업체주소</h2>
+			                            <p>업체주소</p>
 			                        </a>
 			                        <ul>
 			                            <li>
@@ -129,7 +128,6 @@
 			                            <button type="button" class="btn btn-default">관심업체 등록</button>
 			                        </div>
 			                    </li>
-		                  </c:forEach>
 		                  
 		                  <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 							  <div class="modal-dialog modal-lg">
@@ -271,15 +269,13 @@
                                 <th>역경매 시작일</th>
                                 <th>역경매 종료일</th>
                             </tr>
-                         <c:forEach var="a" items="${AuctionList}">
                             <tr>
-                                <td>${a.auctionNo}</td>
-                                <td>${a.auctionType }</td>
-                                <td>${a.auctionStatus}</td>
-                                <td><fmt:formatDate value="${a.auctionSdate}" pattern="yyyy-MM-dd" /></td>
-                                <td><fmt:formatDate value="${a.auctionEDate}" pattern="yyyy-MM-dd" /></td>
+                                <td>1</td>
+                                <td>허니문</td>
+                                <td>진행중</td>
+                                <td><fmt:formatDate value="" pattern="yyyy-MM-dd" /></td>
+                                <td><fmt:formatDate value="" pattern="yyyy-MM-dd" /></td>
                             </tr>
-						</c:forEach>
                     </table>
                       <nav>
 		                    	<div class="text-center">
@@ -770,63 +766,6 @@ $('document').ready(function() {
 		  
 	  })
   }
-  
-  
-  
-  
-  function detail(CompanyInfo){
-		var comInfoName = $(".comName");
-		var comFileName = $(".detailInfo .name");
-		var date = $(".detailInfo .date");
-		var viewCnt = $(".detailInfo .viewCnt");
-		var content = $(".detailContent");
-		var detailAnswer = $(".detailAnswer");
-		var insertAnswer = $(".insertAnswer");
-		var modifyAnswer = $(".modifyAnswer");
-		title.html("");
-		name.html("");
-		date.html("");
-		viewCnt.html("");
-		content.html("");
-		detailAnswer.hide();
-		insertAnswer.hide();
-		modifyAnswer.hide();
-		$.ajax({
-			url : "<c:url value='/service/weddingDetail.do' />",
-			data : "comInfoNo=" +CompanyInfo
-		}).done(function(data){
-			title.html(data.title)		
-			name.html(data.writer)		
-			date.html(new Date(data.regDate).format("yyyy-MM-dd"))		
-			viewCnt.html(data.viewCnt)		
-			content.html(data.content)
-			if(data.category=="mm"){
-				if(data.answer=="n"){
-					$("#questionNo").val(data.boardNo)
-					insertAnswer.show();
-					$("#answer_insert").click(function(){
-						insert_answer()
-					})
-				}else{
-					detail_answer(data.boardNo);
-					detailAnswer.show();
-				}
-			}
-			$(".deleteBoard").attr("onclick","deleteBoard("+data.boardNo+")")
-
-			$(".modifyBoard").click(function(){
-				$("#modify_no").val("")	
-				$("#modify_title").val("")
-				$("#modify_no").val(data.boardNo)	
-				$("#modify_title").val(data.title)
-				callForm("modify",data.content)
-				$('#detailModal').modal("hide")
-				$('#modifyModal').modal('show')
-			})
-		})
-	}
-
-  
   
   
   
