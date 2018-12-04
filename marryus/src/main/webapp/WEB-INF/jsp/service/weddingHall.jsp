@@ -57,7 +57,7 @@
                         <ul class="cf">
                             <li class="on"><a href="<c:url value="/service/weddingHall.do"/>">웨딩홀</a></li>
                             <li><a href="#">스&middot;드&middot;메</a></li>
-                            <li><a href="<c:url value="/service/weddingHall.do"/>">허니문</a></li>
+                            <li><a href="<c:url value="/service/honeymoon.do"/>">허니문</a></li>
                             <li><a href="#">예물</a></li>
                             <li><a href="#">추가서비스</a></li>
                         </ul>
@@ -758,77 +758,6 @@ $('document').ready(function() {
 	});
 
 
-  
-  detail();
-  
-  function detail(CompanyInfo){
-	  $.ajax({
-		  url: "<c:url value='/service/weddingDetail.do' />",
-		  data: "comInfoNo=" +CompanyInfo
-	  }).done(function(data){
-		  console.log("첫번째 data ========= "+data);
-		  
-	  })
-  }
-  
-  
-  
-  
-  function detail(CompanyInfo){
-		var comInfoName = $(".comName");
-		var comFileName = $(".detailInfo .name");
-		var date = $(".detailInfo .date");
-		var viewCnt = $(".detailInfo .viewCnt");
-		var content = $(".detailContent");
-		var detailAnswer = $(".detailAnswer");
-		var insertAnswer = $(".insertAnswer");
-		var modifyAnswer = $(".modifyAnswer");
-		title.html("");
-		name.html("");
-		date.html("");
-		viewCnt.html("");
-		content.html("");
-		detailAnswer.hide();
-		insertAnswer.hide();
-		modifyAnswer.hide();
-		$.ajax({
-			url : "<c:url value='/service/weddingDetail.do' />",
-			data : "comInfoNo=" +CompanyInfo
-		}).done(function(data){
-			title.html(data.title)		
-			name.html(data.writer)		
-			date.html(new Date(data.regDate).format("yyyy-MM-dd"))		
-			viewCnt.html(data.viewCnt)		
-			content.html(data.content)
-			if(data.category=="mm"){
-				if(data.answer=="n"){
-					$("#questionNo").val(data.boardNo)
-					insertAnswer.show();
-					$("#answer_insert").click(function(){
-						insert_answer()
-					})
-				}else{
-					detail_answer(data.boardNo);
-					detailAnswer.show();
-				}
-			}
-			$(".deleteBoard").attr("onclick","deleteBoard("+data.boardNo+")")
-
-			$(".modifyBoard").click(function(){
-				$("#modify_no").val("")	
-				$("#modify_title").val("")
-				$("#modify_no").val(data.boardNo)	
-				$("#modify_title").val(data.title)
-				callForm("modify",data.content)
-				$('#detailModal').modal("hide")
-				$('#modifyModal').modal('show')
-			})
-		})
-	}
-
-  
-  
-  
   
   
   
