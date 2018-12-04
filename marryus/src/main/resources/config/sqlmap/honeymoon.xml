@@ -60,7 +60,7 @@
 		 where i.com_info_type = 'h'
 		 and com_file_repr='Y'
 		 order by i.com_info_no desc
-		 limit #{begin}, 12
+		 limit #{begin}, 9
 		 
 	</select>
 	
@@ -107,14 +107,102 @@
 	</select>
 	
 	
-	<insert id="insertAuction" parameterType="Auction" useGeneratedKeys="true" keyProperty="auctionNo">
+	<select id="searchHoneymoon" parameterType="Search" resultMap="auctionMap">
+		select @rownum:=@rownum+1 as no, a.*	 
+		from mu_auction a, (select @rownum:=0) TMP
+		 <if test="type != ''" >
+		 	<choose>
+		 		<when test="type==1">
+		 			where auction_type like concat('%', #{content}, '%')
+		 		</when>
+		 		<when test="type==2">
+		 			where auction_status like concat('%', #{content}, '%')
+		 		</when>
+		 		<when test="type==3">
+		 			where auction_sdate like concat('%', #{content}, '%')
+		 		</when>
+		 		<otherwise>
+		 			and auction_edate like concat('%', #{content}, '%')
+		 		</otherwise>
+	 		</choose>
+		 </if>
+		 order by a.com_info_no desc
+		 limit #{begin}, 10
+	</select>
+	
+	
+	<select id="selectHoneySearchCnt" parameterType="Search" resultType="int">
+		select count(*)
+		  from mu_auction
+		 <if test="type != ''">
+		 	<choose>
+		 		<when test="type==1">
+		 			where auction_type like concat('%', #{content}, '%')
+		 		</when>
+		 		<when test="type==2">
+		 			where auction_status like concat('%', #{content}, '%')
+		 		</when>
+		 		<when test="type==3">
+		 			where auction_sdate like concat('%', #{content}, '%')
+		 		</when>
+		 		<otherwise>
+		 			and auction_edate like concat('%', #{content}, '%')
+		 		</otherwise>
+		 	</choose>
+		 </if>
+	</select>
+	
+	
+<!-- 	<select id="searchHoneymoon" parameterType="Search" resultMap="comInfoMap"> -->
+<!-- 		select @rownum:=@rownum+1 as no, a.*	  -->
+<!-- 		from mu_company_info a, (select @rownum:=0) TMP -->
+<!-- 		 <if test="type != ''" > -->
+<!-- 		 	<choose> -->
+<!-- 		 		<when test="type==1"> -->
+<!-- 		 			where com_info_name like concat('%', #{content}, '%') -->
+<!-- 		 		</when> -->
+<!-- 		 		<otherwise> -->
+<!-- 		 			where com_info_addr like concat('%', #{content}, '%') -->
+<!-- 		 		</otherwise> -->
+<!-- 	 		</choose> -->
+<!-- 		 </if> -->
+<!-- 		 order by a.com_info_no desc -->
+<!-- 		 limit #{begin}, 10 -->
+<!-- 	</select> -->
+	
+	
+<!-- 	<select id="selectHoneySearchCnt" parameterType="Search" resultType="int"> -->
+<!-- 		select count(*) -->
+<!-- 		  from mu_company_info -->
+<!-- 		 <if test="type != ''"> -->
+<!-- 		 	<choose> -->
+<!-- 		 		<when test="type==1"> -->
+<!-- 		 			where com_info_name like concat('%', #{content}, '%') -->
+<!-- 		 		</when> -->
+<!-- 		 		<otherwise> -->
+<!-- 		 			where com_info_addr like concat('%', #{content}, '%') -->
+<!-- 		 		</otherwise> -->
+<!-- 	 		</choose> -->
+<!-- 		 </if> -->
+<!-- 	</select> -->
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<insert id="HoneyinsertAuction" parameterType="Auction" useGeneratedKeys="true" keyProperty="auctionNo">
 		insert into mu_auction(mem_no, auction_type, auction_edate) values(#{memNo}, #{auctionType}, DATE_ADD(NOW(), INTERVAL 1 MONTH))
 	</insert>
 	
 	
 	
 	<insert id="honeymoonAuction" parameterType="Honeymoon">
-		insert into mu_venue(
+		insert into mu_honeymoon(
 					auction_no,
 					honey_place, 
 					honey_date,
