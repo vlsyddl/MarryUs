@@ -18,6 +18,7 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 	@Autowired
 	private FreeBoardMapper mapper;
 	
+	@Override
 	public List<Board> freeBoardList(Page page){
 		return mapper.selectFreeBoardList(page);
 	} // boardList

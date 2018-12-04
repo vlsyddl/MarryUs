@@ -37,7 +37,7 @@
                         <li ><a href="javascript:void(0);">FAQ</a></li>
                     </ul>
                     <div class="communityContents">
-                    	<form id="editorform" action="write.do" method="post">
+                    	<form id="editorform" action="write.do" method="post" enctype="multipart/form-data">
 	                        <table class="table table-hover">
 	                            <tr>
 	                                <th>제목</th>
@@ -50,6 +50,12 @@
 	                                <td>
 	                                	<input type="text" name="writer" value="${user.email}" readonly="readonly"/>
 	                                </td>
+	                            </tr>
+	                            <tr>
+	                            	<th>대표사진 등록</th>
+	                            	<td>
+	                                	<input type="file" name="fileName"/>
+	                            	</td>
 	                            </tr>
 	                            <tr>
 	                            	<th>내용</th>

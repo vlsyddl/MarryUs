@@ -24,42 +24,7 @@
     
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="row">
-                <div class="logo col-md-3">
-                    <a href="<c:url value="/main/main.do"/>"><img src="<c:url value="/resources/img/logo.png"/>" alt="" class="img-responsive center-block"></a>
-                </div>
-                <nav class="gnb col-md-9">
-                    <div class="gnb_top cf">
-                        <ul class="cf">
-							<!-- 로그인, 로그아웃 -->
-							<c:if test="${user.email eq null}">
-								<li><a href="<c:url value='/signup/signupPro.do' />">회원가입</a></li>
-								<li><a href="#" data-toggle="modal" data-target="#loginModal">로그인</a></li>
-							</c:if>
-							<c:if test="${user.email ne null}">
-								<li>${user.name}님이로그인 하셨습니다.</li>
-								<li><a href="<c:url value='/main/logout.do' />"> 로그아웃</a></li>
-								<li><a href="<c:url value="/mypage/mywedding.do"/>">마이페이지</a></li>
-							</c:if>
-							<li><a href="#"><i class="far fa-bell"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="gnb_bot cf">
-                        <ul class="cf">
-                            <li class="on"><a href="<c:url value="/service/weddingHall.do"/>">웨딩홀</a></li>
-                            <li><a href="#">스&middot;드&middot;메</a></li>
-                            <li><a href="#">허니문</a></li>
-                            <li><a href="#">예물</a></li>
-                            <li><a href="#">추가서비스</a></li>
-                        </ul>
-                    </div> 
-                </nav>
-            </div>
-        </div>
-        <span class="gnbBar"></span>
-    </header>
+	<c:import url="/common/importHeader.jsp" />
     <div id="wrap" class="community">
         <div class="sub_visual">
             <div class="titleBox">
@@ -132,33 +97,25 @@
 										</a></li>
 					</ul>
                		</div>
-            </div>
-            <form id="searchForm" method="post">
-            	<div id="search">
-            		<select name="type">
-            			<option value="">선택</option>
-            			<option value="1">제목</option>
-            			<option value="2">내용</option>
-            			<option value="3">글쓴이</option>
-            			<option value="4">제목+내용</option>
-            		</select>
-            		<input type="hidden" name="pageNo" value="1" />
-            		<input type="text" id="searchContent" name="content" placeholder="검색어를 입력해주세요." />
-            		<button type="button" id="searchBtn">검색</button>
-            	</div>
-            </form>
+			            <form id="searchForm" method="post">
+			            	<div id="search">
+			            		<select name="type">
+			            			<option value="">선택</option>
+			            			<option value="1">제목</option>
+			            			<option value="2">내용</option>
+			            			<option value="3">글쓴이</option>
+			            			<option value="4">제목+내용</option>
+			            		</select>
+			            		<input type="hidden" name="pageNo" value="1" />
+			            		<input type="text" id="searchContent" name="content" placeholder="검색어를 입력해주세요." />
+			            		<button type="button" id="searchBtn">검색</button>
+			            	</div>
+			            </form>
+			            </div>
         </section>
+		<c:import url="/common/importFooter.jsp" />
     </div>
-    <aside id="sideBar">
-        <ul>
-            <li><a href="#"><i class="fas fa-user-edit"></i>마이페이지</a></li>
-            <li><a href="<c:url value='/board/notice/list.do'/>"><i class="fas fa-headset"></i></i>공지 게시판</a></li>
-            <li><a href="#"><i class="fas fa-chalkboard-teacher"></i>후기 게시판</a></li>
-            <li><a href="<c:url value='/board/free/list.do'/>"><i class="far fa-kiss-wink-heart"></i>신부대기실</a></li>
-            <li><a href="<c:url value='/board/mtom/mtomlist.do'/>"><i class="far fa-comments"></i>1 : 1 질문</a></li>
-            <li><a href="#"><i class="far fa-question-circle"></i>FAQ</a></li>
-        </ul>
-    </aside>
+	<c:import url="/common/importSideBar.jsp" />
     <script>
 //          var options = {
 //                 'speed' : 500,				 		//스피드

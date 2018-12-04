@@ -110,7 +110,7 @@
 		 where comm_no = #{commNo}
 	</update>
 	
-	<!-- 자유게시판 게시글 추천 여부 확인 -->
+	<!-- 자유게시판 게시글 추천 여부 확인(내가 추천한 게시글인지 확인) -->
 	<select id="selectCheckRecomm" parameterType="Recomm" resultType="int">
 		select count(*)
 		  from mu_recomm

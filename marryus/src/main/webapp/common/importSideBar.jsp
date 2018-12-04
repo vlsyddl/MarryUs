@@ -8,8 +8,8 @@
 			class="fas fa-user-edit"></i>마이페이지</a></li>
 	<li><a href="<c:url value='/board/notice/list.do'/>"><i
 			class="fas fa-headset"></i></i>공지 게시판</a></li>
-	<li><a href="#"><i class="fas fa-chalkboard-teacher"></i>후기
-			게시판</a></li>
+	<li><a href="<c:url value='/board/review/list.do'/>"><i
+			class="fas fa-chalkboard-teacher"></i>후기게시판</a></li>
 	<li><a href="<c:url value='/board/free/list.do'/>"><i
 			class="far fa-kiss-wink-heart"></i>신부대기실</a></li>
 	<li><a href="<c:url value='/board/mtom/mtomlist.do'/>">

@@ -47,8 +47,8 @@
                 <div class="communityTab">
                     <ul>
                         <li ><a href="<c:url value='/board/notice/list.do'/>">공지게시판</a></li>
-                        <li ><a href="review.html">후기 게시판</a></li>
-                        <li class="on"><a href="<c:url value='/board/free/list.do'/>">신부 대기실    </a></li>
+                        <li class="on"><a href="review.html">후기 게시판</a></li>
+                        <li ><a href="<c:url value='/board/free/list.do'/>">신부 대기실    </a></li>
                         <li ><a href="<c:url value='/board/mtom/mtomlist.do'/>">1:1 질문</a></li>
                         <li ><a href="javascript:void(0);">FAQ</a></li>
                     </ul>
@@ -56,38 +56,42 @@
                         <table class="table table-hover">
                             <tr>
                                 <th>제목</th>
-                                <td>${freeDetail.title}</td>
+                                <td>${reviewDetail.title}</td>
                             </tr>
                             <tr>
                             	<th>작성자</th>
-                            	<td>${freeDetail.writer}</td>
+                            	<td>${reviewDetail.writer}</td>
                             </tr>
                             <tr>
                             	<th>작성일</th>
-                            	<td><fmt:formatDate value="${freeDetail.regDate}" pattern="yyyy-MM-dd"/></td>
+                            	<td><fmt:formatDate value="${reviewDetail.regDate}" pattern="yyyy-MM-dd"/></td>
                             </tr>
                             <tr>
                             	<th>조회수</th>
-                            	<td>${freeDetail.viewCnt}</td>
+                            	<td>${reviewDetail.viewCnt}</td>
                             </tr>
                             <tr>
                             	<th>추천수</th>
                             	<td id="recommCnt">0</td>
                             </tr>
                             <tr>
+                            	<th>대표사진</th>
+                            	<td><img src="<c:url value='${reviewAttach.filePath}/${reviewAttach.fileName}' />"></td>
+                            </tr>
+                            <tr>
                             	<th>내용</th>
-                            	<td>${freeDetail.content}</td>
+                            	<td>${reviewDetail.content}</td>
                             </tr>
                     </table>
                     <a href="list.do"><button>목록</button></a>
-                    <c:if test="${user.email==freeDetail.writer}">
-                    <a href="updateForm.do?boardNo=${freeDetail.boardNo}"><button>수정</button></a>
-                    <a href="delete.do?boardNo=${freeDetail.boardNo}"><button>삭제</button></a>
+                    <c:if test="${user.email==reviewDetail.writer}">
+                    <a href="updateForm.do?boardNo=${reviewDetail.boardNo}"><button>수정</button></a>
+                    <a href="delete.do?boardNo=${reviewDetail.boardNo}"><button>삭제</button></a>
                     </c:if>
                     <a id="recomm"><button id="recommBtn">추천</button></a>
                     <div id="writeComment">
                     	<form id="writeCommentForm" method="post">
-                    		<input type="hidden" name="boardNo" value="${freeDetail.boardNo}" />
+                    		<input type="hidden" name="boardNo" value="${reviewDetail.boardNo}" />
                     		<input type="hidden" name="commWriter" value="${user.email}" />
 	                    	<textarea name='commContent' id='commentWrite' cols='30' rows='7' class='form-control'></textarea>
 	            			<button id="commentFormBtn" type="button">댓글 작성</button>
@@ -119,8 +123,8 @@
 	
 	function list() {
 			$.ajax({
-				url : "<c:url value='/board/free/commentList.json'/>",
-				data : {"boardNo" : "${freeDetail.boardNo}"},
+				url : "<c:url value='/board/review/commentList.json'/>",
+				data : {"boardNo" : "${reviewDetail.boardNo}"},
 				cache : false
 			})
 			.done( function(result) {
@@ -129,7 +133,6 @@
 						html += "<tr id='comm"+result[i].commNo+"'>"
 						html += "<input type='hidden' name='commNo' value='"+result[i].commNo+"'  />"
 						html += "<td>"+result[i].commWriter+"</td>"
-// 						html += "<td id='"+result[i].commNo+"'>"+result[i].commContent+"<td>"
 						html += "<td>"+result[i].commContent+"</td>"
 						
 						if ( result[i].commWriter == "${user.email}" ) {
@@ -155,7 +158,7 @@
 			str = str.replace(/(?:\r\n|\r|\n)/g, "<br>");
 			$("#commentWrite").val(str);
 			$.ajax({
-				url : "<c:url value='/board/free/commentWrite.json'/>",
+				url : "<c:url value='/board/review/commentWrite.json'/>",
 				data : $("#writeCommentForm").serialize(),
 				method : "POST",
 				cache : false
@@ -168,7 +171,7 @@
 		
 		function commentDelete(commNo) {
 			$.ajax({
-				url : "<c:url value='/board/free/commentDelete.json'/>",
+				url : "<c:url value='/board/review/commentDelete.json'/>",
 				data : { "commNo" : commNo },
 				cache : false
 			}).done( function(result) {
@@ -190,7 +193,7 @@
 			$("#thisUpdate").click(function () {
 				
 				$.ajax({
-					url : "<c:url value='/board/free/commentUpdate.json' />",
+					url : "<c:url value='/board/review/commentUpdate.json' />",
 					data : {
 						"commContent" : $("#commContent").val(),
 						"commNo" : comm.commNo
@@ -205,9 +208,9 @@
 		
 		function recommCheck() {
 			$.ajax({
-				url : "<c:url value='/board/free/recommCheck.json' />",
+				url : "<c:url value='/board/review/recommCheck.json' />",
 				data : {
-					"boardNo" : "${freeDetail.boardNo}",
+					"boardNo" : "${reviewDetail.boardNo}",
 					"memNo" : userNo
 				},
 				cache : false
@@ -225,8 +228,8 @@
 		
 		function recommCnt() {
 			$.ajax({
-				url : "<c:url value='/board/free/recommCount.json' />",
-				data : "boardNo=${freeDetail.boardNo}",
+				url : "<c:url value='/board/review/recommCount.json' />",
+				data : "boardNo=${reviewDetail.boardNo}",
 				cache : false
 			}).done(function (result) {
 				$('#recommCnt').html(result);
@@ -243,7 +246,7 @@
 			$.ajax({
 				url : "/marryus/board/free/"+ recommUrl + ".json",
 				data : {
-					"boardNo" : "${freeDetail.boardNo}",
+					"boardNo" : "${reviewDetail.boardNo}",
 					"memNo" : userNo
 				},
 				cache : false

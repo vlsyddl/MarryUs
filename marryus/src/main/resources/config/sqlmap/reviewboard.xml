@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.marryus.repository.mapper.ReviewBoardMapper">
+
+	<resultMap id="boardMap" type="Board">
+		<result column="board_no" property="boardNo" />
+		<result column="writer" property="writer" />
+		<result column="title" property="title" />
+		<result column="content" property="content" />
+		<result column="reg_date" property="regDate" />
+		<result column="view_cnt" property="viewCnt"/>
+		<result column="category" property="category" />
+		<result column="answer" property="answer" />
+		<collection property="attach" resultMap="attachMap"/>
+	</resultMap>
+	
+	<resultMap id="attachMap" type="Attach">
+		<result column="file_no" property="fileNo"/>
+		<result column="board_no" property="boardNo"/>
+		<result column="file_name" property="fileName"/>
+		<result column="file_path" property="filePath"/>
+	</resultMap>
+	
+	<resultMap id="commentMap" type="Comment">
+		<result column="comm_no" property="commNo"/>
+		<result column="board_no" property="boardNo"/>
+		<result column="comm_writer" property="commWriter"/>
+		<result column="comm_content" property="commContent"/>
+		<result column="comm_date" property="commDate"/>
+	</resultMap>
+	
+	<!-- 후기게시판 페이징 + 리스트 -->
+	<select id="selectReviewBoardList" parameterType="Page" resultMap="boardMap">
+		select @rownum:=@rownum+1 as no, b.*, a.*
+		  from mu_board as b
+		 inner join mu_attach as a
+		    on b.board_no = a.board_no, (select @rownum:=0) TMP
+		 where category = 'rv'
+		 order by no desc
+		 limit #{begin}, 10
+	</select>
+	
+	<!-- 총 후기게시판 게시글 수  -->
+	<select id="selectReviewBoardCount" resultType="int">
+		select count(*)
+		  from mu_board
+		 where category = 'rv'
+	</select>
+	
+	<!-- 후기게시판 상세 -->
+	<select id="selectReviewBoardDetail" parameterType="int" resultMap="boardMap">
+		select *
+		  from mu_board
+		 where category = 'rv'
+		   and board_no = #{boardNo}
+	</select>
+	
+	<!-- 후기게시판 대표사진 상세 -->
+	<select id="selectReviewDetailAttach" parameterType="int" resultMap="attachMap">
+		select *
+		  from mu_attach
+		 where board_no = #{boardNo}
+	</select>
+	
+	<!-- 후기게시판 게시글 등록 -->
+	<insert id="insertReviewBoard" parameterType="Board" useGeneratedKeys="true" keyProperty="boardNo">
+		insert into mu_board(
+			title, writer, content, category
+		) values (
+			#{title}, #{writer}, #{content}, 'rv'
+		)
+	</insert>
+	
+	<!-- 후기게시판에 게시글 등록과 동시에 파일 첨부 -->
+	<insert id="insertReviewFile" parameterType="Attach">
+		insert into mu_attach(
+			board_no, file_name, file_path
+		) values (
+			#{boardNo}, #{fileName}, #{filePath}
+		)
+	</insert>
+	
+	<!-- 후기게시판 게시글 삭제 -->
+	<delete id="deleteReviewBoard" parameterType="int">
+		delete from mu_board
+		 where board_no = #{boardNo}
+	</delete>
+	
+	<!-- 후기게시판 조회수 증가 -->
+	<update id="updateReviewBoardCnt" parameterType="int">
+		update mu_board
+		   set view_cnt = view_cnt + 1
+		 where board_no = #{boardNo}
+	</update>
+	
+	<!-- 후기게시판 게시글 수정 -->
+	<update id="updateReviewBoard" parameterType="board">
+		update mu_board
+		   set title = #{title},
+		       content = #{content}
+		 where board_no = #{boardNo}
+	</update>
+	
+	<!-- 후기게시판 대표사진 수정 -->
+	<update id="updateReviewFile" parameterType="Attach">
+		update mu_attach
+		   set file_name = #{fileName},
+		       file_path = #{filePath}
+		 where board_no = #{boardNo}
+	</update>
+	
+	<!-- 후기게시판 댓글 리스트 -->
+	<select id="selectReviewCommentList" parameterType="int" resultMap="commentMap" >
+		select *
+		  from mu_comment
+		 where board_no = #{boardNo}
+	</select>
+	
+	<!-- 후기게시판 댓글 작성 -->
+	<insert id="insertReviewComment" parameterType="Comment">
+		insert into mu_comment(
+			board_no, comm_writer, comm_content
+		) values(
+			#{boardNo}, #{commWriter}, #{commContent}
+		)
+	</insert>
+	
+	<!-- 후기게시판 댓글 삭제 -->
+	<delete id="deleteReviewComment" parameterType="int">
+		delete from mu_comment
+		 where comm_no = #{commNo}
+	</delete>
+	
+	<!-- 후기게시판 댓글 수정 -->
+	<update id="updateReviewComment" parameterType="Comment">
+		update from mu_comment
+		   set comm_content = #{commContent}
+		 where comm_no = #{commNo}
+	</update>
+	
+	<!-- 후기게시판 게시글 추천 여부 확인(내가 추천한 게시글인지 확인) -->
+	<select id="selectCheckRecomm" parameterType="Recomm" resultType="int">
+		select count(*)
+		  from mu_recomm
+		 where board_no = #{boardNo}
+		   and mem_no = #{memNo}
+	</select>
+	
+	<!-- 후기게시판 게시글 추천 수 확인 -->
+	<select id="selectReviewBoardRecomm" parameterType="int" resultType="int">
+		select count(*)
+		  from mu_recomm
+		 where board_no = #{boardNo}
+	</select>
+	
+	<!-- 후기게시판 게시글 추천하기(조건: 추천을 안했을 때) -->
+	<insert id="insertReviewBoardRecomm" parameterType="Recomm">
+		insert into mu_recomm(
+			board_no, mem_no
+		) values (
+			#{boardNo}, #{memNo}
+		)
+	</insert>
+	
+	<!-- 후기게시판 게시글 추천 취소하기(조건: 추천을 한 상태일 때) -->
+	<delete id="deleteReviewBoardRecomm" parameterType="Recomm">
+		delete from mu_recomm
+		 where board_no = #{boardNo}
+		   and mem_no = #{memNo}
+	</delete>
+	
+	<!-- 자유게시판 검색 -->
+	<select id="selectReviewSearch" parameterType="Search" resultMap="boardMap">
+		select @rownum:=@rownum+1 as no, title, writer, content, date_format(reg_date, '%Y-%m-%d') as reg_date
+		  from mu_board b, (select @rownum:=0) TMP
+		 where category = 'rv'
+		 	<choose>
+		 		<when test="type==1">
+		 			and title like concat('%', #{content}, '%')
+		 		</when>
+		 		<when test="type==2">
+		 			and content like concat('%', #{content}, '%')
+		 		</when>
+		 		<when test="type==3">
+		 			and writer like concat('%', #{content}, '%')
+		 		</when>
+		 		<otherwise>
+		 			and title like concat('%', #{content}, '%')
+		 			and content like concat('%', #{content}, '%')
+		 		</otherwise>
+	 		</choose>
+		 order by no desc
+		 limit #{begin}, 10
+	</select>
+	
+	<!-- 자유게시판 검색된 글 수 -->
+	<select id="selectReviewSearchCnt" parameterType="Search" resultType="int">
+		select count(*)
+		  from mu_board
+		 where category = 'rv'
+		 	<choose>
+		 		<when test="type==1">
+		 			and title like concat('%', #{content}, '%')
+		 		</when>
+		 		<when test="type==2">
+		 			and content like concat('%', #{content}, '%')
+		 		</when>
+		 		<when test="type==3">
+		 			and writer like concat('%', #{content}, '%')
+		 		</when>
+		 		<otherwise>
+		 			and title like concat('%', #{content}, '%')
+		 			and content like concat('%', #{content}, '%')
+		 		</otherwise>
+		 	</choose>
+	</select>
+	
+</mapper>

@@ -31,35 +31,43 @@
                 <div class="communityTab">
                     <ul>
                         <li ><a href="<c:url value='/board/notice/list.do'/>">공지게시판</a></li>
-                        <li ><a href="review.html">후기 게시판</a></li>
-                        <li class="on"><a href="<c:url value='/board/free/list.do'/>">신부 대기실    </a></li>
+                        <li class="on" ><a href="review.html">후기 게시판</a></li>
+                        <li ><a href="<c:url value='/board/free/list.do'/>">신부 대기실    </a></li>
                         <li ><a href="<c:url value='/board/mtom/mtomlist.do'/>">1:1 질문</a></li>
                         <li ><a href="javascript:void(0);">FAQ</a></li>
                     </ul>
                     <div class="communityContents">
-                    	<form id="editorform" action="write.do" method="post">
+                    	<form id="editorform" action="update.do" method="post" enctype="multipart/form-data">
 	                        <table class="table table-hover">
 	                            <tr>
 	                                <th>제목</th>
 	                                <td>
-	                                	<input type="text" name="title"/>
+	                                	<input type="text" name="title" value="${reviewDetail.title}"/>
 	                                </td>
 	                            </tr>
 	                            <tr>
 	                                <th>작성자</th>
 	                                <td>
+	                                	<input type="hidden" name="boardNo" value="${reviewDetail.boardNo}"/>
 	                                	<input type="text" name="writer" value="${user.email}" readonly="readonly"/>
 	                                </td>
 	                            </tr>
 	                            <tr>
+	                            	<th>대표사진 등록</th>
+	                            	<td>
+	                                	<input type="hidden" name="filePath" value="${reviewAttach.filePath}"/>
+	                                	<input type="file" name="fileName" value="${reviewAttach.fileName}"/>
+	                            	</td>
+	                            </tr>
+	                            <tr>
 	                            	<th>내용</th>
 	                            	<td>
-						    			<textarea name="content" id="smarteditor" rows="10" cols="100" style="width:100%; height:350px;"></textarea>
+						    			<textarea name="content" id="smarteditor" rows="10" cols="100" style="width:100%; height:350px;">${reviewDetail.content}</textarea>
 	                            	</td>
 	                            </tr>
 	                    	</table>
 	                    	<div class="form-btn">
-								    <a><input type="button" id="savebutton" value="등록" /></a>
+								    <a><input type="button" id="savebutton" value="수정" /></a>
 							    	<a href="list.do" class="cancle">취소</a>
 						    </div>
 	                    </form>
