@@ -158,6 +158,29 @@
 	
 	
 	
+	<resultMap id="serviceAddMap" type="ServiceAdd">
+		<result property="auctionNo" column="auction_no" />
+		<result property="serviceType" column="service_type" />
+		<result property="serviceDetail" column="service_detail" />
+	</resultMap>
+	
+	
+	<resultMap id="todoMap" type="Todo">
+		<result property="todoSchedule" column="todo_schedule" />
+		<result property="todoContent" column="todo_content" />
+		<result property="todoDday" column="todo-dday" />
+		<result property="todoCategory" column="todo_category" />
+		<result property="todoNo" column="todo_no" />
+		<result property="todoCheck" column="todo_check" />
+		<result property="todoDelete" column="todo_delete" />
+	</resultMap>
+	
+	
+	
+	
+
+	
+	
 
 	
 	
@@ -559,6 +582,31 @@
 		service_detail=#{serviceDetail}
 		where auction_no=#{auctionNo}
 	</update>
+	
+	
+	<!-- 웨딩 체크리스트 -->
+	<select id="selectTodo" parameterType="int" resultMap="todoMap">
+		select *
+		from mu_todo
+		where mem_no=#{memNo}
+	</select>
+	
+	<insert id="insertTodo" parameterType="Todo" >
+		insert into mu_todo(todo_schedule, todo_content, todo_dday, todo_category, mem_no) 
+		values(#{todoSchedule},#{todoContent},#{todoDday},#{todoCategory},#{memNo})
+	</insert>
+	
+	<update id="updateTodo" parameterType="Todo">
+		update mu_todo 
+		set todo_schedule=#{todoSchedule},
+		todo_content=#{todoContent},
+		todo_dday=#{todoDday},
+		todo_category=#{todoCategory},
+		todo_check=#{todoCheck},
+    	todo_delete=#{todoDelete}
+		where mem_no=#{memNo}
+	</update>
+	
 	
 
 	
