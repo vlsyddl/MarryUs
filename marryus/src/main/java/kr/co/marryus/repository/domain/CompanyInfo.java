@@ -26,11 +26,12 @@ public class CompanyInfo {
 	private String comFilePath;
 	
 	
-	private String aucionType;
+	private String auctionType;
 	private Date auctionSdate;
 	private Date auctionEdate;
 	private int tenderBudget;
 	private Date tenderRegdate;
+
 	
 	private String Type;
 	

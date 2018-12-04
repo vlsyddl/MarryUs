@@ -15,4 +15,7 @@ public class GeneralMember {
 	private String genGender;
 	private int genNo;
 	
+	private String genProfilepath;
+	private String genProfilename;
+	
 }

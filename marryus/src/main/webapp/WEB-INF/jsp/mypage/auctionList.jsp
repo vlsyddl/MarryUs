@@ -1,3 +1,5 @@
+
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -39,7 +41,8 @@
         table{
             border-spacing:50px;
             border-collapse: collapse;
-            width: 1000px;
+            width: 800px;
+            margin: 50px 0px;
             text-align: center;
         }
         td, th { padding: 0px; text-align: center;}
@@ -117,6 +120,10 @@
         nav{
            text-align: center;   
         }
+        
+        
+        
+
 
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -169,7 +176,7 @@
             <div class="container">
                     <ul>
                         <li class="on">
-                            <a href="<c:url value='/mypage/myService.do'/>">
+                            <a href="<c:url value='/mypage/likeCompany.do?memNo=${user.no}'/>">
                                     <img src="img/hall_ico.png" alt="" class="img-responsive center-block">
                                 My Wedding
                             </a>
@@ -201,7 +208,14 @@
                     </ul>
             </div>
         </nav>
-    <table class="tb-bordered c-fluid">
+        
+        
+        
+        
+        
+
+    
+        <table class="tb-bordered c-fluid">
         <tr>
             <th>입찰 신청일</th>
             <th>경매 신청인</th>
@@ -223,15 +237,11 @@
             <td><fmt:formatNumber type='currency' value='${auction.tenderBudget}' pattern='###,###'/>원</td>
         </tr>
         </c:forEach>
-
-        
-        
-        
     </table>
     
     
-  
-		<c:if test="${count != 0}">
+    
+    <c:if test="${count != 0}">
 			<nav>
 			  <ul class="pagination">
 			    <li <c:if test="${beginPage==1}">class="disabled"</c:if> >
@@ -270,6 +280,16 @@
 			  </ul>
 			</nav>
 		</c:if>
+    
+  </div>
+
+        
+        
+        
+
+    
+    
+ 
 		
     </div>
     

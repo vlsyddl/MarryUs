@@ -15,6 +15,9 @@ import kr.co.marryus.mypage.service.MypageService;
 import java.io.File;
 import java.util.UUID;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import kr.co.marryus.repository.domain.Auction;
 import kr.co.marryus.repository.domain.CompanyFile;
 import kr.co.marryus.repository.domain.CompanyInfo;
 import kr.co.marryus.repository.domain.CompanyMember;
@@ -98,6 +101,9 @@ public class MypageController {
     	service.updateComInfo(comInfo);
         }
         
+        
+
+        
         String imgPath = context.getRealPath("/img/comProfile");
         File filePath = new File(imgPath);
         if(filePath.exists()==false) {
@@ -172,37 +178,90 @@ public class MypageController {
 		model.addAttribute("member",service.selectCompanyMember(((Member)session.getAttribute("user")).getNo()));
 	}
 	
-	
+	@ResponseBody
 	@RequestMapping("/generalUpdate.do")
-	public void generalUpdate( GeneralMember genMem, Member member, String prePass) {
-			if(member.getPass().isEmpty()) {
-				member.setPass(prePass);
-			}
+	public void generalUpdate( GeneralMember genMem, Member member, String prePass, MultipartFile file) throws Exception{
+		if(member.getPass().isEmpty()) {
+			member.setPass(passwordEncoder.encode(prePass));
+		}else {
+			member.setPass(passwordEncoder.encode(member.getPass()));
+		}
+		
+        String imgPath = context.getRealPath("/img/genProfile");
+        File filePath = new File(imgPath);
+        if(filePath.exists()==false) {
+        	filePath.mkdirs();}
+        
+          String fileName = file.getOriginalFilename();
+          String ext = fileName.substring(fileName.indexOf("."),fileName.length());
+          fileName =UUID.randomUUID().toString()+ext;
+          genMem.setGenProfilepath("img/genProfile");
+          genMem.setGenProfilename(fileName);
+          file.transferTo(new File(imgPath, fileName));
 		service.updateGeneralMember(genMem);
 		service.updateMember(member);
+
+
 	}
 	
 	
-	
+	@ResponseBody
 	@RequestMapping("/companyUpdate.do")
 	public void companyUpdate( CompanyMember comMem, Member member, String prePass) {
 			if(member.getPass().isEmpty()) {
-				member.setPass(prePass);
+				member.setPass(passwordEncoder.encode(prePass));
+			}else {
+				member.setPass(passwordEncoder.encode(member.getPass()));
 			}
 		
 		service.updateMember(member);
 		service.updateCompanyMember(comMem);
 	}
-	
+	@ResponseBody
 	@RequestMapping("/validMember.do")
 	public String validMember(Member member, String prePass, Model model) {
 		Member mem=memService.login(member);
 		if(passwordEncoder.matches(prePass, mem.getPass())) {
-			System.out.println("성공.....");
 			return "success";
 		}
 			return "fail";
 	}
+	
+	@RequestMapping("/myAuction.do")
+	public void myAuction(String choo, Auction auction, Model model) {
+		try {
+		System.out.println(auction.getAuctionType());
+		System.out.println(auction.getMemNo());
+		System.out.println(choo);
+		model.addAttribute("choose", choo);
+		model.addAttribute("myAuction", service.selectGeneralAuction(auction));
+		model.addAttribute("count", service.selectGeneralAuctionCnt(auction));
+		
+		}catch(Exception e) {e.getStackTrace();}
+		
+	}
+	
+	@RequestMapping("/likeCompany.do")
+	public void likeCompany(HttpSession session,int memNo, Model model, @RequestParam(value = "pageNo", defaultValue = "1") int pageNo) {
+        int pageSize=12;
+        int lastPage = (int) Math.ceil(service.selectCompanyLikeCnt(((Member)session.getAttribute("user")).getNo()) / 12d);
+        int currTab = (pageNo - 1) / pageSize + 1;
+
+        Page page = new Page();
+        page.setMemNo(((Member)session.getAttribute("user")).getNo());
+        page.setPageNo(pageNo);
+        
+        
+        model.addAttribute("like",service.selectCompanyLike(memNo));
+        model.addAttribute("beginPage", ((currTab - 1) * pageSize + 1));
+        model.addAttribute("endPage", currTab * pageSize < lastPage ? currTab * pageSize : lastPage);
+        model.addAttribute("lastPage", lastPage);
+        model.addAttribute("pageNo", pageNo);
+		
+	}
+	
+	
+	
 }
 
 

@@ -6,6 +6,7 @@ import java.util.List;
 import kr.co.marryus.repository.domain.Auction;
 import kr.co.marryus.repository.domain.CompanyFile;
 import kr.co.marryus.repository.domain.CompanyInfo;
+import kr.co.marryus.repository.domain.CompanyLike;
 import kr.co.marryus.repository.domain.CompanyMember;
 import kr.co.marryus.repository.domain.GeneralMember;
 import kr.co.marryus.repository.domain.Member;
@@ -36,7 +37,12 @@ public interface MypageMapper {
 	public int updateGeneralMember(GeneralMember genMem);
 	public int updateCompanyMember(CompanyMember comMem);
 	
-	public CompanyInfo selectGeneralAuction(Auction auction);
+	public List<CompanyInfo> selectCompanyLike (int momNo);
+	public int deleteCompanyLike(CompanyLike comLike);
+	public int selectCompanyLikeCnt(int memNo);
+	
+	public List<CompanyInfo> selectGeneralAuction(Auction auction);
+	public int selectGeneralAuctionCnt(Auction auction);
 	
 	
 }

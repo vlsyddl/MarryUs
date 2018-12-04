@@ -99,6 +99,20 @@
 			background: #d4deec;
 			margin-top: 20px;
 		}
+		
+		
+		
+		img {
+			-webkit-filter: grayscale(0) blur(0);
+			filter: grayscale(0) blur(0);
+			-webkit-transition: .3s ease-in-out;
+			transition: .3s ease-in-out;
+			margin-top: 20px; margin-bottom: 40px; 
+		}
+		img:hover {
+			-webkit-filter: grayscale(50%) blur(2px);
+			filter: grayscale(50%) blur(2px);
+		}
     </style>
 </head>
 <body>
@@ -147,7 +161,7 @@
             <div class="container">
                     <ul>
                         <li class="on">
-                            <a href="<c:url value='/mypage/myService.do'/>">
+                            <a href="<c:url value='/mypage/likeCompany.do'/>">
                                     <img src="img/hall_ico.png" alt="" class="img-responsive center-block">
                                 My Wedding
                             </a>

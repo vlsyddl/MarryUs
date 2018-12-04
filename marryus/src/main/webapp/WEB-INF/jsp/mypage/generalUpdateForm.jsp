@@ -104,15 +104,36 @@
       
         <div id="grid__content">
           <div id="card">
-            <form class="form" action="validMember.do" method="post">
+            <form id="UpdateProfileForm" method="post" enctype="multipart/form-data" acceptcharset="UTF-8">
       
               <h1 id="title">Marry Us 회원 정보 수정</h1>
+              
+              
+
+			<div class="imgs_wrap">
+				<c:choose>
+					<c:when test="${not empty member.genProfilepath && not empty member.genProfilename}">
+					
+					<img src="<c:url value="/${member.genProfilepath}/${member.genProfilename}"/>"
+				     	onclick="fileUploadAction();" id="genProfile" class="img-circle img-responsive center-block" style=" width: 150px; height: 150px;  object-fit: cover; object-position: top;"/>
+				    </c:when>
+				    <c:otherwise>
+				           <img src="https://images.unsplash.com/photo-1470320691330-ae8e9288fb77?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=2eb2635304319feaaa15b104729138e4&auto=format&fit=crop&w=1050&q=80"  
+				     	onclick="fileUploadAction();" id="genProfile" class="img-circle img-responsive center-block" style=" width: 150px; height: 150px;  object-fit: cover; object-position: top;"/>
+				    </c:otherwise>
+				</c:choose>
+			 </div>
+			<input type="file" id="input_img" name="file"/>
+		
+		
      
       
               <div class="signup__field">
                 <label for="last_name" class="label">이름</label>
-                <input type="text" name="genName" id="name" class="input-field" value="${member.memName}" placeholder="이름을 입력해주세요.">
-                 <input type="hidden" name="genEmail" id="name" class="input-field" value="${member.memEail}" placeholder="이름을 입력해주세요.">
+                <input type="text" name="name" id="name" class="input-field" value="${member.memName}" placeholder="이름을 입력해주세요.">
+                <input type="hidden" name="email" id="mem_email" class="input-field" value="${member.memEmail}">
+				<input type="hidden" name="no" id="no" class="input-field" value="${member.memNo}">
+				<input type="hidden" name="genNo" id="gen_no" class="input-field" value="${member.memNo}">
               </div>
 
               <div class="signup__field">
@@ -133,7 +154,7 @@
       
               <div class="signup__field">
                     <label for="last_name" class="label">핸드폰 번호</label>
-                   <input type="text" name="genPhone" id="gen_phone" class="input-field" value="${member.memPhone}" iplaceholder="ex)01012346087" required>
+                   <input type="text" name="phone" id="gen_phone" class="input-field" value="${member.memPhone}" iplaceholder="ex)01012346087" required>
               </div>
               <div class="signup__field">
                     <label for="last_name" class="label">생년월일</label>
@@ -142,9 +163,9 @@
               <input type="hidden" value="mg" name="type"/>
 
 
-              <div class="signup__button">
-                <button id="submit" class="button" type="button">Signup</button>
-              </div>
+             
+	                 <a href="#" class="cancle btn">취소</a>
+	                 <a href="#" class="save btn" id="savebutton" onclick="updateProfile()">등록</a>
       
             </form>
           </div>
@@ -157,45 +178,68 @@
       
       
 <script>
-// Default styles
-document.getElementsByTagName("html")[0].className = "bri";
-document.getElementById("title").className = "bri";
-document.getElementsByTagName("fieldset")[0].className = "bri";
-var inputArray = document.getElementsByTagName("input");
-for (var i = 0; i < inputArray.length; i++) {
-  document.getElementsByTagName("input")[i].className = "bri";
-}
-document.getElementById("submit").className = "bri";
 
-// Select event
-document.getElementById("gen_gender").onchange = function() {
-  updateColors()
-};
-// update color
-function updateColors() {
-  var x = document.getElementById("gen_gender");
-  var xcolor = "bri";
-  if (x.value != 'bri...') {
-    var xcolor = x.value.toLowerCase();
-  } 
-  // updating
-  console.log(x.value, xcolor);
-  document.getElementsByTagName("html")[0].className = xcolor;
-  document.getElementById("title").className = xcolor;
-  document.getElementsByTagName("fieldset")[0].className = xcolor;
-  var inputArray = document.getElementsByTagName("input");
-  for (var i = 0; i < inputArray.length; i++) {
-    document.getElementsByTagName("input")[i].className = xcolor;
-  }
-  document.getElementById("submit").className = xcolor;
+$(document).ready(function() {
+    $("#input_img").on("change", handleImgFileSelect);
+}); 
 
+
+
+
+
+
+function fileUploadAction() {
+    $("#input_img").trigger('click');
 }
 
-$.(function(){
-	if(${result}){
-		$("#button").attr("type", "submit");
-	}
-})
+
+
+
+function handleImgFileSelect(e) {
+	console.log("sdjfldsjflkdsjfl");
+	var rep_file= $("input[name=file]")[0].files[0];
+	var reader = new FileReader();
+	 reader.onload= function (e) {
+		 console.log($("#genProfile").html());
+         $("#genProfile").attr("src",e.target.result);
+	 }
+	 
+	 
+	 reader.readAsDataURL($("input[name=file]")[0].files[0]);
+}
+
+
+
+function updateProfile(){
+	console.log("들어옴....");
+	 $.ajax({
+	   	   url:"validMember.do",
+		   type : "POST",
+	   	   data: $("#UpdateProfileForm").serialize()
+	      }).done(function (result){
+	    	  console.log(result);
+	    	  if(result=="success"){
+	    		var formData = new FormData(document.getElementById('UpdateProfileForm'));
+	    		formData.append("file", $("input[name=file]")[0].files[0]);
+	    		  
+		    	  $.ajax({
+				   	   url:"generalUpdate.do",
+			    	   type:"POST",
+			    	   processData: false, //쿼리 (데이터 = 값) 형식을 해제하고 문자열? 형태로 보냄
+			           contentType: false, // 기본 타입 말고 multipart/form-data로 설정하게
+			    	   data: formData
+		    	  }).done(function(){
+		    		  alert("정보가 수정되었습니다.");
+				   	  location.href ="mywedding.do"
+		    	  });
+	
+	      	}else{
+	      		alert("비밀번호가 일치하지 않아 정보 수정이 불가능합니다."); 
+	      	}
+	      });
+}
+
+
 
 
 

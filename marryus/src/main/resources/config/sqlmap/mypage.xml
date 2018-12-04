@@ -15,8 +15,13 @@
 		<result  property="comInfoOkay"   column="com_info_okay"/>
 		<result  property="comFileName"   column="com_file_name"/>
 		<result  property="comFilePath"   column="com_file_path"/>
+		
+		<result  property="aucionType"   column="aucion_type"/>
+		<result  property="auctionSdate"   column="auction_sdate"/>
+		<result  property="auctionEdate"   column="auction_edate"/>
+		<result  property="tenderBudget"   column="tender_budget"/>
+		<result  property="tenderRegdate"   column="tender_regdate"/>
 	</resultMap>
-	
 	
 
 	
@@ -67,6 +72,8 @@
 		<result property="genBirth" column="gen_birth" />
 		<result property="genGender" column="gen_gender" />
 		<result property="genNo" column="gen_no" />
+		<result property="genProfilepath" column="gen_profilepath" />
+		<result property="genProfilename" column="gen_profilename" />
 	</resultMap>
 	
 	
@@ -84,6 +91,84 @@
 		<result property="comOkay" column="com_okay" />
 		<result property="comNo" column="com_no" />
 	</resultMap>
+	
+	
+	<resultMap id="companyLikeMap" type="CompanyLike">
+		<result property="memNo" column="mem_no" />
+		<result property="comInfoNo" column="com_info_no" />
+	</resultMap>
+	
+	
+	
+	<resultMap id="venueMap" type="Venue">
+		<result property="auctionNo" column="auction_no" />
+		<result property="weddingVenue" column="wedding_venue" />
+		<result property="weddingDate" column="wedding_date" />
+		<result property="weddingTime" column="wedding_time" />
+		<result property="weddingType" column="wedding_type" />
+		<result property="weddingVistor" column="wedding_vistor" />
+		<result property="weddingWish" column="wedding_wish" />
+		<result property="weddingBudget" column="wedding_budget" />
+	</resultMap>
+	
+	<resultMap id="studioMap" type="Studio">
+		<result property="auctionNo" column="auction_no" />
+		<result property="studioPlace" column="studio_place" />
+		<result property="studioOutdoor" column="studio_outdoor" />
+		<result property="studioSnapshot" column="studio_snapshot" />
+		<result property="studioVideo" column="studio_video" />
+		<result property="studioPickup" column="studio_pickup" />
+	</resultMap>
+	
+	<resultMap id="dressMap" type="Dress">
+		<result property="auctionNo" column="auction_no" />
+		<result property="dressPrice" column="dress_price" />
+		<result property="dressNeckline" column="dress_neckline" />
+		<result property="dressType" column="dress_type" />
+	</resultMap>
+	
+	<resultMap id="makeupMap" type="Makeup">
+		<result property="auctionNo" column="auction_no" />
+		<result property="mkuMakeup" column="mku_makeup" />
+		<result property="mkuMom" column="mku_mom" />
+		<result property="mkuBudget" column="mku_budget" />
+		<result property="mkuWorkout" column="mku_workout" />
+		<result property="mkuMore" column="mku_more" />
+	</resultMap>
+	
+	<resultMap id="honeymoonMap" type="Honeymoon">
+		<result property="auctionNo" column="auction_no" />
+		<result property="honeyPlace" column="honey_place" />
+		<result property="honeyDate" column="honey_date" />
+		<result property="honeyHope" column="honey_hope" />
+	</resultMap>
+	
+	<resultMap id="jewelryMap" type="Jewelry">
+		<result property="auctionNo" column="auction_no" />
+		<result property="gift" column="gift" />
+		<result property="giftPrice" column="gift_price" />
+		<result property="giftHope" column="gift_hope" />
+	</resultMap>
+	
+	<resultMap id="serviceAddMap" type="ServiceAdd">
+		<result property="auctionNo" column="auction_no" />
+		<result property="serviceType" column="service_type" />
+		<result property="serviceDetail" column="service_detail" />
+	</resultMap>
+	
+	
+	
+
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -232,23 +317,27 @@
 	
 	<update id="updateMember" parameterType="Member" >
 		update mu_member
-		set mem_pass=#{pass}
-		and mem_name=#{name}
-		and mem_phone=#{phone}
+		set mem_pass=#{pass},
+		mem_name=#{name},
+		mem_phone=#{phone}
 		where mem_no = #{no}
 	</update>
 	
 	<update id="updateGeneralMember" parameterType="GeneralMember" >
-		update mu_company
-		set birth=#{birth}
+		update mu_general
+		set gen_birth=#{genBirth},
+		gen_profilepath=#{genProfilepath},
+		gen_profilename=#{genProfilename}
 		where gen_no = #{genNo}
 	</update>
 	
+
+	
 	<update id="updateCompanyMember" parameterType="CompanyMember">
 		update mu_company
-		set com_addr=#{comAddr}
-		and com_addr_detail=#{comAddrDetail}
-		and com_type=#{comType}
+		set com_addr=#{comAddr},
+		com_addr_detail=#{comAddrDetail},
+		com_type=#{comType}
 		where com_no = #{comNo}
 	</update>
 	
@@ -262,21 +351,214 @@
 	
 	<!-- 나의 역경매 현황보기(개인) -->
 	<select id="selectGeneralAuction" parameterType="Auction" resultMap="comInfoMap">
-	    select au.*, ci.*
-    	from mu_company_info ci
-    	right join (select a.auction_type, a.mem_no, a.auction_sdate, a.auction_edate, t.tender_budget, t.tender_regdate
-    	from mu_auction a
-    	right join mu_tender t
-    	on a.auction_no = t.auction_no
-    	where a.auction_type=#{auction_type}
-    	and t.tender_status='choo'
-    	and a.mem_no=#{memNo}) au
-    	on au.mem_no = ci.mem_no
+		select *
+		from mu_auction a 
+		left join mu_tender t
+		on a.auction_no = t.auction_no
+		inner join mu_company_info ci
+		on t.com_info_no = ci.com_info_no
+        inner join mu_company_file cf
+        on ci.com_info_no = cf.com_info_no
+		where a.mem_no=#{memNo}
+		and a.auction_type=#{auctionType}
+		and a.auction_status='ing'
+	</select>
+	
+	
+	<select id="selectGeneralAuctionCnt" parameterType="Auction" resultType="int">
+		select count(*)
+		from mu_auction a 
+		left join mu_tender t
+		on a.auction_no = t.auction_no
+        group by a.auction_type
+        having a.mem_no=#{memNo}
+		and a.auction_type=#{auctionType}
+		and a.auction_status='ing' 
 	</select>
 	
 	
 	
 	
+	
+	
+	<!-- 나의 관심업체 보기 -->
+	<select id="selectCompanyLike" parameterType="int" resultMap="comInfoMap">
+		select *
+		from mu_company_like l
+		inner join mu_company_info ci
+		on l.com_info_no = ci.com_info_no
+        inner join mu_company_file cf
+        on ci.com_info_no = cf.com_info_no
+		where l.mem_no=#{memNo}
+        and cf.com_file_repr='Y'
+	</select>
+	
+	<delete id="deleteCompanyLike" parameterType="CompanyLike" >
+		delete from mu_company_like
+		where mem_no=#{memNo}
+		and com_info_no=#{comInfoNo}
+	</delete>
+	
+	<select id="selectCompanyLikeCnt" parameterType="int" resultType="int">
+		select count(*)
+		from mu_company_like l
+		inner join mu_company_info ci
+		on l.com_info_no = ci.com_info_no
+		where l.mem_no=#{memNo};
+	</select>
+	
+
+	
+	
+	<!-- 입찰 내역 보기 -->
+	<select id="selectTenders" parameterType="Auction" resultMap="tenderMap">
+		select *
+		from mu_auction a
+		inner join mu_tender t
+		on t.auction_no = a.auction_no 
+		inner join mu_company_info ci
+		on t.com_info_no = ci.com_info_no
+		where a.mem_no=#{memNo}
+		and a.auction_status=#{auctionStatus}
+	</select>
+	
+	
+	<select id="selectAuctions" parameterType="Auction" resultMap="venueMap">
+		select v.*
+		from mu_venue v
+		inner join mu_auction a
+		on v.auction_no=a.auction_no 
+		where  a.auction_status=#{auctionStatus}
+		and a.mem_no=#{memNo}
+	</select>
+	
+	
+	<select id="selectVenue" parameterType="Auction" resultMap="venueMap">
+		select v.*
+		from mu_venue v
+		inner join mu_auction a
+		on v.auction_no=a.auction_no 
+		where  a.auction_status=#{auctionStatus}
+		and a.mem_no=#{memNo}
+	</select>
+	
+	
+	<select id="selectStudio" parameterType="Auction" resultMap="studioMap">
+		select s.*
+		from mu_studio s
+		inner join mu_auction a
+		on s.auction_no=a.auction_no 
+		where  a.auction_status=#{auctionStatus}
+		and a.mem_no=#{memNo}
+	</select>
+	
+	
+	
+	<!-- 역경매 신청서 수정 -->
+	<select id="selectDress" parameterType="Auction" resultMap="dressMap">
+		select d.*
+		from mu_dress d
+		inner join mu_auction a
+		on d.auction_no=a.auction_no 
+		where  a.auction_status=#{auctionStatus}
+		and a.mem_no=#{memNo}
+	</select>
+	
+	<select id="selectMakeup" parameterType="Auction" resultMap="makeupMap">
+		select m.*
+		from mu_makeup m
+		inner join mu_auction a
+		on m.auction_no=a.auction_no 
+		where  a.auction_status=#{auctionStatus}
+		and a.mem_no=#{memNo}
+	</select>
+	
+	<select id="selectHoneymoon" parameterType="Auction" resultMap="honeymoonMap">
+		select m.*
+		from mu_honeymoon m
+		inner join mu_auction a
+		on m.auction_no=a.auction_no 
+		where  a.auction_status=#{auctionStatus}
+		and a.mem_no=#{memNo}
+	</select>
+	
+	
+	<select id="selectJewelry" parameterType="Auction" resultMap="jewelryMap">
+		select j.*
+		from mu_jewelry j
+		inner join mu_auction a
+		on j.auction_no=a.auction_no 
+		where  a.auction_status=#{auctionStatus}
+		and a.mem_no=#{memNo}
+	</select>
+	
+ 	<select id="selectServiceAdd" parameterType="Auction" resultMap="serviceAddMap">
+		select sd.*
+		from mu_serviceadd sd
+		inner join mu_auction a
+		on sd.auction_no=a.auction_no 
+		where  a.auction_status=#{auctionStatus}
+		and a.mem_no=#{memNo}
+	</select> 
+	
+	
+	<update id="updateVenue" parameterType="Venue" >
+		update mu_vennu
+		set wedding_venue=#{weddingVenue},
+		wedding_date=#{weddingDate},
+		wedding_time=#{weddingTime},
+		wedding_type=#{weddingType},
+		wedding_vistor=#{weddingVistor},
+		wedding_wish=#{weddingWish},
+		wedding_budget=#{weddingBudget}
+		where auction_no=#{auctionNo}
+	</update>
+	
+	
+	<update id="updateStudio" parameterType="Studio" >
+		update mu_studio
+		set studio_place=#{studioPlace},
+		studio_outdoor=#{studioOutdoor},
+		studio_snapshot=#{studioSnapshot},
+		studio_video=#{studioVideo},
+		studio_pickup=#{studioPickup}
+		where auction_no=#{auctionNo}
+	</update>
+	
+	
+	<update id="updateDress" parameterType="Dress" >
+		update mu_dress
+		set dress_price=#{dressPrice},
+		dress_neckline=#{dressNeckline},
+		dress_type=#{dressType}
+		where auction_no=#{auctionNo}
+	</update>
+	
+	<update id="updateMakeup" parameterType="Makeup" >
+		update mu_makeup
+		set mku_makeup=#{mkuMakeup},
+		dress_neckline=#{mkuMom},
+		dress_type=#{mkuBudget},
+		dress_neckline=#{mkuWorkout},
+		dress_type=#{mkuMore}
+		where auction_no=#{auctionNo}
+	</update>
+	
+	<update id="updateJewelry" parameterType="Jewelry" >
+		update mu_makeup
+		set gift=#{gift},
+		gift_price=#{giftPrice},
+		gift_hope=#{giftHope}
+		where auction_no=#{auctionNo}
+	</update>
+	
+	
+	<update id="updateServiceAdd" parameterType="ServiceAdd" >
+		update mu_makeup
+		set service_type=#{serviceType},
+		service_detail=#{serviceDetail}
+		where auction_no=#{auctionNo}
+	</update>
 	
 
 	

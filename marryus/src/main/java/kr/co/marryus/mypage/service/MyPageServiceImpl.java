@@ -9,6 +9,7 @@ import kr.co.marryus.repository.domain.Auction;
 import kr.co.marryus.repository.mapper.MypageMapper;
 import kr.co.marryus.repository.domain.CompanyFile;
 import kr.co.marryus.repository.domain.CompanyInfo;
+import kr.co.marryus.repository.domain.CompanyLike;
 import kr.co.marryus.repository.domain.CompanyMember;
 import kr.co.marryus.repository.domain.GeneralMember;
 import kr.co.marryus.repository.domain.Member;
@@ -99,7 +100,7 @@ public class MyPageServiceImpl implements MypageService{
 
 
 	@Override
-	public CompanyInfo selectGeneralAuction(Auction auction) {
+	public List<CompanyInfo> selectGeneralAuction(Auction auction) {
 		return mapper.selectGeneralAuction(auction);
 	}
 
@@ -131,6 +132,30 @@ public class MyPageServiceImpl implements MypageService{
 	@Override
 	public int updateCompanyMember(CompanyMember comMem) {
 		return mapper.updateCompanyMember(comMem);
+	}
+
+
+	@Override
+	public List<CompanyInfo> selectCompanyLike(int momNo) {
+		return mapper.selectCompanyLike(momNo);
+	}
+
+
+	@Override
+	public int deleteCompanyLike(CompanyLike comLike) {
+		return mapper.deleteCompanyLike(comLike);
+	}
+
+
+	@Override
+	public int selectGeneralAuctionCnt(Auction auction) {
+		return mapper.selectGeneralAuctionCnt(auction);
+	}
+
+
+	@Override
+	public int selectCompanyLikeCnt(int memNo) {
+		return mapper.selectCompanyLikeCnt(memNo);
 	}
 
 

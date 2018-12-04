@@ -1,6 +1,9 @@
 package kr.co.marryus.repository.domain;
 
-public class LikeCompany {
+import lombok.Data;
+
+@Data
+public class CompanyLike {
 	private int memNo;
 	private int comInfoNo;
 }

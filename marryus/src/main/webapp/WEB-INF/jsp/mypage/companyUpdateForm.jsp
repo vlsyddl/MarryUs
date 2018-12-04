@@ -11,8 +11,68 @@
 	<style>
 		.label{
 			color: black;
-			font-size: 10px;
+			font-size: 16px;
+			line-height: 3em;
 		}
+		
+		input, select{
+			height: 26px;
+			width: 150px;
+		}
+		
+		#grid{
+			margin: 30px 30px 30px 60px;
+		}
+		
+		
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+.container_box {
+  padding: 90px 50px;
+}
+
+
+.box {
+  width: 1000px;
+  margin: 0 auto;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.10);
+  position: relative;
+  border-radius: 10px;
+}
+
+
+
+.box__header {
+  width: 100%;
+  height: 80px;
+  background-color: rgba(231, 190, 209, 0.445);
+  background: url(https://images.unsplash.com/photo-1527238902242-4cb5446d7651?ixlib=rb-0.3.5&s=f6e5cacfca45efd3a654691fa46288e9&auto=format&fit=crop&w=1876&q=80) ;
+  background: url(https://images.unsplash.com/photo-1429679310900-bad303d0e63a?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=c9b51348554d75e0d0924eec1908af6f&auto=format&fit=crop&w=1050&q=80) ;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 10px 10px 0px 0px;
+  }
+  p.title{
+  	text-indent: 30px;
+  	font-size: 22px;
+  	font-weight: 800;
+  	color: white;
+  
+  }
+  
+  
+  button{
+  	float: right;
+  	background: white;
+  	border: 3px solid pink;
+  	padding: 10px;
+  	margin: 20px;
+  }
 	</style>
 </head>
 <body>
@@ -94,22 +154,35 @@
                     </ul>
             </div>
         </nav>
-	<div id="grid">
+        
+        
+        <div class="container_box">
+  <div class="box">
+    <div class="box__header">
+      <div class="menu">
+
+        <div class="menu__elements">
+          	<p class="title">Marry Us 업체회원 정보 수정</p>
+        </div>
+      </div>
+    </div>
+    
+    <div id="grid">
 
 		<div></div>
 
 		<div id="grid__content">
 			<div id="card">
-				<form class="form" action="validMember.do" method="post">
-
-					<h1 id="title">Marry Us 업체회원 가입</h1>
+				<form id="UpdateProfileForm" method="POST">
 
 
 
 					<div class="signup__field">
-						<label for="com_name" class="label">회사 이름</label> 
-						<input type="text" name="memName" id="com_name" class="input-field" value="${member.memName}">
-						<input type="text" name="email" id="mem_email" class="input-field" value="${member.memEmail}">
+						<label for="name" class="label">회사 이름</label> 
+						<input type="text" name="name" id="com_name" class="input-field" value="${member.memName}">
+						<input type="hidden" name="email" id="mem_email" class="input-field" value="${member.memEmail}">
+						<input type="hidden" name="no" id="no" class="input-field" value="${member.memNo}">
+						<input type="hidden" name="comNo" id="com_no" class="input-field" value="${member.memNo}">
 					</div>
 					
 					
@@ -132,7 +205,7 @@
 
 					<div class="signup__field">
 						<label for="com_phone" class="label">회사 전화번호</label> <input
-							type="text" name="comPhone" id="com_phone" class="input-field" maxlength="13"
+							type="text" name="phone" id="com_phone" class="input-field" maxlength="13"
 							 required value="${member.memPhone}">
 					</div>
 
@@ -170,7 +243,7 @@
 					</fieldset>
 					<input type="hidden" value="mc" name="type" />
 					<div class="signup__button">
-						<button id="submit" class="button" type="submit">Signup</button>
+						<button  type="button" class="button"  onclick="updateProfile()">정보수정</button>
 					</div>
 
 				</form>
@@ -180,9 +253,42 @@
 		<div></div>
 
 	</div>
+    
+    
+  </div>
+</div>
+	
 	</div>
 	<script>
-	 
+	function updateProfile(){
+		console.log("들어옴....");
+		 $.ajax({
+		   	   url:"validMember.do",
+			   type : "POST",
+		   	   data: $("#UpdateProfileForm").serialize()
+		      }).done(function (result){
+		    	  console.log(result);
+		    	  if(result=="success"){
+		    		  
+			    	  $.ajax({
+					   	   url:"companyUpdate.do",
+					   	   type:"POST",
+					   	   data: $("#UpdateProfileForm").serialize()
+			    	  }).done(function(){
+			    		  alert("정보가 수정되었습니다.");
+					   	  location.href ="mywedding.do"
+			    	  });
+		
+		      	}else{
+		      		alert("비밀번호가 일치하지 않아 정보 수정이 불가능합니다."); 
+		      	}
+		      }).fail(function(e){
+		    	  console.log(e);
+		    	  console.log(e.status);
+		    	     
+		      });
+	}
+	
 
 		// 다음 주소 api
 		//본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.

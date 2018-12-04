@@ -57,7 +57,7 @@
             <div class="container">
                     <ul>
                         <li class="on">
-                            <a href="<c:url value='/mypage/myService.do'/>">
+                            <a href="<c:url value='/mypage/myAuction.do?memNo=${user.no}&auctionType=v'/>">
                                     <img src="img/hall_ico.png" alt="" class="img-responsive center-block">
                                 My Wedding
                             </a>
