@@ -158,13 +158,6 @@
 	
 	
 	
-	<resultMap id="serviceAddMap" type="ServiceAdd">
-		<result property="auctionNo" column="auction_no" />
-		<result property="serviceType" column="service_type" />
-		<result property="serviceDetail" column="service_detail" />
-	</resultMap>
-	
-	
 	<resultMap id="todoMap" type="Todo">
 		<result property="todoSchedule" column="todo_schedule" />
 		<result property="todoContent" column="todo_content" />
