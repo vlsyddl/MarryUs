@@ -128,8 +128,9 @@
 						aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 					</a></li>
 					</ul>
+					</div>
 				 </nav>
-				<a href="writeForm.do"><button class="btn btn-default">글쓰기</button></a>
+
 				 </div>
                 </div>
             </div>

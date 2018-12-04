@@ -23,5 +23,9 @@ public interface WeddingHallMapper {
 	void insertAuction(Auction auction);
 	void weddingAuction(Venue venue);
 	
+	//역경매 디테일
+	CompanyInfo comInfoDetail(int comInfoNo);
+	List<CompanyFile> comInfoFiles(int comInfoNo);
+	
 	
 }

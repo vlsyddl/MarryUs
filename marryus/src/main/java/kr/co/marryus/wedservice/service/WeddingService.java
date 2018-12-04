@@ -20,4 +20,7 @@ public interface WeddingService {
 	//역경매 신청
 	void weddingWrite(Venue venue);
 	void insertAuction(Auction auction);
+	//역경매 디테일
+	CompanyInfo comInfoDetail(int comInfoNo);
+	List<CompanyFile> comInfoFiles(int comInfoNo);
 }

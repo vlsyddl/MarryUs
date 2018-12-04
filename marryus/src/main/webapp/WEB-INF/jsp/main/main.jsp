@@ -934,131 +934,7 @@
 	</div>
 	
 	<!--모달-->
-	<!-- 로그인 -->
-	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-body Page Page--login .Util-not-loaded">
-					<nav class="Login-navigation">
-					<ul class="Login-navigation__list">
-						<li class="Login-navigation__list-item"><a
-							class="Login-navigation__link" data-goto="Login-card--login">Login</a>
-						</li>
-						<li class="Login-navigation__list-item"><a
-							class="Login-navigation__link" data-goto="Login-card--register">비밀번호를 잊으셨나요?</a>
-						</li>
-						<!-- <li class="Login-navigation__list-item"><a
-							class="Login-navigation__link" data-goto="Login-card--connect">Connect
-								directly</a></li> -->
-					</ul>
-					</nav>
-
-					<main class="Login-main">
-					<div class="Login-card-container">
-						<section class="Login-card Login-card--login" data-order="1">
-						<h2 class="Login-card__title">Login</h2>
-						<form method="post" action="/marryus/main/login.do"
-							name="loginForm">
-
-							<div class="Form__form-group">
-
-								<div class="Form__input-group">
-									<input type="text" name="email" placeholder="E-mail address"
-										class="Form__input Login-card__email-input">
-								</div>
-
-								<div class="Form__input-group">
-									<input type="password" name="pass" placeholder="Password"
-										class="Form__input Login-card__password-input">
-								</div>
-
-								<div class="Form__input-group">
-									<input id="loginBo" type="submit" value="Login"
-										class="Form__button Login-card__submit-button">
-								</div>
-
-							</div>
-
-						</form>
-						</section>
-
-						<section
-							class="Login-card Login-card--register Login-card--hidden"
-							data-order="2" id="checkIdCard">
-						<h2 class="Login-card__title">비밀번호 찾기</h2>
-						<form id="findPassForm" action="findPass.do"  method="post">
-
-							<div class="Form__form-group">
-
-								<div class="Form__input-group">
-									<input  type="text" id="passemail" name="email" placeholder="E-mail address"
-										class="Form__input Login-card__email-input">
-								</div>
-
-								<div class="Form__input-group">
-									<input id="passname" type="text" name="name" placeholder="이름"
-										class="Form__input Login-card__password-input">
-								</div> 
-								<div  class="Form__input-group" id="checkEmailnName">
-									<input   type="button" value="아이디 체크" 
-										class="Form__button Login-card__submit-button">
-								</div>
-									
-							<!-- 아이디가 있으므로 아이디 찾기로 감!-->
-								<div class="Form__input-group" id="nextStep" style="display: none">
-									<div class="Form__input-group">
-										<input  type="text" id="passemail" name="email" placeholder="E-mail address"
-										class="Form__input Login-card__email-input">
-									</div>
-									<div class="Form__input-group">
-									 	<input   type="submit" value="비밀번호 찾기"
-											class="Form__button Login-card__submit-button">
-									</div>
-								</div>
-							<!-- 아이디가 없으므로 회원가입으로 진행  -->
-								<div class="Form__input-group" id="goToSignUp" style="display: none">
-									<div>
-										<h1>저희의 회원이 되어주세요 : )</h1>
-									</div>
-									<div class="Form__input-group">
-									 	<input   type="button" value="Marry Us 회원가입하기" onclick="gotoSignUp()"
-											class="Form__button Login-card__submit-button">
-									</div>
-								</div>
-
-							</div>
-
-						</form>
-						</section>
-
-						<%-- <section class="Login-card Login-card--connect Login-card--hidden"
-							data-order="3">
-						<h2 class="Login-card__title">Connect directly</h2>
-						<code># TODO</code> </section>
-					</div> --%>
-					</main>
-				<!-- 네이버아이디로로그인 버튼 노출 영역 -->
-				<!-- 	
-					  <div id="naver_id_login"></div>
-					  //네이버아이디로로그인 버튼 노출 영역
-					  <script type="text/javascript">
-					  	var naver_id_login = new naver_id_login("80pYiQzDzkdBypcTxTyp", "http://localhost:8000/marryus/main/main.do");
-					  	var state = naver_id_login.getUniqState();
-					  	naver_id_login.setButton("white", 2,40);
-					  	naver_id_login.setDomain("YOUR_SERVICE_URL");
-					  	naver_id_login.setState(state);
-					  	naver_id_login.setPopup();
-					  	naver_id_login.init_naver_id_login();
-					  </script>
-				-->
-					<footer class="Login-footer"> Made with <i
-						class="fa fa-heart"></i> </footer>
-				</div>
-			</div>
-		</div>
-	</div>
-
+	
 	<!--플래닝-->
 	<div class="modal fade" id="planingModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true">
@@ -1170,26 +1046,10 @@
 		</div>
 		<div class="textWrap">
 			<div class="textBox">
-				<!-- <div class="chatAdmin">
-                    <dl>
-                        <dt>
-                            <img src="img/chat_adm.png" alt="" class="img-responsive center-block">
-                        </dt>
-                        <dd>
-                            테스트
-                        </dd>
-                    </dl>
-                </div>
-                <div class="chatCustomer">
-                    <dl>
-                        <dt>
-                            <img src="img/chat_cut.png" alt="" class="img-responsive center-block">
-                        </dt>
-                        <dd>
-                            테스트
-                        </dd>
-                    </dl>
-                </div> -->
+				<div class="btnBox">
+					<a href="#">예</a>
+					<a href="#">아니오</a>
+				</div>
 			</div>
           </div>
           <div class="inputBox inputChatbot">
@@ -1198,7 +1058,7 @@
           </div>
           <div class="inputBox inputWebSocket" style="display: none;">
               <textarea name="webSocketInput" style="resize: none;" id="webSocketInput" cols="30"  class="form-control"></textarea>
-              <button class="send">보내기</button>
+              <button class="send" id="webSocketSend">보내기</button>
           </div>
           
       </div>
@@ -1231,7 +1091,7 @@
                     $(".statusList").animate({"left":-cWidth*index},300)
                 })
             })
-            
+            /* 
             $('.v-roll').bxSlider({
                 auto: true,
                 speed: 3000,
@@ -1242,7 +1102,7 @@
                 minSlides: 5, 
                 maxSlides: 5,
                 pager:false
-            });
+            }); */
 
 			var options = {
 				'speed' : 500, //스피드
@@ -1255,83 +1115,8 @@
             //날짜 카운트
            $.fn.CountDownTimer('11/22/2019 00:00 AM'); 
         });
-        $(document).ready(function(){
-            var textBox = $("#chatBot .textWrap .textBox");
-            var inputBox = $("#chatBotInput");
-            var adminBox = '<div class="chatAdmin"><dl><dt><img src="/marryus/resources/img/chat_adm.png" alt="" class="img-responsive center-block"></dt><dd></dd></dl></div>';
-            $("#chatBot .title").click(function(){
-                $("#chatBot").addClass("on")
-                setTimeout(function(){
-                 sendAdmin("안녕하세요 고객님</br>어떤 점이 궁금하신가요?")
-                },1000)
-            })
-            $(".btnClosed").click(function(e){
-                e.preventDefault();
-             setTimeout(function(){
-                 sendAdmin("실시간 상담 을 종료합니다.")
-                },500)
-                setTimeout(function(){
-                 $("#chatBot").removeClass("on")
-                 textBox.html("");
-                },1500)
-            })
-             $("#chatBot").ready(function(){
-                $(".inputChatbot .send").click(function(){
-                    sendCustomer();
-                })
-                $("#chatBotInput").keydown(function(e) {
-                     if(e.keyCode==13){
-                         sendCustomer();
-                     }
-                 });
-            })
-            /*보내기*/
-            function sendCustomer(){
-                var msg = inputBox.val();
-                 textBox.append('<div class="chatCustomer"><dl><dt><img src="/marryus/resources/img/chat_cut.png" alt="" class="img-responsive center-block"></dt><dd>'+msg+'</dd></dl></div>')
-                 inputBox.val("");
-                 textBox.animate({scrollTop: textBox.prop("scrollHeight")}, 500);
-                 reciveBot(msg)
-            }
-            function sendAdmin(){
-                var msg = arguments;
-                for(i=0;i<arguments.length;i++){
-                    (function(x){
-                    setTimeout(function(){
-                     textBox.append('<div class="chatAdmin"><dl><dt><img src="/marryus/resources/img/chat_adm.png" alt="" class="img-responsive center-block"></dt><dd>'+msg[x]+'</dd></dl></div>')
-                     inputBox.val("");
-                     textBox.animate({scrollTop: textBox.prop("scrollHeight")}, 500);
-                    },500*(x+1))
-                    })(i)
-                }   
-            }
-
-           function reciveBot(msg){
-             if ( msg.indexOf('안녕') != -1) {
-                 sendAdmin("안녕하세요 고객님</br>어떤 점이 궁금하신가요?")
-             }else if(msg.indexOf('웨딩')!=-1 ||msg.indexOf('홀')!=-1 ||msg.indexOf('식장')!=-1 ){
-                 sendAdmin("웨딩홀에 관하여 궁금하신가요?</br>담당자를 연결해 드릴게요")
-             }else if(msg.indexOf('스튜디오')!=-1||msg.indexOf('드레스')!=-1||msg.indexOf('메이크업')!=-1||msg.indexOf('메이크 업')!=-1||msg.indexOf('스드메')!=-1||msg.indexOf('스 드 메')!=-1||msg.indexOf('스,드,메')!=-1){
-                 sendAdmin("스튜디오,메이크업,드레스에 관하여 궁금하신가요? </br> 담당자를 연결해 드릴게요. ")
-             }else if(msg.indexOf('허니문')!=-1||msg.indexOf('허니 문')!=-1||msg.indexOf('신혼여행')!=-1||msg.indexOf('신혼 여행')!=-1||msg.indexOf('여행지')!=-1){
-                 sendAdmin("허니문,신혼여행에 관하여 궁금하신가요? </br> 담당자를 연결해 드릴께요")
-             }else if(msg.indexOf('예물')!=-1||msg.indexOf('예단')!=-1){
-                 sendAdmin("예물 예단에 관하여 궁금 하신가요? </br> 담당자를 연결해 드릴게요")
-             }else if(msg.indexOf('프로포즈')!=-1||msg.indexOf('케이터링')!=-1||msg.indexOf('이벤트')!=-1){
-                 sendAdmin("프로포즈,케이터링,이벤트 등이 궁하신가요? </br> 담당자를 연경해 드릴게요")
-             }else if(msg.indexOf('추가서비스')!=-1||msg.indexOf('추가 서비스')!=-1||msg.indexOf('추가')!=-1||msg.indexOf('서비스')!=-1){
-                 sendAdmin("추가서비스에 관하여 궁금하신가요?","추가서비스는 프로포즈 케이터링 이벤트 축가등을 소개해드립니다","추가서비스 담당자를 연결해 드릴까요?")
-             }else if(msg.indexOf('씨발')!=-1||msg.indexOf('시발')!=-1||msg.indexOf('ㅅㅂ')!=-1||msg.indexOf('ㅅ1발')!=-1||msg.indexOf('미친')!=-1||msg.indexOf('병신')!=-1||msg.indexOf('ㅄ')!=-1||msg.indexOf('개새끼')!=-1||msg.indexOf('개새')!=-1||msg.indexOf('ㄳㄲ')!=-1||msg.indexOf('ㄳㅋ')!=-1){
-                 sendAdmin("반사","욕하지마라","나도 욕한다?")
-                 $(".inputChatbot").css({"display":"none"})
-                 $(".inputWebSocket").css({"display":"block"})
-             }else{
-                 sendAdmin("무슨말인지 잘모르겠어요 ㅠㅠ","웨딩홀,스드메,예물,허니문,추가 서비스등 ","웨딩에 관련된 질문을 해주시면 ","답변해드릴게요")
-
-
-						}
-					}
-				})
+        
+       
 /**********************************************************************************
  	역경매 
       	 ver1. 미완
@@ -1348,27 +1133,38 @@
 				type:"post"
 			}).done(function(result){
 				//ing
-				$("#venueAuctionIng").html(
+				/* $("#venueAuctionIng").html(
 				 		"<h5 class='v-roll-title'>"
 				 		+"<a href='#'>입찰중 역경매</a></h5>"
 				 		+"<div class='bx-wrapper' style='max-width: 100%;'>"
 				 		+"<div class='bx-viewport' aria-live='polite' style='width: 100%; overflow: hidden; position: relative; height: 190px;'>"
 				 		+"<ul class='v-roll' id='vIngAcution' style='width: auto; position: relative; transition-duration: 3s; transform: translate3d(0px, -228px, 0px);'>"
 				 		
-				 	); 
+				 	);  */
+				 	var html ='';
 					for(var i = 0 ; i<result.length ; i++){
 						if(result[i].auctionStatus == "ing"){
-							$("#vIngAcution").append(
+							html +='<li>'
+							html +='<span class="w18"><span>'+result[i].memNo+'</span></span>'	 
+							html +='<span class="w18">'+result[i].member.name+'</span>'	 
+							html +='<span class="w28">서울시 강동구</span>'
+							html +='<span class="w18">D-21일</span>'
+							html +='<span class="w18">'+result[i].auctionNo+'</span>'	 
+							html +='</li>'	
+							
+							/* $("#vIngAcution").append(
 							
 							"<li style='float: none; list-style: none; position: relative;' aria-hidden='false' class='bx-clone' aria-hidden='true'>"
 							+"<span class='w18'>"+result[i].auctionNo+"</span>"
 							+"<span class='w18'>"+result[i].memNo+"</span>"
 							+"<span class='w18'>"+result[i].member.name+"</span>"
 							+"</li>"
-							); 
+							);  */
 							
 						}
+						
 					} 
+				 	$("#venueAuctionIng ul").html(html)
 					//done
 				/* 	$("#venueAuctionDone").html(
 					 		"<h5 class='v-roll-title'>"
@@ -1391,6 +1187,17 @@
 							
 						}
 					}  */
+				 	$('#venueAuctionIng ul').bxSlider({
+		                auto: true,
+		                speed: 3000,
+		                pause : 3000,
+		                mode: 'vertical',
+		                controls : false,
+		                moveSlides: 1,
+		                minSlides: 5, 
+		                maxSlides: 5,
+		                pager:false
+		            });
 			});
 			
 		});
@@ -1413,14 +1220,15 @@
 			}).done(function(result){
 				console.log(result)
 				//ing
-		 		$("#venueAuctionIng").html(
+		 	/* 	$("#venueAuctionIng").html(
 			 		"<h5 class='v-roll-title'>"
 			 		+"<a href='#'>입찰중 역경매</a></h5>"
 			 		+"<div class='bx-wrapper' style='max-width: 100%;'>"
 			 		+"<div class='bx-viewport' aria-live='polite' style='width: 100%; overflow: hidden; position: relative; height: 190px;'>"
 			 		+"<ul class='v-roll' id='vIngAcution'>"
 			 		
-			 	); 
+			 	);  */
+			 	var html ='';
 				for(var i = 0 ; i<result.length ; i++){
 					if(result[i].auctionStatus == "ing"){
 						$("#vIngAcution").append(

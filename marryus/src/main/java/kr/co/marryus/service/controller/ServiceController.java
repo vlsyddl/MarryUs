@@ -1,5 +1,8 @@
 package kr.co.marryus.service.controller;
 
+import java.util.HashMap;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,13 +10,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 import kr.co.marryus.repository.domain.Auction;
+import kr.co.marryus.repository.domain.Board;
 import kr.co.marryus.repository.domain.CompanyFile;
 import kr.co.marryus.repository.domain.CompanyInfo;
 import kr.co.marryus.repository.domain.Page;
+import kr.co.marryus.repository.domain.PageResult;
 import kr.co.marryus.repository.domain.Venue;
 import kr.co.marryus.wedservice.service.WeddingService;
 
@@ -113,6 +117,13 @@ public class ServiceController {
 	}
 	
 	
-	
-	
+	@RequestMapping("/comDetail.do")
+	@ResponseBody
+	public HashMap<String, Object> comDetail(int comInfoNo){
+		HashMap<String, Object> listMap = new HashMap();
+		listMap.put("info", service.comInfoDetail(comInfoNo));
+		List<CompanyFile> files = service.comInfoFiles(comInfoNo);
+		listMap.put("files",files);
+		return listMap;
+	}
 }

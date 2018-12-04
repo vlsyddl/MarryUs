@@ -140,6 +140,18 @@
 			)
 	</insert>
 	
+	<select	id="comInfoDetail" parameterType="int" resultMap="comInfoMap">
+		select * 
+		 from mu_company_info 
+		where com_info_no = #{comInfoNo}
+	</select>
+	
+	<select id="comInfoFiles" parameterType="int" resultMap="comFileMap">
+		select * 
+		 from mu_company_file 
+		where com_info_no = #{comInfoNo}
+		      and com_file_repr='N'
+	</select>
 </mapper>
 
 

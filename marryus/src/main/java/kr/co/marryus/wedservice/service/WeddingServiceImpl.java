@@ -52,6 +52,18 @@ public class WeddingServiceImpl implements WeddingService{
 		return mapper.selectComFiles(companyInfo);
 	}
 
+	@Override
+	public CompanyInfo comInfoDetail(int comInfoNo) {
+		// TODO Auto-generated method stub
+		return mapper.comInfoDetail(comInfoNo);
+	}
+
+	@Override
+	public List<CompanyFile> comInfoFiles(int comInfoNo) {
+		// TODO Auto-generated method stub
+		return mapper.comInfoFiles(comInfoNo);
+	}
+
 
 //	@Override
 //	public CompanyInfo weddingDetail(int comInfoNo) {
