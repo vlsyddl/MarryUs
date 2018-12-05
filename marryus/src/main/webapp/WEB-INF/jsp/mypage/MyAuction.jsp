@@ -368,6 +368,7 @@ h4{
             <c:otherwise><h3>입찰한 내역이 없습니다.</h3></c:otherwise>
             </c:choose>
             
+            
              <c:forEach var="auction" items="${myAuction}" varStatus="status">
              <div class="detail_box">
      		<h4><h class="highlight">${status.count}</h>  ${auction.comInfoName}<span class="left">      <fmt:formatDate value='${auction.tenderRegdate}' pattern='yyyy-MM-dd' /></span></h4>
