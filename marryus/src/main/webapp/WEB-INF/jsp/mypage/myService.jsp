@@ -198,7 +198,7 @@
 	<div id="outer_box">
 		 <div id="profile_box">
 
-	        <form action="/mypage/insertComInfoProfile.do" method="post" id="frm"  enctype="multipart/form-data" acceptcharset="UTF-8">
+	        <form a ction="/mypage/insertComInfoProfile.do" method="post" id="frm"  enctype="multipart/form-data" acceptcharset="UTF-8">
 	        <table>
 	       	<tr>
 	        	<td class="highlight">업체 이름</td>
@@ -349,6 +349,7 @@
     
     
     var sel_files = [];
+    var rep_file ="";
 
     
     
@@ -380,12 +381,11 @@
     }   
     function deleteImageAction(index) {   
     	$(".imgs_wrap").empty();
-    	rep_file ="";
     }
     function handleImgFileSelect(e) {
     	$(".imgs_wrap").empty();
     	rep_file ="";
-    	var rep_file= $("input[name=file]")[0].files[0];
+    	rep_file= $("input[name=file]")[0].files[0];
     	var reader = new FileReader();
     	 reader.onload= function (e) {
     		 html2 = "<span id='img_rep'><img src=\"" + e.target.result + "\" data-file='"+rep_file.name+"' class='selProductFile' title='Click to remove'/><a href=\"javascript:void(0);\"  onclick=\"deleteImageAction()\" class=\"xx\" >X</a></span>";

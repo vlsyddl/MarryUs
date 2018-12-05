@@ -56,42 +56,24 @@
         <nav class="myPageNav">
             <div class="container">
                     <ul>
-                        <li class="on">
-                            <a href="<c:url value='/mypage/mywedding.do'/>">
-                                    <img src="img/hall_ico.png" alt="" class="img-responsive center-block">
-                                My Wedding
-                            </a>
-                        </li>
                         <li>
-                            <a href="<c:url value='/mypage/myTodo.do'/>">
+                            <a href="<c:url value='/mypage/myweddingService.do'/>">
                                     <img src="img/chk_ico.png" alt="" class="img-responsive center-block">
-                                Check List
+                                my service 
                             </a>
                         </li>
                         <li>
-                            <a href="<c:url value='/mypage/myAuction.do?memNo=${user.no}&auctionType=v'/>">
+                            <a href="<c:url value='/mypage/service.do'/>">
+                                    <img src="img/chk_ico.png" alt="" class="img-responsive center-block">
+                                service add
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<c:url value='/mypage/auctionList.do'/>">
                                 <img src="img/auction_ico.png" alt="" class="img-responsive center-block">
-                                Auction List
+                                my tender
                             </a>
                         </li>
-                        <li>
-                            <a href="<c:url value='/mypage/myBudget.do'/>">
-                                <img src="img/budget_ico.png" alt="" class="img-responsive center-block">
-                                Budget Spent
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<c:url value='/mypage/likeCompany.do?memNo=${user.no}'/>">
-                                <img src="img/bookmark_ico.png" alt="" class="img-responsive center-block">
-                                Bookmark
-                            </a>
-                        </li>
-                        
-       
-       
-       
-       
-
                     </ul>
             </div>
         </nav>
@@ -130,7 +112,7 @@
                             <div class="photoBox partnerPhoto">
                                     <img src="img/photo_default.png" alt="" class="img-responsive center-block" style="max-width: 50px; padding-top: 10px;">
                             </div>
-                            <a href="<c:url value='/mypage/generalUpdateForm.do'/>">
+                            <a href="<c:url value='/mypage/companyUpdateForm.do'/>">
                             <div class="name">
                                 <h2>Seungjae Lee</h2>
                                 <p>1990.04.30</p>

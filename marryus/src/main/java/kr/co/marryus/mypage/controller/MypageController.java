@@ -274,9 +274,14 @@ public class MypageController {
 		return "redirect:likeCompany.do?memNo="+comLike.getMemNo();
 	}
 	
-	@RequestMapping("/todoExample.do")
-	public void todoExample(Model model) {
+	@RequestMapping("/myTodo.do")
+	public void myTodo(Model model) {
 		model.addAttribute("todo",service.selectTodo(75));
+	}
+	
+	@RequestMapping("/myBudget.do")
+	public void myBudget(Model model) {
+		
 	}
 	
 	
