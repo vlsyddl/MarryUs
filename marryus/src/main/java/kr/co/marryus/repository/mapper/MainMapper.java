@@ -3,6 +3,7 @@ package kr.co.marryus.repository.mapper;
 import java.util.List;
 
 import kr.co.marryus.repository.domain.Auction;
+import kr.co.marryus.repository.domain.Todo;
 import kr.co.marryus.repository.domain.WeddingPlan;
 /**
  * Main 페이지와 관련된 mapper
@@ -17,4 +18,6 @@ public interface MainMapper {
 	List<Auction> selectActionlist(Auction auction);
 	//역경매 리스트 
 	List<Auction> auctionList(Auction auction);
+	// 나만의 웨딩 
+	void sortingPlan(Todo todo);
 }

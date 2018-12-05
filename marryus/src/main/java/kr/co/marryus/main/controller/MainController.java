@@ -7,10 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.marryus.main.service.MainServiceImpl;
 import kr.co.marryus.repository.domain.Auction;
+import kr.co.marryus.repository.domain.Todo;
 import kr.co.marryus.repository.domain.WeddingPlan;
 
 /**
@@ -27,6 +29,10 @@ public class MainController {
 	@Autowired
 	MainServiceImpl service;
 	
+	@RequestMapping("/MyWeddingPlanSorting.do")
+	public void MyWedding() {};
+	@RequestMapping("/resultPlanning.do")
+	public void resultPlanning() {};
 	/**
 	 * main 페이지 호출
 	 */
@@ -49,7 +55,7 @@ public class MainController {
 	@RequestMapping("/submitWeddingPlan.do")
 	public String submitWeddingPlan(WeddingPlan weddingPlan) throws Exception {
 		service.insertWedPlan(weddingPlan);
-		return "redirect:main.do";
+		return "redirect:MyWeddingPlanSorting.do";
 	}
 	
 	
@@ -64,6 +70,15 @@ public class MainController {
 	public List<Auction> auctionList(Auction auction) throws Exception{
 		return service.auctionList(auction);
 		
+	}
+	
+	@RequestMapping("/sortingPlan.do")
+	public void sortingPlan(String [] todoCategory) throws Exception {
+		System.out.println("실행");
+		/*service.sortingPlan(todo);*/
+		for(String todo:todoCategory ) {
+			System.out.println(todo);
+		}
 	}
 	
 	

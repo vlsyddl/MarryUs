@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.marryus.repository.domain.Auction;
+import kr.co.marryus.repository.domain.Todo;
 import kr.co.marryus.repository.domain.WeddingPlan;
 import kr.co.marryus.repository.mapper.MainMapper;
 
@@ -52,5 +53,10 @@ public class MainServiceImpl implements MainService{
 	public List<Auction> auctionList(Auction auction) {
 		
 		return mapper.auctionList(auction);
+	}
+
+	@Override
+	public void sortingPlan(Todo todo) {
+		mapper.sortingPlan(todo);
 	}
 }

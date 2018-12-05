@@ -46,7 +46,7 @@
 			</div>
 			<div class="deadLine">
 				<ul>
-					<li><a href="#">${auction}오O진님의 입찰건이 3일 남았습니다</a></li>
+					<li><a href="#">오O진님의 입찰건이 3일 남았습니다</a></li>
 					<li><a href="#">오O진님의 입찰건이 3일 남았습니다</a></li>
 					<li><a href="#">오O진님의 입찰건이 3일 남았습니다</a></li>
 					<li><a href="#">오O진님의 입찰건이 3일 남았습니다</a></li>
@@ -948,12 +948,7 @@
 								<li><a href="#" data-ref="planPartner">partner</a></li>
 								<li><a href="#" data-ref="planPlace">place</a></li>
 								<li><a href="#" data-ref="planWedDate">wedDate</a></li>
-								<li><a href="#" data-ref="planVenue">venue</a></li>
-								<li><a href="#" data-ref="planSdm">sdm</a></li>
-								<li><a href="#" data-ref="planHoneyMoon">honeyMoon</a></li>
-								<li><a href="#" data-ref="planJewelry">jewelry</a></li>
 								<li><a href="#" data-ref="planVisitor">visitor</a></li>
-								<li><a href="#" data-ref="planMeal">meal</a></li>
 								<li><a href="#" data-ref="planBudget">budget</a></li>
 							</ol>
 						</div>
@@ -982,39 +977,17 @@
 									<input id="planWedDate" name="planWedDate" type="date" placeholder="Weeding date?" autofocus />
 								</li>
 								<li>
-									<span><label for="planVenue">웨딩홀/장소는 예약하셨나요?</label></span>
-									<input id="planVenue" name="planVenue" type="text" placeholder="Are you reserved wedding hall?" autofocus />
-								</li>
-								<li>
-									<span><label for="planSdm">스드메 예약</label></span>
-									<input id="planSdm" name="planSdm" type="text" placeholder="booking Studio/Dress/MakeUp??" autofocus />
-								</li>
-								<li>
-									<span><label for="planHoneyMoon">허니문</label></span>
-									<input id="planHoneyMoon" name="planHoneyMoon" type="text" placeholder="Have you decided honey moon place?" autofocus />
-								</li>
-								<li>
-									<span><label for="planJewelry">예물</label></span>
-									<input id="planJewelry" name="planJewelry" type="text" placeholder="Are you reserved wedding hall?" autofocus />
-								</li>
-								<li>
 									<span><label for="planVisitor">하객수</label></span>
 									<input id="planVisitor" name="planVisitor" type="text" placeholder="how many ?" autofocus />
-								</li>
-								<li>
-									<span><label for="planMeal">한명당 예상 식대?!</label></span>
-									<input id="planMeal" name="planMeal" type="text" placeholder="how much?" autofocus />
 								</li>
 								<li>
 									<span><label for="planBudget">예산</label></span>
 									<input id="planBudget" name="planBudget" type="text" placeholder="how much?" autofocus />
 								</li>
-								
 								<!-- submit 버튼 -->
 								<li>
 									<p style="margin-top: 45px; font-size: 32pt; float: right">
-										<input type="submit" style="color: white; text-decoration: none" id="signup" value="Submit" />
-										<!-- <a href="#" style="color: white; text-decoration: none" id="signup">sign up</a> -->
+										<input type="submit" style="color: white; text-decoration: none" id="myWeddingPlanBtnStart" value="나만의 웨딩플랜시작하기" />
 									</p>
 								</li>
 							</ol>
@@ -1115,7 +1088,9 @@
             //날짜 카운트
            $.fn.CountDownTimer('11/22/2019 00:00 AM'); 
         });
-        
+       
+   
+       
        
 /**********************************************************************************
  	역경매 

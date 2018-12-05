@@ -3,6 +3,7 @@ package kr.co.marryus.main.service;
 import java.util.List;
 
 import kr.co.marryus.repository.domain.Auction;
+import kr.co.marryus.repository.domain.Todo;
 import kr.co.marryus.repository.domain.WeddingPlan;
 
 /**
@@ -36,4 +37,10 @@ public interface MainService {
 	 * @return
 	 */
 	List<Auction> auctionList(Auction auction);
+	
+	/**
+	 * 나만의 웨딩플랜
+	 * @param todo
+	 */
+	void sortingPlan(Todo todo);
 }

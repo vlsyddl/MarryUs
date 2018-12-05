@@ -8,12 +8,7 @@
 		<result column="plan_partner" property="planPartner" />
 		<result column="plan_place" property="planPlace" />
 		<result column="plan_wed_date" property="planWedDate" />
-		<result column="plan_venue" property="planVenue" />
-		<result column="plan_sdm" property="planSdm" />
-		<result column="plan_honey_moon" property="planHoneyMoon" />
-		<result column="plan_jewelry" property="planJewelry" />
 		<result column="plan_visitor" property="planVisitor" />
-		<result column="plan_meal" property="planMeal" />
 		<result column="plan_budget" property="planBudget" />
 		
 	</resultMap>
@@ -39,6 +34,17 @@
 		<result column="mem_name" property="name" />
 		<result column="mem_phone" property="phone" />
 	</resultMap>
+	<resultMap id="todoMap" type="Todo">
+		<result property="todoSchedule" column="todo_schedule" />
+		<result property="todoContent" column="todo_content" />
+		<result property="memNo" column="mem_no" />
+		<result property="todoDday" column="todo_dday" />
+		<result property="todoCategory" column="todo_category" />
+		<result property="todoNo" column="todo_no" />
+		<result property="todoCheck" column="todo_check" />
+		<result property="todoDelete" column="todo_delete" />
+	</resultMap>
+	
 	<!-- 나만의 웨딩 데이터 입력 -->
 	<insert id="insertWedPlan" parameterType="WeddingPlan">
 		insert into
@@ -48,24 +54,14 @@
 		plan_partner,
 		plan_place,
 		plan_wed_date,
-		plan_venue,
-		plan_sdm,
-		plan_honey_moon,
-		plan_jewelry,
 		plan_visitor,
-		plan_meal,
 		plan_budget
 		)values(
 		#{memNo},
 		#{planPartner},
 		#{planPlace},
 		#{planWedDate},
-		#{planVenue},
-		#{planSdm},
-		#{planHoneyMoon},
-		#{planJewelry},
 		#{planVisitor},
-		#{planMeal},
 		#{planBudget}
 		)
 	</insert>
@@ -86,5 +82,14 @@
 		on a.mem_no = w.mem_no
 		where auction_type = #{auctionType}
 	</select>
+	
+	<!-- 나만으 ㅣ웨딩 플랜 -->
+	
+	<update id="sortingPlan" parameterType="Todo"  >
+		update mu_todo
+		set todo_delete='y'
+		where mem_no=#{memNo}
+		and todo_category=#{todoCategory}
+	</update>
 
 </mapper>
