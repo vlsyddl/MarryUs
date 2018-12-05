@@ -578,7 +578,7 @@ $('document').ready(function() {
 	  $.each(eval(area0), function() {
 	   $selsido.append("<option value='"+this+"'>"+this+"</option>");
 	  });
-	  $selsido.next().append("<option value=''>구/군 선택</option>");
+	  $selsido.parent().next().children().append("<option value=''>구/군 선택</option>");
 	 });
 
 	 
@@ -587,7 +587,7 @@ $('document').ready(function() {
 
 	 $("select[name^=weddingVenue]").change(function() {
 	  var area = "area"+$("option",$(this)).index($("option:selected",$(this))); // 선택지역의 구군 Array
-	  var $gugun = $(this).next(); // 선택영역 군구 객체
+	  var $gugun = $(this).parent().next().children(); // 선택영역 군구 객체
 	  $("option",$gugun).remove(); // 구군 초기화
 
 	  if(area == "area0")
