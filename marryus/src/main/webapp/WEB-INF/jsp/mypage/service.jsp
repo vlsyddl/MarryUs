@@ -42,6 +42,7 @@
 </head>
 <body>
 <header>
+<header>
 	<div class="container">
 		<div class="row">
 			<div class="logo col-md-3">
@@ -85,39 +86,33 @@
         <nav class="myPageNav">
             <div class="container">
                     <ul>
-                        <li class="on">
-                            <a href="<c:url value='/mypage/myService.do'/>">
-                                    <img src="img/hall_ico.png" alt="" class="img-responsive center-block">
-                                My Wedding
-                            </a>
-                        </li>
                         <li>
-                            <a href="<c:url value='/mypage/auctionList.do'/>">
+                            <a href="<c:url value='/mypage/myweddingService.do'/>">
                                     <img src="img/chk_ico.png" alt="" class="img-responsive center-block">
-                                Check List
+                                my service 
                             </a>
                         </li>
                         <li>
                             <a href="<c:url value='/mypage/service.do'/>">
+                                    <img src="img/chk_ico.png" alt="" class="img-responsive center-block">
+                                service add
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<c:url value='/mypage/auctionList.do'/>">
                                 <img src="img/auction_ico.png" alt="" class="img-responsive center-block">
-                                Auction List
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<c:url value='/mypage/generalUpdateForm.do'/>">
-                                <img src="img/budget_ico.png" alt="" class="img-responsive center-block">
-                                Budget Spent
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<c:url value='/mypage/companyUpdateForm.do'/>">
-                                <img src="img/bookmark_ico.png" alt="" class="img-responsive center-block">
-                                Bookmark
+                                my tender
                             </a>
                         </li>
                     </ul>
             </div>
         </nav>
+        
+        
+        
+        
+        
+        
 	<c:forEach var="auction" items="${autionList}">
 	<a >
 	<table onClick="location.href=`http://localhost:8000/marryus/mypage/myServiceUpdate.do?memNo=10&comInfoNo=${auction.comInfoNo}`" style="cursor:pointer;" calss="table_outer">

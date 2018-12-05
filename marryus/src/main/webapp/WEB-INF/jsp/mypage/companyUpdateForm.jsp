@@ -75,7 +75,6 @@ body {
 	</style>
 </head>
 <body>
-
 <header>
 	<div class="container">
 		<div class="row">
@@ -87,7 +86,7 @@ body {
 			<nav class="gnb col-md-9">
 			<div class="gnb_top cf">
 				<ul class="cf">
-					<li><a href="<c:url value='companyUpdate.do' />">회원가입</a></li>
+					<li><a href="<c:url value='/signup/signupPro.do' />">회원가입</a></li>
 					<!-- 로그인, 로그아웃 -->
 					<c:if test="${user.email eq null}">
 						<li><a href="#" data-toggle="modal" data-target="#loginModal">로그인</a></li>
@@ -120,34 +119,22 @@ body {
         <nav class="myPageNav">
             <div class="container">
                     <ul>
-                        <li class="on">
-                            <a href="<c:url value='/mypage/myService.do'/>">
-                                    <img src="img/hall_ico.png" alt="" class="img-responsive center-block">
-                                My Wedding
-                            </a>
-                        </li>
                         <li>
-                            <a href="<c:url value='/mypage/auctionList.do'/>">
+                            <a href="<c:url value='/mypage/myweddingService.do'/>">
                                     <img src="img/chk_ico.png" alt="" class="img-responsive center-block">
-                                Check List
+                                my service 
                             </a>
                         </li>
                         <li>
                             <a href="<c:url value='/mypage/service.do'/>">
+                                    <img src="img/chk_ico.png" alt="" class="img-responsive center-block">
+                                service add
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<c:url value='/mypage/auctionList.do'/>">
                                 <img src="img/auction_ico.png" alt="" class="img-responsive center-block">
-                                Auction List
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<c:url value='/mypage/generalUpdate.do'/>">
-                                <img src="img/budget_ico.png" alt="" class="img-responsive center-block">
-                                Budget Spent
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<c:url value='/mypage/companyUpdate.do'/>">
-                                <img src="img/bookmark_ico.png" alt="" class="img-responsive center-block">
-                                Bookmark
+                                my tender
                             </a>
                         </li>
                     </ul>

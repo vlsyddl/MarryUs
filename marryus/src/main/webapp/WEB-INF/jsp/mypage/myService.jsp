@@ -162,39 +162,33 @@
         <nav class="myPageNav">
             <div class="container">
                     <ul>
-                        <li class="on">
-                            <a href="<c:url value='/mypage/likeCompany.do'/>">
-                                    <img src="img/hall_ico.png" alt="" class="img-responsive center-block">
-                                My Wedding
-                            </a>
-                        </li>
                         <li>
-                            <a href="<c:url value='/mypage/auctionList.do'/>">
+                            <a href="<c:url value='/mypage/myweddingService.do'/>">
                                     <img src="img/chk_ico.png" alt="" class="img-responsive center-block">
-                                Check List
+                                my service 
                             </a>
                         </li>
                         <li>
                             <a href="<c:url value='/mypage/service.do'/>">
+                                    <img src="img/chk_ico.png" alt="" class="img-responsive center-block">
+                                service add
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<c:url value='/mypage/auctionList.do'/>">
                                 <img src="img/auction_ico.png" alt="" class="img-responsive center-block">
-                                Auction List
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<c:url value='/mypage/generalUpdate.do'/>">
-                                <img src="img/budget_ico.png" alt="" class="img-responsive center-block">
-                                Budget Spent
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<c:url value='/mypage/companyUpdate.do'/>">
-                                <img src="img/bookmark_ico.png" alt="" class="img-responsive center-block">
-                                Bookmark
+                                my tender
                             </a>
                         </li>
                     </ul>
             </div>
         </nav>
+        
+        
+        
+        
+        
+        
 	<div id="outer_box">
 		 <div id="profile_box">
 

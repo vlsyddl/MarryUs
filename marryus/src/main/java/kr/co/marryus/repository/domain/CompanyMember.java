@@ -16,4 +16,5 @@ public class CompanyMember {
 	private String comType;
 	private String comOkay;
 	private int comNo;
+	
 }

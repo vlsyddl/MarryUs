@@ -12,6 +12,17 @@
 	 <c:import url="/common/importJs.jsp"/>
 </head>
 <body>
+
+
+
+
+
+
+
+
+
+
+
 <header>
 	<div class="container">
 		<div class="row">
@@ -86,15 +97,18 @@
                                 Bookmark
                             </a>
                         </li>
-                        
-       
-       
-       
-       
+
 
                     </ul>
             </div>
         </nav>
+        
+        
+        
+        
+        
+        
+        
         
         
         
