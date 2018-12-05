@@ -57,7 +57,7 @@
             <div class="container">
                     <ul>
                         <li class="on">
-                            <a href="<c:url value='/mypage/myAuction.do?memNo=${user.no}&auctionType=v'/>">
+                            <a href="<c:url value='/mypage/generalUpdateForm.do'/>">
                                     <img src="img/hall_ico.png" alt="" class="img-responsive center-block">
                                 My Wedding
                             </a>
@@ -69,7 +69,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="<c:url value='/mypage/service.do'/>">
+                            <a href="<c:url value='/mypage/myAuction.do?memNo=${user.no}&auctionType=v'/>">
                                 <img src="img/auction_ico.png" alt="" class="img-responsive center-block">
                                 Auction List
                             </a>
@@ -81,9 +81,28 @@
                             </a>
                         </li>
                         <li>
-                            <a href="<c:url value='/mypage/companyUpdateForm.do'/>">
+                            <a href="<c:url value='/mypage/likeCompany.do?memNo=${user.no}'/>">
                                 <img src="img/bookmark_ico.png" alt="" class="img-responsive center-block">
                                 Bookmark
+                            </a>
+                        </li>
+                        
+                          <li>
+                            <a href="<c:url value='/mypage/service.do'/>">
+                                    <img src="img/chk_ico.png" alt="" class="img-responsive center-block">
+                                Service add
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<c:url value='/mypage/auctionList.do'/>">
+                                <img src="img/auction_ico.png" alt="" class="img-responsive center-block">
+                                My Tender
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<c:url value='/mypage/companyUpdateForm.do'/>">
+                                <img src="img/budget_ico.png" alt="" class="img-responsive center-block">
+                                My page
                             </a>
                         </li>
                     </ul>

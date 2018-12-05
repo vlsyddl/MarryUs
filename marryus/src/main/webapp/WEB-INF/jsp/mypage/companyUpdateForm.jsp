@@ -67,7 +67,6 @@ body {
   
   
   button{
-  	float: right;
   	background: white;
   	border: 3px solid pink;
   	padding: 10px;
@@ -210,17 +209,22 @@ body {
 					</div>
 
 					<div class="signup__field">
-						<label for="com_phone" class="label">회사 주소</label> <input
-							type="text" name="comAddr" id="sample4_roadAddress"
-							placeholder="도로명주소" value="${member.comAddr}"> <input type="button"
-							onclick="address()" value="우편번호 찾기"><br> <span
-							id="guide" style="color: #999"></span>
+						<label for="com_phone" class="label">회사 주소</label> 
+						<input type="text" id="sample4_postcode" placeholder="우편번호"> 
+						<input type="text" name="comAddr" id="sample4_roadAddress" placeholder="도로명주소" value="${member.comAddr}"> 
+						<input type="button" onclick="address()" value="우편번호 찾기" size="50">
+						<br> <span id="guide" style="color: #999"></span>
 					</div>
 					<div class="signup__field">
 						<label for="com_addr_detail" class="label" >회사 상세주소</label> <input
-							type="text" name="comAddrDetail" id="com_addr_detail" value="${member.comAddrDetail}"
+							type="text" name="comAddrDetail" id="com_addr_detail"  value="${member.comAddrDetail}"
 							class="input-field" required>
 					</div>
+					
+					
+					
+
+
 
 					<fieldset>
 

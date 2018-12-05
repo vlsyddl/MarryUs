@@ -45,6 +45,8 @@
         
         table{
         	width: 1200px;
+        	border: 2px solid #333333;
+        	margin: 10px;
         }
         table tr, td{
         	border-collapse: collapse;
@@ -276,7 +278,7 @@
 			</table>
 				</form>		
 				<div class="form-btn">
-	                 <a href="#" class="cancle btn">취소</a>
+	                 <a href="service.do" class="cancle btn">취소</a>
 	                 <a href="#" class="save btn" id="savebutton">등록</a>
 	            </div>
 	       
@@ -320,6 +322,11 @@
  	        } 
  		   		formData.append("file", $("input[name=file]")[0].files[0]);
  		   		
+ 		   		if(!rep_file){
+ 		   			alert("대표사진을 꼭 설정해야 합니다.");
+ 		   			return false;
+ 		   		}
+ 		   		
  		   		
  		   		
  	  			 $.ajax({
@@ -336,7 +343,7 @@
  	 	           }) 
  	       	
 	    })
-	})
+	});
    
     
     

@@ -343,7 +343,9 @@
 		update mu_general
 		set gen_birth=#{genBirth},
 		gen_profilepath=#{genProfilepath},
+		<if test="genProfilename!= 'null'">	 
 		gen_profilename=#{genProfilename}
+		</if>
 		where gen_no = #{genNo}
 	</update>
 	
@@ -449,6 +451,9 @@
 	</select>
 	
 	
+	
+	
+	<!-- 역경매 신청서 수정 -->
 	<select id="selectVenue" parameterType="Auction" resultMap="venueMap">
 		select v.*
 		from mu_venue v
@@ -470,7 +475,7 @@
 	
 	
 	
-	<!-- 역경매 신청서 수정 -->
+
 	<select id="selectDress" parameterType="Auction" resultMap="dressMap">
 		select d.*
 		from mu_dress d

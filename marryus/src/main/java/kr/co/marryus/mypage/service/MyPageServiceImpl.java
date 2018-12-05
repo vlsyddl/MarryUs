@@ -11,10 +11,17 @@ import kr.co.marryus.repository.domain.CompanyFile;
 import kr.co.marryus.repository.domain.CompanyInfo;
 import kr.co.marryus.repository.domain.CompanyLike;
 import kr.co.marryus.repository.domain.CompanyMember;
+import kr.co.marryus.repository.domain.Dress;
 import kr.co.marryus.repository.domain.GeneralMember;
+import kr.co.marryus.repository.domain.Jewelry;
+import kr.co.marryus.repository.domain.Makeup;
 import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.Page;
+import kr.co.marryus.repository.domain.ServiceAdd;
+import kr.co.marryus.repository.domain.Studio;
 import kr.co.marryus.repository.domain.Tender;
+import kr.co.marryus.repository.domain.Todo;
+import kr.co.marryus.repository.domain.Venue;
 
 
 @Service
@@ -156,6 +163,96 @@ public class MyPageServiceImpl implements MypageService{
 	@Override
 	public int selectCompanyLikeCnt(int memNo) {
 		return mapper.selectCompanyLikeCnt(memNo);
+	}
+
+
+	@Override
+	public Venue selectVenue(Auction auction) {
+		return mapper.selectVenue(auction);
+	}
+
+
+	@Override
+	public Studio selectStudio(Auction auction) {
+		return mapper.selectStudio(auction);
+	}
+
+
+	@Override
+	public Dress selectDress(Auction auction) {
+		return mapper.selectDress(auction);
+	}
+
+
+	@Override
+	public Makeup selectMakeup(Auction auction) {
+		return mapper.selectMakeup(auction);
+	}
+
+
+	@Override
+	public Jewelry selectHoneymoon(Auction auction) {
+		return mapper.selectHoneymoon(auction);
+	}
+
+
+	@Override
+	public ServiceAdd selectJewelry(Auction auction) {
+		return mapper.selectJewelry(auction);
+	}
+
+
+	@Override
+	public int updateVenue(Venue venue) {
+		return mapper.updateVenue(venue);
+	}
+
+
+	@Override
+	public int updateStudio(Studio studio) {
+		return mapper.updateStudio(studio);
+	}
+
+
+	@Override
+	public int updateDress(Dress dress) {
+		return mapper.updateDress(dress);
+	}
+
+
+	@Override
+	public int updateMakeup(Makeup makeup) {
+		return mapper.updateMakeup(makeup);
+	}
+
+
+	@Override
+	public int updateJewelry(Jewelry jewelry) {
+		return mapper.updateJewelry(jewelry);
+	}
+
+
+	@Override
+	public int updateServiceAdd(ServiceAdd serviceAdd) {
+		return mapper.updateServiceAdd(serviceAdd);
+	}
+
+
+	@Override
+	public List<Todo> selectTodo(int memNo) {
+		return mapper.selectTodo(memNo);
+	}
+
+
+	@Override
+	public int insertTodo(Todo todo) {
+		return mapper.insertTodo(todo);
+	}
+
+
+	@Override
+	public int updateTodo(Todo todo) {
+		return mapper.updateTodo(todo);
 	}
 
 

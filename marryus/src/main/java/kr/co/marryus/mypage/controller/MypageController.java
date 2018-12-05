@@ -13,6 +13,7 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import kr.co.marryus.member.service.MemberService;
 import kr.co.marryus.mypage.service.MypageService;
 import java.io.File;
+import java.util.List;
 import java.util.UUID;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,10 +21,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.co.marryus.repository.domain.Auction;
 import kr.co.marryus.repository.domain.CompanyFile;
 import kr.co.marryus.repository.domain.CompanyInfo;
+import kr.co.marryus.repository.domain.CompanyLike;
 import kr.co.marryus.repository.domain.CompanyMember;
 import kr.co.marryus.repository.domain.GeneralMember;
 import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.Page;
+import kr.co.marryus.repository.domain.Todo;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 
@@ -93,6 +97,7 @@ public class MypageController {
 	
 	
 	/** 업체 정보 올리기  */
+	@ResponseBody
     @RequestMapping("/insertComInfo.do")
     public void insertComInfoProfile(CompanyInfo comInfo, MultipartFile[] files, MultipartFile file, HttpSession session) throws Exception{
         if(comInfo.getType().equals("insert")) {
@@ -156,7 +161,7 @@ public class MypageController {
 	@RequestMapping("/myServiceDelete.do")
 	public String myServiceDelete(Model model, int comInfoNo) {
 	service.deleteComInfo(comInfoNo);
-    return "mypage/service";
+    return "redirect:service.do";
 	}
 	
 	/** 업체 서비스 파일 삭제하기 */
@@ -186,18 +191,20 @@ public class MypageController {
 		}else {
 			member.setPass(passwordEncoder.encode(member.getPass()));
 		}
-		
+	
         String imgPath = context.getRealPath("/img/genProfile");
         File filePath = new File(imgPath);
         if(filePath.exists()==false) {
         	filePath.mkdirs();}
         
+        if(!(file.isEmpty())) {
           String fileName = file.getOriginalFilename();
           String ext = fileName.substring(fileName.indexOf("."),fileName.length());
           fileName =UUID.randomUUID().toString()+ext;
           genMem.setGenProfilepath("img/genProfile");
           genMem.setGenProfilename(fileName);
           file.transferTo(new File(imgPath, fileName));
+        }
 		service.updateGeneralMember(genMem);
 		service.updateMember(member);
 
@@ -258,6 +265,18 @@ public class MypageController {
         model.addAttribute("lastPage", lastPage);
         model.addAttribute("pageNo", pageNo);
 		
+	}
+	
+	@RequestMapping("/likeCompanyDelete.do")
+	public String likeCompanyDelete(CompanyLike comLike) {
+		//memNo, ComInfoNo
+		service.deleteCompanyLike(comLike);
+		return "redirect:likeCompany.do?memNo="+comLike.getMemNo();
+	}
+	
+	@RequestMapping("/todoExample.do")
+	public void todoExample(Model model) {
+		model.addAttribute("todo",service.selectTodo(75));
 	}
 	
 	

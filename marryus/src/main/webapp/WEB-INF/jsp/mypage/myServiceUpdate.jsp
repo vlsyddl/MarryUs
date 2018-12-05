@@ -316,26 +316,35 @@
  	           formData.append("files", file);
  	        } 
  		   		formData.append("file", $("input[name=file]")[0].files[0]);
+ 		   		
+ 		   		console.log(rep_file);
+ 		   		if(!rep_file){
+ 		   			alert("대표사진을 꼭 설정해야 합니다.");
+ 		   			return false;
+ 		   		}
+ 		   		
+ 		   		console.log(sel_files.length);
   			 $.ajax({
  		    	   url:"insertComInfo.do",
  		    	   type:"POST",
  		    	   processData: false, //쿼리 (데이터 = 값) 형식을 해제하고 문자열? 형태로 보냄
  		           contentType: false, // 기본 타입 말고 multipart/form-data로 설정하게
  		    	   data: formData
- 		       }).done(function (data){
+ 		       }).done(function (){
  		    	   alert("정보 수정이 완료되었습니다.");
  		    	  location.href ="service.do"
  		       }).fail(function(e){
  	        	   alert("정보 수정 중 오류가 발생했습니다.");
- 	           }) 
+ 	           }); 
  	       	
-	    })
-	})
+	    });
+	});
    
     
     
     
     var sel_files = [];
+    var rep_file ="";
 
     
     
@@ -415,7 +424,7 @@
     function handleImgFileSelect(e) {
     	$(".imgs_wrap").empty();
     	rep_file ="";
-    	var rep_file= $("input[name=file]")[0].files[0];
+    	rep_file= $("input[name=file]")[0].files[0];
     	var reader = new FileReader();
     	 reader.onload= function (e) {
     		 html2 = "<span id='img_rep'><img src=\"" + e.target.result + "\" data-file='"+rep_file.name+"' class='selProductFile' title='Click to remove'/><a href=\"javascript:void(0);\"  onclick=\"deleteImageAction()\" class=\"xx\" >X</a></span>";

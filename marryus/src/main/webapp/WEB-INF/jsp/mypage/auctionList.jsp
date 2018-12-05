@@ -188,7 +188,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="<c:url value='/mypage/service.do'/>">
+                            <a href="<c:url value='/mypage/todoExample.do'/>">
                                 <img src="img/auction_ico.png" alt="" class="img-responsive center-block">
                                 Auction List
                             </a>

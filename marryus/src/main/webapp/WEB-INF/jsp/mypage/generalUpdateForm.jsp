@@ -13,6 +13,65 @@
 			color: black;
 			font-size: 10px;
 		}
+		
+		
+				input, select{
+			height: 26px;
+			width: 150px;
+		}
+		
+		#grid{
+			margin: 30px 30px 30px 60px;
+		}
+		
+		
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+.container_box {
+  padding: 90px 50px;
+}
+
+
+.box {
+  width: 1000px;
+  margin: 0 auto;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.10);
+  position: relative;
+  border-radius: 10px;
+}
+
+
+
+.box__header {
+  width: 100%;
+  height: 80px;
+  background-color: rgba(231, 190, 209, 0.445);
+  background: url(https://images.unsplash.com/photo-1527238902242-4cb5446d7651?ixlib=rb-0.3.5&s=f6e5cacfca45efd3a654691fa46288e9&auto=format&fit=crop&w=1876&q=80) ;
+  background: url(https://images.unsplash.com/photo-1429679310900-bad303d0e63a?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=c9b51348554d75e0d0924eec1908af6f&auto=format&fit=crop&w=1050&q=80) ;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 10px 10px 0px 0px;
+  }
+  p.title{
+  	text-indent: 30px;
+  	font-size: 22px;
+  	font-weight: 800;
+  	color: white;
+  
+  }
+  
+  
+  button{
+  	background: white;
+  	border: 3px solid pink;
+  	padding: 10px;
+  	margin: 20px;
+  }
 	</style>
 
 </head>
@@ -98,6 +157,19 @@
             </div>
         </nav>
 
+
+
+
+        <div class="container_box">
+  <div class="box">
+    <div class="box__header">
+      <div class="menu">
+
+        <div class="menu__elements">
+          	<p class="title">Marry Us 일반회원 정보 수정</p>
+        </div>
+      </div>
+    </div>
     <div id="grid">
 
         <div></div>
@@ -174,7 +246,10 @@
         <div></div>
       
       </div>
-      </div>
+    
+    
+  </div>
+</div>
       
       
 <script>

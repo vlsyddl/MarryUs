@@ -66,14 +66,6 @@
     
     
     <div id="wrap" class="wedding">
-        <div class="sub_visual">
-            <div class="titleBox">
-                <h2>웨딩홀</h2>
-                <p>
-                    웨딩홀 &middot; 스몰웨딩 &middot; 셀프웨딩
-                </p>
-            </div>
-        </div>
         <section class="contents contents01">
             <div class="container">
                 <div class="contentsTab">
@@ -103,7 +95,7 @@
 	                      
 	                        </ul>
 	                        <div class="btn-group" role="group">
-	                            <button type="button" class="btn btn-default">관심업체 등록</button>
+	                            <button type="button" class="btn btn-default"  onclick="location.href='likeCompanyDelete.do?comInfoNo=${l.comInfoNo}&memNo=${user.no}'">관심업체 등록</button>
 	                        </div>
 	                    </li>
                   </c:forEach>
