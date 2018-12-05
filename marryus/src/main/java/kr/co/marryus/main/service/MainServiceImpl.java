@@ -48,15 +48,31 @@ public class MainServiceImpl implements MainService{
 		
 		return mapper.selectActionlist(auction);
 	}
-
+	/**
+	 * 역경매 List 2
+	 */
 	@Override
 	public List<Auction> auctionList(Auction auction) {
 		
 		return mapper.auctionList(auction);
 	}
-
+	
+	/**
+	 * 나만의 웨딩플랜 
+	 */
 	@Override
 	public void sortingPlan(Todo todo) {
 		mapper.sortingPlan(todo);
 	}
+	
+	/**
+	 * 나만의 웨딩플랜 체크리스트 
+	 */
+	@Override
+	public List<Todo> selectTodoListByWP(Todo todo) {
+		
+		return mapper.selectTodoListByWP(todo);
+	}
+
+	
 }

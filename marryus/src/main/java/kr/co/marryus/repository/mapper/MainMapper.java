@@ -20,4 +20,8 @@ public interface MainMapper {
 	List<Auction> auctionList(Auction auction);
 	// 나만의 웨딩 
 	void sortingPlan(Todo todo);
+	
+	List<Todo> selectTodoListByWP(Todo todo);
+	
+	
 }

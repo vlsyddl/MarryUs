@@ -70,8 +70,7 @@ public class MemberController {
 			
 			session.setAttribute("user", member);
 		}else {
-			
-			System.out.println("계정정보 불일치");
+			System.out.println("계정 불일치");
 		}
 		
 

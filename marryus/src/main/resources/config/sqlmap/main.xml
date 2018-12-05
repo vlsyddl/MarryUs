@@ -43,6 +43,7 @@
 		<result property="todoNo" column="todo_no" />
 		<result property="todoCheck" column="todo_check" />
 		<result property="todoDelete" column="todo_delete" />
+		<collection property="weddingPlan" resultMap="weddingPlanMap" />
 	</resultMap>
 	
 	<!-- 나만의 웨딩 데이터 입력 -->
@@ -91,5 +92,15 @@
 		where mem_no=#{memNo}
 		and todo_category=#{todoCategory}
 	</update>
-
+	
+	<!-- 나만의 웨딩플랜 결과 todoList -->
+	<select id="selectTodoListByWP" parameterType="Todo" resultMap="todoMap">
+	  	select * 
+		from mu_todo t left join mu_wedding_plan w
+		on t.mem_no = w.mem_no
+		where t.mem_no = #{memNo}
+		and todo_delete= 'n'
+	</select>
+	
+	
 </mapper>

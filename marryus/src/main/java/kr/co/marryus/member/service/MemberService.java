@@ -63,4 +63,10 @@ public interface MemberService {
 	 * @param member
 	 */
 	void updateNewPass(Member member);
+	
+	/**
+	 * todoList 생성
+	 * @param memNo
+	 */
+	void insertCopyTable(int memNo);
 }

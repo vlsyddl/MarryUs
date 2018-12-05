@@ -195,7 +195,7 @@ font-weight:bold;
                 <p class="headLine">나만의 웨딩 Todo List</p>
                 <p class="subheadLine">원하는 카테고리를 선택해주세요.</p>  
                     <input type="button" class="button-start"  onclick="startSelectList()" value="시작하기"/>
-                <!-- form start -->
+             <!-- form start -->
                <form action="sortingPlan.do" method="post" >
                 <input type="hidden" name="memNo" value="75"> 
                 
@@ -232,7 +232,7 @@ font-weight:bold;
                    		<p class="questionHead">예물, 예단</p>
                    		<div class="btnConainer">
                     	<label class="choice" >
-                            <input type="checkbox" name="todoCategory" value="h" onclick="next3()" />
+                            <input type="checkbox" name="todoCategory" value="p" onclick="next3()" />
                               <span>필요없어요</span>
                           </label>
                           <label class="choice">
@@ -245,7 +245,7 @@ font-weight:bold;
                   		<p class="questionHead">신혼집, 혼수</p>
                   		<div class="btnConainer">
                     	<label class="choice">
-                            <input type="checkbox" name="todoCategory" value="p" onclick="next4()" />
+                            <input type="checkbox" name="todoCategory" value="h" onclick="next4()" />
                               <span>필요없어요</span>
                           </label>
                           <label class="choice">
@@ -268,6 +268,7 @@ font-weight:bold;
                           </div>
                   </li>
                 </ul>
+                <input type="hidden" id="memNo" name="memNo" value="${user.no }">
                 </form>
                 <button class="button-submit" id="sumitBtn" style="display: none" onclick="sortingResult()">나만의 웨딩플랜 신청하기</button>
             
@@ -301,10 +302,31 @@ function startSelectList(){
 
 
 
+var result =[];
 function sortingResult(){
+   $('input:checkbox[name="todoCategory"]').each(function() {
+
+
+         if(this.checked){
+
+            result.push(this.value); 
+
+         }
+
+    });
+   
+   
+  console.log(result);
+var memNo= $("#memNo").val();
+  $.ajax({
+	  url:"/marryus/main/sortingPlan.json",
+	  data: "todoCategoryList="+result+"&memNo="+memNo,
+	  type: "post"
+  });
+  
   location.href ="http://localhost:8000/marryus/main/resultPlanning.do";
-		alert("감사합니다!");
-	
+      alert("감사합니다!");
+   
 }
 
 

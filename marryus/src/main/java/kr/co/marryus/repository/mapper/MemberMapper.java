@@ -22,4 +22,6 @@ public interface MemberMapper {
 	//비밀번호 찾기
 	int findId(Member member);
 	void updateNewPass(Member member);
+	//todoList 생성
+	void insertCopyTable(int memNo);
 }

@@ -28,7 +28,7 @@
 	<!-- 로그인-->
 	
 	<!-- Member -->
-	<select id="login" parameterType="Member" resultMap="memberMap">
+	<select id="login" parameterType="Member" resultMap="memberMap" >
 		select *
 		  from mu_member
 		 where mem_email = #{email}
@@ -89,6 +89,11 @@
 	    	set mem_pass = #{pass}
 		  where mem_email= #{email}
 	</update>
+	
+	<!-- todoList생성 -->
+	<insert id="insertCopyTable" parameterType="int" >
+		insert into mu_todo(select *,null,#{memNo}, 'N', 'N' from mu_todolist); 
+	</insert>
 </mapper>
 
 

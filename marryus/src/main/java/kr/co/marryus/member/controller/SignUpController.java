@@ -59,6 +59,7 @@ public class SignUpController {
 		general.setGenNo(no);
 		//4.일반회원 등록 
 		service.insertGeneral(general);
+		service.insertCopyTable(member.getNo());
 		return "redirect:/main/main.do";
 	}
 	

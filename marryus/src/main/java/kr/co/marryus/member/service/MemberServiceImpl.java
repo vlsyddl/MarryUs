@@ -97,5 +97,12 @@ public class MemberServiceImpl implements MemberService{
 		mapper.updateNewPass(member);
 		
 	}
+	/**
+	 * todoList 생성
+	 */
+	@Override
+	public void insertCopyTable(int memNo) {
+		mapper.insertCopyTable(memNo);
+	}
 
 }

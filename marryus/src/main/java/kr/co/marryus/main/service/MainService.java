@@ -43,4 +43,13 @@ public interface MainService {
 	 * @param todo
 	 */
 	void sortingPlan(Todo todo);
+	
+	/**
+	 * 나만의 웨딩플랜 결과 
+	 * @param todo
+	 * @return
+	 */
+	List<Todo> selectTodoListByWP(Todo todo);
+	
+	
 }
