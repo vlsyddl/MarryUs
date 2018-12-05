@@ -7,11 +7,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css'/>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-    <link href="https://ivaynberg.github.io/select2/select2-3.5.1/select2.css" rel="stylesheet"/>
 
+<c:import url="/common/importCss.jsp"/>
+<c:import url="/common/importJs.jsp"/>
+<c:import url="/common/webSocket.jsp"/>
 <style>
 @font-face {
   font-family: 'Lato';
@@ -157,82 +156,116 @@
 .container-form {
   font-family: Lato, Helvetica, Arial, sans-serif;
   color: #545454;
-  margin: 200px;
+ 
+  margin: 300px;
   min-height: 50vh;
+}
+.headLine{
+font-size:35px;
+font-weight:bold;
+ text-align: center;
+     padding: 6%;
+}
+.subheadLine{
+font-size:20px;
+font-weight:bold;
+ text-align: center;
+     padding: 2%;
+}
+.questionHead{
+ text-align: center;
+ font-weight:bold;
+ font-size:20px;
+ padding: 2%;
+}
+.question{
+	display: table; margin-left: auto; margin-right: auto;
+
+}
+.btnConainer{
+	margin-left: 25%;
+    padding: 10px;
 }
 </style>
 </head>
 <body>
-
+<c:import url="/common/importHeader.jsp" />
     <div class="container-form">
         <div class="form">
-                <header>
-                    <h1>나만의 웨딩 Todo List</h1>
-                    <h2>원하는 카테고리를 선택해주세요.</h2>  
+                <p class="headLine">나만의 웨딩 Todo List</p>
+                <p class="subheadLine">원하는 카테고리를 선택해주세요.</p>  
                     <input type="button" class="button-start"  onclick="startSelectList()" value="시작하기"/>
-                </header>
-                <form action="sortingPlan.do" method="post" >
+                <!-- form start -->
+               <form action="sortingPlan.do" method="post" >
                 <input type="hidden" name="memNo" value="75"> 
                 
                 <ul>
+                
                   <li class="question" id="question1" style="display: none">
-                    <h3>Wedding</h3>
-                    <h4>웨딩과 관련된 To do List</h4>
-                        <label class="choice">
-                        
-                          <input type="radio" name="todoC  ategory" value="w" onclick="next1()"/>
-                            <span>필요없어요!</span>
-                        </label>
-                        <label class="choice">
-                          <input type="radio" name="Category"  onclick="next1()" />
-                            <span>완전! 필요해요!</span>
-                        </label>
+                    <p class="questionHead">웨딩홀</p>
+                    	<div class="btnConainer">
+	                        <label class="choice">
+	                          <input type="checkbox" name="todoCategory" value="w" onclick="next1()"/>
+	                            <span>필요없어요!</span>
+	                        </label>
+	                        <label class="choice">
+	                          <input type="checkbox" name="Category"  onclick="next1()" />
+	                            <span>완전! 필요해요!</span>
+	                        </label>
+                        </div>
                   </li>
                 
                     <li class="question" id="question2" style="display: none">
-                        <h3>스튜디오, 드레스 , 메이크업</h3>
-                        <h4>원하는 카테고리를 선택해주세요.</h4>
+                        <p class="questionHead">스튜디오, 드레스, 메이크업</p>
+                        <div class="btnConainer">
                         <label class="choice">
-                          <input type="radio" name="todoCategory" value="wp" onclick="next2()" />
+                          <input type="checkbox" name="todoCategory" value="wp" onclick="next2()" />
                             <span>필요없어요</span>
                         </label>
                         <label class="choice">
-                          <input type="radio" name="Category"   onclick="next2()" />
+                          <input type="checkbox" name="Category"   onclick="next2()" />
                             <span>완전! 필요해요!</span>
                         </label>
+                        </div>
                   </li>
                     <li class="question" id="question3" style="display: none">
-                    <h3>신혼집, 혼수</h3>
-                    <label class="choice" >
-                            <input type="radio" name="todoCategory" value="h" onclick="next3()" />
+                   		<p class="questionHead">예물, 예단</p>
+                   		<div class="btnConainer">
+                    	<label class="choice" >
+                            <input type="checkbox" name="todoCategory" value="h" onclick="next3()" />
                               <span>필요없어요</span>
                           </label>
                           <label class="choice">
-                            <input type="radio" name="Category" onclick="next3()" />
+                            <input type="checkbox" name="Category" onclick="next3()" />
                               <span>완전! 필요해요!</span>
                           </label>
+                          </div>
                   </li>
                     <li class="question" id="question4" style="display: none">
-                    <h3>예물,예단</h3>
-                    <label class="choice">
-                            <input type="radio" name="todoCategory" value="p" onclick="next4()" />
+                  		<p class="questionHead">신혼집, 혼수</p>
+                  		<div class="btnConainer">
+                    	<label class="choice">
+                            <input type="checkbox" name="todoCategory" value="p" onclick="next4()" />
                               <span>필요없어요</span>
                           </label>
                           <label class="choice">
-                            <input type="radio" name="Category" onclick="next4()"  />
+                            <input type="checkbox" name="Category" onclick="next4()"  />
                               <span>완전! 필요해요!</span>
                           </label>
+                          </div>
                   </li>
                     <li class="question" id="question5" style="display: none">
-                    <h3>기타</h3>
+                   		<p class="questionHead">기타</p>
+                   		<div class="btnConainer">
                         <label class="choice">
-                            <input type="radio" name="todoCategory" value="e" onclick="next5()" />
+                            <input type="checkbox" name="todoCategory" value="e" onclick="next5()" />
                               <span>필요없어요</span>
                           </label>
                           <label class="choice">
-                            <input type="radio" name="Category" onclick="next5()" />
+                            <input type="checkbox" name="Category" onclick="next5()" />
                               <span>완전! 필요해요!</span>
                           </label>
+                          </div>
                   </li>
                 </ul>
                 </form>

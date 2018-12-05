@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -7,7 +8,9 @@
 <title>Insert title here</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="https://fonts.googleapis.com/css?family=Crete+Round:400i|Lato:400,900s" />
-
+<c:import url="/common/importCss.jsp"/>
+<c:import url="/common/importJs.jsp"/>
+<c:import url="/common/webSocket.jsp"/>
 <style>
 html {
   box-sizing: border-box;
@@ -89,6 +92,7 @@ main {
 @media (min-width: 630px) {
   .receipt {
     margin: auto;
+    top:100px;
     width: 600px;
     padding: 5rem;
   }
@@ -141,22 +145,29 @@ table td {
 .u-shadow {
   box-shadow: 1px 1px 2px #DDD;
 }
+.dDay{
+ font-size:16px	; font-weight: bolder;
+}
+
 
 </style>
 </head>
 <body>
-        <main>
+<c:import url="/common/importHeader.jsp" />
+        <main class="container-main">
                 <div class="receipt">
-                    <header>
                         <h1>
                           Your To do List
                         </h1>
-                        <p class="sub-head">Your order has been received and is now being processed.</p>
-                        <p>이름 : </p>
+                        <hr>
+                        <p class="dDay">상세 내역보기</p>
+                        <hr>
+                        <p>결혼 날짜 : </p>
+                        <p>결혼 예정일 : </p>
+                        <p>결혼 예정 장소 : </p>
                     <hr>
-                    </header>
                     <div class="description">
-                        <p><strong>D-100</strong></p>
+                        <p class="dDay">D-100</p>
                     </div>
                     <table>
                         <tbody>
@@ -183,8 +194,9 @@ table td {
                             
                         </tbody>
                     </table>
+                    <hr>
                     <div class="description">
-                            <p><strong>D-80</strong></p>
+                            <p class="dDay">D-80</p>
                     </div>
                     <table>
                             <tbody>
@@ -211,10 +223,64 @@ table td {
                                 
                             </tbody>
                         </table>
+                        <hr>
                         <div class="description">
-                                <p><strong>D-60</strong></p>
+                                <p class="dDay">D-60</p>
                             </div>
                             <table>
+                                <tbody>
+                                    <tr>
+                                       
+                                    </tr>
+                                    <tr>
+                                        <td class="table__img">
+                                            혼수
+                                        </td>
+                                        <td class="table__desc">
+                                            <strong>혼수 리스트 뽑아보기</strong><br>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table__img">
+                                            웨딩
+                                        </td>
+                                        <td class="table__desc">
+                                            <strong>웨딩홀 리스트 뽑아보기</strong><br>
+                                        </td>
+                                        
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                            <div class="description">
+                                <p class="dDay">D-40</p>
+                            </div>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                       
+                                    </tr>
+                                    <tr>
+                                        <td class="table__img">
+                                            혼수
+                                        </td>
+                                        <td class="table__desc">
+                                            <strong>혼수 리스트 뽑아보기</strong><br>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table__img">
+                                            웨딩
+                                        </td>
+                                        <td class="table__desc">
+                                            <strong>웨딩홀 리스트 뽑아보기</strong><br>
+                                        </td>
+                                        
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                             <table>
                                 <tbody>
                                     <tr>
                                        
