@@ -97,7 +97,24 @@
                                 Bookmark
                             </a>
                         </li>
-
+                        <li>
+                            <a href="<c:url value='/mypage/myweddingService.do'/>">
+                                    <img src="img/chk_ico.png" alt="" class="img-responsive center-block">
+                                my service 
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<c:url value='/mypage/service.do'/>">
+                                    <img src="img/chk_ico.png" alt="" class="img-responsive center-block">
+                                service add
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<c:url value='/mypage/auctionList.do'/>">
+                                <img src="img/auction_ico.png" alt="" class="img-responsive center-block">
+                                my tender
+                            </a>
+                        </li>
 
                     </ul>
             </div>
