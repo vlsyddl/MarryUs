@@ -181,14 +181,15 @@ form.form {
   flex-flow: column wrap;
   padding: 8px;
 }
-.form > .signup__field label {
+.form > .signup__field .label-form {
   font-size: 12px;
   font-weight: bold;
   padding-bottom: 3px;
 }
 .form > .signup__field label::after {
-  content: ':';
+ 
 }
+
 .form > .signup__field input {
   color: #666666;
   border-bottom: 1px solid #9E9E9E;

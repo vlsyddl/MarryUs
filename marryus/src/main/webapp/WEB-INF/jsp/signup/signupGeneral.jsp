@@ -7,8 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="<c:url value="/resources/css/signupGeneral.css"/>">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script> 
- 
+<%--  <c:import url="/common/importJs.jsp"/> --%>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/additional-methods.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/localization/messages_ko.js"></script>
+
 <script src="https://unpkg.com/sweetalert2@latest/dist/sweetalert2.all.js"></script> 
 </head>
 <body>
@@ -19,36 +23,36 @@
       
         <div id="grid__content">
           <div id="card">
-            <form name="generalForm" class="form" action="general.do" method="post">
+            <form id="generalForm" name="generalForm" class="form" action="general.do" method="post">
       
               <h1 id="title">Marry Us 회원가입</h1>
       
               <div class="signup__field">
-                <label for="first_name" class="label">아이디(이메일)</label>
-                <input type="email" name="email" id="e_mail" class="input-field" placeholder="ex)marryUs@naver.com" autofocus>
+                <label class="label-form" for="first_name" class="label">아이디(이메일)</label>
+                <input type="email" name="email" id="e_mail" class="input-field" placeholder="ex)marryUs@naver.com" required  autofocus>
               </div>
       
               <div class="signup__field">
-                <label for="last_name" class="label">이름</label>
-                <input type="text" name="name" id="name" class="input-field" placeholder="이름을 입력해주세요.">
+                <label class="label-form" for="last_name" class="label">이름</label>
+                <input type="text" name="name" id="name" class="input-field" placeholder="이름을 입력해주세요." required>
               </div>
 
               <div class="signup__field">
-                <label for="password" class="label">비밀번호</label>
+                <label class="label-form" for="password" class="label">비밀번호</label>
                 <input type="password" name="pass" id="pass" class="input-field" placeholder="4자 이상 16자 이하" required>
               </div>
 
               <div class="signup__field">
-                    <label for="password" class="label">비밀번호 확인</label>
+                    <label class="label-form" for="password" class="label">비밀번호 확인</label>
                     <input type="password" name="pass2" id="pass2" class="input-field" placeholder="한번더 입력해주세요." required>
               </div>
       
               <div class="signup__field">
-                    <label for="last_name" class="label">핸드폰 번호</label>
+                    <label class="label-form" for="last_name" class="label">핸드폰 번호</label>
                     <input type="text" name="phone" id="phone" class="input-field" placeholder="ex)01012346087" required>
               </div>
               <div class="signup__field">
-                    <label for="last_name" class="label">생년월일</label>
+                    <label class="label-form" for="last_name" class="label">생년월일</label>
                     <input type="text" name="genBirth" id="genBirth" class="input-field" placeholder="ex)19900619" required>
               </div>
               <input type="hidden" value="mg" name="type"/>
@@ -56,7 +60,7 @@
               <fieldset>
                 <legend>Bri or Gro</legend>
                 <div class="signup__field" style="margin-top:12px;">
-                  <label class="label" for="gen_gender">신부님이세요? 신랑님이세요?</label>
+                  <label class="label-form" class="label" for="gen_gender">신부님이세요? 신랑님이세요?</label>
                   <div class="select-field">
                     <select name="genGender" id=gen_gender class="select-field__menu">
                       <option name="genGender" value="bri">신부님</option>
@@ -114,7 +118,164 @@ function updateColors() {
 
 }
 
-	// 입력란 비어있는지 체크 하는 함수
+/**********************************************************************************
+	validation 플러그인 사용 
+**********************************************************************************/
+jQuery.validator.setDefaults({
+	  debug: true,
+	  success: "valid"
+	});
+$.validator.addMethod("passwordCk",  function( value, element ) {
+
+	return this.optional(element) ||  /^.*(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/.test(value);
+
+	});
+$.validator.addMethod("phone", function(phone_number, element) {
+	phone_number = phone_number.replace(/\s+/g, ""); 
+	return this.optional(element) || phone_number.length > 9 &&
+		phone_number.match(/^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/);
+}, "Please specify a valid phone number");
+
+
+출처: http://amajoy.tistory.com/entry/jquery의-validate-사용법 [내 삶의 즐거움]
+$( "#generalForm" ).validate({
+	rules: {
+		email: {
+	      required: true,
+	      minlength: 2
+	    },
+	    name:{
+	      required : true,
+	      minlength: 2 ,
+	      
+	    },
+	    pass:{
+            required : true,
+            passwordCk:true
+        },
+        pass2:{
+			required : true,
+			passwordCk:true,
+			equalTo : pass
+		},
+		phone:{
+			required : true,
+			phone:true
+			
+		},
+		genBirth:{
+			
+		}
+	  },
+	  messages:{
+		  email:{
+              required : "필수로입력하세요",
+              minlength : "최소 {0}글자이상이어야 합니다",
+              email : "메일규칙에 어긋납니다",
+                       
+        },
+        name:{
+        	required : "필수로입력하세요",
+            minlength : "최소 {0}글자이상이어야 합니다"
+  	      
+  	    },
+  	    pass:{
+        	required : "필수로입력하세요",
+        	passwordCk:"영문, 숫자, 특수문자 포함 8~16자",
+            minlength : "최소 {0}글자이상이어야 합니다"
+  	      
+  	    },
+  	    pass2:{
+			required : "필수로입력하세요",
+			passwordCk:"영문, 숫자, 특수문자 포함 8~16자",
+			equalTo : "비밀번호가 일치하지 않습니다."
+		},
+		phone:{
+			required: "연락처를 입력하세요.",
+			phone: "잘못된 문자가 입력되었습니다."
+
+
+		}
+	  }
+	});
+/* $(function(){
+	  $('#generalForm').validate({
+		  rules : {
+
+	            
+	            e_mail:{
+	                  required:ture,
+	                  minlength : 2,
+	                  eail : true
+	                   remote:
+	                  {
+	                     url:"/",
+	                     type:"post",
+	                     success:function(data){
+	                     if(fa)
+	                  }
+	                  
+	            },
+	            name:{
+	                  required : true,   
+	            
+	            },
+	            pass:{
+	                  required : true,
+	                  minlength : 6
+	            },
+	            pass2:{
+	                  required : true,
+	                  minlength : 6,
+	                  equalTo : pass
+	            },
+	            phone:{
+	                  required : true,   
+	            
+	            },
+	            genBirth:{
+	                  required : true,   
+	            }
+	            
+	         },
+	         messages:{
+	            e_mail:{
+	                  required : "필수로입력하세요",
+	                  minlength : "최소 {0}글자이상이어야 합니다",
+	                  email : "메일규칙에 어긋납니다",
+	                  remote : "존재하는 아이디입니다"            
+	            },
+	            name:{
+	                  required : "필수로입력하세요",
+	                  minlength : "최소 {0}글자이상이어야 합니다",
+	            },
+	            pass:{
+	                  required : "필수로입력하세요",
+	                  minlength : "최소 {0}글자이상이어야 합니다",
+	                  
+	            },
+	            pass2:{
+	                  required : "필수로입력하세요",
+	                  minlength : "최소 {0}글자이상이어야 합니다",
+	                  equalTo : "비밀번호가 일치하지 않습니다."
+	            },
+	            phone:{
+	               required : "필수로입력하세요"
+	            
+	            },
+	            genBirth:{
+	               required : "필수로입력하세요"
+	            }
+	         }
+	   
+	         
+	   
+		  
+	  });
+}); 
+*/
+/* 
+// 입력란 비어있는지 체크 하는 함수
 	function checkForm(){
 		var gForm = document.generalForm;
 			// 아이디 입력 체크
@@ -164,8 +325,10 @@ function updateColors() {
 				gForm.pass2.value = "";
 				return false;
 			}
-			return true;
+			return true; 
+			
 	}
+			*/
 </script>      
 </body>
 </html>
