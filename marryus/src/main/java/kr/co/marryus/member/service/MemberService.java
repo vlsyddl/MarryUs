@@ -50,6 +50,11 @@ public interface MemberService {
 	 * @param company
 	 */
 	void insertCompany(Company company);
+	/**
+	 * 아이디 중복 체크
+	 * @param member
+	 */
+	int checkID(String email);
 
 	/**
 	 * 비밀번호 찾기 - 아이디 check

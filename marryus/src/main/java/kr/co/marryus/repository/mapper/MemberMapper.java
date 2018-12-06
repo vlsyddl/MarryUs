@@ -18,7 +18,7 @@ public interface MemberMapper {
 	int insertMember(Member member);
 	void insertGeneral(General general);
 	void insertCompany(Company company);
-	
+	int checkID(String email);
 	//비밀번호 찾기
 	int findId(Member member);
 	void updateNewPass(Member member);

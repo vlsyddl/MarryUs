@@ -74,6 +74,11 @@
 		( #{comNo}, #{comAddr}, #{comAddrDetail}, #{comType} )
 	</insert>
 	
+	<!-- 이메일 중복체크 -->
+	<select id="checkID" parameterType="String" resultType="int">
+		select count(*) from mu_member
+		where mem_email = #{email}
+	</select>
 	
 	<!-- 비밀번호 찾기  -->
 	<!-- 아이디 이름 매치  -->

@@ -280,13 +280,13 @@ function openList(){
 		$(".detail").html(detail);
 		
 		/*
-		상세내역 뽑기 
+			todoList 뽑기
 		*/
 		var html = '';
 		for(i=0; i<result.length ; i++){
 			if(result[i].todoDday == '120'){
 			html += '<tr>'
-			html += '<td class="table__img">'+result[i].todoCategory+'</td>'
+			html += '<td class="table__img">'+categoryName(result[i].todoCategory)+'</td>'
 			html += '<td class="table__desc">'+result[i].todoContent+'</td>'
 			html += '<tr>'
 			}
@@ -298,7 +298,7 @@ function openList(){
 		for(i=0; i<result.length ; i++){
 			if(result[i].todoDday == '110'){
 			html2 += '<tr>'
-			html2 += '<td class="table__img">'+result[i].todoCategory+'</td>'
+			html2 += '<td class="table__img">'+categoryName(result[i].todoCategory)+'</td>'
 			html2 += '<td class="table__desc">'+result[i].todoContent+'</td>'
 			html2 += '<tr>'
 			}
@@ -310,7 +310,7 @@ function openList(){
 		for(i=0; i<result.length ; i++){
 			if( result[i].todoDday <= '90'  && result[i].todoDday >= '70'){
 				html3 += '<tr>'
-				html3 += '<td class="table__img">'+result[i].todoCategory+'</td>'
+				html3 += '<td class="table__img">'+categoryName(result[i].todoCategory)+'</td>'
 				html3 += '<td class="table__desc">'+result[i].todoContent+'</td>'
 				html3 += '<tr>'
 			}
@@ -321,7 +321,7 @@ function openList(){
 		for(i=0; i<result.length ; i++){
 			if( result[i].todoDday <= '60'&& result[i].todoDday >= '40'){
 				html4 += '<tr>'
-				html4 += '<td class="table__img">'+result[i].todoCategory+'</td>'
+				html4 += '<td class="table__img">'+categoryName(result[i].todoCategory)+'</td>'
 				html4 += '<td class="table__desc">'+result[i].todoContent+'</td>'
 				html4 += '<tr>'
 			}
@@ -332,7 +332,7 @@ function openList(){
 		for(i=0; i<result.length ; i++){
 			if( result[i].todoDday <= '30'  && result[i].todoDday >= '10'){
 				html5 += '<tr>'
-				html5 += '<td class="table__img">'+result[i].todoCategory+'</td>'
+				html5 += '<td class="table__img">'+categoryName(result[i].todoCategory)+'</td>'
 				html5 += '<td class="table__desc">'+result[i].todoContent+'</td>'
 				html5 += '<tr>'
 			}
@@ -343,7 +343,7 @@ function openList(){
 		for(i=0; i<result.length ; i++){
 			if( result[i].todoDday =='7'){
 				html6 += '<tr>'
-				html6 += '<td class="table__img">'+result[i].todoCategory+'</td>'
+				html6 += '<td class="table__img">'+ categoryName(result[i].todoCategory)+'</td>'
 				html6 += '<td class="table__desc">'+result[i].todoContent+'</td>'
 				html6 += '<tr>'
 			}
@@ -351,7 +351,24 @@ function openList(){
 		$("#todoListTable6").html(html6);
 	});
 }
-
+function categoryName(todoCategory) {
+	switch(todoCategory){
+	case "wp" : return "스튜디오,드레스,메이크업";  
+	case "w" : return "웨딩";  
+	case "h" : return "신혼집, 혼수";  
+	case "p" : return "예물, 예단";  
+	case "e" : return "기타";  
+	
+	/*
+	wp(웨딩 페키지)-5   
+	w(웨딩)-6  
+	h(신혼집, 혼수)-4  
+	p(예물,예단)-2     
+	e(기타)-3
+	*/
+		
+	}
+}
 
 </script>            
             

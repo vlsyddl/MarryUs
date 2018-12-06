@@ -206,9 +206,7 @@ form.form {
 	padding-bottom: 3px;
 }
 
-.form>.signup__field label::after {
-	content: ':';
-}
+
 
 .form>.signup__field input {
 	color: #666666;
@@ -300,4 +298,29 @@ form.form {
 
 body {
 	background: url(../img/signupGeneral.jpg) center center no-repeat;
+}
+.validation-error {
+
+float: none; 
+
+color: #C14D4B;
+
+padding-left: 5px; 
+
+vertical-align: top;
+
+font-size: 11px;
+
+}
+
+.validation-valid {
+
+color: #3063d6;
+
+padding-left: 5px; 
+
+vertical-align: top;
+
+font-size: 11px;
+
 }

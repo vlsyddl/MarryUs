@@ -104,5 +104,15 @@ public class MemberServiceImpl implements MemberService{
 	public void insertCopyTable(int memNo) {
 		mapper.insertCopyTable(memNo);
 	}
+	
+	/**
+	 * 아이디 중복체크
+	 */
+
+	@Override
+	public int checkID(String email) {
+		// TODO Auto-generated method stub
+		return mapper.checkID(email);
+	}
 
 }

@@ -71,7 +71,7 @@
               </fieldset>
 
               <div class="signup__button">
-                <button id="submit" class="button" type="submit" onclick="checkForm()">Signup</button>
+                <button id="submit" class="button">Signup</button>
               </div>
       
             </form>
@@ -121,10 +121,7 @@ function updateColors() {
 /**********************************************************************************
 	validation 플러그인 사용 
 **********************************************************************************/
-jQuery.validator.setDefaults({
-	  debug: true,
-	  success: "valid"
-	});
+
 $.validator.addMethod("passwordCk",  function( value, element ) {
 
 	return this.optional(element) ||  /^.*(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/.test(value);
@@ -137,12 +134,24 @@ $.validator.addMethod("phone", function(phone_number, element) {
 }, "Please specify a valid phone number");
 
 
-출처: http://amajoy.tistory.com/entry/jquery의-validate-사용법 [내 삶의 즐거움]
+$(document).ready(function(){
+	
+
 $( "#generalForm" ).validate({
+	/* focusCleanup: false, //true이면 잘못된 필드에 포커스가 가면 에러를 지움
+	focusInvalid:false, //유효성 검사후 포커스를 무효필드에 둠 꺼놓음
+	onclick: false, //클릭시 발생됨 꺼놓음
+	onfocusout:false, //포커스가 아웃되면 발생됨 꺼놓음 */
+	onkeyup:true, //키보드 키가 올라가면 발생됨 꺼놓음
 	rules: {
 		email: {
 	      required: true,
-	      minlength: 2
+	      minlength: 2,
+	      remote : { 
+	    	     url : "/marryus/main/checkID.json",
+	    	     type : "post",
+	    	     data : { email : function() { return $('#e_mail').val()} }  
+	    	     }
 	    },
 	    name:{
 	      required : true,
@@ -161,10 +170,6 @@ $( "#generalForm" ).validate({
 		phone:{
 			required : true,
 			phone:true
-			
-		},
-		genBirth:{
-			
 		}
 	  },
 	  messages:{
@@ -172,6 +177,7 @@ $( "#generalForm" ).validate({
               required : "필수로입력하세요",
               minlength : "최소 {0}글자이상이어야 합니다",
               email : "메일규칙에 어긋납니다",
+              remote:"아이디가 중복됩니다."
                        
         },
         name:{
@@ -196,139 +202,23 @@ $( "#generalForm" ).validate({
 
 
 		}
-	  }
-	});
-/* $(function(){
-	  $('#generalForm').validate({
-		  rules : {
+		
+	  },
+	  onsubmit: true,
 
-	            
-	            e_mail:{
-	                  required:ture,
-	                  minlength : 2,
-	                  eail : true
-	                   remote:
-	                  {
-	                     url:"/",
-	                     type:"post",
-	                     success:function(data){
-	                     if(fa)
-	                  }
-	                  
-	            },
-	            name:{
-	                  required : true,   
-	            
-	            },
-	            pass:{
-	                  required : true,
-	                  minlength : 6
-	            },
-	            pass2:{
-	                  required : true,
-	                  minlength : 6,
-	                  equalTo : pass
-	            },
-	            phone:{
-	                  required : true,   
-	            
-	            },
-	            genBirth:{
-	                  required : true,   
-	            }
-	            
-	         },
-	         messages:{
-	            e_mail:{
-	                  required : "필수로입력하세요",
-	                  minlength : "최소 {0}글자이상이어야 합니다",
-	                  email : "메일규칙에 어긋납니다",
-	                  remote : "존재하는 아이디입니다"            
-	            },
-	            name:{
-	                  required : "필수로입력하세요",
-	                  minlength : "최소 {0}글자이상이어야 합니다",
-	            },
-	            pass:{
-	                  required : "필수로입력하세요",
-	                  minlength : "최소 {0}글자이상이어야 합니다",
-	                  
-	            },
-	            pass2:{
-	                  required : "필수로입력하세요",
-	                  minlength : "최소 {0}글자이상이어야 합니다",
-	                  equalTo : "비밀번호가 일치하지 않습니다."
-	            },
-	            phone:{
-	               required : "필수로입력하세요"
-	            
-	            },
-	            genBirth:{
-	               required : "필수로입력하세요"
-	            }
-	         }
-	   
-	         
-	   
-		  
-	  });
-}); 
-*/
-/* 
-// 입력란 비어있는지 체크 하는 함수
-	function checkForm(){
-		var gForm = document.generalForm;
-			// 아이디 입력 체크
-			if(gForm.email.value == ""){
-				swal('아이디를 입력해주세요','','error')
-				gForm.email.focus()
-				return false;
-			}
-			//  이름 입력란 체크 
-			if(gForm.name.value == ""){
-				swal('이름을 입력해주세요','','error')
-				gForm.name.focus()
-				return false;
-			}
-			// 비밀번호 입력 체크
-			if(gForm.pass.value == ""){
-				swal('비밀번호를 입력해주세요','','error')
-				gForm.pass.focus()
-				return false;
-			}
-			// 비밀번호 확인 입력란 체크
-			if(gForm.pass2.value == ""){
-				swal('비밀번호확인을 입력해주세요','','error')
-				gForm.pass2.focus()
-				return false;
-			}
-			// 핸드폰번호 입력란 체크 
-			if(gForm.phone.value == ""){
-				swal('핸드폰번호를 입력해주세요','','error')
-				gForm.phone.focus()
-				return false;
-			}
-			// 생년월일 입력란 체크 
-			if(gForm.genBirth.value == ""){
-				swal('생년월일을 입력해주세요','','error')
-				gForm.genBirth.focus()
-				return false;
-			}
-			
-			
-			// 비밀번호 확인 체크 
-			if(gForm.pass.value != gForm.pass2.value){
-				swal('비밀번혼가 달라요','다시입력해주세요','error')
-				gForm.pass.focus()
-				gForm.pass.select()
-				
-				gForm.pass2.value = "";
-				return false;
-			}
-			return true; 
-			
-	}
-			*/
+	  errorClass : "validation-error",
+
+	 validClass : "validation-valid", 
+	  success: function(label) {
+		   label.addClass("validation-valid").text("Ok!")
+	  } 
+	});
+});
+
+
+
+
+
 </script>      
 </body>
 </html>

@@ -8,13 +8,12 @@
 <title>Insert title here</title>
 <link rel="stylesheet"
 	href="<c:url value="/resources/css/signupCompany.css"/>">
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/additional-methods.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/localization/messages_ko.js"></script>	
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script> 
- 
 <script src="https://unpkg.com/sweetalert2@latest/dist/sweetalert2.all.js"></script> 
- 
 </head>
 <body>
 	<div id="grid">
@@ -23,14 +22,14 @@
 
 		<div id="grid__content">
 			<div id="card">
-				<form name="companyForm" class="form" action="company.do" method="post">
+				<form id="companyForm" name="companyForm" class="form" action="company.do" method="post">
 
 					<h1 id="title">Marry Us 업체회원 가입</h1>
 
 					<div class="signup__field">
 						<label for="email" class="label">아이디(이메일)</label> <input
-							type="email" name="email" id="Email" class="input-field"
-							autofocus>
+							type="email" name="email" id="e_mail" class="input-field"
+							required autofocus>
 					<div class="input-field" id="checkMsg"></div>
 					</div>
 					<div class="signup__field">
@@ -46,7 +45,7 @@
 
 					<div class="signup__field">
 						<label for="com_name" class="label">회사 이름</label> <input
-							type="text" name="name" id="name" class="input-field">
+							type="text" name="name" id="name" class="input-field" required>
 					</div>
 
 					<div class="signup__field">
@@ -57,9 +56,9 @@
 
 					<div class="signup__field">
 						<label for="com_phone" class="label">회사 주소</label> <input
-							type="text" id="sample4_postcode" placeholder="우편번호"> <input
+							type="text" id="sample4_postcode" placeholder="우편번호" required> <input
 							type="text" name="comAddr" id="sample4_roadAddress"
-							placeholder="도로명주소"> <input type="button"
+							placeholder="도로명주소" required> <input type="button"
 							onclick="address()" value="우편번호 찾기"><br> <span
 							id="guide" style="color: #999"></span>
 					</div>
@@ -75,7 +74,7 @@
 						<div class="signup__field" style="margin-top: 12px;">
 							<label class="label" for="comType">대표업종 선택</label>
 							<div class="select-field">
-								<select name="comType" id="comType" class="select-field__menu">
+								<select name="comType" id="comType" class="select-field__menu" required>
 									<option	value="">업종선택</option>
 									<option value="v">웨딩홀</option>
 									<option value="s">스튜디오</option>
@@ -91,7 +90,7 @@
 					</fieldset>
 					<input type="hidden" value="mc" name="type" />
 					<div class="signup__button">
-						<button id="submit" class="button" type="submit" onclick="checkForm()">Signup</button>
+						<button id="submit" class="button" >Signup</button>
 					</div>
 
 				</form>
@@ -163,69 +162,104 @@
 					}).open();
 				}
 		
-		// 입력란 비어있는지 체크 하는 함수
-		function checkForm(){
-			var cForm = document.companyForm;
-				// 아이디 입력 체크
-				if(cForm.email.value == ""){
-					swal('이메일을 입력해주세요','','error')
-					cForm.email.focus()
-					return false;
-				}
-				// 비밀번호 입력 체크
-				if(cForm.pass.value == ""){
-					swal('비밀번호를 입력해주세요','','error')
-					cForm.pass.focus()
-					return false;
-				}
-				// 비밀번호 확인 입력란 체크
-				if(cForm.pass2.value == ""){
-					swal('비밀번호 확인을 입력해주세요','','error')
-					cForm.pass2.focus()
-					return false;
-				}
-				// 비밀번호 확인 체크 
-				if(cForm.pass.value != cForm.pass2.value){
-					swal('비밀번호가 다릅니다. 다시입력해주세요.','','error')
-					cForm.pass.focus()
-					cForm.pass.select()
-					
-					cForm.pass2.value = "";
-					return false;
-				}
-				// 회사 이름 입력란 체크 
-				if(cForm.name.value == ""){
-					swal('회사이름을 입력해주세요','','error')
-					cForm.name.focus()
-					return false;
-				}
-				// 회사 번호 입력란 체크 
-				if(cForm.phone.value == ""){
-					swal('회사전화번호를 입력해주세요','','error')
-					cForm.phone.focus()
-					return false;
-				}
-				// 주소 입력란 체크 
-				if(cForm.comAddr.value == ""){
-					swal('주소를 입력해주세요','','error')
-					cForm.comAddr.focus()
-					return false;
-				}
-				// 상세주소 입력란 체크 
-				if(cForm.comAddrDetail.value == ""){
-					swal('상세주소를 입력해주세요','','error')
-					cForm.comAddrDetail.focus()
-					return false;
-				}
-				
-				// 업종 입력란 체크 
-				if(cForm.comType.value == ""){
-					swal('상세주소를 입력해주세요','','error')
-					cForm.comType.focus()
-					return false;
-				}
-				return true;
-		}
+	/**********************************************************************************
+		validation 플러그인 사용 
+	**********************************************************************************/
+
+	$.validator.addMethod("passwordCk",  function( value, element ) {
+
+		return this.optional(element) ||  /^.*(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/.test(value);
+
+		});
+	$.validator.addMethod("phone", function(phone_number, element) {
+		phone_number = phone_number.replace(/\s+/g, ""); 
+		return this.optional(element) || phone_number.length > 9 &&
+			phone_number.match(/^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/);
+	}, "Please specify a valid phone number");
+
+
+	$(document).ready(function(){
+		
+
+	$( "#companyForm" ).validate({
+		/* focusCleanup: false, //true이면 잘못된 필드에 포커스가 가면 에러를 지움
+		focusInvalid:false, //유효성 검사후 포커스를 무효필드에 둠 꺼놓음
+		onclick: false, //클릭시 발생됨 꺼놓음
+		onfocusout:false, //포커스가 아웃되면 발생됨 꺼놓음 */
+		onkeyup:true, //키보드 키가 올라가면 발생됨 꺼놓음
+		rules: {
+			email: {
+		      required: true,
+		      minlength: 2,
+		      remote : { 
+		    	     url : "/marryus/main/checkID.json",
+		    	     type : "post",
+		    	     data : { email : function() { return $('#e_mail').val()} }  
+		    	     }
+		    },
+		    name:{
+		      required : true,
+		      minlength: 2 ,
+		      
+		    },
+		    pass:{
+	            required : true,
+	            passwordCk:true
+	        },
+	        pass2:{
+				required : true,
+				passwordCk:true,
+				equalTo : pass
+			},
+			phone:{
+				required : true,
+				phone:true
+			}
+		  },
+		  messages:{
+			  email:{
+	              required : "필수로입력하세요",
+	              minlength : "최소 {0}글자이상이어야 합니다",
+	              email : "메일규칙에 어긋납니다",
+	              remote:"아이디가 중복됩니다."
+	                       
+	        },
+	        name:{
+	        	required : "필수로입력하세요",
+	            minlength : "최소 {0}글자이상이어야 합니다"
+	  	      
+	  	    },
+	  	    pass:{
+	        	required : "필수로입력하세요",
+	        	passwordCk:"영문, 숫자, 특수문자 포함 8~16자",
+	            minlength : "최소 {0}글자이상이어야 합니다"
+	  	      
+	  	    },
+	  	    pass2:{
+				required : "필수로입력하세요",
+				passwordCk:"영문, 숫자, 특수문자 포함 8~16자",
+				equalTo : "비밀번호가 일치하지 않습니다."
+			},
+			phone:{
+				required: "연락처를 입력하세요.",
+				phone: "잘못된 문자가 입력되었습니다."
+
+
+			}
+			
+		  },
+		  onsubmit: true,
+
+		  errorClass : "validation-error",
+
+		 validClass : "validation-valid", 
+		  success: function(label) {
+			   label.addClass("validation-valid").text("Ok!")
+		  } 
+		});
+	});
+
+	
 	</script>
 </body>
 </html>

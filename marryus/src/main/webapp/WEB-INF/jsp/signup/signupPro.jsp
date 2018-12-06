@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="<c:url value="/resources/css/signupPro.css"/>">
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	
 
 </head>
 <body>
@@ -22,6 +23,8 @@
 			<a href="<c:url value='/signup/signupCompany.do' />" class="cta">Let's Go</a>
 		</div>
 	</div>
+
+
 	<script>
 		$l = $('.left')
 		$r = $('.right')
@@ -37,6 +40,8 @@
 		}).mouseleave(function() {
 			$('.container').removeClass('right-is-hovered');
 		});
+		
+		
 	</script>
 </body>
 </html>
