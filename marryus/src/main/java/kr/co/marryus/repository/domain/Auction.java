@@ -13,10 +13,11 @@ public class Auction {
 	private String auctionStatus;
 	private Date auctionSdate;
 	private Date auctionEDate;
-	private int comNo;
 	private String memName;
-	
 	// collection
 	private Member member;
 	private WeddingPlan weddingPlan;
+	private Studio studio;
+	private Makeup makeup;
+	private Dress dress;
 }
