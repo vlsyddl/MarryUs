@@ -35,14 +35,16 @@
 		<result column="mem_phone" property="phone" />
 	</resultMap>
 	<resultMap id="todoMap" type="Todo">
-		<result property="todoSchedule" column="todo_schedule" />
-		<result property="todoContent" column="todo_content" />
+		<result property="todoPeriod" column="todo_period" />
+		<result property="todoTitle" column="todo_title" />
 		<result property="memNo" column="mem_no" />
 		<result property="todoDday" column="todo_dday" />
+		<result property="todoDay" column="todo_day" />
 		<result property="todoCategory" column="todo_category" />
 		<result property="todoNo" column="todo_no" />
 		<result property="todoCheck" column="todo_check" />
 		<result property="todoDelete" column="todo_delete" />
+		<result property="todoDetail" column="todo_detail" />
 		<collection property="weddingPlan" resultMap="weddingPlanMap" />
 	</resultMap>
 	
@@ -100,6 +102,7 @@
 		on t.mem_no = w.mem_no
 		where t.mem_no = #{memNo}
 		and todo_delete= 'n'
+		order by todo_dday desc
 	</select>
 	
 	

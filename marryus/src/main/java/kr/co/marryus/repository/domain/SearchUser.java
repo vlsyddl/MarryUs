@@ -1,5 +1,6 @@
 package kr.co.marryus.repository.domain;
 
+
 public class SearchUser {
 
 	private String memType;

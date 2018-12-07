@@ -155,18 +155,60 @@ table td {
 #CheckBtn{
 display: block;
 }
+
+.CheckBtn{
+  background:#1AAB8A;
+  color:#fff;
+  border:none;
+  position:relative;
+  height:60px;
+  font-size:1.6em;
+  padding:0 2em;
+  cursor:pointer;
+  transition:800ms ease all;
+  outline:none;
+}
+.CheckBtn:hover{
+  background:#fff;
+  color:#1AAB8A;
+}
+.CheckBtn:before,button:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: #1AAB8A;
+  transition:400ms ease all;
+}
+.CheckBtn:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+.CheckBtn:hover:before,.CheckBtn:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
 </style>
 </head>
 <body>
 <c:import url="/common/importHeader.jsp" />
         <main class="container-main">
         
-        <input type="hidden" id="memNo" name="memNo" value="${user.no }">
                 <div class="receipt">
-                      <div class="header"></div>
+                      <div class="header">
+                      	
                         <h1>
                           Your To do List
                         </h1>
+                        <form action="downExcel.do">
+        <input type="hidden" id="memNo" name="memNo" value="${user.no}">
+                        <button>download</button>
+                        </form>
+                      </div>
                         <input id="CheckBtn" onclick="openList()" type="button" value="todoList 확인하기" >
                     <div class="lists" >
                     <hr>
@@ -179,7 +221,7 @@ display: block;
                       </div>
                     <hr>
                     <div class="description">
-                        <p class="dDay">D-100</p>
+                        <p class="dDay">D-120</p>
                     </div>
                     <table id="todoListTable">
                         <tbody>
@@ -189,7 +231,7 @@ display: block;
                     </table>
                     <hr>
                     <div class="description">
-                            <p class="dDay">D-80</p>
+                            <p class="dDay">D-90</p>
                     </div>
                     <table id="todoListTable2">
                             <tbody>
@@ -209,7 +251,7 @@ display: block;
                                 </tbody>
                             </table>
                             <div class="description">
-                                <p class="dDay">D-40</p>
+                                <p class="dDay">D-50~D-40</p>
                             </div>
                             <table id="todoListTable4">
                                 <tbody>
@@ -218,7 +260,7 @@ display: block;
                                 </tbody>
                             </table>
                             <div class="description">
-                                <p class="dDay">D-20</p>
+                                <p class="dDay">D-30~D-10</p>
                             </div>
                              <table id="todoListTable5">
                                 <tbody>
@@ -230,6 +272,15 @@ display: block;
                                 <p class="dDay">D-일주일전</p>
                             </div>
                              <table id="todoListTable6">
+                                <tbody>
+                                   
+                                    
+                                </tbody>
+                            </table>
+                             <div class="description">
+                                <p class="dDay">D-1~D-Day</p>
+                            </div>
+                             <table id="todoListTable7">
                                 <tbody>
                                    
                                     
@@ -287,7 +338,7 @@ function openList(){
 			if(result[i].todoDday == '120'){
 			html += '<tr>'
 			html += '<td class="table__img">'+categoryName(result[i].todoCategory)+'</td>'
-			html += '<td class="table__desc">'+result[i].todoContent+'</td>'
+			html += '<td class="table__desc">'+result[i].todoTitle+'</td>'
 			html += '<tr>'
 			}
 		}
@@ -296,10 +347,10 @@ function openList(){
 		
 		var html2='';
 		for(i=0; i<result.length ; i++){
-			if(result[i].todoDday == '110'){
+			if( result[i].todoDday == '90'){
 			html2 += '<tr>'
 			html2 += '<td class="table__img">'+categoryName(result[i].todoCategory)+'</td>'
-			html2 += '<td class="table__desc">'+result[i].todoContent+'</td>'
+			html2 += '<td class="table__desc">'+result[i].todoTitle+'</td>'
 			html2 += '<tr>'
 			}
 		}
@@ -308,10 +359,10 @@ function openList(){
 		
 		var html3='';
 		for(i=0; i<result.length ; i++){
-			if( result[i].todoDday <= '90'  && result[i].todoDday >= '70'){
+			if( result[i].todoDday == '60'  ){
 				html3 += '<tr>'
 				html3 += '<td class="table__img">'+categoryName(result[i].todoCategory)+'</td>'
-				html3 += '<td class="table__desc">'+result[i].todoContent+'</td>'
+				html3 += '<td class="table__desc">'+result[i].todoTitle+'</td>'
 				html3 += '<tr>'
 			}
 		}
@@ -319,10 +370,10 @@ function openList(){
 		
 		var html4='';
 		for(i=0; i<result.length ; i++){
-			if( result[i].todoDday <= '60'&& result[i].todoDday >= '40'){
+			if( result[i].todoDday <= '50'&& result[i].todoDday >= '40'){
 				html4 += '<tr>'
 				html4 += '<td class="table__img">'+categoryName(result[i].todoCategory)+'</td>'
-				html4 += '<td class="table__desc">'+result[i].todoContent+'</td>'
+				html4 += '<td class="table__desc">'+result[i].todoTitle+'</td>'
 				html4 += '<tr>'
 			}
 		}
@@ -333,7 +384,7 @@ function openList(){
 			if( result[i].todoDday <= '30'  && result[i].todoDday >= '10'){
 				html5 += '<tr>'
 				html5 += '<td class="table__img">'+categoryName(result[i].todoCategory)+'</td>'
-				html5 += '<td class="table__desc">'+result[i].todoContent+'</td>'
+				html5 += '<td class="table__desc">'+result[i].todoTitle+'</td>'
 				html5 += '<tr>'
 			}
 		}
@@ -344,31 +395,47 @@ function openList(){
 			if( result[i].todoDday =='7'){
 				html6 += '<tr>'
 				html6 += '<td class="table__img">'+ categoryName(result[i].todoCategory)+'</td>'
-				html6 += '<td class="table__desc">'+result[i].todoContent+'</td>'
+				html6 += '<td class="table__desc">'+result[i].todoTitle+'</td>'
 				html6 += '<tr>'
 			}
 		}
 		$("#todoListTable6").html(html6);
+		
+		var html7='';
+		for(i=0; i<result.length ; i++){
+			if( result[i].todoDday =='7'){
+				html7 += '<tr>'
+				html7 += '<td class="table__img">'+ categoryName(result[i].todoCategory)+'</td>'
+				html7 += '<td class="table__desc">'+result[i].todoTitle+'</td>'
+				html7 += '<tr>'
+			}
+		}
+		$("#todoListTable7").html(html7);
 	});
 }
 function categoryName(todoCategory) {
 	switch(todoCategory){
 	case "wp" : return "스튜디오,드레스,메이크업";  
 	case "w" : return "웨딩";  
-	case "h" : return "신혼집, 혼수";  
+	case "h" : return "신혼집";  
 	case "p" : return "예물, 예단";  
 	case "e" : return "기타";  
+	case "hm" : return "허니문";  
+	case "ha" : return "혼수";  
 	
 	/*
 	wp(웨딩 페키지)-5   
 	w(웨딩)-6  
-	h(신혼집, 혼수)-4  
+	h(신혼집)-4  
 	p(예물,예단)-2     
 	e(기타)-3
+	ha 혼수
+	hm 허니문 
 	*/
 		
 	}
 }
+
 
 </script>            
             

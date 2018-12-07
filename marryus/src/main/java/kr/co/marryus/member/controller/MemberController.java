@@ -170,7 +170,12 @@ public class MemberController {
 		return "redirect:main.do";
 				
 	}
-	
+	/**
+	 * 비밀번호 찾기 
+	 * @param member
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping("/checkID.json")
 	@ResponseBody
 	public int checkID(Member member) throws Exception {
@@ -182,6 +187,13 @@ public class MemberController {
 		return check;
 	}
 	
+	/**
+	 * 회원가입 아이디 중복체크
+	 * @param email
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
 	@RequestMapping(value="/checkID.json", method=RequestMethod.POST)
 	public void getPersonMngUserIdCheck(String email, HttpServletRequest request, HttpServletResponse response) throws IOException {
 	

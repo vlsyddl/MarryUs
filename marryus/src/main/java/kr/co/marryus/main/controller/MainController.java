@@ -1,10 +1,16 @@
 package kr.co.marryus.main.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -107,6 +113,22 @@ public class MainController {
 	public List<Todo> resultPlan(Model model, Todo todo) throws Exception {
 	
 		return service.selectTodoListByWP(todo);
+	}
+	
+	@RequestMapping("/downExcel.do")
+	public void listExcel(HttpServletRequest request, HttpServletResponse response, Todo todo, ModelMap modelmap) throws Exception {
+		System.out.println("tdodo?!?"+todo);
+		
+		List<Todo> todoList = service.selectTodoListByWP(todo);
+		
+		//받은 데이터를 맵에 담는다. 
+		Map<String, Object> beans = new HashMap<String, Object>();
+		beans.put("todoList", todoList);
+		
+		//엑셀 다운로드 메소드가 담겨 있는 객체
+		MakeExcel me = new MakeExcel();
+		
+		me.download(request, response, beans, "todoList", "todoList.xlsx", "무시가능");
 	}
 	
 	

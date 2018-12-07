@@ -24,6 +24,19 @@
 		<result column="com_addr_detail" property="comAddrDetail" />
 		<result column="com_type" property="comType" />
 	</resultMap>
+	<resultMap id="todoMap" type="Todo">
+		<result property="todoPeriod" column="todo_period" />
+		<result property="todoTitle" column="todo_title" />
+		<result property="memNo" column="mem_no" />
+		<result property="todoDday" column="todo_dday" />
+		<result property="todoDay" column="todo_day" />
+		<result property="todoCategory" column="todo_category" />
+		<result property="todoNo" column="todo_no" />
+		<result property="todoCheck" column="todo_check" />
+		<result property="todoDelete" column="todo_delete" />
+		<result property="todoDetail" column="todo_detail" />
+		<collection property="weddingPlan" resultMap="weddingPlanMap" />
+	</resultMap>
 	
 	<!-- 로그인-->
 	
@@ -97,7 +110,7 @@
 	
 	<!-- todoList생성 -->
 	<insert id="insertCopyTable" parameterType="int" >
-		insert into mu_todo(select *,null,#{memNo}, 'N', 'N' from mu_todolist); 
+		insert into mu_todo(select todo_period,todo_title, todo_dday,todo_category,null,#{memNo},null,null, 'N', 'N' from mu_todolist);  
 	</insert>
 </mapper>
 
