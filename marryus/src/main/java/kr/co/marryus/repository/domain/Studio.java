@@ -10,4 +10,6 @@ public class Studio {
 	private String studioSnapshot;
 	private String studioVideo;
 	private String studioPickup;
+	private String studioMore;
+	private int studioBudget;
 }

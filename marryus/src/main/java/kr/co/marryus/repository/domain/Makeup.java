@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class Makeup {
 	private int auctionNo;
+	private String mkuPlace;
 	private String mkuMakeup;
 	private String mkuMom;
 	private int mkuBudget;
