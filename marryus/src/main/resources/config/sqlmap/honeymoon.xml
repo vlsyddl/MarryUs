@@ -29,14 +29,25 @@
 	<resultMap id="auctionMap" type="Auction">
 		<result property="auctionNo" column="auction_no" />
 		<result property="memNo" column="mem_no" />
-		<result property="comNo" column="com_no" />
 		<result property="auctionType" column="auction_type" />
 		<result property="auctionStatus" column="auction_status" />
 		<result property="auctionSdate" column="auction_sdate" />
 		<result property="auctionEDate" column="auction_edate" />
-		<result property="memName" column="mem_name" />
+		<collection property="member" resultMap="memberMap"></collection>
 	</resultMap>
 	
+	<resultMap id="memberMap" type="Member">
+		<result column="mem_no" property="no" />
+		<result column="mem_email" property="email" />
+		<result column="mem_pass" property="pass" />
+		<result column="mem_type" property="type" />
+		<result column="mem_status" property="status" />
+		<result column="mem_name" property="name" />
+		<result column="mem_phone" property="phone" />
+	</resultMap>
+	
+	
+	        
 	<resultMap id="honeymoonMap" type="Honeymoon">
 		<result property="auctionNo" column="auction_no" />
 		<result property="honeyPlace" column="honey_place" />
@@ -92,11 +103,23 @@
 	
 	
 	<!-- 역경매 리스트 -->
+<!-- 	<select id="auctionList" parameterType="Page" resultMap="auctionMap"> -->
+<!-- 		select @rownum:=@rownum+1 as no, a.*	  -->
+<!-- 		from mu_auction a, (select @rownum:=0) TMP -->
+<!-- 		inner join mu_member m -->
+<!-- 		 on a.mem_no = m.mem_no -->
+<!-- 		 order by a.mem_no desc -->
+<!-- 		 limit #{begin}, 10 -->
+<!-- 	</select> -->
+	
+	<!-- 역경매 리스트 -->
 	<select id="auctionList" parameterType="Page" resultMap="auctionMap">
-		select @rownum:=@rownum+1 as no, a.*	 
-		from mu_auction a, (select @rownum:=0) TMP
+		select @rownum:=@rownum+1 as no, a.*, m.*
+		from mu_auction a 
+		inner join mu_member m 
+		 on a.mem_no = m.mem_no, (select @rownum:=0) TMP
 		 where a.auction_type = 'h'
-		 order by a.auction_no desc
+		 order by a.mem_no desc
 		 limit #{begin}, 10
 	</select>
 	
@@ -215,6 +238,29 @@
 					#{honeyHope}
 			)
 	</insert>
+	
+	
+	
+	<select	id="comInfoDetail" parameterType="int" resultMap="comInfoMap">
+		select * 
+		 from mu_company_info 
+		where com_info_no = #{comInfoNo}
+	</select>
+	
+	<select id="comInfoFiles" parameterType="int" resultMap="comFileMap">
+		select * 
+		 from mu_company_file 
+		where com_info_no = #{comInfoNo}
+		      and com_file_repr='N'
+	</select>
+	
+	
+	<!-- 허니문 역경매 리스트 디테일 -->
+	<select id="HoneyAuctionDetail" parameterType="int" resultMap="honeymoonMap">
+		select *
+		 from mu_honeymoon
+		 where auction_no = #{auctionNo}
+	</select>
 	
 </mapper>
 

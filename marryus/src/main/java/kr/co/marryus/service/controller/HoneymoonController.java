@@ -1,5 +1,6 @@
 package kr.co.marryus.service.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,6 +96,29 @@ public class HoneymoonController {
 		model.addAttribute("search", service.searchHoneymoon(search));
 		return service.searchHoneymoon(search);
 	}
+	
+	
+	
+	
+	@RequestMapping("/comHoneyDetail.do")
+	@ResponseBody
+	public HashMap<String, Object> comDetail(int comInfoNo){
+		HashMap<String, Object> listMap = new HashMap();
+		listMap.put("info", service.comInfoDetail(comInfoNo));
+		List<CompanyFile> files = service.comInfoFiles(comInfoNo);
+		listMap.put("files",files);
+		return listMap;
+	}
+	
+	@RequestMapping("/honeyAuctionDetail.do")
+	@ResponseBody
+	public HashMap<String, Object> honeyAuctionDetail(int auctionNo){
+		HashMap<String, Object> listMap = new HashMap();
+		System.out.println("auction ========= " + service.HoneyAuctionDetail(auctionNo));
+		listMap.put("auction", service.HoneyAuctionDetail(auctionNo));
+		return listMap;
+	}
+	
 	
 	
 	

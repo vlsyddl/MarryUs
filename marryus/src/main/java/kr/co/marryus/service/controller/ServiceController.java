@@ -18,6 +18,7 @@ import kr.co.marryus.repository.domain.CompanyFile;
 import kr.co.marryus.repository.domain.CompanyInfo;
 import kr.co.marryus.repository.domain.Page;
 import kr.co.marryus.repository.domain.PageResult;
+import kr.co.marryus.repository.domain.Tender;
 import kr.co.marryus.repository.domain.Venue;
 import kr.co.marryus.wedservice.service.WeddingService;
 
@@ -126,4 +127,45 @@ public class ServiceController {
 		listMap.put("files",files);
 		return listMap;
 	}
+	
+	
+	
+	
+	//웨딩홀 역경매 리스트 디테일
+	@RequestMapping("/weddingAuctionDetail.do")
+	@ResponseBody
+	public HashMap<String, Object> weddingAuctionDetail(int auctionNo){
+		HashMap<String, Object> listMap = new HashMap();
+		listMap.put("wedList", service.WeddingAuctionDetail(auctionNo));
+		return listMap;
+	}
+	
+	//입찰서 등록
+	@RequestMapping("/TenderwriteForm.do")
+	@ResponseBody
+	public Auction TenderwriteForm(int auctionNo) {
+		
+		System.out.println("writeForm . auctionNO === " +auctionNo);
+		System.out.println("service.selectAuctionDetail(auctionNo) ==================" + service.selectAuctionDetail(auctionNo));
+		return service.selectAuctionDetail(auctionNo);
+	}
+	
+	@RequestMapping("/comInfoWrite.do")
+	@ResponseBody
+	public CompanyInfo comInfoWrite(int memNo) {
+		System.out.println("infoWrite.memNo === " + memNo);
+		System.out.println("service.selectCompanyDetail(memNo) === " + service.selectCompanyDetail(memNo));
+		return service.selectCompanyDetail(memNo);
+	}
+	
+	@RequestMapping("/Tenderwrite.do")
+	public String Tenderwrite(Tender tender) {
+		System.out.println(tender);
+		service.insertTender(tender);
+		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "weddingHall.do";
+	}
+	
+	
+	
+	
 }

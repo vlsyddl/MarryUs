@@ -10,18 +10,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Marry Us</title>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dc6291b36d6e91a7fc6b30e92a9171d3&libraries=services"></script>
-    <!-- 합쳐지고 최소화된 최신 CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-	<!-- 부가적인 테마 -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-	<link rel="stylesheet"
-		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="<c:url value="/resources/css/wedding.css"/>">
-<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script
-	src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
     <c:import url="/common/importCss.jsp"/>
 	 <c:import url="/common/importJs.jsp"/>
+    <link rel="stylesheet" href="<c:url value="/resources/css/wedding.css"/>">
 <style>
 	
 
@@ -55,9 +46,9 @@
                     </div>
                     <div class="gnb_bot cf">
                         <ul class="cf">
-                            <li ><a href="<c:url value="/service/weddingHall.do"/>">웨딩홀</a></li>
-                            <li><a href="#" class='mm-item'>스&middot;드&middot;메</a></li>
-                            <li class="on"><a href="#">허니문</a></li>
+                            <li class="on"><a href="<c:url value="/service/weddingHall.do"/>">웨딩홀</a></li>
+                            <li><a href="#">스&middot;드&middot;메</a></li>
+                            <li><a href="<c:url value="/service/honeymoon.do"/>">허니문</a></li>
                             <li><a href="#">예물</a></li>
                             <li><a href="#">추가서비스</a></li>
                         </ul>
@@ -72,7 +63,7 @@
             <div class="titleBox">
                 <h2>허니문</h2>
                 <p>
-                    하와이 &middot; 괌 &middot; 한라산
+                    하와이 &middot; 괌 &middot; 몰디브
                 </p>
             </div>
         </div>
@@ -103,64 +94,30 @@
 						        </div>
 						    </div>
                     	<div>
-		                      <ul class="card-list">
-		                      <c:forEach var="h" items="${honeymoonList}">
-			                    <li class="card">
-			                        <a href="#" class="card-image"   data-toggle="modal"  data-target=".bs-example-modal-lg"  ><img src="/marryus/img/comProfile/${h.comFileName}"  /></a>
-			                        <a>${h.comInfoName}</a>
-			                        <a class="card-description" >
-			                            <h2>${h.comInfoAddr}</h2>
-			                            <p>${h.comInfoAddrDetail}</p>
-			                        </a>
-			                        <ul>
-			                            <li>
-			                                <i class="glyphicon glyphicon-user">인원 50~100</i>
-			                            </li>
-			                            <li>
-			                                <span >별점</span>
-			                                <span class="glyphicon glyphicon-star"></span>
-			                                <span class="glyphicon glyphicon-star"></span>
-			                                <span class="glyphicon glyphicon-star"></span>
-			                                <span class="glyphicon glyphicon-star"></span>
-			                            </li>
-			                      
-			                        </ul>
-			                        <div class="btn-group" role="group">
-			                            <button type="button" class="btn btn-default">관심업체 등록</button>
-			                        </div>
-			                    </li>
-		                      </c:forEach>
-		                  
-		                  <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-							  <div class="modal-dialog modal-lg">
-							    <div class="modal-content">
-							      <div class="comName">
-							      		<h1>업체이름:</h1>
-							      </div>
-							      <section class="portfolio-slideshow-wrapper">
-									    <ul class="carousel">
-									        <li class="items main-pos" data-id="1"><p>업체이미지</p></li>
-									        <li class="items right-pos" data-id="2"><p>2</p></li>
-									        <li class="items back-pos" data-id="3"><p>3</p></li>
-									        <li class="items back-pos" data-id="4"><p>4</p></li>
-									        <li class="items back-pos" data-id="5"><p>5</p></li>
-									        <li class="items left-pos" data-id="6"><p>6</p></li>
-									    </ul>
-									    <span>
-									        <input type="button" value="Prev" class="prev">
-									        <input type="button" value="Next" class="next">
-									    </span>
-									</section>
-									
-									<div class="comIntro">
-										<a>업체 소개:</a>
-									</div>
-								
-							    </div>
-							  </div>
-						</div>
-		    
-		                  <nav>
+                    	<div class="row itemWrap">
+                        <c:forEach var="h" items="${honeymoonList}">
+                                <div class="col-md-4 itemBox" data-href="${h.comInfoNo}">
+                                    <div class="item">
+                                        <div class="imgBox">
+                                            <a href="#"><img src="/marryus/img/comProfile/${h.comFileName}" alt="" class="img-responsive center-block" onError="javascript:this.src='<c:url value="/resources/img/sorry.png"/>'"></a>
+                                        </div>
+                                        <div class="textBox">
+                                            <h5><a href="#">${h.comInfoName}</a></h5>
+                                            <p>
+                                                ${h.comInfoAddr} <br/>
+                                                ${h.comInfoAddrDetail}
+                                            </p>
+                                        </div>
+                                        <div class="infoBox">
+                                            <ul>
+                                                <li><span>별점</span> <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></li>
+                                            </ul>
+                                        </div>
+                                        <a href="#" class="itemBtn">관심업체 등록</a>
+                                    </div>
+                                    </div>
+                            </c:forEach>
+                            <nav>
 		                    	<div class="text-center">
 		                    	<ul class="pagination">
 								<li><a
@@ -193,37 +150,40 @@
 								aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 							</a></li>
 							</ul>
+							</div>
 						 </nav>
-		                   <form class="form-inline" role="form" id="searchForm" method="post">
-				            	<div class="form-group" id="search">
-				            		<select class="form-control" name="type">
-				            			<option value="1">홀 이름</option>
-				            			<option value="2">홀 지역</option>
-				            		</select>
-				            		<input type="hidden" name="pageNo" value="1" />
-				            		<input class="form-control" type="text" id="searchContent" name="content" placeholder="검색어를 입력해주세요." />
-				            		<button type="submit" class="btn">검색</button>
-				            	</div>
-				            </form>
-							
-		                </ul>
+		                    
+                          <div class="searchWrap">
+                          	 <form action="" id="search">
+                                <select class="form-control" id="searchType">
+                                    <option value="title" selected>제목</option>
+                                    <option value="writer">글쓴이</option>
+                                </select>
+                                <input type="text" class="form-control" id="searchContent" placeholder="Search for...">
+                                <span class="input-group-btn">
+                                  <button class="btn btn-default" type="button" id="searchBtn"><i class="fas fa-search"></i></button>
+                                </span>
+                               </form>
+                          </div>
+                        </div>
+
                   		</div>
                         </div>
                         <div class="tab2">
                         <!-- Button trigger modal -->
-						<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+						<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#insertModal">
 						  역경매 신청하기
 						</button>
 						
 						<!-- Modal -->
-						<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 						  <div class="modal-dialog">
 						    <div class="modal-content">
 						      <div class="modal-header">
 						        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						        <h4 class="modal-title" id="myModalLabel">허니문 역경매 신청서</h4>
+						        <h4 class="modal-title" id="myModalLabel">웨딩홀 역경매 신청서</h4>
 						      </div>
-						      <form action="Honeywrite.do"  method="post" enctype="multipart/form-data">
+						      	      <form action="Honeywrite.do"  method="post" enctype="multipart/form-data">
 							      <div class="modal-body">
 								        <input type="hidden" name="memNo" value="${user.no}" />
 								        <input type="hidden" name="auctionType" value="h" />
@@ -246,18 +206,20 @@
 						  </div>
 						</div>
                         
-                   <table class="table table-hover" id="contentsList">
+                   <table class="table table-hover serviceTable">
                             <tr>
                                 <th>경매번호</th>
+                                <th>경매신청자</th>
                                 <th>경매타입</th>
                                 <th>경매상태</th>
                                 <th>역경매 시작일</th>
                                 <th>역경매 종료일</th>
                             </tr>
-                            <c:forEach var="a" items="${AuctionList}">
+                          <c:forEach var="a" items="${AuctionList}">
                             <tr>
                                 <td>${a.auctionNo}</td>
-                                <td>${a.auctionType }</td>
+                                <td><a href="#" data-href="${a.auctionNo}" class="col-md-4 TravelBox">${a.member.name}</a></td>
+                                <td>허니문</td>
                                 <td>${a.auctionStatus}</td>
                                 <td><fmt:formatDate value="${a.auctionSdate}" pattern="yyyy-MM-dd" /></td>
                                 <td><fmt:formatDate value="${a.auctionEDate}" pattern="yyyy-MM-dd" /></td>
@@ -298,77 +260,18 @@
 							</a></li>
 							</ul>
 						 </nav>
-						 	<form class="form-inline" role="form" id="searchForm1" method="post">
-				            	<div class="form-group" id="search">
-				            		<select class="form-control" name="type">
-				            			<option value="1">경매타입</option>
-				            			<option value="2">경매상태</option>
-				            			<option value="2">역경매 시작일</option>
-				            			<option value="2">역경매 종료일</option>
-				            		</select>
-				            		<input type="hidden" name="pageNo" value="1" />
-				            		<input class="form-control" type="text" id="searchContent1" name="content" placeholder="검색어를 입력해주세요." />
-				            		<button type="submit" class="btn">검색</button>
-				            	</div>
-				            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
     </div>
-     <aside id="sideBar">
-            <ul>
-                <li><a href="<c:url value="/mypage/mywedding.do"/>"><i class="fas fa-user-edit"></i>마이페이지</a></li>
-                <li><a href="<c:url value="/community/notice.do"/>"><i class="fas fa-headset"></i></i>공지 게시판</a></li>
-                <li><a href="#"><i class="fas fa-chalkboard-teacher"></i>후기 게시판</a></li>
-                <li><a href="#"><i class="far fa-kiss-wink-heart"></i>신부대기실</a></li>
-                <li><a href="#"><i class="far fa-comments"></i>1 : 1 질문</a></li>
-                <li><a href="#"><i class="far fa-question-circle"></i>FAQ</a></li>
-            </ul>
-        </aside>
+    <c:import url="/common/importSideBar.jsp" />
+    <c:import url="/common/importFooter.jsp" />
+
 
 <!-- 카카오지도 -->
 <script>
-$(".btn").click(function () {
-	 if ($("#searchContent1").val() == "") {
-		 alert("검색어를 입력해주세요.");
-		 return false;
-	 }
-	 $.ajax({
-		url : "<c:url value='/service/SearchHoneymoon.json' />",
-		method : "POST",
-		data : $("#searchForm1").serialize(),
-		cache : false
-	 }).done (function (result) {
-		 var html = "";
-		 html += "<tr>";
-		html  += "<th>경매번호</th>";
-		html  += "<th>경매타입</th>";
-		html  += "<th>경매상태</th>";
-		html  += "<th>역경매 시작일</th>";
-		html  += "<th>역경매 종료일</th>";
-		html  += "</tr>";
-		 	  for ( var i = 0; i<result.length; i++) {
-   		 		html += "<tr>"
-   		 		html += "<td>" + result[i].no + "</td>"
-   		 		html += "<td><a href=''>" + result[i].auctionType + "</a></td>"
-   		 		html += "<td>" + result[i].auctionStatus + "</td>"
-   		 		html += "<td>"+ new Date(result[i].auctionSdate).format("yyyy-MM-dd") +"</td>"
-   		 		html += "<td>"+ new Date(result[i].auctionEDate).format("yyyy-MM-dd") +"</td>"
-   		 		html += "</tr>"
-		 	  	 }
-		$("#contentsList").html(html);
-	 });
-});
-
-
-
-
-
-
-
-
 var options = {
         'speed' : 500,				 		//스피드
         'initTop' : 300, 					//기본top위치
@@ -597,152 +500,200 @@ function removeAllChildNods(el) {
 
 
 
-//slideshow style interval
-var autoSwap = 0; //setInterval(swap, 3500);
-
-//pause slideshow and reinstantiate on mouseout
-/*
-$('ul, span').hover(
-    function(){
-        clearInterval(autoSwap);
-}, 
-    function(){
-        autoSwap = setInterval(swap, 3500);
-});
-*/
-
-//global variables
-var items = [];
-var startItem = 1;
-var position = 0;
-var itemCount = $('.portfolio-slideshow-wrapper .carousel li.items').length;
-var leftpos = itemCount;
-var resetCount = itemCount;
-
-//unused: gather text inside items class
-$('li.items').each(function(index) {
-    items[index] = $(this).text();
-});
-
-// get position of image (for moving to forward)
-function portfolio_ss_pos(positionvalue)
-{
-    if(positionvalue != 'leftposition')
-    {
-        //increment image list id
-        position++;
-        
-        //if final result is greater than image count, reset position.
-        if((startItem+position) > resetCount)
-        {
-            position = 1-startItem;
-        }
-    }
-    
-    //setting the left positioned item
-    if(positionvalue == 'leftposition')
-    {
-        //left positioned image should always be one left than main positioned image.
-        position = startItem - 1;
-      
-        //reset last image in list to left position if first image is in main position
-        if(position < 1)
-        {
-            position = itemCount;
-        }
-    }
-   
-    return position;
-}  
-
-//swap images function
-function portfolio_ss_swap(action, box)
-{
-    var direction         = action;
-    var slideshow_wrapper = box;
-  
-    //moving carousel backwards
-    if(direction == 'counter-clockwise')
-    {
-        var leftitem = slideshow_wrapper.find('.left-pos').attr('data-id') - 1;
-        if(leftitem == 0)
-        {
-            leftitem = itemCount;
-        }
-    
-        slideshow_wrapper.find('li.right-pos').removeClass('right-pos').addClass('back-pos');
-        slideshow_wrapper.find('li.main-pos').removeClass('main-pos').addClass('right-pos');
-        slideshow_wrapper.find('li.left-pos').removeClass('left-pos').addClass('main-pos');
-        slideshow_wrapper.find('li.items[data-id='+leftitem+']').removeClass('back-pos').addClass('left-pos');
-    
-        startItem--;
-        if(startItem < 1)
-        {
-            startItem = itemCount;
-        }
-    }
-  
-    //moving carousel forward
-    if(direction == 'clockwise' || direction == '' || direction == null )
-    {
-        slideshow_wrapper.find('li.items[data-id='+ startItem +']').removeClass('main-pos').addClass('left-pos');
-        slideshow_wrapper.find('li.items[data-id='+ (startItem+portfolio_ss_pos()) +']').removeClass('right-pos').addClass('main-pos');
-        slideshow_wrapper.find('li.items[data-id='+ (startItem+portfolio_ss_pos()) +']').removeClass('back-pos').addClass('right-pos');
-        slideshow_wrapper.find('li.items[data-id='+ portfolio_ss_pos('leftposition') +']').removeClass('left-pos').addClass('back-pos');
-
-        startItem++;
-        position=0;
-        if(startItem > itemCount)
-        {
-            startItem = 1;
-        }
-    }
-}
-
-//next button click function
-$('.portfolio-slideshow-wrapper .next').click(function() {
-    portfolio_ss_swap('clockwise', $(this).parent().parent());
-});
-
-//prev button click function
-$('.portfolio-slideshow-wrapper .prev').click(function() {
-    portfolio_ss_swap('counter-clockwise', $(this).parent().parent());
-});
-
-//if any visible items are clicked
-$('.portfolio-slideshow-wrapper li.items').click(function() {
-    if($(this).attr('class') == 'items left-pos')
-    {
-        portfolio_ss_swap('counter-clockwise', $(this).parent().parent()); 
-    }
-    else if($(this).attr('class') == 'items right-pos')
-    {
-        portfolio_ss_swap('clockwise', $(this).parent().parent()); 
-    }
-});
 
 
-$(document).ready(function(){
-    $("#date_pretty").datepicker({ 
-    });
-    var myDate = new Date();
-    var month = myDate.getMonth() + 1;
-    var prettyDate = month + '/' + myDate.getDate() + '/' + myDate.getFullYear();
-    $("#date_pretty").val(prettyDate);
-});
 
-$(function() {
-	  $( "#datepicker1" ).datepicker({
-	    dateFormat: 'yy-mm-dd'
-	  });
+  $(document).ready(function(){
+	    $("#date_pretty").datepicker({ 
+	    });
+	    var myDate = new Date();
+	    var month = myDate.getMonth() + 1;
+	    var prettyDate = month + '/' + myDate.getDate() + '/' + myDate.getFullYear();
+	    $("#date_pretty").val(prettyDate);
+	});
+  $(document).ready(function(){
+	    $("#datepicker1").datepicker({ 
+	    });
+	    var myDate = new Date();
+	    var month = myDate.getMonth() + 1;
+	    var prettyDate = month + '/' + myDate.getDate() + '/' + myDate.getFullYear();
+	    $("#datepicker1").val(prettyDate);
 	});
 
-  
-  
-  
-  
+//디테일 모달
+function detail(comInfoNo){
+	var modal = $("#detailModal")
+	var slideBox = $(".slideBox")
+	slideBox.find("ul").html("")
+	$.ajax({
+		url : "<c:url value='/service/comHoneyDetail.do'/>",
+		data : "comInfoNo="+comInfoNo
+	}).done(function(data){
+		console.log(data)
+		modal.find(".modal-title").html(data.info.comInfoName)
+        modal.find(".infoBox").find(".adress").children("dd").html(data.info.comInfoAddr+" "+data.info.comInfoAddrDetail)
+        modal.find(".infoBox").find(".phone").children("dd").html(data.info.comInfoPhone)
+        modal.find(".infoBox").find(".profile").children("dd").html(data.info.comInfoProfile)
+        modal.find(".contentsBox").html(data.info.comInfoContent)
+        var fileList="";
+        for(var f of data.files){
+			fileList +='<li>'        	
+			fileList +='<img src="/marryus/img/comProfile/'+f.comFileName+'" alt="" class="img-responsive center-block">'        	
+			fileList +='</li>'        	
+        }
+        slideBox.find("ul").html(fileList)
+	})
+   
+
+}
+
+// 역경매 리스트 디테일
+function honeyDetail(auctionNo){
+	var modal = $("#TravelBoxModal")
+	var slideBox = $(".slideBox")
+	console.log("auctionNo: =====" + auctionNo)
+	$.ajax({
+		url : "<c:url value='/service/honeyAuctionDetail.do'/>",
+		data : "auctionNo="+auctionNo
+	}).done(function(data){
+		console.log(data)
+        modal.find(".Teavel").find(".hopeTravel").children("dd").html(data.auction.honeyPlace)
+        modal.find(".Teavel").find(".TravelDate").children("dd").html(data.auction.honeyDate)
+        modal.find(".Teavel").find(".Hope").children("dd").html(data.auction.honeyHope)
+        modal.find(".contentsBox").html(data.auction.comInfoContent)
+        slideBox.find("dd").html()
+	})
+   
+
+}
+
+
+$(function(){
+	$(".itemBox").click(function(e){
+		  e.preventDefault();
+		  detail($(this).data("href"))
+	      $('#detailModal').modal('show')
+	      var bx;
+		  $('#detailModal').on('shown.bs.modal', function () {
+		    if(bx === undefined){
+		      bx= slider = $('.slideBox ul').bxSlider({
+		  	    mode: 'fade',
+			    captions: true
+			});
+		    } else {
+		      bx.reloadSlider(); 
+		    }
+		  });
+	    
+	  })
+
+})
+
+$(function(){
+	$(".TravelBox").click(function(e){
+		  e.preventDefault();
+		  honeyDetail($(this).data("href"))
+	      $('#TravelBoxModal').modal('show')
+	      var bx;
+		  $('#TravelBoxModal').on('shown.bs.modal', function () {
+		  });
+	    
+	  })
+
+})
+
+
+
+
+
+
+
+function maskingName(strName) {
+    if(strName === undefined || strName === '') {
+        return '';
+    }
+    var pattern = /.$/; // 정규식
+    return strName.replace(pattern, "*");
+}
+
+
   
   
   </script>
+<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog  modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"></h4>
+      </div>
+      <div class="modal-body">
+        <div class="slideBox">
+        	<ul>
+        		<li>1</li>
+        		<li>2</li>
+        		<li>3</li>
+        	</ul>
+        </div>
+        <div class="infoBox">
+            <dl class="adress">
+                <dt>주소 : </dt>
+                <dd></dd>
+            </dl>
+            <dl class="phone">
+                <dt>연락처 : </dt>
+                <dd></dd>
+            </dl>
+            <dl class="Profile">
+                <dt>정보 : </dt>
+                <dd></dd>
+            </dl>
+        </div>
+        <div class="contentsBox">
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="TravelBoxModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog  modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"></h4>
+      </div>
+      <div class="modal-body">
+        <div class="Teavel">
+            <dl class="hopeTravel">
+                <dt>희망여행지 : </dt>
+                <dd></dd>
+            </dl>
+            <dl class="TravelDate">
+                <dt>여행일자: </dt>
+                <dd></dd>
+            </dl>
+            <dl class="Hope">
+                <dt>희망사항 : </dt>
+                <dd></dd>
+            </dl>
+        </div>
+        <div class="contentsBox">
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">입찰하기</button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>

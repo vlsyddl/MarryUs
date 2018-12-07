@@ -6,6 +6,7 @@ import kr.co.marryus.repository.domain.Auction;
 import kr.co.marryus.repository.domain.CompanyFile;
 import kr.co.marryus.repository.domain.CompanyInfo;
 import kr.co.marryus.repository.domain.Page;
+import kr.co.marryus.repository.domain.Tender;
 import kr.co.marryus.repository.domain.Venue;
 
 public interface WeddingHallMapper {
@@ -26,6 +27,13 @@ public interface WeddingHallMapper {
 	//역경매 디테일
 	CompanyInfo comInfoDetail(int comInfoNo);
 	List<CompanyFile> comInfoFiles(int comInfoNo);
+	
+	Venue WeddingAuctionDetail(int auctionNo);
+	
+	//입찰서 등록
+	void insertTender(Tender tender);
+	Auction selectAuctionDetail(int auctionNo);
+	CompanyInfo selectCominfo(int memNo);
 	
 	
 }

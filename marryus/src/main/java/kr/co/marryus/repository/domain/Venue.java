@@ -8,10 +8,14 @@ public class Venue {
 	private int auctionNo;
 	private String weddingVenue;
 	private String weddingDate;
-	private int weddingTime;
-	private int weddingType;
+	private String weddingTime;
+	private String weddingType;
 	private int weddingVistor;
 	private String weddingWish;
 	private int weddingBudget;
+	private String memName;
+	
+	// collection
+	private Member member;
 	
 }

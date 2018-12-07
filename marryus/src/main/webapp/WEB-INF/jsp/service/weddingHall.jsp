@@ -208,23 +208,23 @@
 								        </div>
 		                                <div class="btn-group" data-toggle="buttons" name="weddingTime">
 											  <label class="btn btn-primary active" >
-											    <input name="weddingTime" type="checkbox" value="1" /> 12시 이전 가능
+											    <input name="weddingTime" type="checkbox" value="열두시이전" /> 12시 이전 가능
 											  </label>
 											  <label  class="btn btn-primary">
-											    <input name="weddingTime" type="checkbox" value="2" />12시 ~ 2시
+											    <input name="weddingTime" type="checkbox" value="12시부터2시" />12시 ~ 2시
 											  </label>
 											  <label  class="btn btn-primary">
-											    <input name="weddingTime" type="checkbox" value="3" /> 2시 이후 시간대 가능
+											    <input name="weddingTime" type="checkbox" value="2시이후" /> 2시 이후 시간대 가능
 											  </label>
 										</div>
 									  	<h2>예식 타입</h2>
 									  	<div class="form-group">
 									  		<div class="col-md-6">									  		
 										  		<select class="selectBox1 form-control" name="weddingType" id="weddingType" >
-				                                    <option value="1">일반예식</option>
-				                                    <option value="2">하우스웨딩</option>
-				                                    <option value="3">야외예식</option>
-				                                    <option value="4">종교예식</option>
+				                                    <option value="일반예식">일반예식</option>
+				                                    <option value="하우스예식">하우스웨딩</option>
+				                                    <option value="야외예식">야외예식</option>
+				                                    <option value="종교예식">종교예식</option>
 	                            				</select>
 									  		</div>
 									  	</div>
@@ -264,6 +264,7 @@
                    <table class="table table-hover serviceTable">
                             <tr>
                                 <th>경매번호</th>
+                                <th>경매 신청자</th>
                                 <th>경매타입</th>
                                 <th>경매상태</th>
                                 <th>역경매 시작일</th>
@@ -272,6 +273,7 @@
                          <c:forEach var="a" items="${AuctionList}">
                             <tr>
                                 <td>${a.auctionNo}</td>
+                                <td><a href="#" data-href="${a.auctionNo}" class="col-md-4 weddingBox">${a.member.name}</a></td>
                                 <td>웨딩홀</td>
                                 <td>${a.auctionStatus}</td>
                                 <td><fmt:formatDate value="${a.auctionSdate}" pattern="yyyy-MM-dd" /></td>
@@ -637,11 +639,79 @@ function detail(comInfoNo){
 			fileList +='<img src="/marryus/img/comProfile/'+f.comFileName+'" alt="" class="img-responsive center-block">'        	
 			fileList +='</li>'        	
         }
-        slideBox.find("ul").html(fileList)
+        slideBox.find("ul").html(fileList);
 	})
+}
+	
+// 역경매 리스트 디테일
+function weddingAuctionDetail(auctionNo){
+	var modal = $("#weddingDetailModal")
+	var slideBox = $(".slideBox")
+	$.ajax({
+		url : "<c:url value='/service/weddingAuctionDetail.do'/>",
+		data : "auctionNo="+auctionNo
+	}).done(function(data){
+		console.log("auctiondetail ======== " + data)
+        modal.find(".wedVenue").find(".venue").children("dd").html(data.wedList.weddingVenue)
+        modal.find(".wedVenue").find(".wedDate").children("dd").html(data.wedList.weddingDate)
+        modal.find(".wedVenue").find(".wedTime").children("dd").html(data.wedList.weddingTime)
+        modal.find(".wedVenue").find(".wedType").children("dd").html(data.wedList.weddingType)
+        modal.find(".wedVenue").find(".wedVisitor").children("dd").html(data.wedList.weddingVistor)
+        modal.find(".wedVenue").find(".wedWish").children("dd").html(data.wedList.weddingWish)
+        modal.find(".wedVenue").find(".wedBudget").children("dd").html(data.wedList.weddingBudget)
+       
+        slideBox.find("dd").html()
+        $(".insertBox").attr('data-href', auctionNo);
+	});
    
 
+};
+
+
+function tenderWrite(auctionNo){
+	console.log("tenderWrite...auctionNo ======= " + auctionNo);
+	$.ajax({
+		url: "<c:url value='/service/TenderwriteForm.do'/>",
+		data: "auctionNo=" + auctionNo
+	}).done(function(data){
+		console.dir("dir ======= " + data)
+// 		console.log("data.tender.comInfoNo" + data.tender.comInfoNo);
+// 		console.log("data.tender" + data.tender);
+		var html="";
+		var cominfo= "";
+		html += '<input type="hidden" name="auctionNo" value="'+auctionNo+'"/>'
+// 		cominfo += '<input type="hidden" name="comInfoNo" value="'+data.tender.comInfoNo+'"/>'
+		
+		$(".auction-no").html(html);
+// 		$(".comInfo-no").html(cominfo);
+	})
 }
+
+function comInfoWrite(memNo){
+	console.log("comInfoWrite...memNo ======= " + memNo);
+	$.ajax({
+		url: "<c:url value='/service/comInfoWrite.do'/>",
+		data: "memNo=" + memNo
+	}).done(function(data){
+		console.dir("dir ======= " + data)
+		console.log("log ======= " + data)
+// 		console.log("data.tender.comInfoNo" + data.tender.comInfoNo);
+// 		console.log("data.tender" + data.tender);
+// 		var html="";
+		var comInfo= "";
+// 		html += '<input type="hidden" name="auctionNo" value="'+auctionNo+'"/>'
+		comInfo += '<input type="hidden" name="comInfoNo" value="'+data.comInfoNo+'"/>'
+		
+// 		$(".auction-no").html(html);
+		$(".comInfo-no").html(comInfo);
+	})
+}
+
+
+
+
+
+
 $(function(){
 	$(".itemBox").click(function(e){
 		  e.preventDefault();
@@ -659,12 +729,35 @@ $(function(){
 		    }
 		  });
 	    
-	  })
+	  });
 
-})
-  
-  
-  </script>
+});
+
+// 역경매 리스트 디테일
+
+	$(".weddingBox").click(function(e){
+		  e.preventDefault();
+		  weddingAuctionDetail($(this).data("href"))
+	      $('#weddingDetailModal').modal('show')
+	      $('#weddingDetailModal').on('shown.bs.modal', function () {
+		  });
+	    
+	$(".insertBox").click(function(e){
+		  e.preventDefault();
+		  console.log("입찰하기 클릭" + $(this).data("href"));
+	      tenderWrite($(this).data("href"));
+	      comInfoWrite($(".mem > #memNo").val());
+	      $('#weddingDetailModal').modal('hide')
+	      $('#insertAuction').modal('show')
+	    
+	  });
+	  });
+	  
+	  
+	  
+	  
+
+</script>
 <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog  modal-lg">
     <div class="modal-content">
@@ -700,10 +793,112 @@ $(function(){
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
 </div>
+
+
+<div class="modal fade" id="weddingDetailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog  modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"></h4>
+      </div>
+      <div class="modal-body">
+        <div class="wedVenue">
+            <dl class="mem">
+            <input type="hidden" id="memNo" value="${user.no}"/>
+            </dl>
+            <dl class="venue">
+                <dt>희망예식장소 : </dt>
+                <dd></dd>
+            </dl>
+            <dl class="wedDate">
+                <dt>희망예식날짜: </dt>
+                <dd></dd>
+            </dl>
+            <dl class="wedTime">
+                <dt> 시간 : </dt>
+                <dd></dd>
+            </dl>
+            <dl class="wedType">
+                <dt>예식 타입 : </dt>
+                <dd></dd>
+            </dl>
+            <dl class="wedVisitor">
+                <dt>하객 수 : </dt>
+                <dd></dd>
+            </dl>
+            <dl class="wedWish">
+                <dt>기타의견 사항 : </dt>
+                <dd></dd>
+            </dl>
+            <dl class="wedBudget">
+                <dt>희망예산 : </dt>
+                <dd></dd>
+            </dl>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button"   class="btn btn-primary insertBox"><a href="#">입찰하기</a></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+	<div class="modal fade" id="insertAuction" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog  modal-lg">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel"></h4>
+	      	</div>
+				<form action="Tenderwrite.do"  method="post" enctype="multipart/form-data">
+				      <div class="modal-body">
+				      <div class="form-group">
+				      <input type="hidden" name="memNo" value="${user.no}" />
+<%-- 				      <input type="hidden" name="auctionNo" value="1" /> --%>
+					  	</div>
+					  	<div class="auction-no">
+					  	</div>
+					  	<div class="comInfo-no">
+					  	</div>
+					  	<h2>서비스 소개</h2>
+					  	<div class="form-group">
+					  		<div class="col-md-4">
+					  			<textarea name="tenderInfo" id="tenderInfo" class="wish form-control" rows="3" cols="30"></textarea>
+					  		</div>
+					  	</div><br>
+					  	
+					  	<h2>입찰 예산</h2>
+					  	<div class="form-group">
+					  		<div class="col-md-4">
+					  			<input type="text" id="tenderBudget" name="tenderBudget" class="form-control"/>
+					  		</div>
+					  	</div>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				        <button type="submit" class="btn btn-primary">입찰하기</button>
+				      </div>
+				</form>
+	    </div>
+	  </div>
+	</div>
+
+
+
+
+
+
+
+
 </body>
 </html>

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.marryus.repository.domain.Auction;
+import kr.co.marryus.repository.domain.CompanyFile;
 import kr.co.marryus.repository.domain.CompanyInfo;
 import kr.co.marryus.repository.domain.Honeymoon;
 import kr.co.marryus.repository.domain.Page;
@@ -56,6 +57,25 @@ public class HoneymoonServiceImpl implements HoneymoonService{
 	@Override
 	public int selectHoneySearchCount(Search search) {
 		return mapper.selectHoneySearchCnt(search);
+	}
+	
+	
+	
+	@Override
+	public CompanyInfo comInfoDetail(int comInfoNo) {
+		// TODO Auto-generated method stub
+		return mapper.comInfoDetail(comInfoNo);
+	}
+
+	@Override
+	public List<CompanyFile> comInfoFiles(int comInfoNo) {
+		// TODO Auto-generated method stub
+		return mapper.comInfoFiles(comInfoNo);
+	}
+
+	@Override
+	public Honeymoon HoneyAuctionDetail(int auctionNo) {
+		return mapper.HoneyAuctionDetail(auctionNo);
 	}
 
 }

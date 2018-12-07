@@ -3,6 +3,7 @@ package kr.co.marryus.repository.mapper;
 import java.util.List;
 
 import kr.co.marryus.repository.domain.Auction;
+import kr.co.marryus.repository.domain.CompanyFile;
 import kr.co.marryus.repository.domain.CompanyInfo;
 import kr.co.marryus.repository.domain.Honeymoon;
 import kr.co.marryus.repository.domain.Page;
@@ -22,4 +23,12 @@ public interface HoneymoonMapper {
 	// 검색
 	List<CompanyInfo> searchHoneymoon(Search search);
 	int selectHoneySearchCnt(Search search);
+	
+	
+	//역경매 업체 디테일
+	CompanyInfo comInfoDetail(int comInfoNo);
+	List<CompanyFile> comInfoFiles(int comInfoNo);
+	
+	// 허니문 역경매 리스트 디테일
+	Honeymoon HoneyAuctionDetail(int auctionNo);
 }

@@ -9,6 +9,7 @@ import kr.co.marryus.repository.domain.Auction;
 import kr.co.marryus.repository.domain.CompanyFile;
 import kr.co.marryus.repository.domain.CompanyInfo;
 import kr.co.marryus.repository.domain.Page;
+import kr.co.marryus.repository.domain.Tender;
 import kr.co.marryus.repository.domain.Venue;
 import kr.co.marryus.repository.mapper.WeddingHallMapper;
 @Service
@@ -62,6 +63,29 @@ public class WeddingServiceImpl implements WeddingService{
 	public List<CompanyFile> comInfoFiles(int comInfoNo) {
 		// TODO Auto-generated method stub
 		return mapper.comInfoFiles(comInfoNo);
+	}
+
+	//웨딩홀 역경매 리스트 디테일
+	@Override
+	public Venue WeddingAuctionDetail(int auctionNo) {
+		return mapper.WeddingAuctionDetail(auctionNo);
+	}
+	
+	//입찰서 등록
+	@Override
+	public void insertTender(Tender tender) {
+		mapper.insertTender(tender);
+		
+	}
+
+	@Override
+	public Auction selectAuctionDetail(int auctionNo) {
+		return mapper.selectAuctionDetail(auctionNo);
+	}
+
+	@Override
+	public CompanyInfo selectCompanyDetail(int memNo) {
+		return mapper.selectCominfo(memNo);
 	}
 
 

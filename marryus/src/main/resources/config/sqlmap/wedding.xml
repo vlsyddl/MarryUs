@@ -35,7 +35,35 @@
 		<result property="auctionSdate" column="auction_sdate" />
 		<result property="auctionEDate" column="auction_edate" />
 		<result property="memName" column="mem_name" />
+		<collection property="member" resultMap="memberMap"></collection>
+		<collection property="tender" resultMap="tenderMap"></collection>
 	</resultMap>
+	
+	
+	<resultMap id="memberMap" type="Member">
+		<result column="mem_no" property="no" />
+		<result column="mem_email" property="email" />
+		<result column="mem_pass" property="pass" />
+		<result column="mem_type" property="type" />
+		<result column="mem_status" property="status" />
+		<result column="mem_name" property="name" />
+		<result column="mem_phone" property="phone" />
+	</resultMap>
+	
+	
+	<resultMap id="tenderMap" type="Tender">
+		<result column="tender_no" property="tenderNo" />
+		<result column="auction_no" property="auctionNo" />
+		<result column="tender_status" property="tenderStatus" />
+		<result column="tender_budget" property="tenderBudget" />
+		<result column="tender_regdate" property="tenderRegdate" />
+		<result column="mem_no" property="memNo" />
+		<result column="tender_info" property="tenderInfo" />
+		<result column="com_info_no" property="comInfoNo" />
+	</resultMap>
+	
+	
+	
 	
 	<resultMap id="venueMap" type="Venue">
 		<result property="auctionNo" column="auction_no" />
@@ -97,10 +125,12 @@
 	
 	<!-- 역경매 리스트 -->
 	<select id="auctionList" parameterType="Page" resultMap="auctionMap">
-		select @rownum:=@rownum+1 as no, a.*	 
-		from mu_auction a, (select @rownum:=0) TMP
+		select @rownum:=@rownum+1 as no, a.*, m.*
+		from mu_auction a 
+		inner join mu_member m 
+		 on a.mem_no = m.mem_no, (select @rownum:=0) TMP
 		 where a.auction_type = 'v'
-		 order by a.auction_no desc
+		 order by a.mem_no desc
 		 limit #{begin}, 10
 	</select>
 	
@@ -152,6 +182,55 @@
 		where com_info_no = #{comInfoNo}
 		      and com_file_repr='N'
 	</select>
+	
+	
+	
+	
+	
+	<!-- 웨딩홀 역경매 리스트 디테일 -->
+	<select id="WeddingAuctionDetail" parameterType="int" resultMap="venueMap">
+		select *
+		 from mu_venue
+		 where auction_no = #{auctionNo}
+	</select>
+	
+	
+
+	<select id="selectAuctionDetail" parameterType="int" resultMap="auctionMap">
+		select *
+		from mu_auction a
+		 where a.auction_no = #{auctionNo}
+	</select>
+	
+	<select id="selectCominfo" parameterType="int" resultMap="comInfoMap">
+		 select *
+		   from mu_company_info
+		  where mem_no = #{memNo}
+		    and com_info_type = 'v';
+	</select>
+	
+	
+	
+	<!-- 웨딩홀 입찰서 등록 -->
+	<insert id="insertTender" parameterType="Tender">
+		insert into mu_tender(
+							   mem_no, 
+							   auction_no, 
+							   tender_info, 
+							   tender_budget,
+							   com_info_no
+							   
+						) 
+					  values(
+					         #{memNo}, 
+					         #{auctionNo}, 
+					         #{tenderInfo}, 
+					         #{tenderBudget},
+					         #{comInfoNo}
+					         )
+	</insert>
+	
+	
 </mapper>
 
 

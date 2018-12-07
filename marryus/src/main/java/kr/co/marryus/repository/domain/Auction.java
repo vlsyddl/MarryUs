@@ -20,4 +20,5 @@ public class Auction {
 	private Studio studio;
 	private Makeup makeup;
 	private Dress dress;
+	private Tender tender;
 }

@@ -402,3 +402,91 @@
 .serviceTable tr:last-child td{
 	border-bottom: 1px solid #d9d9d9;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#weddingDetailModal .wedVenue{
+	border-top: 2px solid #000;
+	padding: 15px 0;
+	text-align: left;
+}
+#weddingDetailModal .wedVenue dl{
+	width: 100%;
+	padding: 10px 0;
+}
+#weddingDetailModal .wedVenue dl+dl{
+	
+	border-top: 1px dashed #d9d9d9;
+}
+#weddingDetailModal .wedVenue dl::after{
+	display: block;
+	clear: both;
+	content:'';
+}
+#weddingDetailModal .wedVenue dl dt{
+	width: 10%;
+	float: left;
+	font-size: 1.2em;
+	font-weight: bold;
+}
+#weddingDetailModal .wedVenue dl dd{
+	width: 90%;
+	float: left;
+	font-size: 1.2em;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+#TravelBoxModal .Teavel{
+	border-top: 2px solid #000;
+	padding: 15px 0;
+	text-align: left;
+}
+#TravelBoxModal .Teavel dl{
+	width: 100%;
+	padding: 10px 0;
+}
+#TravelBoxModal .Teavel dl+dl{
+	
+	border-top: 1px dashed #d9d9d9;
+}
+#TravelBoxModal .Teavel dl::after{
+	display: block;
+	clear: both;
+	content:'';
+}
+#TravelBoxModal .Teavel dl dt{
+	width: 10%;
+	float: left;
+	font-size: 1.2em;
+	font-weight: bold;
+}
+#TravelBoxModal .Teavel dl dd{
+	width: 90%;
+	float: left;
+	font-size: 1.2em;
+}
+
