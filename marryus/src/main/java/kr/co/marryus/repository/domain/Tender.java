@@ -14,6 +14,7 @@ public class Tender {
 	private int memNo;
 	private String tenderInfo;
 	private int comInfoNo;
+	private String tenderTitle;
 	
 
 	
