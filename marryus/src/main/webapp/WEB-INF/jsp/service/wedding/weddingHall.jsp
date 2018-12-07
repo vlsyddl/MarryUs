@@ -9,10 +9,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Marry Us</title>
+    
+<script type="text/javascript" src="/marryus/resources/se2/js/HuskyEZCreator.js" charset="utf-8"></script>
+<script type="text/javascript" src="/marryus/resources/se2/photo_uploader/plugin/hp_SE2M_AttachQuickPhoto.js" charset="utf-8"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dc6291b36d6e91a7fc6b30e92a9171d3&libraries=services"></script>
     <c:import url="/common/importCss.jsp"/>
 	 <c:import url="/common/importJs.jsp"/>
     <link rel="stylesheet" href="<c:url value="/resources/css/wedding.css"/>">
+    
 <style>
 	
 
@@ -20,44 +24,7 @@
 </style>
 </head>
 <body>
-     <header>
-        <div class="container">
-            <div class="row">
-                <div class="logo col-md-3">
-                    <a href="<c:url value="/main/main.do"/>"><img src="<c:url value="/resources/img/logo.png"/>" alt="" class="img-responsive center-block"></a>
-                </div>
-                <nav class="gnb col-md-9">
-                    <div class="gnb_top cf">
-                        <ul class="cf">
-                           <li><a href="<c:url value='/signup/signupPro.do' />">회원가입</a></li>
-					<!-- 로그인, 로그아웃 -->
-					<c:if test="${user.email eq null}">
-						<li><a href="#" data-toggle="modal" data-target="#loginModal">로그인</a></li>
-					</c:if>
-					<c:if test="${user.email ne null}">
-					
-							<li>${user.name}님이로그인 하셨습니다.</li>
-					
-						<li><a href="<c:url value='/main/logout.do' />"> 로그아웃</a></li>
-					</c:if>
-					<li><a href="<c:url value="/mypage/mywedding.do"/>">마이페이지</a></li>
-					<li><a href="#"><i class="far fa-bell"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="gnb_bot cf">
-                        <ul class="cf">
-                            <li class="on"><a href="<c:url value="/service/weddingHall.do"/>">웨딩홀</a></li>
-                            <li><a href="#">스&middot;드&middot;메</a></li>
-                            <li><a href="<c:url value="/service/honeymoon.do"/>">허니문</a></li>
-                            <li><a href="#">예물</a></li>
-                            <li><a href="#">추가서비스</a></li>
-                        </ul>
-                    </div> 
-                </nav>
-            </div>
-        </div>
-        <span class="gnbBar"></span>
-    </header>
+<c:import url="/common/importHeader.jsp" />
     <div id="wrap" class="wedding">
         <div class="sub_visual">
             <div class="titleBox">
@@ -320,6 +287,7 @@
                 </div>
             </div>
         </section>
+
     </div>
     <c:import url="/common/importSideBar.jsp" />
     <c:import url="/common/importFooter.jsp" />
@@ -327,6 +295,9 @@
 
 <!-- 카카오지도 -->
 <script>
+
+
+
 var options = {
         'speed' : 500,				 		//스피드
         'initTop' : 300, 					//기본top위치
@@ -624,7 +595,7 @@ function detail(comInfoNo){
 	var slideBox = $(".slideBox")
 	slideBox.find("ul").html("")
 	$.ajax({
-		url : "<c:url value='/service/comDetail.do'/>",
+		url : "<c:url value='/service/wedding/comDetail.do'/>",
 		data : "comInfoNo="+comInfoNo
 	}).done(function(data){
 		console.log(data)
@@ -648,7 +619,7 @@ function weddingAuctionDetail(auctionNo){
 	var modal = $("#weddingDetailModal")
 	var slideBox = $(".slideBox")
 	$.ajax({
-		url : "<c:url value='/service/weddingAuctionDetail.do'/>",
+		url : "<c:url value='/service/wedding/weddingAuctionDetail.do'/>",
 		data : "auctionNo="+auctionNo
 	}).done(function(data){
 		console.log("auctiondetail ======== " + data)
@@ -671,7 +642,7 @@ function weddingAuctionDetail(auctionNo){
 function tenderWrite(auctionNo){
 	console.log("tenderWrite...auctionNo ======= " + auctionNo);
 	$.ajax({
-		url: "<c:url value='/service/TenderwriteForm.do'/>",
+		url: "<c:url value='/service/wedding/TenderwriteForm.do'/>",
 		data: "auctionNo=" + auctionNo
 	}).done(function(data){
 		console.dir("dir ======= " + data)
@@ -690,7 +661,7 @@ function tenderWrite(auctionNo){
 function comInfoWrite(memNo){
 	console.log("comInfoWrite...memNo ======= " + memNo);
 	$.ajax({
-		url: "<c:url value='/service/comInfoWrite.do'/>",
+		url: "<c:url value='/service/wedding/comInfoWrite.do'/>",
 		data: "memNo=" + memNo
 	}).done(function(data){
 		console.dir("dir ======= " + data)
@@ -755,7 +726,41 @@ $(function(){
 	  
 	  
 	  
-	  
+
+	$(function(){
+		    //전역변수선언
+		    var editor_object = [];
+		     
+		    nhn.husky.EZCreator.createInIFrame({
+		        oAppRef: editor_object,
+		        elPlaceHolder: "smarteditor",
+		        sSkinURI: "/marryus/resources/se2/SmartEditor2Skin.html",  
+		        htParams : {
+		            // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
+		            bUseToolbar : true,            
+		            // 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
+		            bUseVerticalResizer : true,    
+		            // 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
+		            bUseModeChanger : true,
+		        }
+		    });
+		     
+		    //전송버튼 클릭이벤트
+		    $("#savebutton").click(function(){
+		        //id가 smarteditor인 textarea에 에디터에서 대입
+		        editor_object.getById["smarteditor"].exec("UPDATE_CONTENTS_FIELD", []);
+		         
+		        // 이부분에 에디터 validation 검증
+		         
+		        //폼 submit
+		        $("#frm").submit();
+		    })
+		})
+	 
+		
+
+
+
 
 </script>
 <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -851,8 +856,7 @@ $(function(){
 
 
 
-
-
+     
 	<div class="modal fade" id="insertAuction" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	  <div class="modal-dialog  modal-lg">
 	    <div class="modal-content">
@@ -860,7 +864,7 @@ $(function(){
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 	        <h4 class="modal-title" id="myModalLabel"></h4>
 	      	</div>
-				<form action="Tenderwrite.do"  method="post" enctype="multipart/form-data">
+				<form action="Tenderwrite.do"  method="post" id="frm" enctype="multipart/form-data">
 				      <div class="modal-body">
 				      <div class="form-group">
 				      <input type="hidden" name="memNo" value="${user.no}" />
@@ -870,10 +874,15 @@ $(function(){
 					  	</div>
 					  	<div class="comInfo-no">
 					  	</div>
+					  	<div class="form-group">
+					  		<div class="col-md-4">
+					  			제목:<textarea class="form-control" id="tenderTitle" type="text" name="tenderTitle" placeholder="제목을 입력 해 주세요" /></textarea>	
+					  		</div>
+					  	</div><br>
 					  	<h2>서비스 소개</h2>
 					  	<div class="form-group">
 					  		<div class="col-md-4">
-					  			<textarea name="tenderInfo" id="tenderInfo" class="wish form-control" rows="3" cols="30"></textarea>
+					  			<textarea name="tenderInfo" id="smarteditor" rows="10" cols="100" style="width:100%; height:350px;"></textarea>
 					  		</div>
 					  	</div><br>
 					  	
@@ -886,15 +895,12 @@ $(function(){
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				        <button type="submit" class="btn btn-primary">입찰하기</button>
+				        <button type="submit" class="btn btn-primary" id="savebutton">입찰하기</button>
 				      </div>
 				</form>
 	    </div>
 	  </div>
 	</div>
-
-
-
 
 
 

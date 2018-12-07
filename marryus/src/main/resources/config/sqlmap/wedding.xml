@@ -60,6 +60,7 @@
 		<result column="mem_no" property="memNo" />
 		<result column="tender_info" property="tenderInfo" />
 		<result column="com_info_no" property="comInfoNo" />
+		<result column="tender_title" property="tenderTitle" />
 	</resultMap>
 	
 	
@@ -195,7 +196,7 @@
 	</select>
 	
 	
-
+	<!-- 웨딩홀 역경매 입찰 -->
 	<select id="selectAuctionDetail" parameterType="int" resultMap="auctionMap">
 		select *
 		from mu_auction a
@@ -218,15 +219,16 @@
 							   auction_no, 
 							   tender_info, 
 							   tender_budget,
-							   com_info_no
-							   
+							   com_info_no,
+							   tender_title
 						) 
 					  values(
 					         #{memNo}, 
 					         #{auctionNo}, 
 					         #{tenderInfo}, 
 					         #{tenderBudget},
-					         #{comInfoNo}
+					         #{comInfoNo},
+					         #{tenderTitle}
 					         )
 	</insert>
 	

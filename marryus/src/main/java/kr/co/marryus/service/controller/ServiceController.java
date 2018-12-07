@@ -26,7 +26,7 @@ import kr.co.marryus.wedservice.service.WeddingService;
 
 
 @Controller("kr.co.marryus.service.controller.ServiceContoller")
-@RequestMapping("/service")
+@RequestMapping("/service/wedding")
 public class ServiceController {
 	
 	@Autowired

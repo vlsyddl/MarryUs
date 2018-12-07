@@ -8,6 +8,7 @@ import kr.co.marryus.repository.domain.CompanyInfo;
 import kr.co.marryus.repository.domain.Honeymoon;
 import kr.co.marryus.repository.domain.Page;
 import kr.co.marryus.repository.domain.Search;
+import kr.co.marryus.repository.domain.Tender;
 
 public interface HoneymoonMapper {
 	
@@ -31,4 +32,9 @@ public interface HoneymoonMapper {
 	
 	// 허니문 역경매 리스트 디테일
 	Honeymoon HoneyAuctionDetail(int auctionNo);
+	
+	
+	void insertTender(Tender tender);
+	Auction selectAuctionDetail(int auctionNo);
+	CompanyInfo selectCominfo(int memNo);
 }

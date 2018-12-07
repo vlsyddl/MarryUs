@@ -28,9 +28,9 @@
 			</div>
 			<div class="gnb_bot cf">
 				<ul class="cf">
-					<li><a href="<c:url value="/service/weddingHall.do"/>">웨딩홀</a></li>
+					<li><a href="<c:url value="/service/wedding/weddingHall.do"/>">웨딩홀</a></li>
 					<li><a href="<c:url value='/service/sdme/companyList.do' />">스&middot;드&middot;메</a></li>
-					<li><a href="#">허니문</a></li>
+					<li><a href="<c:url value="/service/honeymoon/honeymoon.do"/>">허니문</a></li>
 					<li><a href="#">예물</a></li>
 					<li><a href="#">추가서비스</a></li>
 				</ul>

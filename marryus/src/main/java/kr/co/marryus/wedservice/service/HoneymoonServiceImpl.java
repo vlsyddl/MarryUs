@@ -13,6 +13,7 @@ import kr.co.marryus.repository.domain.CompanyInfo;
 import kr.co.marryus.repository.domain.Honeymoon;
 import kr.co.marryus.repository.domain.Page;
 import kr.co.marryus.repository.domain.Search;
+import kr.co.marryus.repository.domain.Tender;
 import kr.co.marryus.repository.mapper.HoneymoonMapper;
 
 @Service
@@ -76,6 +77,24 @@ public class HoneymoonServiceImpl implements HoneymoonService{
 	@Override
 	public Honeymoon HoneyAuctionDetail(int auctionNo) {
 		return mapper.HoneyAuctionDetail(auctionNo);
+	}
+	
+	
+	//입찰서 등록
+	@Override
+	public void insertTender(Tender tender) {
+		mapper.insertTender(tender);
+		
+	}
+
+	@Override
+	public Auction selectAuctionDetail(int auctionNo) {
+		return mapper.selectAuctionDetail(auctionNo);
+	}
+
+	@Override
+	public CompanyInfo selectCompanyDetail(int memNo) {
+		return mapper.selectCominfo(memNo);
 	}
 
 }

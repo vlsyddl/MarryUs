@@ -18,10 +18,11 @@ import kr.co.marryus.repository.domain.CompanyInfo;
 import kr.co.marryus.repository.domain.Honeymoon;
 import kr.co.marryus.repository.domain.Page;
 import kr.co.marryus.repository.domain.Search;
+import kr.co.marryus.repository.domain.Tender;
 import kr.co.marryus.wedservice.service.HoneymoonService;
 
 @Controller("kr.co.marryus.service.controller.HoneymoonController")
-@RequestMapping("/service")
+@RequestMapping("/service/honeymoon")
 public class HoneymoonController {
 	
 	@Autowired
@@ -118,6 +119,34 @@ public class HoneymoonController {
 		listMap.put("auction", service.HoneyAuctionDetail(auctionNo));
 		return listMap;
 	}
+	
+	
+	
+	//입찰서 등록
+		@RequestMapping("/TenderwriteForm.do")
+		@ResponseBody
+		public Auction TenderwriteForm(int auctionNo) {
+			
+			System.out.println("writeForm . auctionNO === " +auctionNo);
+			System.out.println("service.selectAuctionDetail(auctionNo) ==================" + service.selectAuctionDetail(auctionNo));
+			return service.selectAuctionDetail(auctionNo);
+		}
+		
+		@RequestMapping("/comInfoWrite.do")
+		@ResponseBody
+		public CompanyInfo comInfoWrite(int memNo) {
+			System.out.println("infoWrite.memNo === " + memNo);
+			System.out.println("service.selectCompanyDetail(memNo) === " + service.selectCompanyDetail(memNo));
+			return service.selectCompanyDetail(memNo);
+		}
+		
+		@RequestMapping("/Tenderwrite.do")
+		public String Tenderwrite(Tender tender) {
+			System.out.println(tender);
+			service.insertTender(tender);
+			return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "honeymoon.do";
+		}
+		
 	
 	
 	

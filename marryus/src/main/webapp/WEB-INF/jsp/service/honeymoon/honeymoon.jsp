@@ -20,44 +20,7 @@
 </style>
 </head>
 <body>
-     <header>
-        <div class="container">
-            <div class="row">
-                <div class="logo col-md-3">
-                    <a href="<c:url value="/main/main.do"/>"><img src="<c:url value="/resources/img/logo.png"/>" alt="" class="img-responsive center-block"></a>
-                </div>
-                <nav class="gnb col-md-9">
-                    <div class="gnb_top cf">
-                        <ul class="cf">
-                           <li><a href="<c:url value='/signup/signupPro.do' />">회원가입</a></li>
-					<!-- 로그인, 로그아웃 -->
-					<c:if test="${user.email eq null}">
-						<li><a href="#" data-toggle="modal" data-target="#loginModal">로그인</a></li>
-					</c:if>
-					<c:if test="${user.email ne null}">
-					
-							<li>${user.name}님이로그인 하셨습니다.</li>
-					
-						<li><a href="<c:url value='/main/logout.do' />"> 로그아웃</a></li>
-					</c:if>
-					<li><a href="<c:url value="/mypage/mywedding.do"/>">마이페이지</a></li>
-					<li><a href="#"><i class="far fa-bell"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="gnb_bot cf">
-                        <ul class="cf">
-                            <li class="on"><a href="<c:url value="/service/weddingHall.do"/>">웨딩홀</a></li>
-                            <li><a href="#">스&middot;드&middot;메</a></li>
-                            <li><a href="<c:url value="/service/honeymoon.do"/>">허니문</a></li>
-                            <li><a href="#">예물</a></li>
-                            <li><a href="#">추가서비스</a></li>
-                        </ul>
-                    </div> 
-                </nav>
-            </div>
-        </div>
-        <span class="gnbBar"></span>
-    </header>
+     <c:import url="/common/importHeader.jsp" />
     <div id="wrap" class="wedding">
         <div class="sub_visual">
             <div class="titleBox">
@@ -187,6 +150,7 @@
 							      <div class="modal-body">
 								        <input type="hidden" name="memNo" value="${user.no}" />
 								        <input type="hidden" name="auctionType" value="h" />
+								       
 								        <br>
 											희망여행지: <input type="text" name="honeyPlace">
 											<br>
@@ -196,6 +160,9 @@
 		                                  	            <input type="text" name="honeyDate" id="datepicker1">
 		                                  </div>
 				                                                              기타의견사항: <textarea name="honeyHope" id="" class="wish" rows="3" cols="30"></textarea><br>
+				                            <div>
+				                                                             희망예산:<input type="text" name="honeyBudget">
+				                            </div>                                 
 							      </div>
 							      <div class="modal-footer">
 							        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
@@ -526,7 +493,7 @@ function detail(comInfoNo){
 	var slideBox = $(".slideBox")
 	slideBox.find("ul").html("")
 	$.ajax({
-		url : "<c:url value='/service/comHoneyDetail.do'/>",
+		url : "<c:url value='/service/honeymoon/comHoneyDetail.do'/>",
 		data : "comInfoNo="+comInfoNo
 	}).done(function(data){
 		console.log(data)
@@ -553,7 +520,7 @@ function honeyDetail(auctionNo){
 	var slideBox = $(".slideBox")
 	console.log("auctionNo: =====" + auctionNo)
 	$.ajax({
-		url : "<c:url value='/service/honeyAuctionDetail.do'/>",
+		url : "<c:url value='/service/honeymoon/honeyAuctionDetail.do'/>",
 		data : "auctionNo="+auctionNo
 	}).done(function(data){
 		console.log(data)
@@ -562,10 +529,56 @@ function honeyDetail(auctionNo){
         modal.find(".Teavel").find(".Hope").children("dd").html(data.auction.honeyHope)
         modal.find(".contentsBox").html(data.auction.comInfoContent)
         slideBox.find("dd").html()
+        $(".insertBox").attr('data-href', auctionNo);
 	})
    
 
 }
+
+
+
+
+function tenderWrite(auctionNo){
+	console.log("tenderWrite...auctionNo ======= " + auctionNo);
+	$.ajax({
+		url: "<c:url value='/service/honeymoon/TenderwriteForm.do'/>",
+		data: "auctionNo=" + auctionNo
+	}).done(function(data){
+		console.dir("dir ======= " + data)
+// 		console.log("data.tender.comInfoNo" + data.tender.comInfoNo);
+// 		console.log("data.tender" + data.tender);
+		var html="";
+		var cominfo= "";
+		html += '<input type="hidden" name="auctionNo" value="'+auctionNo+'"/>'
+// 		cominfo += '<input type="hidden" name="comInfoNo" value="'+data.tender.comInfoNo+'"/>'
+		
+		$(".auction-no").html(html);
+// 		$(".comInfo-no").html(cominfo);
+	})
+}
+
+function comInfoWrite(memNo){
+	console.log("comInfoWrite...memNo ======= " + memNo);
+	$.ajax({
+		url: "<c:url value='/service/honeymoon/comInfoWrite.do'/>",
+		data: "memNo=" + memNo
+	}).done(function(data){
+		console.dir("dir ======= " + data)
+		console.log("log ======= " + data)
+// 		console.log("data.tender.comInfoNo" + data.tender.comInfoNo);
+// 		console.log("data.tender" + data.tender);
+// 		var html="";
+		var comInfo= "";
+// 		html += '<input type="hidden" name="auctionNo" value="'+auctionNo+'"/>'
+		comInfo += '<input type="hidden" name="comInfoNo" value="'+data.comInfoNo+'"/>'
+		
+// 		$(".auction-no").html(html);
+		$(".comInfo-no").html(comInfo);
+	})
+}
+
+
+
 
 
 $(function(){
@@ -594,11 +607,17 @@ $(function(){
 		  e.preventDefault();
 		  honeyDetail($(this).data("href"))
 	      $('#TravelBoxModal').modal('show')
-	      var bx;
-		  $('#TravelBoxModal').on('shown.bs.modal', function () {
-		  });
 	    
-	  })
+	  });
+	      $(".insertBox").click(function(e){
+			  e.preventDefault();
+			  console.log("입찰하기 클릭" + $(this).data("href"));
+			  tenderWrite($(this).data("href"));
+		      comInfoWrite($(".mem > #memNo").val());
+		      $('#TravelBoxModal').modal('hide')
+		      $('#insertAuction').modal('show')
+		    
+		  });
 
 })
 
@@ -617,7 +636,6 @@ function maskingName(strName) {
 }
 
 
-  
   
   </script>
 <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -671,6 +689,9 @@ function maskingName(strName) {
       </div>
       <div class="modal-body">
         <div class="Teavel">
+	        <dl class="mem">
+	            <input type="hidden" id="memNo" value="${user.no}"/>
+            </dl>
             <dl class="hopeTravel">
                 <dt>희망여행지 : </dt>
                 <dd></dd>
@@ -690,10 +711,71 @@ function maskingName(strName) {
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">입찰하기</button>
+        <button type="button" class="btn btn-primary insertBox"><a href="#">입찰하기</a></button>
       </div>
     </div>
   </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<div class="modal fade" id="insertAuction" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog  modal-lg">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel"></h4>
+	      	</div>
+				<form action="Tenderwrite.do"  method="post" enctype="multipart/form-data">
+				      <div class="modal-body">
+				      <div class="form-group">
+				      <input type="hidden" name="memNo" value="${user.no}" />
+<%-- 				      <input type="hidden" name="auctionNo" value="1" /> --%>
+					  	</div>
+					  	<div class="auction-no">
+					  	</div>
+					  	<div class="comInfo-no">
+					  	</div>
+						<div class="form-group">
+					  		<div class="col-md-4">
+					  			제목:<textarea class="form-control" id="tenderTitle" type="text" name="tenderTitle" placeholder="제목을 입력 해 주세요" /></textarea>	
+					  		</div>
+					  	</div><br>
+						
+					  	<h2>서비스 소개</h2>
+					  	<div class="form-group">
+					  		<div class="col-md-4">	
+					  			<textarea name="tenderInfo" id="tenderInfo" class="wish form-control" rows="3" cols="30"></textarea>
+					  		</div>
+					  	</div><br>
+					  	
+					  	<h2>입찰 예산</h2>
+					  	<div class="form-group">
+					  		<div class="col-md-4">
+					  			<input type="text" id="tenderBudget" name="tenderBudget" class="form-control"/>
+					  		</div>
+					  	</div>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				        <button type="submit" class="btn btn-primary">입찰하기</button>
+				      </div>
+				</form>
+	    </div>
+	  </div>
+	</div>
+
+
+
 </body>
 </html>

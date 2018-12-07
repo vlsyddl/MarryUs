@@ -9,4 +9,5 @@ public class Honeymoon {
 	private String honeyPlace;
 	private String honeyDate;
 	private String honeyHope;
+	private int honeyBudget;
 }
