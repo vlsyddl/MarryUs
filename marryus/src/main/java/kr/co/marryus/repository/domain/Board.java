@@ -15,7 +15,6 @@ public class Board {
 	private int viewCnt;
 	private String category;
 	private String answer;
-	
+	private Page page;
 	private Attach attach;
-	private Search search;
 }

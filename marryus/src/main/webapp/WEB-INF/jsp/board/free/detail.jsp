@@ -9,29 +9,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Marry Us</title>
-<link rel="stylesheet"
-		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <c:import url="/common/importCss.jsp"/>
+     <c:import url="/common/importCss.jsp"/>
 	 <c:import url="/common/importJs.jsp"/>
-	 <script
-	  src="https://code.jquery.com/jquery-3.3.1.js"
-	  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-	  crossorigin="anonymous"></script>
-	  <Style>
-	  	#commentSide > tbody > tr > th {
-	  		width: 150px;
-	  		padding-right: 10px;
-	  	}
-	  	#commentSide > tbody > tr > td {
-	  		width: 150px;
-	  	}
-	  	#commContent {
-	  		width: 200px;
-	  		height: 50px;
-    		resize: none;
-	  	}
-	  </Style>
-	    
+	 <link rel="stylesheet" href="<c:url value="/resources/css/board.css"/>">	    
 </head>
 <body>
 	<c:import url="/common/importHeader.jsp" />
@@ -46,57 +26,29 @@
             <div class="container">
                 <div class="communityTab">
                     <ul>
-                        <li ><a href="<c:url value='/board/notice/list.do'/>">공지게시판</a></li>
-                        <li ><a href="review.html">후기 게시판</a></li>
-                        <li class="on"><a href="<c:url value='/board/free/list.do'/>">신부 대기실    </a></li>
-                        <li ><a href="<c:url value='/board/mtom/mtomlist.do'/>">1:1 질문</a></li>
-                        <li ><a href="javascript:void(0);">FAQ</a></li>
+                        <li ><a href="<c:url value='/board/list.do?category=nt'/>">공지게시판</a></li>
+                        <li ><a href="<c:url value='/board/review.do'/>">후기 게시판</a></li>
+                        <li  class="on"><a href="<c:url value='/board/list.do?category=fr'/>">신부 대기실    </a></li>
+                        <li ><a href="<c:url value='/board/list.do?category=mm'/>">1:1 질문</a></li>
+                        <li ><a href="<c:url value='/board/list.do?category=fq'/>">FAQ</a></li>
                     </ul>
                     <div class="communityContents">
-                        <table class="table table-hover">
-                            <tr>
-                                <th>제목</th>
-                                <td>${freeDetail.title}</td>
-                            </tr>
-                            <tr>
-                            	<th>작성자</th>
-                            	<td>${freeDetail.writer}</td>
-                            </tr>
-                            <tr>
-                            	<th>작성일</th>
-                            	<td><fmt:formatDate value="${freeDetail.regDate}" pattern="yyyy-MM-dd"/></td>
-                            </tr>
-                            <tr>
-                            	<th>조회수</th>
-                            	<td>${freeDetail.viewCnt}</td>
-                            </tr>
-                            <tr>
-                            	<th>추천수</th>
-                            	<td id="recommCnt">0</td>
-                            </tr>
-                            <tr>
-                            	<th>내용</th>
-                            	<td>${freeDetail.content}</td>
-                            </tr>
-                    </table>
-                    <a href="list.do"><button>목록</button></a>
-                    <c:if test="${user.email==freeDetail.writer}">
-                    <a href="updateForm.do?boardNo=${freeDetail.boardNo}"><button>수정</button></a>
-                    <a href="delete.do?boardNo=${freeDetail.boardNo}"><button>삭제</button></a>
-                    </c:if>
-                    <a id="recomm"><button id="recommBtn">추천</button></a>
-                    <div id="writeComment">
-                    	<form id="writeCommentForm" method="post">
-                    		<input type="hidden" name="boardNo" value="${freeDetail.boardNo}" />
-                    		<input type="hidden" name="commWriter" value="${user.email}" />
-	                    	<textarea name='commContent' id='commentWrite' cols='30' rows='7' class='form-control'></textarea>
-	            			<button id="commentFormBtn" type="button">댓글 작성</button>
-                    	</form>
-                    </div>
-                    <div id="communityComments">
-	                   	<table id="commentSide" class="table table-hover">
-	                   	</table>
-                    </div>
+                        <div class="contentsHead">
+                            <h2 class="title">${board.title }</h2>
+                            <div class="infoBox">
+                                <ul>
+                                    <li>작성자 <span>${board.writer}</span></li>
+                                    <li>작성일 <span><fmt:formatDate value="${board.regDate}" pattern="yyyy-MM-dd" /></span></li>
+                                    <li>조회수 <span>${board.viewCnt }</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="contentsBody">
+							${board.content}
+                        </div>
+                        <div class="btnBox">
+                            <a href="#" class="listBtn" onclick="window.history.go(-1); return false;">목록</a>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,231 @@
+@charset "UTF-8";
+.pagination > li > a >span{
+    padding: 2px 0;
+    display: inline-block;
+}
+.searchWrap{
+    margin: auto;
+    width: 100%;
+    max-width: 	400px;
+}
+.searchWrap:after{
+	display: block;
+	clear: both;
+	content: '';
+}
+.searchWrap >form> *{
+    display: block;
+    float: left;
+}
+.searchWrap select{
+	width: 20%;
+	border-radius: 4px 0 0 4px;
+	border-right: 0;
+}
+.searchWrap input{
+	width: 70%;
+	border-radius: 0;
+}
+.searchWrap span{
+	width: 10%;
+}
+.searchWrap span button{
+	padding-top: 9px;
+	padding-bottom: 9px;
+}	  
+.communityContents {
+	margin-top: 50px;
+}
+.communityContents .contentsHead{
+	border-top: 2px solid #333;
+	padding: 10px 0;
+}
+.communityContents .contentsHead .title{
+	font-size: 1.8em;
+	font-weight: bold;
+	margin-bottom: 10px; 
+}
+.communityContents .contentsHead .infoBox ul li{
+	display: inline-block;
+	font-weight: bold;
+}
+.communityContents .contentsHead .infoBox ul li+li{
+	margin-left: 10px;
+}
+.communityContents .contentsHead .infoBox ul li span{
+	display: inline-block;
+	font-weight: normal;
+	border-right: 1px solid #d9d9d9;
+	padding-right: 10px;
+	margin-left: 5px;
+	color: #666;
+}
+.communityContents .contentsHead .infoBox ul li:last-child{
+	border-right: 0;
+}
+.communityContents .contentsBody{
+	border-bottom: 2px solid #333;
+	border-top: 2px solid #333;
+	padding: 20px 0;
+	min-height: 300px;
+}
+.communityContents .btnBox{
+	margin-top: 30px;
+	text-align: right;
+}
+.communityContents .btnBox a{
+	display: inline-block;
+	padding: 5px 20px;
+	border: 1px solid #333;
+	transition: all 0.5s;
+}
+.communityContents .btnBox a:hover{
+	background: #333;
+	color: #fff;
+}
+.searchWrap.reviewSearch{
+	max-width: 800px;
+	margin-bottom: 50px;
+}
+.searchWrap.reviewSearch form:after{
+	display: block;
+	clear: both;
+	content: '';
+}
+.searchWrap.reviewSearch form{
+	float: left;
+	width: 59%;
+}
+.searchWrap.reviewSearch .btnBox{
+	float: right;
+	display:block;
+	width: 39%;
+	margin-top: 0;
+}
+.searchWrap.reviewSearch .btnBox a{
+	width: 30%;
+	text-align: center;
+	border: 1px solid #d9d9d9;
+	border-radius: 4px;
+	padding: 8px 0;
+}
+#columns.review{
+	position: relative;
+	padding-bottom: 30px;
+}
+#columns.review figure{
+	cursor: pointer;
+}
+
+#columns.review dd ul{
+	text-align:right;
+}
+#columns.review dd ul li{
+	display: inline-block;
+	font-size: 1.05em;
+	color: #999;
+	margin-left: 10px;
+}
+
+#detailModal .modal-title{
+	font-size: 1.4em;
+	font-wieght: bold;
+}
+#detailModal .infoBox{
+	padding: 10px 0;
+}
+#detailModal .infoBox:after{
+	dipslay: block;
+	clear: both;
+	content: '';
+}
+#detailModal .infoBox dl{
+	display: inline-block;
+}
+#detailModal .infoBox dl+dl{
+	margin-left: 10px;
+	padding-left: 10px;
+	border-left: 1px solid #d9d9d9;
+}
+#detailModal .infoBox dl >*{
+	display: inline-block;
+}
+#detailModal .infoBox dl > dd{
+	margin-left: 5px;
+}
+#detailModal .textWrap{
+	overflow-y: scroll;	
+}
+#detailModal .inputBox{
+	margin-bottom: 30px;
+}
+#detailModal .inputBox text-area{
+	height: 75px;
+}
+#detailModal .inputBox a.commentInputBtn{
+	height: 75px;
+	border: 1px solid #d9d9d9;
+	border-radius: 5px;
+	line-height: 75px;
+	display: block;
+	text-align: center;
+	transition: all 0.5s;
+}
+#detailModal .inputBox a.commentInputBtn:hover{
+	background: #333;
+	color: #fff;
+}
+#detailModal .commentBox{
+	margin-top: 30px;
+	padding: 10px 0;
+	border-top: 1px solid #333;
+}
+#detailModal .commentBox ul.commentList li{
+	padding: 5px 0;
+	border-bottom: 1px dotted #333;
+}
+#detailModal .commentBox ul.commentList li .commentInfo span{
+	display: inline-block;
+	margin-right: 10px;
+}
+#detailModal .commentBox ul.commentList li .commentInfo span.commentName{
+	font-weight: bold;
+	
+}
+#detailModal .commentBox ul.commentList li .commentInfo span a{
+	display: inline-block;
+	margin: 0 5px;
+}
+#detailModal .commentBox ul.commentList li .commentContents{
+	margin-top: 5px;
+}
+#insertModal >.modal-dialog{
+	width: 1170px;
+}
+#modifyModal >.modal-dialog{
+	width: 1170px;
+}
+.modal form label{
+	margin-bottom: 10px;
+}
+.dropzone
+{
+	height: 490px;
+    border:2px dotted #3292A2;
+    color:#92AAB0;
+    text-align:center;
+    font-size:24px;
+    padding-top:12px;
+    margin-top:10px;
+    position: relative;
+}
+.dropzone img{
+	width: 100%;
+	position: absolute;
+	top: 50%;
+	transform: translate(0,-50%);
+}
+
+
+
+

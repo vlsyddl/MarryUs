@@ -11,9 +11,10 @@
 		<result column="view_cnt" property="viewCnt"/>
 		<result column="category" property="category" />
 		<result column="answer" property="answer" />
+		<collection property="attach" resultMap="attachMap" />
 	</resultMap>
 	
-	<resultMap id="CommentMap" type="Comment">
+	<resultMap id="commentMap" type="Comment">
 		<result column="comm_no" property="commNo" />
 		<result column="board_no" property="boardNo" />
 		<result column="comm_writer" property="commWriter" />
@@ -21,97 +22,132 @@
 		<result column="comm_date" property="commDate" />
 	</resultMap>
 	
-	
-	
-	<!-- 공지게시판 리스트(페이징) -->
-	<select id="boardList" parameterType="Page" resultMap="boardMap">
-		select @rownum:=@rownum+1 as no, b.*, (select count(*) from mu_board where category = 'nt') as cnt
-		  from mu_board b, (select @rownum:=0) TMP
-		 where category = 'nt'
-		 order by no desc
+	<resultMap type="attach" id="attachMap">
+		<result column="file_no" property="fileNo"/>
+		<result column="board_no" property="boardNo"/>
+		<result column="file_name" property="fileName"/>
+		<result column="file_path" property="filePath"/>
+	</resultMap>
+	<!-- 게시판 목록 -->
+	<select id="boardList" parameterType="SearchForm" resultMap="boardMap">
+		select * 
+		from mu_board
+		where category = #{category}
+		 <if test="content != 'null' and content!=null and content!=''" >
+	 	      and ${type} like CONCAT('%',#{content},'%')
+	 	   </if>
+		 order by board_no desc
 		 limit #{begin}, 10
 	</select>
-	<!-- 공지게시판 디테일 -->
-	<select id="noticeDetailBoard" parameterType="int" resultMap="boardMap">
-		select *
-		from mu_board
-		where board_no = #{boardNo}
-	</select>
-	<!-- 공지게시판 조회수 -->
-	<update id="listNoticeUpdateView">
-		update mu_board
-		set view_cnt = view_cnt +1
-		where board_no = #{boardNo}
-	</update>
 	
-	<select id="selectBoardCount" resultType="int">
+	<!-- 전체 게시물의 수 (조건에 맞는)-->
+	<select id="boardCount" parameterType="SearchForm" resultType="int">
 		select count(*)
-		from mu_board
-		where category = 'nt'
+		from mu_board b
+		 <if test="category=='rv'">
+ 	   		inner join mu_attach a
+	    on b.board_no = a.board_no
+ 	   </if>
+		where category = #{category}
+		<if test="content != 'null' and content!=null and content!=''" >
+ 	      	and ${type} like CONCAT('%',#{content},'%')
+ 	   </if>
+ 	  
 	</select>
 	
-	
-	
-	<!-- 1대1 게시판 -->
-	<select id="mtomList" parameterType="Page" resultMap="boardMap">
-		select @rownum:=@rownum+1 as no, b.*, (select count(*) from mu_board where category = 'mm') as cnt
-		  from mu_board b, (select @rownum:=0) TMP
-		 where category = 'mm'
-		 order by no desc
-		 limit #{begin}, 10
-	</select>
-	<!-- 1대1 게시판 상세 -->
-	<select id="mtomDetailBoard" parameterType="int" resultMap="boardMap">
+	<!-- 디테일 -->
+	<select id="boardDetail" parameterType="int" resultMap="boardMap">
 		select *
-		from mu_board
+		 from mu_board
+		where board_no = #{boardNo}
+	</select>
+
+	<select id="attachDetail" parameterType="int" resultMap="attachMap"> 
+		select * 
+		 from mu_attach 
+		where board_no = #{boardNo} 
+		 order by file_no desc 
+		limit 1
+	</select>	
+	<!-- 게시판 목록 -->
+	<select id="reviewList" parameterType="SearchForm" resultMap="boardMap">
+	select * 
+	 from mu_board b
+		inner join mu_attach a
+	    on b.board_no = a.board_no
+	    where category = 'rv'
+		 <if test="content != 'null' and content!=null and content!=''" >
+	 	      and ${type} like CONCAT('%',#{content},'%')
+	 	   </if>
+		order by b.board_no desc
+		 limit #{begin}, 9
+	</select>
+	
+	<!-- 댓글 목록 -->
+	<select id="boardComment" parameterType="int" resultMap="commentMap">
+		select * 
+		 from mu_comment
 		where board_no = #{boardNo}
 	</select>
 	
-	<!-- 조회수 -->
-	<update id="listMtoMUpdateView">
-		update mu_board
-		set view_cnt = view_cnt +1
-		where board_no = #{boardNo}
-	</update>
-	
-	<select id="selectMtoMBoardCount" resultType="int">
-		select count(*)
-		from mu_board
-		where category = 'mm'
-	</select>
-	<!-- 1대1 질문 글쓰기 -->
-	<insert id="insertMtom" parameterType="board">
-	insert into mu_board(title, writer, content, category)
-		values(#{title}, #{writer}, #{content}, 'mm')
+	<!-- 글작성 -->
+	<insert id="boardWrite" parameterType="Board"  useGeneratedKeys="true" keyProperty="no">
+		insert into mu_board(
+			title, writer, content, category
+		) values (
+		 #{title}, #{writer}, #{content}, #{category}
+		)
 	</insert>
 	
-	<!-- 1대1 게시판 삭제 -->
-	<delete id="mtomdelete" parameterType="int">
-		delete from mu_board
-		where board_no = #{boardNo}
-	</delete>
+	<!-- 파일 업로드 -->
+	<insert id="attachFile" parameterType="attach">
+		insert into mu_attach(
+			board_no, file_name, file_path
+		) values (
+			#{boardNo}, #{fileName}, #{filePath}
+		)
+	</insert>
 	
-	<!-- 1대1 질문 수정 -->
-	<update id="mtomUpdate" parameterType="board">
-		update mu_board 
-	    	set title = #{title},
-			content = #{content}
-	        where board_no = #{boardNo}
+	<!-- 게시물 수정 -->
+	<update id="updateBoard" parameterType="Board">
+		update mu_board
+		 SET title = #{title},content = #{content}
+		where board_no =  #{boardNo}
 	</update>
 	
+	<!-- 파일 수정 -->
+	<update id="updateAttach" parameterType="attach">
+		update mu_attach
+			set file_name=#{fileName}, file_path = #{filePath}
+		where file_no = #{fileNo}
+	</update>
 	
+	<!-- 댓글 등록 -->
+	<insert id="insertComment" parameterType="Comment">
+		insert into mu_comment (
+			board_no, comm_writer, comm_content
+		) values (
+			#{boardNo}, #{commWriter}, #{commContent}
+		)
+	</insert>
 	
-	<!-- 댓글 리스트 -->
-	<select id="listComment" parameterType="int" resultMap="CommentMap">
-		select *
-		  from mu_comment
-		 where board_no= #{boardNo}
-	</select>
+	<!-- 댓글수정 -->
+	<update id="updateComment" parameterType="Comment">
+		update mu_comment
+		 set comm_content = #{commContent}
+		where comm_no = #{commNo}
+	</update>
 	
-	<!-- 질문  등록 -->
-	
-	
-	
+	<!-- 글삭제 -->
+	<delete id="deleteBoard" parameterType="int">
+		delete from mu_board
+		 where board_no = #{boardNo}
+	</delete>
+	<!-- 댓글삭제 -->
+	<delete id="deleteComment" parameterType="int">
+		delete from mu_comment
+		 where comm_no = #{commNo}
+	</delete>
 </mapper>
 
 
