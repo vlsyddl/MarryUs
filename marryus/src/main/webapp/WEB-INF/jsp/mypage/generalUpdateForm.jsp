@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -11,13 +11,17 @@
 	<style>
 		.label{
 			color: black;
-			font-size: 10px;
+			font-size: 16px;
+			line-height: 3em;
+			font-family: 맑은 고딕;
+			font-weight: 800;
 		}
 		
 		
-				input, select{
+		input, select{
 			height: 26px;
 			width: 150px;
+			font-family: 맑은 고딕;
 		}
 		
 		#grid{
@@ -25,53 +29,68 @@
 		}
 		
 		
-body {
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-}
-
-.container_box {
-  padding: 90px 50px;
-}
-
-
-.box {
-  width: 1000px;
-  margin: 0 auto;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.10);
-  position: relative;
-  border-radius: 10px;
-}
-
-
-
-.box__header {
-  width: 100%;
-  height: 80px;
-  background-color: rgba(231, 190, 209, 0.445);
-  background: url(https://images.unsplash.com/photo-1527238902242-4cb5446d7651?ixlib=rb-0.3.5&s=f6e5cacfca45efd3a654691fa46288e9&auto=format&fit=crop&w=1876&q=80) ;
-  background: url(https://images.unsplash.com/photo-1429679310900-bad303d0e63a?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=c9b51348554d75e0d0924eec1908af6f&auto=format&fit=crop&w=1050&q=80) ;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  border-radius: 10px 10px 0px 0px;
-  }
-  p.title{
-  	text-indent: 30px;
-  	font-size: 22px;
-  	font-weight: 800;
-  	color: white;
-  
-  }
-  
-  
-  button{
-  	background: white;
-  	border: 3px solid pink;
-  	padding: 10px;
-  	margin: 20px;
-  }
+		body {
+		  margin: 0;
+		  padding: 0;
+		  min-height: 100vh;
+		}
+		
+		.container_box {
+		  padding: 90px 50px;
+		}
+		
+		
+		.box {
+		  width: 800px;
+		  margin: 0 auto;
+		  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.10);
+		  position: relative;
+		  border-radius: 10px;
+		  position: relative;
+		}
+		
+		
+		
+		.box__header {
+		  width: 100%;
+		  height: 80px;
+		  background-color: rgba(231, 190, 209, 0.445);
+		  background: url(https://images.unsplash.com/photo-1429679310900-bad303d0e63a?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=c9b51348554d75e0d0924eec1908af6f&auto=format&fit=crop&w=1050&q=80) ;
+		  background: linear-gradient(135deg, rgba(237,141,161,1) 0%,rgba(249,178,195,1)30%,rgba(250,186,240,1) 60%,rgba(249,178,195,1) 100%);
+		  display: flex;
+		  align-items: center;
+		  overflow: hidden;
+		  border-radius: 10px 10px 0px 0px;
+		  }
+		  p.title{
+		  	text-indent: 30px;
+		  	font-size: 22px;
+		  	font-weight: 800;
+		  	color: white;
+		  	font-family: 맑은 고딕;
+		  
+		  }
+		  
+		  
+		  .btn{
+		  	position: relative;
+		  	left: 550px;
+		  	border: 2.2px solid #575757;
+		  	padding: 5px 12px;
+		  	margin: 30px 10px;
+		  	font-weight: 700;
+		  	font-family: 맑은 고딕;
+		  	color:#575757;
+		  }
+		  
+		    .btn:hover{
+		  	background: #575757;
+		  	border: 2.2px solid #575757;
+		  	color: white;
+		  }
+		  
+		  .hidden{
+		  display: hidden;}
 	</style>
 
 </head>
@@ -178,7 +197,6 @@ body {
           <div id="card">
             <form id="UpdateProfileForm" method="post" enctype="multipart/form-data" acceptcharset="UTF-8">
       
-              <h1 id="title">Marry Us 회원 정보 수정</h1>
               
               
 
@@ -186,8 +204,8 @@ body {
 				<c:choose>
 					<c:when test="${not empty member.genProfilepath && not empty member.genProfilename}">
 					
-					<img src="<c:url value="/${member.genProfilepath}/${member.genProfilename}"/>"
-				     	onclick="fileUploadAction();" id="genProfile" class="img-circle img-responsive center-block" style=" width: 150px; height: 150px;  object-fit: cover; object-position: top;"/>
+					<img src="<c:url value="/${member.genProfilepath}/${member.genProfilename}" />"
+				     	onclick="fileUploadAction();" id="genProfile" class="img-circle img-responsive center-block profile" style=" width: 150px; height: 150px;  object-fit: cover; object-position: top;" style="margin: 30px;"/>
 				    </c:when>
 				    <c:otherwise>
 				           <img src="https://images.unsplash.com/photo-1470320691330-ae8e9288fb77?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=2eb2635304319feaaa15b104729138e4&auto=format&fit=crop&w=1050&q=80"  
@@ -195,7 +213,7 @@ body {
 				    </c:otherwise>
 				</c:choose>
 			 </div>
-			<input type="file" id="input_img" name="file"/>
+			<input type="file" id="input_img" name="file" class="hidden"/>
 		
 		
      
@@ -236,7 +254,7 @@ body {
 
 
              
-	                 <a href="#" class="cancle btn">취소</a>
+	                 <a href="<c:url value="mywedding.do" />" class="cancle btn"  >취소</a>
 	                 <a href="#" class="save btn" id="savebutton" onclick="updateProfile()">등록</a>
       
             </form>

@@ -168,6 +168,17 @@
 		<result property="todoDelete" column="todo_delete" />
 	</resultMap>
 	
+	<resultMap id="budgetMap" type="Budget">
+		<result property="budgNo" column="budg_no" />
+		<result property="memNo" column="mem_no" />
+		<result property="budgContent" column="budg_content" />
+		<result property="budgBudget" column="budg_budget" />
+		<result property="budgExpenses" column="budg_expenses" />
+		<result property="budgRegDate" column="budg_reg_date" />
+		<result property="budgCategory" column="budg_category" />
+	</resultMap>
+	
+	
 	
 	
 	
@@ -341,11 +352,14 @@
 	
 	<update id="updateGeneralMember" parameterType="GeneralMember" >
 		update mu_general
-		set gen_birth=#{genBirth},
+		set 
+		<if test="genProfilepath!=null and !genProfilepath.equals('')">
 		gen_profilepath=#{genProfilepath},
-		<if test="genProfilename!= 'null'">	 
-		gen_profilename=#{genProfilename}
 		</if>
+		<if test="genProfilename!=null and !genProfilename.equals('')">
+		gen_profilename=#{genProfilename},
+		</if>
+		gen_birth=#{genBirth}
 		where gen_no = #{genNo}
 	</update>
 	
@@ -604,6 +618,38 @@
     	todo_delete=#{todoDelete}
 		where mem_no=#{memNo}
 	</update>
+	
+	<!-- 결혼 예산 -->
+	<select id="selectBudget" parameterType="int" resultMap="budgetMap">
+		select *
+		from mu_budget
+		where mem_no=#{memNo}
+	</select>
+	
+	<insert id="insertBudget" parameterType="Budget">
+		insert into mu_budget(mem_no,budg_content,budg_budget,budg_expenses,budg_category) 
+		values(#{memNo},#{budgContent},#{budgBudget},#{budgExpenses},#{budgCategory})
+	</insert>
+	
+	
+	<update id="updateBudget" parameterType="Budget">
+		update mu_budget 
+		set budg_content=#{budgContent},
+		budg_budget=#{budgBudget},
+		budg_expenses=#{budgExpenses},
+		budg_category=#{budgCategory}
+		where budg_no=#{budgNo};
+	</update>
+	
+	
+	<delete id="deleteBudget" parameterType="int">
+		delete from mu_budget 
+		where budg_no=#{budgNo};
+	</delete>
+	
+	
+
+	
 	
 	
 

@@ -171,18 +171,19 @@ public class MypageController {
 	}
 	
 	
-	
+	/** 개인회원 정보 보기(정보수정)*/
 	@RequestMapping("/generalUpdateForm.do")
 	public void generalUpdateForm(HttpSession session,  Model model) {
 		model.addAttribute("member",service.selectGeneralMember(((Member)session.getAttribute("user")).getNo()));
 	}
 	
-	
+	/** 업체회원 정보 보기(정보수정)*/	
 	@RequestMapping("/companyUpdateForm.do")
 	public void companyUpdateForm(HttpSession session,  Model model) {
 		model.addAttribute("member",service.selectCompanyMember(((Member)session.getAttribute("user")).getNo()));
 	}
 	
+	/** 개인회원 정보 수정*/
 	@ResponseBody
 	@RequestMapping("/generalUpdate.do")
 	public void generalUpdate( GeneralMember genMem, Member member, String prePass, MultipartFile file) throws Exception{
@@ -197,21 +198,26 @@ public class MypageController {
         if(filePath.exists()==false) {
         	filePath.mkdirs();}
         
+        System.out.println(file);
         if(!(file.isEmpty())) {
           String fileName = file.getOriginalFilename();
           String ext = fileName.substring(fileName.indexOf("."),fileName.length());
           fileName =UUID.randomUUID().toString()+ext;
           genMem.setGenProfilepath("img/genProfile");
           genMem.setGenProfilename(fileName);
+          System.out.println(file.getOriginalFilename());
+          System.out.println(fileName);
           file.transferTo(new File(imgPath, fileName));
         }
+        System.out.println(genMem.getGenProfilename()+"프로필 이름");
+        System.out.println(genMem.getGenProfilepath()+"프로필 경로");
 		service.updateGeneralMember(genMem);
 		service.updateMember(member);
 
 
 	}
 	
-	
+	/* 업체회원 정보 수정*/
 	@ResponseBody
 	@RequestMapping("/companyUpdate.do")
 	public void companyUpdate( CompanyMember comMem, Member member, String prePass) {
@@ -224,6 +230,8 @@ public class MypageController {
 		service.updateMember(member);
 		service.updateCompanyMember(comMem);
 	}
+	
+	/*정보 수정시 비밀번호 확인*/
 	@ResponseBody
 	@RequestMapping("/validMember.do")
 	public String validMember(Member member, String prePass, Model model) {
@@ -234,6 +242,7 @@ public class MypageController {
 			return "fail";
 	}
 	
+	/**/
 	@RequestMapping("/myAuction.do")
 	public void myAuction(String choo, Auction auction, Model model) {
 		try {
@@ -272,6 +281,11 @@ public class MypageController {
 		//memNo, ComInfoNo
 		service.deleteCompanyLike(comLike);
 		return "redirect:likeCompany.do?memNo="+comLike.getMemNo();
+	}
+	
+	@RequestMapping("/myweddingService.do")
+	public void myweddingService() {
+		
 	}
 	
 	@RequestMapping("/myTodo.do")

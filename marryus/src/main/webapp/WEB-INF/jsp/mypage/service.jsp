@@ -42,7 +42,6 @@
 </head>
 <body>
 <header>
-<header>
 	<div class="container">
 		<div class="row">
 			<div class="logo col-md-3">

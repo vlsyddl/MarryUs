@@ -32,7 +32,7 @@
   }
 
   body {
-  	font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  	font-family:맑은 고딕;
   	background: #f6f9fa;
   }
 
@@ -48,12 +48,11 @@
 
   /*Fun begins*/
   .tab_container {
-  	width: 90%;
+  	width: 70%;
   	margin: 0 auto;
-  	padding-top: 70px;
     position: relative;
     font-size: 12px;
-    font-family: '바탕';
+    background: #f4e2ec;
   }
 
   input, section {
@@ -64,7 +63,7 @@
 
   label {
     font-weight: 900;
-    font-size: 18px;
+    font-size: 16px;
     display: block;
     float: left;
     width: 12.5%;
@@ -73,8 +72,11 @@
     cursor: pointer;
     text-decoration: none;
     text-align: center;
-    background: #f0f0f0;
+/*     background: #f0f0f0; */
   }
+  label span{
+  font-family: 맑은 고딕;
+  font-weight: 700;}
 
   #tab1:checked ~ #content,
   #tab2:checked ~ #content,
@@ -101,8 +103,10 @@
   }
 
   .tab_container [id^="tab"]:checked + label {
-    background: #fff;
-    box-shadow: inset 0 5px rgb(176, 203, 207);
+    background: rgb(255, 255, 255,0.3);
+    /* box-shadow: inset 0 5px rgb(176, 203, 207); */
+    border-bottom: 5px solid #8c8880 ;
+    
   }
 
   .tab_container [id^="tab"]:checked + label .fa {
@@ -148,7 +152,6 @@
 
 
   body{
-	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 	color: rgb(112, 112, 112);
 	line-height:30px;
 	font-weight: 500;
@@ -235,6 +238,7 @@ h4{
 	margin-top: 80px;
 	margin-bottom: 10px;
 }
+.auction_box{  	padding-top: 70px;}
  
 
   </style>
@@ -290,24 +294,37 @@ h4{
         <nav class="myPageNav">
             <div class="container">
                     <ul>
-                        <li>
-                            <a href="<c:url value='/mypage/myweddingService.do'/>">
-                                    <img src="img/chk_ico.png" alt="" class="img-responsive center-block">
-                                my service 
+                        <li class="on">
+                            <a href="<c:url value='/mypage/mywedding.do'/>">
+                                    <img src="img/hall_ico.png" alt="" class="img-responsive center-block">
+                                My Wedding
                             </a>
                         </li>
                         <li>
-                            <a href="<c:url value='/mypage/service.do'/>">
+                            <a href="<c:url value='/mypage/myTodo.do'/>">
                                     <img src="img/chk_ico.png" alt="" class="img-responsive center-block">
-                                service add
+                                Check List
                             </a>
                         </li>
                         <li>
-                            <a href="<c:url value='/mypage/auctionList.do'/>">
+                            <a href="<c:url value='/mypage/myAuction.do?memNo=${user.no}&auctionType=v'/>">
                                 <img src="img/auction_ico.png" alt="" class="img-responsive center-block">
-                                my tender
+                                Auction List
                             </a>
                         </li>
+                        <li>
+                            <a href="<c:url value='/mypage/myBudget.do'/>">
+                                <img src="img/budget_ico.png" alt="" class="img-responsive center-block">
+                                Budget Spent
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<c:url value='/mypage/likeCompany.do?memNo=${user.no}'/>">
+                                <img src="img/bookmark_ico.png" alt="" class="img-responsive center-block">
+                                Bookmark
+                            </a>
+                        </li>
+
                     </ul>
             </div>
         </nav>
@@ -316,8 +333,7 @@ h4{
 
 
 
-
-  <h1>역경매 현황 보기${choo}</h1>
+<div class="auction_box">
 		<div class="tab_container">
 		
 			<input id="tab1" type="radio" name="tabs" onClick="window.location.href='myAuction.do?choo=tab1&auctionType=v&memNo=${user.no}'" ${choose == 'tab1' ? 'checked="checked"' : '' } />
@@ -381,7 +397,7 @@ h4{
 			</section>
 			</div>
 
-			
+	</div>
 
 
 
