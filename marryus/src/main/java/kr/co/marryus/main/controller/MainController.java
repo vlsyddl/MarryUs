@@ -34,7 +34,7 @@ public class MainController {
 	@Autowired
 	MainServiceImpl service;
 	
-	@RequestMapping("/MyWeddingPlanSorting.do")
+	@RequestMapping("/myWeddingPlanSorting.do")
 	public void MyWedding() {};
 	@RequestMapping("/resultPlanning.do")
 	public void resultPlanning() {};
@@ -61,7 +61,7 @@ public class MainController {
 	public String submitWeddingPlan(WeddingPlan weddingPlan) throws Exception {
 		service.insertWedPlan(weddingPlan);
 		
-		return "redirect:MyWeddingPlanSorting.do";
+		return "redirect:myWeddingPlanSorting.do";
 	}
 	
 	

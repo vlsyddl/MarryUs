@@ -31,23 +31,23 @@
 					<div class="Login-card-container">
 						<section class="Login-card Login-card--login" data-order="1">
 						<h2 class="Login-card__title">Login</h2>
-						<form method="post" action="/marryus/main/login.do"
-							name="loginForm">
+						
+						<form id="loginForm"  name="loginForm" method="post" >
 
 							<div class="Form__form-group">
 
 								<div class="Form__input-group">
-									<input type="text" name="email" placeholder="E-mail address"
-										class="Form__input Login-card__email-input">
+									<input type="text" id="email" name="email" placeholder="E-mail address"
+										 class="Form__input Login-card__email-input">
 								</div>
 
 								<div class="Form__input-group">
-									<input type="password" name="pass" placeholder="Password"
+									<input onkeydown="enterLogin();" type="password" id="pass" name="pass" placeholder="Password"
 										class="Form__input Login-card__password-input">
 								</div>
 
 								<div class="Form__input-group">
-									<input id="loginBo" type="submit" value="Login"
+									<input  id="loginBtn" type="submit" value="Login"
 										class="Form__button Login-card__submit-button">
 								</div>
 
@@ -85,7 +85,7 @@
 										class="Form__input Login-card__email-input">
 									</div>
 									<div class="Form__input-group">
-									 	<input   type="submit" value="비밀번호 찾기"
+									 	<input  onkeyup="enter();" type="submit" value="비밀번호 찾기"
 											class="Form__button Login-card__submit-button">
 									</div>
 								</div>
@@ -131,3 +131,98 @@
 			</div>
 		</div>
 	</div>
+<script>
+
+/****************************************************************************
+ * 엔터이벤트  로그인 
+ *****************************************************************************/
+ 
+     function enterLogin(){
+    	  if(window.event.keyCode==13){
+    		  
+    		  loginForm.submit();
+    	  }
+      }
+      
+/* 	function checkLoginForm(){
+		var email = window.document.loginForm.email;
+		
+		if(email.value ==""){
+			alert("아이디를 입력해주세요")
+			email.focus();
+			return false;
+		}
+		if(document.loginForm.pass.value=""){
+
+			alert("암호를 입력하시오.");
+			document.loginForm.pass.focus();
+			return false;
+
+		}
+
+	}
+ */
+	$("#loginBtn").on('click',function(e){
+		e.preventDefault();
+		var email = $("#email").val();
+		var pass =  $("#pass").val();
+		
+		$.ajax({
+			url:"/marryus/main/login.json",
+			data:{email:email, pass: pass},
+			type: "post"
+		})
+		.done(function(member){
+			console.log(member)
+			if(member == ""){
+				alert("아이디 또는 비밀번호를 잘못 입력했습니다.");
+				
+				return;
+			} else{
+				alert("로그인 되었습니다.");
+				$("#loginModal").modal("hide");
+				var url = "${requestScope['javax.servlet.forward.request_uri']}"
+				if(url == "/marryus/main/main.do"){
+					location.href = "/marryus/main/main.do";
+					return;
+				}
+				location.href = "${requestScope['javax.servlet.forward.request_uri']}";
+			}
+			
+		});
+		
+	});
+
+ /**********************************************************************************
+  	비밀번호 찾기 
+       	1. 아이디와 이름을 검색해서 회원인지 여부 회원이 아닐시  회원가입 유도 
+       	2. 회원이 맞을시아이디 비번 찾도록 유도 
+ **********************************************************************************/
+        $("#checkEmailnName").on('click',function(e){
+     	   
+     	    var email = $("#passemail").val()
+         	var name = $("#passname").val()
+        	$.ajax({
+        		url:"/marryus/main/checkID.json",
+        		data:"email="+email+"&name="+name
+        	}).done(function(result){
+        		if(result==1){
+        			alert("회원입니다. 이메일 인증을 진행해주세요")
+        			  e.preventDefault()
+        			$("#findPassForm").html($("#nextStep").html());
+        		}else{
+        			alert("Marry Us 회원이 아닙니다. 회원가입먼저 진행해주세요.")
+        			 e.preventDefault()
+        			$("#findPassForm").html($("#goToSignUp").html());
+        		}
+     	   
+        	});
+        });
+         
+        
+       function gotoSignUp(){
+     	  location.href = 'http://localhost:8000/marryus/signup/signupPro.do';
+       }
+       
+
+</script>

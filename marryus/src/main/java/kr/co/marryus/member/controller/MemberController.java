@@ -45,8 +45,9 @@ public class MemberController {
 	 * 
 	 */
 	
-	@RequestMapping("/login.do")
-	public String login(Member member , HttpSession session) throws Exception {
+	@RequestMapping("/login.json")
+	@ResponseBody
+	public Member login(Member member , HttpSession session) throws Exception {
 		// 비밀번호 암호화
 		String rawPassword = member.getPass();
 		
@@ -77,11 +78,12 @@ public class MemberController {
 			
 			session.setAttribute("user", member);
 		}else {
-			System.out.println("계정 불일치");
+			member = null;
+			return member;
 		}
 		
 
-		return "redirect:main.do";
+		return member;
 	}
 	
 	/**
@@ -194,7 +196,7 @@ public class MemberController {
 	 * @param response
 	 * @throws IOException
 	 */
-	@RequestMapping(value="/checkID.json", method=RequestMethod.POST)
+	@RequestMapping(value="/checkEmail.json", method=RequestMethod.POST)
 	public void getPersonMngUserIdCheck(String email, HttpServletRequest request, HttpServletResponse response) throws IOException {
 	
 	  int selectUserIdCheck = service.checkID(email);

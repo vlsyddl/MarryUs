@@ -275,7 +275,7 @@ font-weight:bold;
                  </div>
             </div>
         </div>
-
+<c:import url="/common/importFooter.jsp" />
 <script>
 /*
  *	다음 질문들 생성 	

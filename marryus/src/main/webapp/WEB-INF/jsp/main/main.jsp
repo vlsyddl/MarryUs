@@ -8,11 +8,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>Marry Us</title>
-<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
-  <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-<c:import url="/common/importCss.jsp"/>
 <c:import url="/common/importJs.jsp"/>
+<c:import url="/common/importCss.jsp"/>
 <c:import url="/common/webSocket.jsp"/>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+
 </head>
 <body>
 	<c:import url="/common/importHeader.jsp" />
@@ -1097,7 +1097,7 @@
       	 ver1. 미완
       	
 **********************************************************************************/
-		
+
 		$(document).ready(function(){
 			var auctionType = $("#auctionType").val();
 			var auctionStatusIng = $("#auctionStatusIng").val();
@@ -1107,40 +1107,37 @@
 				data:"auctionType="+auctionType,
 				type:"post"
 			}).done(function(result){
-				//ing
-				/* $("#venueAuctionIng").html(
-				 		"<h5 class='v-roll-title'>"
-				 		+"<a href='#'>입찰중 역경매</a></h5>"
-				 		+"<div class='bx-wrapper' style='max-width: 100%;'>"
-				 		+"<div class='bx-viewport' aria-live='polite' style='width: 100%; overflow: hidden; position: relative; height: 190px;'>"
-				 		+"<ul class='v-roll' id='vIngAcution' style='width: auto; position: relative; transition-duration: 3s; transform: translate3d(0px, -228px, 0px);'>"
-				 		
-				 	);  */
+				//ing 
 				 	var html ='';
 					for(var i = 0 ; i<result.length ; i++){
 						if(result[i].auctionStatus == "ing"){
 							html +='<li>'
-							html +='<span class="w18"><span>'+result[i].memNo+'</span></span>'	 
+							html +='<span class="w18"><span>'+getAuctionStatus(result[i].auctionStatus)+'</span></span>'	 
 							html +='<span class="w18">'+result[i].member.name+'</span>'	 
 							html +='<span class="w28">서울시 강동구</span>'
-							html +='<span class="w18">D-21일</span>'
-							html +='<span class="w18">'+result[i].auctionNo+'</span>'	 
+							html +='<span class="w18">D-'+result[i].auctionEdate+'</span>'
+							html +='<span class="w18">접수중</span>'	 
 							html +='</li>'	
-							
-							/* $("#vIngAcution").append(
-							
-							"<li style='float: none; list-style: none; position: relative;' aria-hidden='false' class='bx-clone' aria-hidden='true'>"
-							+"<span class='w18'>"+result[i].auctionNo+"</span>"
-							+"<span class='w18'>"+result[i].memNo+"</span>"
-							+"<span class='w18'>"+result[i].member.name+"</span>"
-							+"</li>"
-							);  */
 							
 						}
 						
 					} 
 				 	$("#venueAuctionIng ul").html(html)
+				 	$('#venueAuctionIng ul').bxSlider({
+		                auto: true,
+		                speed: 3000,
+		                pause : 3000,
+		                mode: 'vertical',
+		                controls : false,
+		                moveSlides: 1,
+		                minSlides: 5, 
+		                maxSlides: 5,
+		                pager:false
+		            });
+				 	
+				 
 					//done
+					
 				/* 	$("#venueAuctionDone").html(
 					 		"<h5 class='v-roll-title'>"
 					 		+"<a href='#'>입찰중 역경매</a></h5>"
@@ -1162,20 +1159,23 @@
 							
 						}
 					}  */
-				 	$('#venueAuctionIng ul').bxSlider({
-		                auto: true,
-		                speed: 3000,
-		                pause : 3000,
-		                mode: 'vertical',
-		                controls : false,
-		                moveSlides: 1,
-		                minSlides: 5, 
-		                maxSlides: 5,
-		                pager:false
-		            });
 			});
 			
 		});
+		/* function countDday(auctionEdate){
+			var endDay = auctionEdate;
+			var countDownDate = new Date(endDay).getTime();
+
+			//1초마다 갱신되로록 함수 생성, 실행
+			var x = setInterval(function(){
+			  // 오늘 날짜 등록
+			  var now = new Date().getTime();
+
+			  // 종료일자에서 현재 일자를 뺀 시간 
+			  var distance = countDownDate-now;
+			  var d = Math.floor(distance/(1000*60*60*24));
+			}
+		} */
 		// 입찰 현황 버튼 클릭시 
 		/*
 			auctioType만 보내서 auctionStatus는 다 가져와서 
@@ -1203,6 +1203,21 @@
 			 		+"<ul class='v-roll' id='vIngAcution'>"
 			 		
 			 	);  */
+				var html ='';
+				for(var i = 0 ; i<result.length ; i++){
+					if(result[i].auctionStatus == "ing"){
+						html +='<li>'
+						html +='<span class="w18"><span>'+getAuctionStatus(result[i].auctionStatus)+'</span></span>'	 
+						html +='<span class="w18">'+result[i].member.name+'</span>'	 
+						html +='<span class="w28">서울시 강동구</span>'
+						html +='<span class="w18">D-21일</span>'
+						html +='<span class="w18">접수중</span>'	 
+						html +='</li>'	
+						
+					}
+					
+				} 
+				
 			 	var html ='';
 				for(var i = 0 ; i<result.length ; i++){
 					if(result[i].auctionStatus == "ing"){
@@ -1217,7 +1232,18 @@
 						
 					}
 				} 
-				 
+				$("#venueAuctionIng ul").html(html)
+			 	$('#venueAuctionIng ul').bxSlider({
+	                auto: true,
+	                speed: 3000,
+	                pause : 3000,
+	                mode: 'vertical',
+	                controls : false,
+	                moveSlides: 1,
+	                minSlides: 5, 
+	                maxSlides: 5,
+	                pager:false
+	            });
 				//done
 				$("#venueAuctionDone").html(
 				 		"<h5 class='v-roll-title'>"
@@ -1463,40 +1489,19 @@
 			});
         	
         });
-        
-        // 
        
-/**********************************************************************************
- 	비밀번호 찾기 
-      	1. 아이디와 이름을 검색해서 회원인지 여부 회원이 아닐시  회원가입 유도 
-      	2. 회원이 맞을시아이디 비번 찾도록 유도 
-**********************************************************************************/
-       $("#checkEmailnName").on('click',function(e){
-    	   
-    	    var email = $("#passemail").val()
-        	var name = $("#passname").val()
-       	$.ajax({
-       		url:"/marryus/main/checkID.json",
-       		data:"email="+email+"&name="+name
-       	}).done(function(result){
-       		if(result==1){
-       			alert("회원입니다. 이메일 인증을 진행해주세요")
-       			  e.preventDefault()
-       			$("#findPassForm").html($("#nextStep").html());
-       		}else{
-       			alert("Marry Us 회원이 아닙니다. 회원가입먼저 진행해주세요.")
-       			 e.preventDefault()
-       			$("#findPassForm").html($("#goToSignUp").html());
-       		}
-    	   
-       	});
-       });
-        
-       
-      function gotoSignUp(){
-    	  location.href = 'http://localhost:8000/marryus/signup/signupPro.do';
-      }
+        function getAuctionStatus(auctionStatus){
+        	switch(auctionStatus){
+        	case "ing": return "입찰중";
+        	case "done": return "낙찰";
+        	}
+        }
       
+       
+
+      
+
+ 
       
 
 	</script>

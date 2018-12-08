@@ -148,7 +148,7 @@ $( "#generalForm" ).validate({
 	      required: true,
 	      minlength: 2,
 	      remote : { 
-	    	     url : "/marryus/main/checkID.json",
+	    	     url : "/marryus/main/checkEmail.json",
 	    	     type : "post",
 	    	     data : { email : function() { return $('#e_mail').val()} }  
 	    	     }
