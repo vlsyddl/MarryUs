@@ -10,7 +10,11 @@ import kr.co.marryus.repository.domain.Member;
 // AuthIntercepter를 스프링에 환경설정에 등록해준다. 
 
 
-
+/**
+ * 인터 셉터 
+ * @author suzie
+ *
+ */
 public class AuthInterceptor extends HandlerInterceptorAdapter{
 
 	@Override
@@ -22,7 +26,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter{
 			return true;
 		}
 		System.out.println("인증 인터셉터에 로그인 부분이 안되었음이 걸렸음..");
-		response.sendRedirect("main.do");
+		response.sendRedirect("/marryus/main/main.do");
 		return false;
 	}
 	

@@ -42,7 +42,7 @@
 								</div>
 
 								<div class="Form__input-group">
-									<input onkeydown="enterLogin();" type="password" id="pass" name="pass" placeholder="Password"
+									<input  type="password" id="pass" name="pass" placeholder="Password"
 										class="Form__input Login-card__password-input">
 								</div>
 
@@ -81,11 +81,11 @@
 							<!-- 아이디가 있으므로 아이디 찾기로 감!-->
 								<div class="Form__input-group" id="nextStep" style="display: none">
 									<div class="Form__input-group">
-										<input  type="text" id="passemail" name="email" placeholder="E-mail address"
+										<input  type="text" id="sendemail" name="email" placeholder="E-mail address"
 										class="Form__input Login-card__email-input">
 									</div>
 									<div class="Form__input-group">
-									 	<input  onkeyup="enter();" type="submit" value="비밀번호 찾기"
+									 	<input  type="submit" value="비밀번호 찾기"
 											class="Form__button Login-card__submit-button">
 									</div>
 								</div>
@@ -105,11 +105,6 @@
 						</form>
 						</section>
 
-						<%-- <section class="Login-card Login-card--connect Login-card--hidden"
-							data-order="3">
-						<h2 class="Login-card__title">Connect directly</h2>
-						<code># TODO</code> </section>
-					</div> --%>
 					</main>
 				<!-- 네이버아이디로로그인 버튼 노출 영역 -->
 				<!-- 	
@@ -136,32 +131,45 @@
 /****************************************************************************
  * 엔터이벤트  로그인 
  *****************************************************************************/
+
  
-     function enterLogin(){
-    	  if(window.event.keyCode==13){
-    		  
-    		  loginForm.submit();
-    	  }
-      }
-      
-/* 	function checkLoginForm(){
-		var email = window.document.loginForm.email;
-		
-		if(email.value ==""){
-			alert("아이디를 입력해주세요")
-			email.focus();
-			return false;
-		}
-		if(document.loginForm.pass.value=""){
+     $("#pass").keydown(function (e) {
+    	   if (e.keyCode == 13) {
+    			e.preventDefault();
+    			var email = $("#email").val();
+    			var pass =  $("#pass").val();
+    			
+    			$.ajax({
+    				url:"/marryus/main/login.json",
+    				data:{email:email, pass: pass},
+    				type: "post"
+    			})
+    			.done(function(member){
+    				console.log(member)
+    				if(member == ""){
+    					alert("아이디 또는 비밀번호를 잘못 입력했습니다.");
+    					
+    					return;
+    				} else{
+    					alert("로그인 되었습니다.");
+    					$("#loginModal").modal("hide");
+    					var url = "${requestScope['javax.servlet.forward.request_uri']}"
+    					if(url == "/marryus/main/main.do"){
+    						location.href = "/marryus/main/main.do";
+    						return;
+    					}
+    					location.href = "${requestScope['javax.servlet.forward.request_uri']}";
+    				}
+    				
+    			});
+    			
+    	   }   
+    	});
 
-			alert("암호를 입력하시오.");
-			document.loginForm.pass.focus();
-			return false;
 
-		}
-
-	}
- */
+/****************************************************************************
+ * 마우스 클릭  로그인 
+ *****************************************************************************/
 	$("#loginBtn").on('click',function(e){
 		e.preventDefault();
 		var email = $("#email").val();
@@ -198,6 +206,40 @@
        	1. 아이디와 이름을 검색해서 회원인지 여부 회원이 아닐시  회원가입 유도 
        	2. 회원이 맞을시아이디 비번 찾도록 유도 
  **********************************************************************************/
+ 
+ /*
+ 	keydown
+ */
+ 
+ $("#passname").keydown(function (e) {
+	   if (e.keyCode == 13) {
+		   var email = $("#passemail").val()
+        	var name = $("#passname").val()
+       	$.ajax({
+       		url:"/marryus/main/checkID.json",
+       		data:"email="+email+"&name="+name
+       	}).done(function(result){
+       		if(result==1){
+       			alert("회원입니다. 이메일 인증을 진행해주세요")
+       			  e.preventDefault()
+       			$("#findPassForm").html($("#nextStep").html());
+				
+       		}else{
+       			alert("Marry Us 회원이 아닙니다. 회원가입먼저 진행해주세요.")
+       			 e.preventDefault()
+       			$("#findPassForm").html($("#goToSignUp").html());
+       		}
+    	   
+       	});
+		   
+		   
+	   }
+ });
+ 
+ /*
+	click
+*/
+ 
         $("#checkEmailnName").on('click',function(e){
      	   
      	    var email = $("#passemail").val()

@@ -51,5 +51,10 @@ public interface MainService {
 	 */
 	List<Todo> selectTodoListByWP(Todo todo);
 	
-	
+	/**
+	 * 마감임박 역경매 건 리스트  (D-7)
+	 * @param auction
+	 * @return
+	 */
+	List<Auction> selectAuctionEDate(Auction auction);
 }

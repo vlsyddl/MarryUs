@@ -12,6 +12,7 @@
 <c:import url="/common/importCss.jsp"/>
 <c:import url="/common/webSocket.jsp"/>
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/locale/ko.js" charset="utf-8"></script>
 
 </head>
 <body>
@@ -46,6 +47,7 @@
 			</div>
 			<div class="deadLine">
 				<ul>
+					<input type="hidden" value="ing" id="auctionStatusValue">
 					<li><a href="#">오O진님의 입찰건이 3일 남았습니다</a></li>
 					<li><a href="#">오O진님의 입찰건이 3일 남았습니다</a></li>
 					<li><a href="#">오O진님의 입찰건이 3일 남았습니다</a></li>
@@ -1108,6 +1110,11 @@
 				type:"post"
 			}).done(function(result){
 				//ing 
+				
+
+ 
+
+
 				 	var html ='';
 					for(var i = 0 ; i<result.length ; i++){
 						if(result[i].auctionStatus == "ing"){
@@ -1115,7 +1122,7 @@
 							html +='<span class="w18"><span>'+getAuctionStatus(result[i].auctionStatus)+'</span></span>'	 
 							html +='<span class="w18">'+result[i].member.name+'</span>'	 
 							html +='<span class="w28">서울시 강동구</span>'
-							html +='<span class="w18">D-'+result[i].auctionEdate+'</span>'
+							html +='<span class="w18">D-'+countDay(result[i].auctionEDate) +'</span>'
 							html +='<span class="w18">접수중</span>'	 
 							html +='</li>'	
 							
@@ -1162,20 +1169,18 @@
 			});
 			
 		});
-		/* function countDday(auctionEdate){
-			var endDay = auctionEdate;
-			var countDownDate = new Date(endDay).getTime();
+		function countDay(auctionEDate){
+			console.log(auctionEDate)
+			var endDate = moment(auctionEDate).format('YYYY-MM-DD');
+			console.log(endDate);
+			var startDate = moment();
+			
+			return Math.floor(Math.abs(moment.duration(startDate.diff(endDate)).asDays()));
 
-			//1초마다 갱신되로록 함수 생성, 실행
-			var x = setInterval(function(){
-			  // 오늘 날짜 등록
-			  var now = new Date().getTime();
-
-			  // 종료일자에서 현재 일자를 뺀 시간 
-			  var distance = countDownDate-now;
-			  var d = Math.floor(distance/(1000*60*60*24));
-			}
-		} */
+		}
+		
+		
+	
 		// 입찰 현황 버튼 클릭시 
 		/*
 			auctioType만 보내서 auctionStatus는 다 가져와서 
@@ -1497,9 +1502,31 @@
         	}
         }
       
-       
-
-      
+        
+ /**********************************************************************************
+         	마감임박  불러오기 D-7일 
+**********************************************************************************/     
+ 
+  $(document).ready(function(){
+	  var auctionStatus = $("#auctionStatusValue").val();
+	 	$.ajax({
+	 		url:"/marryus/main/deadlineList.json",
+	 		data:{auctionStatus:auctionStatus},
+	 		type:"POST"
+	 	})
+	 	.done(function(result){
+	 		console.log(result);
+	 		var html ='';
+			for(var i = 0 ; i<result.length ; i++){
+					html +='<li>'
+					html +='<a href="#">'+result[i].memName+'님의 입찰건이'+countDay(result[i].auctionEDate) +'일 남았습니다.</a>' 
+					html +='</li>'	
+			} 
+			
+			$(".deadLine ul").html(html);
+	 	});
+	  
+  });
 
  
       

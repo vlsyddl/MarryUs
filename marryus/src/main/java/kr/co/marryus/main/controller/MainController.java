@@ -43,9 +43,6 @@ public class MainController {
 	 */
 	@RequestMapping("/main.do")
 	public Model loginMain(Auction auction,Model model ) {
-		System.out.println("auction status||"+auction.getAuctionStatus());
-		System.out.println("auction type||"+auction.getAuctionType());
-		
 		model.addAttribute("auction", service.selectActionlist(auction));
 		return model;
 		
@@ -74,6 +71,7 @@ public class MainController {
 	@RequestMapping(value="/auctionList.json",  method= RequestMethod.POST)
 	@ResponseBody
 	public List<Auction> auctionList(Auction auction) throws Exception{
+		
 		return service.auctionList(auction);
 		
 	}
@@ -115,6 +113,14 @@ public class MainController {
 		return service.selectTodoListByWP(todo);
 	}
 	
+	/**
+	 * 나만의 웨딩플랜 check 리스트 excele로 뽑기 
+	 * @param request
+	 * @param response
+	 * @param todo
+	 * @param modelmap
+	 * @throws Exception
+	 */
 	@RequestMapping("/downExcel.do")
 	public void listExcel(HttpServletRequest request, HttpServletResponse response, Todo todo, ModelMap modelmap) throws Exception {
 		System.out.println("tdodo?!?"+todo);
@@ -131,5 +137,17 @@ public class MainController {
 		me.download(request, response, beans, "todoList", "todoList.xlsx", "무시가능");
 	}
 	
-	
+	/**
+	 * 마감입박 역경매 건 리스트 
+	 * @param auction
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/deadlineList.json",method= RequestMethod.POST)
+	@ResponseBody
+	public List<Auction> listofDeadline(Auction auction) throws Exception{
+		System.out.println(auction.getAuctionEDate());
+		return service.selectAuctionEDate(auction);
+	}
+ 	
 }

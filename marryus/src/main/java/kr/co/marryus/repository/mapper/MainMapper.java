@@ -20,8 +20,9 @@ public interface MainMapper {
 	List<Auction> auctionList(Auction auction);
 	// 나만의 웨딩 
 	void sortingPlan(Todo todo);
-	
+	// 나만의 웨딩플랜 sorting
 	List<Todo> selectTodoListByWP(Todo todo);
-	
+	// 마감임박 경매 건 가져오기  - 7일 
+	List<Auction> selectAuctionEDate(Auction auction);
 	
 }

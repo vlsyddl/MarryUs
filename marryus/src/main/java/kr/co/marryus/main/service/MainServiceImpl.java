@@ -74,5 +74,11 @@ public class MainServiceImpl implements MainService{
 		return mapper.selectTodoListByWP(todo);
 	}
 
+	@Override
+	public List<Auction> selectAuctionEDate(Auction auction) {
+		
+		return mapper.selectAuctionEDate(auction);
+	}
+
 	
 }

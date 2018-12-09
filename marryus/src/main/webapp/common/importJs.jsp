@@ -10,3 +10,6 @@
  <script src="<c:url value="/resources/js/jquery.bxslider.js"/>"></script>
  <script src="<c:url value="/resources/js/wow.min.js"/>"></script>
  <script src="<c:url value="/resources/js/script.js"/>"></script>
+ <script src="<c:url value="/resources/js/jquery-dateformat.js"/>"></script>
+ <script src="<c:url value="/resources/js/ko.js"/>"></script>
+ <script src="<c:url value="/resources/js/moment.js"/>"></script>

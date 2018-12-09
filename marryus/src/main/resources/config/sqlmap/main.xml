@@ -105,5 +105,18 @@
 		order by todo_dday desc
 	</select>
 	
+	<!-- 마감 임박 검색 -->
+	<select id="selectAuctionEDate" parameterType="Auction" resultMap="auctionMap">
+		<![CDATA[
+			SELECT * 
+			FROM mu_auction a left join mu_member m
+			on a.mem_no = m.mem_no
+			WHERE DATEDIFF(DATE(NOW()), a.auction_edate) > -8 
+			and a.auction_status =#{auctionStatus}
+		
+		]]>
+	
+	</select>
+	
 	
 </mapper>
