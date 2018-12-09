@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.co.marryus.repository.domain.Answer;
 import kr.co.marryus.repository.domain.Attach;
 import kr.co.marryus.repository.domain.Board;
 import kr.co.marryus.repository.domain.Comment;
@@ -117,6 +118,20 @@ public class BoardServiceImpl implements BoardService{
 	public int deleteComment(int commNo) {
 		// TODO Auto-generated method stub
 		return mapper.deleteComment(commNo);
+	}
+
+
+	@Override
+	public int updateBoardCount(int boardNo) {
+		// TODO Auto-generated method stub
+		return mapper.updateBoardCount(boardNo);
+	}
+
+
+	@Override
+	public Answer boardAnswer(int questionNo) {
+		// TODO Auto-generated method stub
+		return mapper.boardAnswer(questionNo);
 	}
 	
 	

@@ -1,9 +1,13 @@
 package kr.co.marryus.board.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,10 +20,10 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 import kr.co.marryus.board.service.BoardService;
+import kr.co.marryus.repository.domain.Answer;
 import kr.co.marryus.repository.domain.Attach;
 import kr.co.marryus.repository.domain.Board;
 import kr.co.marryus.repository.domain.Comment;
-import kr.co.marryus.repository.domain.Page;
 import kr.co.marryus.repository.domain.PageResult;
 import kr.co.marryus.repository.domain.SearchForm;
 
@@ -29,8 +33,15 @@ public class BoardController {
 	
 	@Autowired
 	private BoardService service;
-	
-	// 공지사항 리스트
+
+	/**
+	 * 게시판 목록
+	 * @param pageNo
+	 * @param model
+	 * @param form
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping("/list.do")
 	public String boardList(@RequestParam(value = "pageNo", defaultValue = "1") int pageNo, Model model, SearchForm form) throws Exception {
 		form.setPageNo(pageNo);
@@ -62,16 +73,55 @@ public class BoardController {
 		
 		return page;
 	}
-	
+
+	/**
+	 * 게시판 디테일
+	 * @param model
+	 * @param boardNo
+	 * @return
+	 */
 	@RequestMapping("/detail.do")
 	public String boardDetail(Model model, int boardNo) {
 		
 		String page ="";
 
 		Board board = service.boradDetail(boardNo);
+		service.updateBoardCount(boardNo);
 		String category = board.getCategory();
 		
 		model.addAttribute("board",board);
+		
+		switch(category) {
+		case "nt" :
+			page = "board/notice";
+			break;
+		case "rv" :
+			page = "board/review";
+			break;
+		case "fr" :
+			page = "board/free";
+			break;
+		case "mm" :
+			page = "board/mtom";
+			break;
+		case "fq" :
+			page = "board/faq";
+			break;
+		}
+		
+		return page+"/detail";
+	}
+	
+	/**
+	 * 게시판 디테일
+	 * @param model
+	 * @param boardNo
+	 * @return
+	 */
+	@RequestMapping("/writeForm.do")
+	public String boardWriteForm(String category) {
+		
+		String page ="";
 		
 		switch(category) {
 			case "nt" :
@@ -91,15 +141,173 @@ public class BoardController {
 				break;
 		}
 		
-		return page+"/detail";
+		return page+"/writeForm";
 	}
 	
+	@RequestMapping("/write.do")
+	public String boardWrite(Board board,HttpServletResponse response) throws IOException {
+		
+		String category = board.getCategory();
+		String result = "";
+		
+		String page ="";
+		
+		switch(category) {
+			case "nt" :
+				page = "board/notice";
+				break;
+			case "rv" :
+				page = "board/review";
+				break;
+			case "fr" :
+				page = "board/free";
+				break;
+			case "mm" :
+				page = "board/mtom";
+				break;
+			case "fq" :
+				page = "board/faq";
+				break;
+		}
+		
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		
+		if(service.boardWrite(board) ==1) {
+			int boardNO = board.getBoardNo();
+			result = UrlBasedViewResolver.REDIRECT_URL_PREFIX + "list.do?category="+category;
+		}else{
+			out.println("<script>alert('게시물이 등록에 실패하였습니다.');history.go(-1);</script>");
+			out.flush();
+		};
+		return result;
+	}
 	
+	/**
+	 * 게시판 수정 폼
+	 * @param model
+	 * @param boardNo
+	 * @return
+	 */
+	@RequestMapping("/updateForm.do")
+	public String boardUpdateForm(Model model, String category,int boardNo) {
+		model.addAttribute("board",service.boradDetail(boardNo));
+		
+		String page ="";
+		
+		switch(category) {
+			case "nt" :
+				page = "board/notice";
+				break;
+			case "rv" :
+				page = "board/review";
+				break;
+			case "fr" :
+				page = "board/free";
+				break;
+			case "mm" :
+				page = "board/mtom";
+				break;
+			case "fq" :
+				page = "board/faq";
+				break;
+		}
+		
+		return page+"/updateForm";
+	}
+	
+	/**
+	 * 게시판 수정
+	 * @param board
+	 * @param response
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("/update.do")
+	public String boardUpdate(Board board,HttpServletResponse response) throws IOException {
+		String category = board.getCategory();
+		String result = "";
+		
+		String page ="";
+		
+		switch(category) {
+			case "nt" :
+				page = "board/notice";
+				break;
+			case "rv" :
+				page = "board/review";
+				break;
+			case "fr" :
+				page = "board/free";
+				break;
+			case "mm" :
+				page = "board/mtom";
+				break;
+			case "fq" :
+				page = "board/faq";
+				break;
+		}
+		
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		
+		if(service.updateBoard(board) ==1) {
+			int boardNO = board.getBoardNo();
+			result = UrlBasedViewResolver.REDIRECT_URL_PREFIX + "list.do?category="+category;
+		}else{
+			out.println("<script>alert('게시물 수정에 실패하였습니다.');history.go(-1);</script>");
+			out.flush();
+		};
+		return result;
+	}
+	
+	@RequestMapping("/delete.do")
+	public String deleteBoadr(int boardNo, String category, HttpServletResponse response) throws IOException {
+		String page = "";
+		String result="";
+		switch(category) {
+			case "nt" :
+				page = "board/notice";
+				break;
+			case "rv" :
+				page = "board/review";
+				break;
+			case "fr" :
+				page = "board/free";
+				break;
+			case "mm" :
+				page = "board/mtom";
+				break;
+			case "fq" :
+				page = "board/faq";
+				break;
+		}
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		
+		if(service.deleteBoard(boardNo)==1) {
+			result = UrlBasedViewResolver.REDIRECT_URL_PREFIX + "list.do?category="+category;
+		}else{
+			out.println("<script>alert('게시물이 삭제에 실패하였습니다.');history.go(-1);</script>");
+			out.flush();
+		};
+		return result;
+	}
+	
+	/**
+	 * 후기게시판 
+	 * @return
+	 */
 	@RequestMapping("/review.do")
 	public String review() {
 		return "board/review/list";
 	}
 	
+	/**
+	 * 후기게시판 리스트
+	 * @param form
+	 * @return
+	 */
 	@RequestMapping("/review/list.json")
 	@ResponseBody
 	public HashMap<String, Object> reviewList(SearchForm form){
@@ -112,6 +320,11 @@ public class BoardController {
 		return listMap;
 	}
 	
+	/**
+	 * 후기게시판 디테일
+	 * @param boardNo
+	 * @return
+	 */
 	@RequestMapping("/review/detail.json")
 	@ResponseBody
 	public HashMap<String, Object> reviewDetail(int boardNo) {
@@ -120,13 +333,20 @@ public class BoardController {
 		listMap.put("attach",service.attachDetail(boardNo));
 		return listMap;
 	}
-	@RequestMapping("/review/commentList.json")
+	
+	/**
+	 * 댓글 리스트
+	 * @param boardNo
+	 * @return
+	 */
+	@RequestMapping("/commentList.json")
 	@ResponseBody
 	public List<Comment> reviceCommentList(int boardNo){
 		return service.boardComment(boardNo);
 	}
+	
 	/**
-	 * 스터디 글쓰기
+	 * 글 작성
 	 * @param board
 	 */
 	@RequestMapping("/review/write.json")
@@ -186,6 +406,11 @@ public class BoardController {
 		return boardNo;
 	}
 	
+	/**
+	 * 글 수정
+	 * @param multi
+	 * @return
+	 */
 	@RequestMapping("/review/update.json")
 	@ResponseBody
 	public int updateBoard(MultipartHttpServletRequest multi) {
@@ -234,20 +459,11 @@ public class BoardController {
 		return boardNo;
 	}
 	
-	@RequestMapping("/review/insertComment.json")
-	@ResponseBody
-	public int insertComment(Comment comment) {
-		return service.insertComment(comment);
-	}
-	
-	@RequestMapping("/review/updateComment.json")
-	@ResponseBody
-	public int updateComment(Comment comment) {
-		return service.updateComment(comment);
-	}
-	
-	
-	
+	/**
+	 * 후기게시판 글삭제
+	 * @param boardNo
+	 * @return
+	 */
 	@RequestMapping("/review/deleteBoard.json")
 	@ResponseBody
 	public String deleteBoard(int boardNo) {
@@ -260,12 +476,48 @@ public class BoardController {
 		System.out.println(result);
 		return "{\"result\":\""+result+"\"}";
 	}
-
-	@RequestMapping("/review/deleteComment.json")
+	
+	/**
+	 * 댓글 등록
+	 * @param comment
+	 * @return
+	 */
+	@RequestMapping("/insertComment.json")
+	@ResponseBody
+	public int insertComment(Comment comment) {
+		return service.insertComment(comment);
+	}
+	
+	/**
+	 * 댓글수정
+	 * @param comment
+	 * @return
+	 */
+	@RequestMapping("/updateComment.json")
+	@ResponseBody
+	public int updateComment(Comment comment) {
+		return service.updateComment(comment);
+	}
+	
+	/**
+	 * 댓글 삭제
+	 * @param commNo
+	 * @return
+	 */
+	@RequestMapping("/deleteComment.json")
 	@ResponseBody
 	public int deleteComment(int commNo) {
 		return service.deleteComment(commNo);
 	}
 	
-	
+	/**
+	 * 1:1 질문 답
+	 * @param questionNo
+	 * @return
+	 */
+	@RequestMapping("/boardAnswer.json")
+	@ResponseBody
+	public Answer boardAnswer(int questionNo) {
+		return service.boardAnswer(questionNo);
+	}
 }

@@ -20,7 +20,7 @@
     <div id="wrap" class="community">
         <div class="sub_visual">
             <div class="titleBox">
-                <h2>신부 대기실</h2>
+                <h2>1:1 질문</h2>
             </div>
         </div>
         <section class="contents contents01">
@@ -29,8 +29,8 @@
                     <ul>
                         <li ><a href="<c:url value='/board/list.do?category=nt'/>">공지게시판</a></li>
                         <li ><a href="<c:url value='/board/review.do'/>">후기 게시판</a></li>
-                        <li class="on"><a href="<c:url value='/board/list.do?category=fr'/>">신부 대기실    </a></li>
-                        <li ><a href="<c:url value='/board/list.do?category=mm'/>">1:1 질문</a></li>
+                        <li ><a href="<c:url value='/board/list.do?category=fr'/>">신부 대기실    </a></li>
+                        <li class="on"><a href="<c:url value='/board/list.do?category=mm'/>">1:1 질문</a></li>
                         <li ><a href="<c:url value='/board/list.do?category=fq'/>">FAQ</a></li>
                     </ul>
                     <div class="communityContents">
@@ -41,6 +41,7 @@
                                 <th>작성자</th>
                                 <th>작성일</th>
                                 <th>조회수</th>
+                                <th>답변여부</th>
                             </tr>
 						<c:choose>
                             	<c:when test="${fn:length(list) eq 0}">
@@ -52,10 +53,18 @@
                             		<c:forEach var="b" items="${list}">
 			                            <tr>
 			                                <td>${b.boardNo}</td>
-			                                <td><a href='detail.do?boardNo=${b.boardNo}'>${b.title}</a></td>
+			                                <c:choose>
+			                                	<c:when test='${b.secret=="y"}'>
+		                                			<td><a href='detail.do?boardNo=${b.boardNo}' <c:if test='${user.email != b.writer }'>onclick='alert("비밀글 입니다."); return false;'</c:if>>${b.title}<i class="fas fa-lock"></i></a></td>
+			                                	</c:when>
+			                                	<c:otherwise>		                                		
+					                                <td><a href='detail.do?boardNo=${b.boardNo}'>${b.title}</a></td>
+			                                	</c:otherwise>
+			                                </c:choose>
 			                                <td>${b.writer}</td>
 			                                <td><fmt:formatDate value="${b.regDate}" pattern="yyyy-MM-dd" /></td>
 			                                <td>${b.viewCnt}</td>
+			                                <td style="text-transform: uppercase;">${b.answer}</td>
 			                            </tr>
 									</c:forEach>
                             	</c:otherwise>
@@ -63,7 +72,7 @@
                     </table>
                     <c:if test="${user !=null }">                    	
 	                    <div class="btnBox">
-	                    	<a class="wirteBtn" href="<c:url value="/board/writeForm.do?category=fr"/>">글작성</a>
+	                    	<a class="wirteBtn" href="<c:url value="/board/writeForm.do?category=${param.category }"/>">글작성</a>
 	                    </div>
                     </c:if>
                     </div>

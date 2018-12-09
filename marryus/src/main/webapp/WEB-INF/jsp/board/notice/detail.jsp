@@ -45,7 +45,7 @@
 							${board.content}
                         </div>
                         <div class="btnBox">
-                            <a href="#" class="listBtn" onclick="window.history.go(-1); return false;">목록</a>
+                            <a href="#" class="listBtn" onclick="location.href='<%= request.getHeader("REFERER") %>'; return false;">목록</a>
                         </div>
                     </div>
 				 </div>

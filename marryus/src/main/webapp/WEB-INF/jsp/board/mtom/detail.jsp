@@ -18,7 +18,7 @@
     <div id="wrap" class="community">
         <div class="sub_visual">
             <div class="titleBox">
-                <h2>신부 대기실</h2>
+                <h2>1:1 질문</h2>
             </div>
         </div>
         <section class="contents contents01">
@@ -27,8 +27,8 @@
                     <ul>
                         <li ><a href="<c:url value='/board/list.do?category=nt'/>">공지게시판</a></li>
                         <li ><a href="<c:url value='/board/review.do'/>">후기 게시판</a></li>
-                        <li  class="on"><a href="<c:url value='/board/list.do?category=fr'/>">신부 대기실    </a></li>
-                        <li ><a href="<c:url value='/board/list.do?category=mm'/>">1:1 질문</a></li>
+                        <li><a href="<c:url value='/board/list.do?category=fr'/>">신부 대기실    </a></li>
+                        <li class="on"><a href="<c:url value='/board/list.do?category=mm'/>">1:1 질문</a></li>
                         <li ><a href="<c:url value='/board/list.do?category=fq'/>">FAQ</a></li>
                     </ul>
                     <div class="communityContents">
@@ -45,35 +45,10 @@
                         <div class="contentsBody">
 							${board.content}
                         </div>
-                        <div class="commentBox">
-			       		<c:if test="${user != null }">	       			
-				       		<div class="inputBox">
-				       			<div class="row">	       				
-					       			<form id="insertComment" class="col-md-10">
-					       				<input type="hidden" name="boardNo" id="commentBoardNo" value="${board.boardNo }"/>
-					       				<input type="hidden" name="commWriter" value="${user.email}"/>
-					       				<textarea rows="3" cols="100" class="form-control" name="commContent" id="commentContent"></textarea>
-					       			</form>
-					       			<div class="col-md-2">
-					       				<a class="commentInputBtn" href="javascript:void(0)" onclick="insertComment()">댓글 남기기</a>
-					       			</div>
-				       			</div>
-				       		</div>
-			       		</c:if>
-			       		<ul class="commentList">
-			       				<li>
-				       				<div class="commentInfo">
-				       					<span class="commentName"></span>
-				       					<span class="commentDate"></span>
-				       					<a class="deleteComment" href="javascript:void(0)" onclick=""><i class="fas fa-trash-alt"></i> 삭제</a>
-			       					</div>
-				       				<div class="commentContents">
-				       					
-				       				</div>
-				       			</li>
-			       		</ul>
-			       </div>
-                        <div class="btnBox">
+                        <div class="answerBox">
+                        	
+                        </div>
+                       <div class="btnBox">
                         	<c:if test="${board.writer eq user.email }">
                         		<a class="modifyBtn" href="<c:url value="/board/updateForm.do?category=${board.category}&boardNo=${board.boardNo }"/>">수정</a>
                         		<a class="deleteBtn" href="<c:url value="/board/delete.do?category=${board.category}&boardNo=${board.boardNo }"/>"/>삭제</a>
@@ -93,7 +68,7 @@
 	<c:import url="/common/importSideBar.jsp" />
     <script>
         $(function(){
-        	commentList(${board.boardNo})
+        	answer(${board.boardNo})
         })
     		var options = {
                  'speed' : 500,				 		//스피드
@@ -104,56 +79,24 @@
              $('#sideBar').Floater(options);
         
 	          //댓글
-	          function commentList(boardNo){
-	          	$(".commentList").html("")
+	          function answer(questionNo){
+	          	$(".answerBox").html("")
 	          	$.ajax({
-	          		url : "<c:url value="/board/commentList.json"/>",
-	          		data : "boardNo="+boardNo
+	          		url : "<c:url value="/board/boardAnswer.json"/>",
+	          		data : "questionNo="+questionNo
 	          	}).done(function(data){
+	          		console.log(data)
 	          		var html ='';
-	          		for(var c of data){
-	          			html+='<li>'
-			       			html+='<div class="commentInfo">'
-			       			html+='<span class="commentName">'+c.commWriter+'</span>'
-			       			html+='<span class="commentDate">'+new Date(c.commDate).format("yyyy-MM-dd")+'</span>'
-			       			if(c.commWriter=="${user.email}"){		       				
-				       			html+='<a class="deleteComment" href="#" onclick="deleteComment('+c.commNo+','+boardNo+')"><i class="fas fa-trash-alt"></i> 삭제</a>'		
-			       			}
-			       			html+='</div>'		
-		       				html+='<div class="commentContents">'+c.commContent+'</div>'	
-			       			html+='</li>'		       			
+	          		if( data != null){
+	          			html = data.content
+	          			
+	          		}else{
+	          			html = "등록 된 답변이 없습니다."
 	          		}
-	          		$(".commentList").html(html)
+	          		$(".answerBox").html("답변 : "+html)
 	          	})
 	          } 
-			//댓글 입력
-			function insertComment(){
-				if($("#commentContent").val()==""){
-					alert("댓글 내용을 입력해주세요")
-					return;
-				}
-				var formData = new FormData($("#insertComment")[0])
-				$.ajax({
-					url : "<c:url value="/board/insertComment.json"/>",
-					data : formData,
-					type : "POST",
-					processData : false,
-					contentType : false
-				}).done(function(data){
-					$("#commentContent").val("")
-					commentList(formData.get("boardNo"))
-				});
-			};
-			
-			//댓글 삭제
-			function deleteComment(commNo,boardNo){
-				$.ajax({
-					url : "<c:url value="/board/deleteComment.json"/>",
-					data : "commNo="+commNo
-				}).done(function(data){
-					commentList(boardNo)
-				})			
-			}
+		
 	
 			//날짜 정리
             Date.prototype.format = function(f) {

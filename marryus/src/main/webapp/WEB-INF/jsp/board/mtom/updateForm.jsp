@@ -19,7 +19,7 @@
     <div id="wrap" class="community">
         <div class="sub_visual">
             <div class="titleBox">
-                <h2>신부 대기실</h2>
+                <h2>1:1 질문</h2>
                 
             </div>
         </div>
@@ -27,9 +27,9 @@
             <div class="container">
                 <div class="communityTab">
                     <ul>
-                        <li><a href="<c:url value='/board/list.do?category=nt'/>">공지게시판</a></li>
+                       <li ><a href="<c:url value='/board/list.do?category=nt'/>">공지게시판</a></li>
                         <li ><a href="<c:url value='/board/review.do'/>">후기 게시판</a></li>
-                        <li class="on"><a href="<c:url value='/board/list.do?category=fr'/>">신부 대기실    </a></li>
+                        <li  class="on"><a href="<c:url value='/board/list.do?category=fr'/>">신부 대기실    </a></li>
                         <li ><a href="<c:url value='/board/list.do?category=mm'/>">1:1 질문</a></li>
                         <li ><a href="<c:url value='/board/list.do?category=fq'/>">FAQ</a></li>
                     </ul>
@@ -42,8 +42,13 @@
 	                    			<div class="col-md-2">
 	                    				<label for="">제목</label>
 	                    			</div>
-	                    			<div class="col-md-10">
+	                    			<div class="col-md-8">
 	                    				<input type="text" name="title" id="insertTitle" class="form-control" value="${board.title }"/>
+	                    			</div>
+	                    			<div class=" col-md-2 checkbox-custom checkbox-inline checkbox-primary">
+	                    				<input type="hidden" name="secret" value="" id="secret">
+                    					<input type="checkBox" name="secretDummy" value="y" id="secretDummy"<c:if test='${board.secret=="y" }'>checked</c:if>>
+										<label class="check fas" for="secretDummy" >비밀글</label>
 	                    			</div>
 	                    		</div>
 	                    		<div class="form-group">
@@ -108,12 +113,27 @@
      	    });
      	     
      	    //전송버튼 클릭이벤트
-     	    $("#savebutton").click(function(){
+     	    $("#savebutton").click(function(e){
+     	    	e.preventDefault();
      	        //id가 smarteditor인 textarea에 에디터에서 대입
      	        editor_object.getById["smarteditor"].exec("UPDATE_CONTENTS_FIELD", []);
-     	         
+     	       var content = $("#smarteditor").val();
+     	         if($("input[name=title]").val()==""){
+	        	alert("제목을 입력해 주세요")
+	        	$("#"+area+"_title").focus()
+	        	return;
+	         }
+				if( content == ""  || content == null || content == '&nbsp;' || content == '<p>&nbsp;</p>')  {
+		             alert("내용을 입력해주세요.");
+		             editor_object.getById["smarteditor"].exec("FOCUS"); //포커싱
+		             return;
+		        } 
      	        // 이부분에 에디터 validation 검증
-     	         
+     	         if ($('input[name=secretDummy]').is(":checked")) {
+				    $('input[name=secret]').val('y');
+				} else {
+				    $('input[name=secret]').val('n');
+				}
      	        //폼 submit
      	        $("#editorform").submit();
      	    })

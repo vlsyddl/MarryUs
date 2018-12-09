@@ -22,9 +22,9 @@
     <div id="wrap" class="wedding">
         <div class="sub_visual">
             <div class="titleBox">
-                <h2>웨딩홀</h2>
+                <h2>후기게시판</h2>
                 <p>
-                    웨딩홀 &middot; 스몰웨딩 &middot; 셀프웨딩
+                    후기를 남겨주세요
                 </p>
             </div>
         </div>
@@ -256,7 +256,7 @@
             function commentList(boardNo){
             	$(".commentList").html("")
             	$.ajax({
-            		url : "<c:url value="/board/review/commentList.json"/>",
+            		url : "<c:url value="/board/commentList.json"/>",
             		data : "boardNo="+boardNo
             	}).done(function(data){
             		var html ='';
@@ -419,7 +419,7 @@
 			function insertComment(){
 				var formData = new FormData($("#insertComment")[0])
 				$.ajax({
-					url : "<c:url value="/board/review/insertComment.json"/>",
+					url : "<c:url value="/board/insertComment.json"/>",
 					data : formData,
 					type : "POST",
 					processData : false,
@@ -433,7 +433,7 @@
 			//댓글 삭제
 			function deleteComment(commNo,boardNo){
 				$.ajax({
-					url : "<c:url value="/board/review/deleteComment.json"/>",
+					url : "<c:url value="/board/deleteComment.json"/>",
 					data : "commNo="+commNo
 				}).done(function(data){
 					commentList(boardNo)

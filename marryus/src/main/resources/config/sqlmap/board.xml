@@ -11,6 +11,7 @@
 		<result column="view_cnt" property="viewCnt"/>
 		<result column="category" property="category" />
 		<result column="answer" property="answer" />
+		<result column="secret" property="secret" />
 		<collection property="attach" resultMap="attachMap" />
 	</resultMap>
 	
@@ -27,6 +28,12 @@
 		<result column="board_no" property="boardNo"/>
 		<result column="file_name" property="fileName"/>
 		<result column="file_path" property="filePath"/>
+	</resultMap>
+	
+	<resultMap type="Answer" id="answerMap">
+		<result column="question_no" property="questionNo"/>
+		<result column="answer_no" property="answerNo"/>
+		<result column="content" property="content"/>
 	</resultMap>
 	<!-- 게시판 목록 -->
 	<select id="boardList" parameterType="SearchForm" resultMap="boardMap">
@@ -62,13 +69,15 @@
 		where board_no = #{boardNo}
 	</select>
 
+	<!-- 파일 -->
 	<select id="attachDetail" parameterType="int" resultMap="attachMap"> 
 		select * 
 		 from mu_attach 
 		where board_no = #{boardNo} 
 		 order by file_no desc 
 		limit 1
-	</select>	
+	</select>
+		
 	<!-- 게시판 목록 -->
 	<select id="reviewList" parameterType="SearchForm" resultMap="boardMap">
 	select * 
@@ -93,9 +102,9 @@
 	<!-- 글작성 -->
 	<insert id="boardWrite" parameterType="Board"  useGeneratedKeys="true" keyProperty="no">
 		insert into mu_board(
-			title, writer, content, category
+			title, writer, content, category <if test="category=='mm'">, secret</if>
 		) values (
-		 #{title}, #{writer}, #{content}, #{category}
+		 #{title}, #{writer}, #{content}, #{category}<if test="category=='mm'">, #{secret}</if>
 		)
 	</insert>
 	
@@ -111,7 +120,7 @@
 	<!-- 게시물 수정 -->
 	<update id="updateBoard" parameterType="Board">
 		update mu_board
-		 SET title = #{title},content = #{content}
+		 SET title = #{title},content = #{content}<if test="category=='mm'">,secret =  #{secret}</if>
 		where board_no =  #{boardNo}
 	</update>
 	
@@ -148,6 +157,22 @@
 		delete from mu_comment
 		 where comm_no = #{commNo}
 	</delete>
+	
+	<!-- 조회수 카운트 -->
+	<update id="updateBoardCount" parameterType="int">
+		update mu_board
+		 set view_cnt = view_cnt+1
+		where board_no = #{boardNo}
+	</update>
+	
+	<!-- 답글 목록 -->
+	<select id="boardAnswer" parameterType="int" resultMap="answerMap">
+		select * 
+		 from mu_answer
+		where question_no = #{questionNo}
+		order by answer_no desc
+		limit 1
+	</select>
 </mapper>
 
 

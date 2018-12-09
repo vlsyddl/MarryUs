@@ -2,10 +2,10 @@ package kr.co.marryus.repository.mapper;
 
 import java.util.List;
 
+import kr.co.marryus.repository.domain.Answer;
 import kr.co.marryus.repository.domain.Attach;
 import kr.co.marryus.repository.domain.Board;
 import kr.co.marryus.repository.domain.Comment;
-import kr.co.marryus.repository.domain.Page;
 import kr.co.marryus.repository.domain.SearchForm;
 
 
@@ -24,4 +24,6 @@ public interface BoardMapper {
 	int updateComment(Comment comment);
 	int deleteBoard(int boardNo);
 	int deleteComment(int commNo);
+	int updateBoardCount(int boardNo);
+	Answer boardAnswer(int questionNo);
 }

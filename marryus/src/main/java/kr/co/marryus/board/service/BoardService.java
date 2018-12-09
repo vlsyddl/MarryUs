@@ -2,6 +2,7 @@ package kr.co.marryus.board.service;
 
 import java.util.List;
 
+import kr.co.marryus.repository.domain.Answer;
 import kr.co.marryus.repository.domain.Attach;
 import kr.co.marryus.repository.domain.Board;
 import kr.co.marryus.repository.domain.Comment;
@@ -25,5 +26,6 @@ public interface BoardService {
 	int updateComment(Comment comment);
 	int deleteBoard(int boardNo);
 	int deleteComment(int commNo);
-	
+	int updateBoardCount(int boardNo);
+	Answer boardAnswer(int questionNo);
 }

@@ -20,7 +20,7 @@
     <div id="wrap" class="community">
         <div class="sub_visual">
             <div class="titleBox">
-                <h2>신부 대기실</h2>
+                <h2>FAQ</h2>
             </div>
         </div>
         <section class="contents contents01">
@@ -29,43 +29,32 @@
                     <ul>
                         <li ><a href="<c:url value='/board/list.do?category=nt'/>">공지게시판</a></li>
                         <li ><a href="<c:url value='/board/review.do'/>">후기 게시판</a></li>
-                        <li class="on"><a href="<c:url value='/board/list.do?category=fr'/>">신부 대기실    </a></li>
+                        <li ><a href="<c:url value='/board/list.do?category=fr'/>">신부 대기실    </a></li>
                         <li ><a href="<c:url value='/board/list.do?category=mm'/>">1:1 질문</a></li>
-                        <li ><a href="<c:url value='/board/list.do?category=fq'/>">FAQ</a></li>
+                        <li class="on"><a href="<c:url value='/board/list.do?category=fq'/>">FAQ</a></li>
                     </ul>
                     <div class="communityContents">
-                        <table class="table table-hover">
-                            <tr>
-                                <th>번호</th>
-                                <th>제목</th>
-                                <th>작성자</th>
-                                <th>작성일</th>
-                                <th>조회수</th>
-                            </tr>
-						<c:choose>
-                            	<c:when test="${fn:length(list) eq 0}">
-                            		<tr>
-                            			<td colspan="5" style="text-align: center;">게시물이 존재하지 않습니다.</td>
-                            		</tr>
-                            	</c:when>
-                            	<c:otherwise>
-                            		<c:forEach var="b" items="${list}">
-			                            <tr>
-			                                <td>${b.boardNo}</td>
-			                                <td><a href='detail.do?boardNo=${b.boardNo}'>${b.title}</a></td>
-			                                <td>${b.writer}</td>
-			                                <td><fmt:formatDate value="${b.regDate}" pattern="yyyy-MM-dd" /></td>
-			                                <td>${b.viewCnt}</td>
-			                            </tr>
-									</c:forEach>
-                            	</c:otherwise>
-                            </c:choose>
-                    </table>
-                    <c:if test="${user !=null }">                    	
-	                    <div class="btnBox">
-	                    	<a class="wirteBtn" href="<c:url value="/board/writeForm.do?category=fr"/>">글작성</a>
-	                    </div>
-                    </c:if>
+                      <div class="faqWrap">
+                      	<c:choose>
+                           	<c:when test="${fn:length(list) eq 0}">
+                       			<h2 style="text-align: center;">게시물이 존재하지 않습니다.</h2>
+                           	</c:when>
+                           	<c:otherwise>
+                           		<c:forEach var="b" items="${list}" varStatus="status">
+		                           <dl>
+		                    			<dt class="title <c:if test="${status.index == 0}">on</c:if>">
+		                    				<a href="#">
+		                    					Q. <span>${b.title}</span> 
+		                    				</a>
+		                    			</dt>
+		                    			<dd class="content" <c:if test="${status.index == 0}">style="display: block;"</c:if>>
+		                    				A. <span>${b.content}</span>
+		                    			</dd>
+		                    		</dl>
+								</c:forEach>
+                           	</c:otherwise>
+                           </c:choose>
+                    	</div>
                     </div>
                     <c:import url="/common/importPageSearch.jsp"/>
 		            </div>
