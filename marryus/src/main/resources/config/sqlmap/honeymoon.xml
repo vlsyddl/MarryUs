@@ -44,6 +44,7 @@
 		<result column="mem_status" property="status" />
 		<result column="mem_name" property="name" />
 		<result column="mem_phone" property="phone" />
+		<collection property="comInfo" resultMap="comInfoMap"></collection>
 	</resultMap>
 	
 	<resultMap id="tenderMap" type="Tender">
@@ -143,86 +144,6 @@
 	</select>
 	
 	
-	<select id="searchHoneymoon" parameterType="Search" resultMap="auctionMap">
-		select @rownum:=@rownum+1 as no, a.*	 
-		from mu_auction a, (select @rownum:=0) TMP
-		 <if test="type != ''" >
-		 	<choose>
-		 		<when test="type==1">
-		 			where auction_type like concat('%', #{content}, '%')
-		 		</when>
-		 		<when test="type==2">
-		 			where auction_status like concat('%', #{content}, '%')
-		 		</when>
-		 		<when test="type==3">
-		 			where auction_sdate like concat('%', #{content}, '%')
-		 		</when>
-		 		<otherwise>
-		 			and auction_edate like concat('%', #{content}, '%')
-		 		</otherwise>
-	 		</choose>
-		 </if>
-		 order by a.com_info_no desc
-		 limit #{begin}, 10
-	</select>
-	
-	
-	<select id="selectHoneySearchCnt" parameterType="Search" resultType="int">
-		select count(*)
-		  from mu_auction
-		 <if test="type != ''">
-		 	<choose>
-		 		<when test="type==1">
-		 			where auction_type like concat('%', #{content}, '%')
-		 		</when>
-		 		<when test="type==2">
-		 			where auction_status like concat('%', #{content}, '%')
-		 		</when>
-		 		<when test="type==3">
-		 			where auction_sdate like concat('%', #{content}, '%')
-		 		</when>
-		 		<otherwise>
-		 			and auction_edate like concat('%', #{content}, '%')
-		 		</otherwise>
-		 	</choose>
-		 </if>
-	</select>
-	
-	
-<!-- 	<select id="searchHoneymoon" parameterType="Search" resultMap="comInfoMap"> -->
-<!-- 		select @rownum:=@rownum+1 as no, a.*	  -->
-<!-- 		from mu_company_info a, (select @rownum:=0) TMP -->
-<!-- 		 <if test="type != ''" > -->
-<!-- 		 	<choose> -->
-<!-- 		 		<when test="type==1"> -->
-<!-- 		 			where com_info_name like concat('%', #{content}, '%') -->
-<!-- 		 		</when> -->
-<!-- 		 		<otherwise> -->
-<!-- 		 			where com_info_addr like concat('%', #{content}, '%') -->
-<!-- 		 		</otherwise> -->
-<!-- 	 		</choose> -->
-<!-- 		 </if> -->
-<!-- 		 order by a.com_info_no desc -->
-<!-- 		 limit #{begin}, 10 -->
-<!-- 	</select> -->
-	
-	
-<!-- 	<select id="selectHoneySearchCnt" parameterType="Search" resultType="int"> -->
-<!-- 		select count(*) -->
-<!-- 		  from mu_company_info -->
-<!-- 		 <if test="type != ''"> -->
-<!-- 		 	<choose> -->
-<!-- 		 		<when test="type==1"> -->
-<!-- 		 			where com_info_name like concat('%', #{content}, '%') -->
-<!-- 		 		</when> -->
-<!-- 		 		<otherwise> -->
-<!-- 		 			where com_info_addr like concat('%', #{content}, '%') -->
-<!-- 		 		</otherwise> -->
-<!-- 	 		</choose> -->
-<!-- 		 </if> -->
-<!-- 	</select> -->
-	
-	
 	
 	
 	
@@ -314,6 +235,40 @@
 		  where mem_no = #{memNo}
 		    and com_info_type = 'h';
 	</select>
+	
+	
+	
+	
+		<select id="selectWeddingSearch" parameterType="Search" resultMap="comInfoMap">
+		 select @rownum:=@rownum+1 as no, f.*, i.*
+		   from mu_company_info i
+		  inner join mu_company_file f
+		     on f.com_info_no = i.com_info_no, (select @rownum:=0) TMP
+		  where i.com_info_type= 'h'
+		    and f.com_file_repr='Y'
+		 	<choose>
+		 		<when test="type==1">
+		 			and i.com_info_name like concat('%', #{content}, '%')
+		 		</when>
+		 		<when test="type==2">
+		 			and i.com_info_addr like concat('%', #{content}, '%')
+		 		</when>
+	 		</choose>
+		 order by i.com_info_no desc
+		 
+	</select>
+	
+	
+	
+		<select id="selectLoginCheck" parameterType="CompanyInfo" resultMap="memberMap">
+		select *
+		  from mu_member m
+		 inner join mu_company_info i
+		    on m.mem_no = i.mem_no
+		 where m.mem_no = #{memNo}
+		   and i.com_info_type = #{comInfoType}
+	</select>
+	
 	
 </mapper>
 

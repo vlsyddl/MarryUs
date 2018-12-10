@@ -16,8 +16,10 @@ import kr.co.marryus.repository.domain.Auction;
 import kr.co.marryus.repository.domain.Board;
 import kr.co.marryus.repository.domain.CompanyFile;
 import kr.co.marryus.repository.domain.CompanyInfo;
+import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.Page;
 import kr.co.marryus.repository.domain.PageResult;
+import kr.co.marryus.repository.domain.Search;
 import kr.co.marryus.repository.domain.Tender;
 import kr.co.marryus.repository.domain.Venue;
 import kr.co.marryus.wedservice.service.WeddingService;
@@ -129,6 +131,16 @@ public class ServiceController {
 	}
 	
 	
+	@RequestMapping("/weddingsearch.do")
+	@ResponseBody
+	public List<CompanyInfo> search( Search search){
+		System.out.println("search=====" + search);
+		List<CompanyInfo> scList = service.selectWeddingSearch(search);
+		return scList;
+	}
+	
+	
+	
 	
 	
 	//웨딩홀 역경매 리스트 디테일
@@ -162,9 +174,40 @@ public class ServiceController {
 	public String Tenderwrite(Tender tender) {
 		System.out.println(tender);
 		service.insertTender(tender);
-		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "weddingHall.do";
+		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "addauctionList.do";
 	}
 	
+	
+	// 검색
+//	@RequestMapping("/weddingsearch.do")
+//	@ResponseBody
+//	public List<Auction> search(@RequestParam(value = "pageNo", defaultValue = "1") int pageNo, Model model, Search search) throws Exception {
+//		// 총 게시글 수 표시
+//		int count = service.selectWeddingSearchCount(search);
+//		int lastPage = (int) Math.ceil(count / 10d);
+//		
+//		// 페이지 블럭 시작
+//		int pageSize = 10;
+//		int currTab = (pageNo - 1) / pageSize + 1;
+//		// 11번 부터 2페이지가 되는것
+//		int beginPage = (currTab - 1) * pageSize + 1;
+//		int endPage = currTab * pageSize < lastPage ? currTab * pageSize : lastPage;
+//		System.out.println(service.selectWeddingSearch(search));
+//		model.addAttribute("beginPage", beginPage);
+//		model.addAttribute("endPage", endPage);
+//		model.addAttribute("lastPage", lastPage);
+//		model.addAttribute("pageNo", pageNo);
+//		model.addAttribute("search", service.selectWeddingSearch(search));
+//		return service.selectWeddingSearch(search);
+//	}
+	
+	
+	@RequestMapping("/loginCheck.json")
+	@ResponseBody
+	public Member loginCheck(CompanyInfo companyInfo) {
+		System.out.println("service.loginCheck(companyInfo)" + service.loginCheck(companyInfo));
+		return service.loginCheck(companyInfo);
+	}
 	
 	
 	

@@ -48,6 +48,7 @@
 		<result column="mem_status" property="status" />
 		<result column="mem_name" property="name" />
 		<result column="mem_phone" property="phone" />
+		<collection property="comInfo" resultMap="comInfoMap"></collection>
 	</resultMap>
 	
 	
@@ -231,6 +232,46 @@
 					         #{tenderTitle}
 					         )
 	</insert>
+	
+	
+	
+	
+	
+	
+	
+	
+<!-- 자유게시판 검색 -->
+	<select id="selectWeddingSearch" parameterType="Search" resultMap="comInfoMap">
+		 select @rownum:=@rownum+1 as no, f.*, i.*
+		   from mu_company_info i
+		  inner join mu_company_file f
+		     on f.com_info_no = i.com_info_no, (select @rownum:=0) TMP
+		  where i.com_info_type= 'v'
+		    and f.com_file_repr='Y'
+		 	<choose>
+		 		<when test="type==1">
+		 			and i.com_info_name like concat('%', #{content}, '%')
+		 		</when>
+		 		<when test="type==2">
+		 			and i.com_info_addr like concat('%', #{content}, '%')
+		 		</when>
+	 		</choose>
+		 order by i.com_info_no desc
+		 
+	</select>
+	
+	
+	
+		<select id="selectLoginCheck" parameterType="CompanyInfo" resultMap="memberMap">
+		select *
+		  from mu_member m
+		 inner join mu_company_info i
+		    on m.mem_no = i.mem_no
+		 where m.mem_no = #{memNo}
+		   and i.com_info_type = #{comInfoType}
+	</select>
+	
+	
 	
 	
 </mapper>

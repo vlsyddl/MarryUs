@@ -20,13 +20,13 @@
 </style>
 </head>
 <body>
-     <c:import url="/common/importHeader.jsp" />
+	<c:import url="/common/importHeader.jsp" />
     <div id="wrap" class="wedding">
         <div class="sub_visual">
             <div class="titleBox">
-                <h2>허니문</h2>
+                <h2>기타 서비스</h2>
                 <p>
-                    하와이 &middot; 괌 &middot; 몰디브
+                    축가 &middot; 케이터링&middot; 프로포즈
                 </p>
             </div>
         </div>
@@ -34,8 +34,8 @@
             <div class="container">
                 <div class="contentsTab">
                     <ul>
-                        <li data-target="tab1" class="on"><a href="javascript:void(0);">업체리스트</a></li>
-                        <li data-target="tab2"><a href="javascript:void(0);">경매리스트</a></li>
+                        <li data-target="tab1" class="on"><a href="/service/serviceAdd/addcompanyList.do">업체리스트</a></li>
+                        <li data-target="tab2"><a href="<c:url value='/service/serviceAdd/addauctionList.do'/>">경매리스트</a></li>
                     </ul>
                     <div class="tabContents">
                         <div class="tab1 on">
@@ -58,17 +58,17 @@
 						    </div>
                     	<div>
                     	<div class="row itemWrap">
-                        <c:forEach var="h" items="${honeymoonList}">
-                                <div class="col-md-4 itemBox" data-href="${h.comInfoNo}">
+                        <c:forEach var="add" items="${addList}">
+                                <div class="col-md-4 itemBox" data-href="${add.comInfoNo}">
                                     <div class="item">
                                         <div class="imgBox">
-                                            <a href="#"><img src="/marryus/img/comProfile/${h.comFileName}" alt="" class="img-responsive center-block" onError="javascript:this.src='<c:url value="/resources/img/sorry.png"/>'"></a>
+                                            <a href="#"><img src="/marryus/img/comProfile/${add.comFileName}" alt="" class="img-responsive center-block" onError="javascript:this.src='<c:url value="/resources/img/sorry.png"/>'"></a>
                                         </div>
                                         <div class="textBox">
-                                            <h5><a href="#">${h.comInfoName}</a></h5>
+                                            <h5><a href="#">${add.comInfoName}</a></h5>
                                             <p>
-                                                ${h.comInfoAddr} <br/>
-                                                ${h.comInfoAddrDetail}
+                                                ${add.comInfoAddr} <br/>
+                                                ${add.comInfoAddrDetail}
                                             </p>
                                         </div>
                                         <div class="infoBox">
@@ -85,7 +85,7 @@
 		                    	<ul class="pagination">
 								<li><a
 								<c:choose>
-							      <c:when test="${beginPage!=1}">href="honeymoon.do?pageNo=${beginPage-1}"</c:when>
+							      <c:when test="${beginPage!=1}">href="AddCompanyList.do?pageNo=${beginPage-1}"</c:when>
 							      <c:otherwise>href="#"</c:otherwise>
 							    </c:choose>
 								aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
@@ -93,12 +93,12 @@
 								<c:forEach var="i" begin="${beginPage}" end="${endPage}">
 									<li><a
 									<c:choose>
-							   		<c:when test='${requestScope["javax.servlet.forward.request_uri"].substring(20) eq "/category.do"}'>
-							    	href="<c:url value='category.do?pageNo=${i-1}&select=${result.select}&text=${result.text}' />"
+							   		<c:when test='${requestScope["javax.servlet.forward.request_uri"].substring(20) eq "/search.do"}'>
+							    	href="<c:url value='search.do?pageNo=${i-1}&type=${result.type}&content=${result.content}' />"
 							    </c:when>
 								
 							    <c:otherwise>
-							     href="honeymoon.do?pageNo=${i}"
+							     href="AddCompanyList.do?pageNo=${i}"
 							     </c:otherwise>
 							      </c:choose>>
 		
@@ -107,7 +107,7 @@
 		
 							<li><a
 								<c:choose>
-							      	<c:when test="${endPage != lastPage}"> href="honeymoon.do?pageNo=${endPage+1}" </c:when>
+							      	<c:when test="${endPage != lastPage}"> href="AddCompanyList.do?pageNo=${endPage+1}" </c:when>
 							    	<c:otherwise>href="#"</c:otherwise>
 						    	</c:choose>
 								aria-label="Next"> <span aria-hidden="true">&raquo;</span>
@@ -117,9 +117,8 @@
 						 </nav>
 		                    
                           
-
                         </div>
-                         <div class="searchWrap">
+                        <div class="searchWrap">
                           	 <form action="weddingsearch.do" id="searchForm">
 	                                <select class="form-control" name="type" id="searchType">
 	                                    <option value="1">여행사 이름</option>
@@ -131,104 +130,7 @@
 	                                </span>
                                </form>
                           </div>
-
                   		</div>
-                        </div>
-                        <div class="tab2">
-                        <!-- Button trigger modal -->
-						<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#insertModal">
-						  역경매 신청하기
-						</button>
-						
-						<!-- Modal -->
-						<div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-						  <div class="modal-dialog">
-						    <div class="modal-content">
-						      <div class="modal-header">
-						        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						        <h4 class="modal-title" id="myModalLabel">웨딩홀 역경매 신청서</h4>
-						      </div>
-						      	      <form action="Honeywrite.do"  method="post" enctype="multipart/form-data">
-							      <div class="modal-body">
-								        <input type="hidden" name="memNo" value="${user.no}" />
-								        <input type="hidden" name="auctionType" value="h" />
-								       
-								        <br>
-											희망여행지: <input type="text" name="honeyPlace">
-											<br>
-	
-										  <div class="input" >
-		                                  	희망여행날짜 :  <input type="text" name="honeyDate" id="date_pretty"/> ~ 
-		                                  	            <input type="text" name="honeyDate" id="datepicker1">
-		                                  </div>
-				                                                              기타의견사항: <textarea name="honeyHope" id="" class="wish" rows="3" cols="30"></textarea><br>
-				                            <div>
-				                                                             희망예산:<input type="text" name="honeyBudget">
-				                            </div>                                 
-							      </div>
-							      <div class="modal-footer">
-							        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-							        <button type="submit" class="btn btn-primary">신청</button>
-							      </div>
-	                         </form>
-						    </div>
-						  </div>
-						</div>
-                        
-                   <table class="table table-hover serviceTable">
-                            <tr>
-                                <th>경매번호</th>
-                                <th>경매신청자</th>
-                                <th>경매타입</th>
-                                <th>경매상태</th>
-                                <th>역경매 시작일</th>
-                                <th>역경매 종료일</th>
-                            </tr>
-                          <c:forEach var="a" items="${AuctionList}">
-                            <tr>
-                                <td>${a.auctionNo}</td>
-                                <td><a href="#" data-href="${a.auctionNo}" data-type="${a.auctionType}" data-no="${a.member.no}" class="col-md-4 TravelBox">${a.member.name}</a></td>
-                                <td>허니문</td>
-                                <td>${a.auctionStatus}</td>
-                                <td><fmt:formatDate value="${a.auctionSdate}" pattern="yyyy-MM-dd" /></td>
-                                <td><fmt:formatDate value="${a.auctionEdate}" pattern="yyyy-MM-dd" /></td>
-                            </tr>
-                            </c:forEach>
-                    </table>
-                      <nav>
-		                    	<div class="text-center">
-		                    	<ul class="pagination">
-								<li><a
-								<c:choose>
-							      <c:when test="${beginPage!=1}">href="honeymoon.do?pageNo=${beginPage-1}"</c:when>
-							      <c:otherwise>href="#"</c:otherwise>
-							    </c:choose>
-								aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-								</a></li>
-								<c:forEach var="i" begin="${beginPage}" end="${endPage}">
-									<li><a
-									<c:choose>
-							   		<c:when test='${requestScope["javax.servlet.forward.request_uri"].substring(20) eq "/category.do"}'>
-							    	href="<c:url value='category.do?pageNo=${i-1}&select=${result.select}&text=${result.text}' />"
-							    </c:when>
-								
-							    <c:otherwise>
-							     href="honeymoon.do?pageNo=${i}"
-							     </c:otherwise>
-							      </c:choose>>
-		
-										${i}</a></li>
-							</c:forEach>
-		
-							<li><a
-								<c:choose>
-							      	<c:when test="${endPage != lastPage}"> href="honeymoon.do?pageNo=${endPage+1}" </c:when>
-							    	<c:otherwise>href="#"</c:otherwise>
-						    	</c:choose>
-								aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-							</a></li>
-							</ul>
-						 </nav>
                         </div>
                     </div>
                 </div>
@@ -243,6 +145,7 @@
 <script>
 
 
+
 $("#searchBtn").click(function () {
 	 if ($("#searchContent").val() == "") {
 		 alert("검색어를 입력해주세요.");
@@ -251,7 +154,7 @@ $("#searchBtn").click(function () {
 	 var serialize = $("#searchForm").serialize() 
 	 console.log("시리얼라이지====" + serialize)
 	 $.ajax({
-		url : "<c:url value='/service/honeymoon/weddingsearch.do' />",
+		url : "<c:url value='/service/serviceAdd/weddingsearch.do' />",
 		method : "POST",
 		data : $("#searchForm").serialize(),
 		cache : false
@@ -280,31 +183,29 @@ $("#searchBtn").click(function () {
 		 var html = "";
 		for(var w of data){
 			html+= '<div class="col-md-4 itemBox" data-href="'+w.comInfoNo+'">'
-       	    html+='<div class="item">'
-          	html+='<div class="imgBox">'
-           html+= '<a href="#"><img src="/marryus/img/comProfile/'+w.comFileName+'" alt="" class="img-responsive center-block" onError="javascript:this.src=\'/marryus/resources/img/sorry.png\'"/></a>'
-           html+='</div>'
-           html+='<div class="textBox">'
-           html+='<h5><a href="#">'+w.comInfoName+'</a></h5>'
-           html+='<p>'
-           html+=' '+w.comInfoAddr+' <br/>'
-           html+='  '+w.comInfoAddrDetail+' '
-           html+='</p>'
-           html+='</div>'
-           html+='<div class="infoBox">'
-           html+='<ul>'
-           html+='<li><span>별점</span> <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></li>'
-           html+='</ul>'
-           html+='</div>'
-           html+= '<a href="#" class="itemBtn">관심업체 등록</a>'
-       	   html+='</div>'
-       	   html+='</div>'
+        	html+='<div class="item">'
+            html+='<div class="imgBox">'
+            html+= '<a href="#"><img src="/marryus/img/comProfile/'+w.comFileName+'" alt="" class="img-responsive center-block" onError="javascript:this.src=\'/marryus/resources/img/sorry.png\'"/></a>'
+            html+='</div>'
+            html+='<div class="textBox">'
+            html+='<h5><a href="#">'+w.comInfoName+'</a></h5>'
+            html+='<p>'
+            html+=' '+w.comInfoAddr+' <br/>'
+            html+='  '+w.comInfoAddrDetail+' '
+            html+='</p>'
+            html+='</div>'
+            html+='<div class="infoBox">'
+            html+='<ul>'
+            html+='<li><span>별점</span> <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></li>'
+            html+='</ul>'
+            html+='</div>'
+            html+= '<a href="#" class="itemBtn">관심업체 등록</a>'
+        	html+='</div>'
+        	html+='</div>'
 		}
 		$(".itemWrap").html(html);
 	 });
 });
-
-
 
 
 
@@ -320,11 +221,6 @@ var options = {
         'default_x' : false 				//레이어가 붙는 아이디 
     }
     $('#sideBar').Floater(options);
-
-
-
-
-
 
 //마커를 담을 배열입니다
 var markers = [];
@@ -543,12 +439,6 @@ function removeAllChildNods(el) {
     }
 }
 
-
-
-
-
-
-
   $(document).ready(function(){
 	    $("#date_pretty").datepicker({ 
 	    });
@@ -557,14 +447,6 @@ function removeAllChildNods(el) {
 	    var prettyDate = month + '/' + myDate.getDate() + '/' + myDate.getFullYear();
 	    $("#date_pretty").val(prettyDate);
 	});
-  $(document).ready(function(){
-	    $("#datepicker1").datepicker({ 
-	    });
-	    var myDate = new Date();
-	    var month = myDate.getMonth() + 1;
-	    var prettyDate = month + '/' + myDate.getDate() + '/' + myDate.getFullYear();
-	    $("#datepicker1").val(prettyDate);
-	});
 
 //디테일 모달
 function detail(comInfoNo){
@@ -572,7 +454,7 @@ function detail(comInfoNo){
 	var slideBox = $(".slideBox")
 	slideBox.find("ul").html("")
 	$.ajax({
-		url : "<c:url value='/service/honeymoon/comHoneyDetail.do'/>",
+		url : "<c:url value='/service/serviceAdd/AddcompanyDetail.do'/>",
 		data : "comInfoNo="+comInfoNo
 	}).done(function(data){
 		console.log(data)
@@ -592,107 +474,6 @@ function detail(comInfoNo){
    
 
 }
-
-// 역경매 리스트 디테일
-function honeyDetail(auctionNo, auctionType){
-	var modal = $("#TravelBoxModal")
-	var slideBox = $(".slideBox")
-	console.log("auctionNo: =====" + auctionNo)
-	$.ajax({
-		url : "<c:url value='/service/honeymoon/honeyAuctionDetail.do'/>",
-		data : "auctionNo="+auctionNo
-	}).done(function(data){
-		console.log(data)
-        modal.find(".Teavel").find(".hopeTravel").children("dd").html(data.auction.honeyPlace)
-        modal.find(".Teavel").find(".TravelDate").children("dd").html(data.auction.honeyDate)
-        modal.find(".Teavel").find(".Hope").children("dd").html(data.auction.honeyHope)
-        modal.find(".contentsBox").html(data.auction.comInfoContent)
-        slideBox.find("dd").html()
-        $(".insertBox").attr('data-href', auctionNo);
-		$(".insertBox").attr("data-auctype", auctionType);
-		$(".insertBox").attr("disabled", true);
-
-		loginCheck(auctionType);
-	})
-   
-
-}
-
-
-
-function loginCheck(type) {
-	
-	$.ajax({
-		url : '<c:url value="/service/honeymoon/loginCheck.json" />',
-		method : 'POST',
-		data : {
-			"memNo" : $("#memCheckNo").val(),
-			"comInfoType" : type
-		},
-		cache : false
-	}).done(function (data) {
-		console.log($("#memCheckNo").val());
-		console.log(type);
-		console.log("logInCheck" + data.type);
-		console.log("loginCheck ===== " + data.comInfo.comInfoType);
-		
-		if ( data.type == "mc" && data.comInfo.comInfoType == type ) {
-			$(".insertBox").attr("disabled", false);
-		}
-		console.log("왔다링~~");
-	});
-};
-
-
-
-
-
-
-
-
-function tenderWrite(auctionNo){
-	console.log("tenderWrite...auctionNo ======= " + auctionNo);
-	$.ajax({
-		url: "<c:url value='/service/honeymoon/TenderwriteForm.do'/>",
-		data: "auctionNo=" + auctionNo
-	}).done(function(data){
-		console.dir("dir ======= " + data)
-// 		console.log("data.tender.comInfoNo" + data.tender.comInfoNo);
-// 		console.log("data.tender" + data.tender);
-		var html="";
-		var cominfo= "";
-		html += '<input type="hidden" name="auctionNo" value="'+auctionNo+'"/>'
-// 		cominfo += '<input type="hidden" name="comInfoNo" value="'+data.tender.comInfoNo+'"/>'
-		
-		$(".auction-no").html(html);
-// 		$(".comInfo-no").html(cominfo);
-	})
-}
-
-function comInfoWrite(memNo){
-	console.log("comInfoWrite...memNo ======= " + memNo);
-	$.ajax({
-		url: "<c:url value='/service/honeymoon/comInfoWrite.do'/>",
-		data: "memNo=" + memNo
-	}).done(function(data){
-		console.dir("dir ======= " + data)
-		console.log("log ======= " + data)
-// 		console.log("data.tender.comInfoNo" + data.tender.comInfoNo);
-// 		console.log("data.tender" + data.tender);
-// 		var html="";
-		var comInfo= "";
-// 		html += '<input type="hidden" name="auctionNo" value="'+auctionNo+'"/>'
-		comInfo += '<input type="hidden" name="comInfoNo" value="'+data.comInfoNo+'"/>'
-		
-// 		$(".auction-no").html(html);
-		$(".comInfo-no").html(comInfo);
-	})
-}
-
-
-
-
-
 $(function(){
 	$(".itemBox").click(function(e){
 		  e.preventDefault();
@@ -713,41 +494,7 @@ $(function(){
 	  })
 
 })
-
-$(function(){
-	$(".TravelBox").click(function(e){
-		  e.preventDefault();
-		  honeyDetail($(this).data("href"), $(this).data("type"), $(this).data("no"))
-	      $('#TravelBoxModal').modal('show')
-	    
-	  });
-	      $(".insertBox").click(function(e){
-			  e.preventDefault();
-			  console.log("입찰하기 클릭" + $(this).data("href"));
-			  tenderWrite($(this).data("href"));
-		      comInfoWrite($("#memCheckNo").val());
-		      $('#TravelBoxModal').modal('hide')
-		      $('#insertAuction').modal('show')
-		    
-		  });
-
-})
-
-
-
-
-
-
-
-function maskingName(strName) {
-    if(strName === undefined || strName === '') {
-        return '';
-    }
-    var pattern = /.$/; // 정규식
-    return strName.replace(pattern, "*");
-}
-
-
+  
   
   </script>
 <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -790,104 +537,5 @@ function maskingName(strName) {
     </div>
   </div>
 </div>
-
-
-<div class="modal fade" id="TravelBoxModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog  modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel"></h4>
-      </div>
-      <div class="modal-body">
-        <div class="Teavel">
-	        <dl class="mem">
-	            <input type="hidden" id="memCheckNo" value="${user.no}"/>
-            </dl>
-            <dl class="hopeTravel">
-                <dt>희망여행지 : </dt>
-                <dd></dd>
-            </dl>
-            <dl class="TravelDate">
-                <dt>여행일자: </dt>
-                <dd></dd>
-            </dl>
-            <dl class="Hope">
-                <dt>희망사항 : </dt>
-                <dd></dd>
-            </dl>
-        </div>
-        <div class="contentsBox">
-
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary insertBox"><a href="#">입찰하기</a></button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-	<div class="modal fade" id="insertAuction" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	  <div class="modal-dialog  modal-lg">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title" id="myModalLabel"></h4>
-	      	</div>
-				<form action="Tenderwrite.do"  method="post" enctype="multipart/form-data">
-				      <div class="modal-body">
-				      <div class="form-group">
-				      <input type="hidden" name="memNo" value="${user.no}" />
-<%-- 				      <input type="hidden" name="auctionNo" value="1" /> --%>
-					  	</div>
-					  	<div class="auction-no">
-					  	</div>
-					  	<div class="comInfo-no">
-					  	</div>
-						<div class="form-group">
-					  		<div class="col-md-4">
-					  			제목:<textarea class="form-control" id="tenderTitle" type="text" name="tenderTitle" placeholder="제목을 입력 해 주세요" /></textarea>	
-					  		</div>
-					  	</div><br>
-						
-					  	<h2>서비스 소개</h2>
-					  	<div class="form-group">
-					  		<div class="col-md-4">	
-					  			<textarea name="tenderInfo" id="tenderInfo" class="wish form-control" rows="3" cols="30"></textarea>
-					  		</div>
-					  	</div><br>
-					  	
-					  	<h2>입찰 예산</h2>
-					  	<div class="form-group">
-					  		<div class="col-md-4">
-					  			<input type="text" id="tenderBudget" name="tenderBudget" class="form-control"/>
-					  		</div>
-					  	</div>
-				      </div>
-				      <div class="modal-footer">
-				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				        <button type="submit" class="btn btn-primary">입찰하기</button>
-				      </div>
-				</form>
-	    </div>
-	  </div>
-	</div>
-
-
-
 </body>
 </html>

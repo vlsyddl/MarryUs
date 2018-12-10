@@ -11,6 +11,7 @@ import kr.co.marryus.repository.domain.Auction;
 import kr.co.marryus.repository.domain.CompanyFile;
 import kr.co.marryus.repository.domain.CompanyInfo;
 import kr.co.marryus.repository.domain.Honeymoon;
+import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.Page;
 import kr.co.marryus.repository.domain.Search;
 import kr.co.marryus.repository.domain.Tender;
@@ -96,5 +97,17 @@ public class HoneymoonServiceImpl implements HoneymoonService{
 	public CompanyInfo selectCompanyDetail(int memNo) {
 		return mapper.selectCominfo(memNo);
 	}
+	
+	@Override
+	public List<CompanyInfo> selectWeddingSearch(Search search) {
+		return mapper.selectWeddingSearch(search);
+	}
+
+
+	@Override
+	public Member loginCheck(CompanyInfo companyInfo) {
+		return mapper.selectLoginCheck(companyInfo);
+	}
+
 
 }

@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class ServiceAdd {
 	private int auctionNo;
-	private String serviceType;
+	private String serviceTitle;
 	private String serviceDetail;
 }

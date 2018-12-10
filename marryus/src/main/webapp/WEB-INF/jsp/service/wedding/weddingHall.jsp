@@ -120,19 +120,19 @@
 							</div>
 						 </nav>
 		                    
+                        </div>
                           <div class="searchWrap">
-                          	 <form action="" id="search">
-                                <select class="form-control" id="searchType">
-                                    <option value="title" selected>제목</option>
-                                    <option value="writer">글쓴이</option>
-                                </select>
-                                <input type="text" class="form-control" id="searchContent" placeholder="Search for...">
-                                <span class="input-group-btn">
-                                  <button class="btn btn-default" type="button" id="searchBtn"><i class="fas fa-search"></i></button>
-                                </span>
+                          	 <form action="weddingsearch.do" id="searchForm">
+	                                <select class="form-control" name="type" id="searchType">
+	                                    <option value="1">홀 이름</option>
+	                                    <option value="2">홀 지역</option>
+	                                </select>
+	                                <input type="text" class="form-control" name="content" id="searchContent" placeholder="Search for...">
+	                                <span class="input-group-btn">
+	                                  <button class="btn btn-default" type="button" id="searchBtn"><i class="fas fa-search"></i></button>
+	                                </span>
                                </form>
                           </div>
-                        </div>
 
                   		</div>
                         </div>
@@ -172,6 +172,7 @@
 								        	<div class="col-md-10">
 								        		<input type="text" name="weddingDate" id="date_pretty" class="form-control"/>
 								        	</div>
+								        	
 								        </div>
 		                                <div class="btn-group" data-toggle="buttons" name="weddingTime">
 											  <label class="btn btn-primary active" >
@@ -240,7 +241,7 @@
                          <c:forEach var="a" items="${AuctionList}">
                             <tr>
                                 <td>${a.auctionNo}</td>
-                                <td><a href="#" data-href="${a.auctionNo}" class="col-md-4 weddingBox">${a.member.name}</a></td>
+                                <td><a href="#" data-href="${a.auctionNo}" data-type="${a.auctionType}" data-no="${a.member.no}" class="col-md-4 weddingBox">${a.member.name}</a></td>
                                 <td>웨딩홀</td>
                                 <td>${a.auctionStatus}</td>
                                 <td><fmt:formatDate value="${a.auctionSdate}" pattern="yyyy-MM-dd" /></td>
@@ -295,6 +296,73 @@
 
 <!-- 카카오지도 -->
 <script>
+
+
+$("#searchBtn").click(function () {
+	 if ($("#searchContent").val() == "") {
+		 alert("검색어를 입력해주세요.");
+		 return false;
+	 }
+	 var serialize = $("#searchForm").serialize() 
+	 console.log("시리얼라이지====" + serialize)
+	 $.ajax({
+		url : "<c:url value='/service/wedding/weddingsearch.do' />",
+		method : "POST",
+		data : $("#searchForm").serialize(),
+		cache : false
+	 }).done (function (data) {
+		 $(function(){
+				$(".itemBox").click(function(e){
+					  e.preventDefault();
+					  detail($(this).data("href"))
+				      $('#detailModal').modal('show')
+				      var bx;
+					  $('#detailModal').on('shown.bs.modal', function () {
+					    if(bx === undefined){
+					      bx= slider = $('.slideBox ul').bxSlider({
+					  	    mode: 'fade',
+						    captions: true
+						});
+					    } else {
+					      bx.reloadSlider(); 
+					    }
+					  });
+				    
+				  });
+
+			});
+		 console.log(data)
+		 var html = "";
+		for(var w of data){
+			html+= '<div class="col-md-4 itemBox" data-href="'+w.comInfoNo+'">'
+         	html+='<div class="item">'
+            html+='<div class="imgBox">'
+            html+= '<a href="#"><img src="/marryus/img/comProfile/'+w.comFileName+'" alt="" class="img-responsive center-block" onError="javascript:this.src=\'/marryus/resources/img/sorry.png\'"/></a>'
+            html+='</div>'
+            html+='<div class="textBox">'
+            html+='<h5><a href="#">'+w.comInfoName+'</a></h5>'
+            html+='<p>'
+            html+=' '+w.comInfoAddr+' <br/>'
+            html+='  '+w.comInfoAddrDetail+' '
+            html+='</p>'
+            html+='</div>'
+            html+='<div class="infoBox">'
+            html+='<ul>'
+            html+='<li><span>별점</span> <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></li>'
+            html+='</ul>'
+            html+='</div>'
+            html+= '<a href="#" class="itemBtn">관심업체 등록</a>'
+         	html+='</div>'
+         	html+='</div>'
+         		
+		}
+		$(".itemWrap").html(html);
+		
+	 });
+});
+
+
+
 
 
 
@@ -615,7 +683,7 @@ function detail(comInfoNo){
 }
 	
 // 역경매 리스트 디테일
-function weddingAuctionDetail(auctionNo){
+function weddingAuctionDetail(auctionNo, auctionType){
 	var modal = $("#weddingDetailModal")
 	var slideBox = $(".slideBox")
 	$.ajax({
@@ -633,10 +701,39 @@ function weddingAuctionDetail(auctionNo){
        
         slideBox.find("dd").html()
         $(".insertBox").attr('data-href', auctionNo);
+		$(".insertBox").attr("data-auctype", auctionType);
+		$(".insertBox").attr("disabled", true);
+
+		loginCheck(auctionType);
 	});
    
 
 };
+
+
+function loginCheck(type) {
+	
+	$.ajax({
+		url : '<c:url value="/service/wedding/loginCheck.json" />',
+		method : 'POST',
+		data : {
+			"memNo" : $("#memCheckNo").val(),
+			"comInfoType" : type
+		},
+		cache : false
+	}).done(function (data) {
+		console.log($("#memCheckNo").val());
+		console.log(type);
+		console.log("logInCheck" + data.type);
+		console.log("loginCheck ===== " + data.comInfo.comInfoType);
+		
+		if ( data.type == "mc" && data.comInfo.comInfoType == type ) {
+			$(".insertBox").attr("disabled", false);
+		}
+		console.log("왔다링~~");
+	});
+};
+
 
 
 function tenderWrite(auctionNo){
@@ -708,7 +805,7 @@ $(function(){
 
 	$(".weddingBox").click(function(e){
 		  e.preventDefault();
-		  weddingAuctionDetail($(this).data("href"))
+		  weddingAuctionDetail($(this).data("href"),$(this).data("type"), $(this).data("no"))
 	      $('#weddingDetailModal').modal('show')
 	      $('#weddingDetailModal').on('shown.bs.modal', function () {
 		  });
@@ -717,7 +814,7 @@ $(function(){
 		  e.preventDefault();
 		  console.log("입찰하기 클릭" + $(this).data("href"));
 	      tenderWrite($(this).data("href"));
-	      comInfoWrite($(".mem > #memNo").val());
+	      comInfoWrite($("#memCheckNo").val());
 	      $('#weddingDetailModal').modal('hide')
 	      $('#insertAuction').modal('show')
 	    
@@ -726,38 +823,6 @@ $(function(){
 	  
 	  
 	  
-
-	$(function(){
-		    //전역변수선언
-		    var editor_object = [];
-		     
-		    nhn.husky.EZCreator.createInIFrame({
-		        oAppRef: editor_object,
-		        elPlaceHolder: "smarteditor",
-		        sSkinURI: "/marryus/resources/se2/SmartEditor2Skin.html",  
-		        htParams : {
-		            // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
-		            bUseToolbar : true,            
-		            // 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
-		            bUseVerticalResizer : true,    
-		            // 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
-		            bUseModeChanger : true,
-		        }
-		    });
-		     
-		    //전송버튼 클릭이벤트
-		    $("#savebutton").click(function(){
-		        //id가 smarteditor인 textarea에 에디터에서 대입
-		        editor_object.getById["smarteditor"].exec("UPDATE_CONTENTS_FIELD", []);
-		         
-		        // 이부분에 에디터 validation 검증
-		         
-		        //폼 submit
-		        $("#frm").submit();
-		    })
-		})
-	 
-		
 
 
 
@@ -814,7 +879,7 @@ $(function(){
       <div class="modal-body">
         <div class="wedVenue">
             <dl class="mem">
-            <input type="hidden" id="memNo" value="${user.no}"/>
+            <input type="hidden" id="memCheckNo" value="${user.no}"/>
             </dl>
             <dl class="venue">
                 <dt>희망예식장소 : </dt>

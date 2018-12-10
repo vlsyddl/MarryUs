@@ -6,6 +6,7 @@ import kr.co.marryus.repository.domain.Auction;
 import kr.co.marryus.repository.domain.CompanyFile;
 import kr.co.marryus.repository.domain.CompanyInfo;
 import kr.co.marryus.repository.domain.Honeymoon;
+import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.Page;
 import kr.co.marryus.repository.domain.Search;
 import kr.co.marryus.repository.domain.Tender;
@@ -38,4 +39,9 @@ public interface HoneymoonService {
 	Auction selectAuctionDetail(int auctionNo);
 	CompanyInfo selectCompanyDetail(int memNo);
 	
+	
+	//검색
+	List<CompanyInfo> selectWeddingSearch(Search search);
+	
+	Member loginCheck(CompanyInfo companyInfo);
 }

@@ -490,3 +490,41 @@
 	font-size: 1.2em;
 }
 
+
+
+
+
+
+
+
+#serviceAddDetailModal .ServiceAdd{
+	border-top: 2px solid #000;
+	padding: 15px 0;
+	text-align: left;
+}
+#serviceAddDetailModal .ServiceAdd dl{
+	width: 100%;
+	padding: 10px 0;
+}
+#serviceAddDetailModal .ServiceAdd dl+dl{
+	
+	border-top: 1px dashed #d9d9d9;
+}
+#serviceAddDetailModal .ServiceAdd dl::after{
+	display: block;
+	clear: both;
+	content:'';
+}
+#serviceAddDetailModal .ServiceAdd dl dt{
+	width: 10%;
+	float: left;
+	font-size: 1.2em;
+	font-weight: bold;
+}
+#serviceAddDetailModal .ServiceAdd dl dd{
+	width: 90%;
+	float: left;
+	font-size: 1.2em;
+}
+
+
