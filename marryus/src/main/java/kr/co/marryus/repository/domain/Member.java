@@ -14,5 +14,6 @@ public class Member {
 	// collection
 	private General general;
 	private Company company;
+	private CompanyInfo comInfo;
 
 }

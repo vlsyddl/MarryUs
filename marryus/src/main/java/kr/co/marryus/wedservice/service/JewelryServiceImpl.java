@@ -8,27 +8,26 @@ import org.springframework.stereotype.Service;
 import kr.co.marryus.repository.domain.Auction;
 import kr.co.marryus.repository.domain.CompanyFile;
 import kr.co.marryus.repository.domain.CompanyInfo;
-import kr.co.marryus.repository.domain.Dress;
-import kr.co.marryus.repository.domain.Makeup;
+import kr.co.marryus.repository.domain.Jewelry;
+import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.Page;
-import kr.co.marryus.repository.domain.Studio;
 import kr.co.marryus.repository.domain.Tender;
-import kr.co.marryus.repository.mapper.SDMeMapper;
+import kr.co.marryus.repository.mapper.JewelryMapper;
 
 @Service
-public class SDMeServiceImpl implements SDMeService {
+public class JewelryServiceImpl implements JewelryService {
 
 	@Autowired
-	private SDMeMapper mapper;
-
+	private JewelryMapper mapper;
+	
 	@Override
-	public List<CompanyInfo> sdmeCompanyList(Page page) {
-		return mapper.sdmeCompanyList(page);
+	public List<CompanyInfo> jewelryCompanyList(Page page) {
+		return mapper.jewelryCompanyList(page);
 	}
 
 	@Override
-	public int sdmeCompanyCount() {
-		return mapper.sdmeCompanyCount();
+	public int jewelryCompanyCount() {
+		return mapper.auctionCount();
 	}
 
 	@Override
@@ -42,17 +41,17 @@ public class SDMeServiceImpl implements SDMeService {
 	}
 
 	@Override
-	public List<Auction> sdmeAuctionList(Page page) {
+	public List<Auction> jewelryAuctionList(Page page) {
 		return mapper.auctionList(page);
 	}
 
 	@Override
-	public int sdmeAuctionCount() {
+	public int jewelryAuctionCount() {
 		return mapper.auctionCount();
 	}
 
 	@Override
-	public Auction sdmeAuctionDetail(Auction auction) {
+	public Auction jewelryAuctionDetail(Auction auction) {
 		return mapper.auctionDetail(auction);
 	}
 
@@ -62,18 +61,8 @@ public class SDMeServiceImpl implements SDMeService {
 	}
 
 	@Override
-	public void writeStudio(Studio studio) {
-		mapper.insertStudioAuction(studio);
-	}
-
-	@Override
-	public void writeDress(Dress dress) {
-		mapper.insertDressAuction(dress);
-	}
-
-	@Override
-	public void writeMakeup(Makeup makeup) {
-		mapper.insertMakeupAuction(makeup);
+	public void writeJewelry(Jewelry jewelry) {
+		mapper.insertJewelryAuction(jewelry);
 	}
 
 	@Override
@@ -89,6 +78,11 @@ public class SDMeServiceImpl implements SDMeService {
 	@Override
 	public void writeTender(Tender tender) {
 		mapper.insertTender(tender);
+	}
+
+	@Override
+	public Member loginCheck(CompanyInfo companyInfo) {
+		return mapper.selectLoginCheck(companyInfo);
 	}
 
 }

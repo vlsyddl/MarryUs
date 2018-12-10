@@ -24,9 +24,9 @@
     <div id="wrap" class="wedding">
         <div class="sub_visual">
             <div class="titleBox">
-                <h2>웨딩홀</h2>
+                <h2>스.드.메</h2>
                 <p>
-                    웨딩홀 &middot; 스몰웨딩 &middot; 셀프웨딩
+                    스튜디오 &middot; 드레스 &middot; 메이크업
                 </p>
             </div>
         </div>
@@ -40,12 +40,12 @@
                     <div class="tabContents">
                         <div class="tab2 on">
                         <!-- Button trigger modal -->
-						<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#insertModal">
+						<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#insertAuctionModal">
 						  역경매 신청하기
 						</button>
 						
 						<!-- Modal -->
-						<div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal fade" id="insertAuctionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 						  <div class="modal-dialog">
 						    <div class="modal-content">
 						      <div class="modal-header">
@@ -63,8 +63,8 @@
 						      <form action="writeStudio.do"  method="post" enctype="multipart/form-data">
 							      <div class="modal-body">
 								        
-								        <input type="hidden" name="memNo" value="${user.no}" />
-								        <input type="hidden" name="auctionType" value="s" />
+								        <input type="hidden" id="memCheckNo" name="memNo" value="${user.no}" />
+								        <input type="hidden" id="aucTypeCheck" name="auctionType" value="s" />
 							        	<h2 class="hopePlace">희망 위치</h2>	
 								        <div class="form-group">
 								        	<div class="col-md-6 place" >
@@ -284,7 +284,7 @@
                                 <td>${s.auctionType}</td>
                                 <td>${s.auctionStatus}</td>
                                 <td><fmt:formatDate value="${s.auctionSdate}" pattern="yyyy-MM-dd" /></td>
-                                <td><fmt:formatDate value="${s.auctionEDate}" pattern="yyyy-MM-dd" /></td>
+                                <td><fmt:formatDate value="${s.auctionEdate}" pattern="yyyy-MM-dd" /></td>
                             </tr>
 						</c:forEach>
                     </table>
@@ -469,6 +469,10 @@ function detail(auctionNo, auctionType, no){
 		} else if ( auctionType == "d") {
 			console.log("auctionType d ======" + auctionType);
 			console.log("auctionNo  d======" + auctionNo);
+			html += '<h4 style="color:bule">';
+			html += '넥라인과 드레스 타입은 선호하는 스타일을 보고자 하는 것입니다. ';
+			html += '심각하게 고민하지 않으셔도 신부님과 어울리는 여러 아름다운 드레스를 만나보실 수 있습니다.';
+			html += '</h4>';
 			html += '<dl class="memName">';
 			html += '<dt>이름 : </dt>';
 			html += '<dd>'+data.memName+'</dd>';
@@ -535,9 +539,72 @@ function detail(auctionNo, auctionType, no){
 			html += '</dl>';
 		}
 		$(".infoBox").html(html);
+		$(".selectTenderModal").attr("data-href", auctionNo);
+		$(".selectTenderModal").attr("data-auctype", auctionType);
+		$(".selectTenderModal").attr("disabled", true);
+
+		loginCheck(auctionType);
 		
 	}).fail(function (){
 		console.log("요청에 실패했으니까 열심히 좀 해봐라^^");
+	});
+};
+
+function loginCheck(type) {
+	
+	$.ajax({
+		url : '<c:url value="/service/jewelry/loginCheck.json" />',
+		method : 'POST',
+		data : {
+			"memNo" : $("#memCheckNo").val(),
+			"comInfoType" : type
+		},
+		cache : false
+	}).done(function (data) {
+		console.log($("#memCheckNo").val());
+		console.log(type);
+		console.log("logInCheck" + data.type);
+		console.log("loginCheck ===== " + data.comInfo.comInfoType);
+		
+		if ( data.type == "mc" && data.comInfo.comInfoType == type ) {
+			$(".selectTenderModal").attr("disabled", false);
+		}
+		console.log("왔다링~~");
+	});
+};
+
+
+function selectAuction(auctionNo) {
+	$.ajax({
+		url : '<c:url value="/service/sdme/auctionCheck.json" />',
+		method : "POST",
+		data : "auctionNo=" + auctionNo,
+		cache : false
+	}).done(function (data) {
+		var html = "";
+		console.log("data.auctionNo" + data.auctionNo);
+		html += '<input type="hidden" name="auctionNo" value="'+data.auctionNo+'" />'
+		
+		$(".auction-no").html(html);
+	});
+};
+
+function selectComInfo(memNo, comInfoType) {
+	$.ajax({
+		url : '<c:url value="/service/sdme/companyInfoCheck.json" />',
+		method : "POST",
+		data : {
+			"memNo" : memNo,
+			"comInfoType" : comInfoType
+		},
+		cache : false
+	}).done(function (data) {
+		var html = "";
+		console.log("data."+data);
+		console.log("data.comInfoNo"+data.comInfoNo);
+		html += '<input type="hidden" name="comInfoNo" value="'+data.comInfoNo+'" />'
+		
+		$(".comInfo-no").html(html);
 	});
 };
 
@@ -545,11 +612,24 @@ $(function(){
 	$(".itemBox").click(function(e){
 		  e.preventDefault();
 		  detail($(this).data("href"), $(this).data("type"), $(this).data("no"));
-	      $('#detailModal').modal('show')
-	    
-	  })
+	      $('#detailModal').modal('show');
+	  });
 
-})
+});
+
+$(function(){
+	$(".selectTenderModal").click(function(e){
+		  e.preventDefault();
+		  selectAuction($(this).data("href"));
+		  console.log("$(memNo).val()" + $(".mem > #memNo").val());
+		  console.log('$(this).data("aucType")' + $(this).data("auctype"));
+		  selectComInfo($(".memberNo > #memNo").val(), $(this).data("auctype"));
+	      $('#detailModal').modal('hide');
+	      $('#insertTenderModal').modal('show');
+	    
+	  });
+
+});
 
  $("#dressForm").hide();
  $("#makeupForm").hide();
@@ -581,21 +661,12 @@ function writeFormShow(index) {
         <h4 class="modal-title" id="myModalLabel"></h4>
       </div>
       <div class="modal-body">
+        	<div class="memberNo">
+		      <input type="hidden" id="memNo" name="memNo" value="${user.no}" />
+        	</div>
         <div class="infoBox">
             <dl class="memName">
                 <dt>이름 : </dt>
-                <dd></dd>
-            </dl>
-            <dl class="budget">
-                <dt>예상견적 : </dt>
-                <dd></dd>
-            </dl>
-            <dl class="neckline">
-                <dt>넥라인 : </dt>
-                <dd></dd>
-            </dl>
-            <dl class="dressType">
-                <dt>드레스타입 : </dt>
                 <dd></dd>
             </dl>
         </div>
@@ -603,22 +674,62 @@ function writeFormShow(index) {
 
         </div>
       </div>
-      <c:if test="">
-      <div class="modal-company">
-      	<div class="companyBox">
-      		<dl>
-      			<dt></dt>
-      			<dd><input type="text" name=""/></dd>
-      		</dl>
-      	</div>
-      </div>
-      </c:if>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+        <button type="button" class="btn btn-primary selectTenderModal">입찰하기</button>
       </div>
     </div>
   </div>
 </div>
+
+	<div class="modal fade" id="insertTenderModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog  modal-lg">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel"></h4>
+	      	</div>
+				<form action="writeTender.do"  method="post" enctype="multipart/form-data">
+				      <div class="modal-body">
+				      <div class="form-group">
+				      <input type="hidden" name="memNo" value="${user.no}" />
+					  	</div>
+					  	<div class="auction-no">
+					  	</div>
+					  	<div class="comInfo-no">
+					  	</div>
+					  	<h2>서비스 제목</h2>
+					  	<div class="form-group">
+					  		<div class="col-md-4">
+							  	<div class="panel-heading">
+		                        	<input class="form-control" type="text" id="tenderTitle" name="tenderTitle" placeholder="제목을 입력 해 주세요" />   
+		                        </div>
+					  		</div>
+					  	</div><br> 
+					  	<h2>입찰예산</h2>
+					  	<div class="form-group">
+					  		<div class="col-md-4">
+							  	<div class="panel-heading">
+		                        	<input class="form-control" type="text" id="tenderBudget" name="tenderBudget" placeholder="제목을 입력 해 주세요" />   
+		                        </div>
+					  		</div>
+					  	</div><br> 
+					  	<h2>서비스 상세</h2>
+					  	<div class="form-group">
+					  		<div class="col-md-4">
+							  	<div class="panel-heading">
+		                        	<input class="form-control" type="text" id="tenderInfo" name="tenderInfo" placeholder="제목을 입력 해 주세요" />   
+		                        </div>
+					  		</div>
+					  	</div>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				        <button type="submit" class="btn btn-primary">입찰하기</button>
+				      </div>
+				</form>
+	    </div>
+	  </div>
+	</div>
 </body>
 </html>

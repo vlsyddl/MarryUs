@@ -12,7 +12,7 @@ public class Auction {
 	private String auctionType;
 	private String auctionStatus;
 	private Date auctionSdate;
-	private Date auctionEDate;
+	private Date auctionEdate;
 	private String memName;
 	// collection
 	private Member member;
@@ -21,4 +21,5 @@ public class Auction {
 	private Makeup makeup;
 	private Dress dress;
 	private Tender tender;
+	private Jewelry jewelry;
 }

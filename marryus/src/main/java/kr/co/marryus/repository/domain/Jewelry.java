@@ -5,7 +5,8 @@ import lombok.Data;
 @Data
 public class Jewelry {
 	private int auctionNo;
-	private String gift;
-	private int giftPrice;
-	private String giftHope;
+	private String jewelryType;
+	private int jewelryBudget;
+	private String jewelryMore;
+	private String jewelryPlace;
 }

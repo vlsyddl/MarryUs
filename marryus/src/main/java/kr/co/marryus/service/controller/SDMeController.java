@@ -19,6 +19,7 @@ import kr.co.marryus.repository.domain.Dress;
 import kr.co.marryus.repository.domain.Makeup;
 import kr.co.marryus.repository.domain.Page;
 import kr.co.marryus.repository.domain.Studio;
+import kr.co.marryus.repository.domain.Tender;
 import kr.co.marryus.repository.domain.Venue;
 import kr.co.marryus.wedservice.service.SDMeService;
 
@@ -99,7 +100,7 @@ public class SDMeController {
 	}
 	
 	@RequestMapping("/sdme/writeStudio.do")
-	public String writeStudie(@ModelAttribute Studio studio, @ModelAttribute Auction auction) {
+	public String writeStudio(@ModelAttribute Studio studio, @ModelAttribute Auction auction) {
 		System.out.println("writeStudio.do인데 오나요?!");
 		service.writeAuction(auction);
 		int auctionNo = auction.getAuctionNo();
@@ -132,6 +133,26 @@ public class SDMeController {
 		makeup.setAuctionNo(auctionNo);
 		
 		service.writeMakeup(makeup);
+		
+		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "auctionList.do";
+	}
+	
+	@RequestMapping("/sdme/auctionCheck.json")
+	@ResponseBody
+	public Auction auctionCheck(int auctionNo) {
+		return service.auctionCheck(auctionNo);
+	}
+	
+	@RequestMapping("/sdme/comInfoCheck.json")
+	@ResponseBody
+	public CompanyInfo comInfoCheck(CompanyInfo companyInfo) {
+		System.out.println("companyInfo" + companyInfo);
+		return service.comInfoCheck(companyInfo);
+	}
+	
+	@RequestMapping("/sdme/writeTender.do")
+	public String writeTender(Tender tender) {
+		service.writeTender(tender);
 		
 		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "auctionList.do";
 	}

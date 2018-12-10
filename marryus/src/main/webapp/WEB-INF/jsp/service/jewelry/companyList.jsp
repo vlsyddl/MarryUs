@@ -13,20 +13,15 @@
     <c:import url="/common/importCss.jsp"/>
 	 <c:import url="/common/importJs.jsp"/>
     <link rel="stylesheet" href="<c:url value="/resources/css/wedding.css"/>">
-<style>
-	
-
-
-</style>
 </head>
 <body>
 	<c:import url="/common/importHeader.jsp" />
     <div id="wrap" class="wedding">
         <div class="sub_visual">
             <div class="titleBox">
-                <h2>스.드.메</h2>
+                <h2>예물</h2>
                 <p>
-                    스튜디오 &middot; 드레스 &middot; 메이크업
+                    다이아 &middot; 금 &middot; 보석
                 </p>
             </div>
         </div>
@@ -34,8 +29,8 @@
             <div class="container">
                 <div class="contentsTab">
                     <ul>
-                        <li data-target="tab1" class="on"><a href="/service/sdme/companyList.do">업체리스트</a></li>
-                        <li data-target="tab2"><a href="<c:url value='/service/sdme/auctionList.do'/>">경매리스트</a></li>
+                        <li data-target="tab1" class="on"><a href="/service/jewelry/companyList.do">업체리스트</a></li>
+                        <li data-target="tab2"><a href="<c:url value='/service/jewelry/auctionList.do'/>">경매리스트</a></li>
                     </ul>
                     <div class="tabContents">
                         <div class="tab1 on">
@@ -46,7 +41,7 @@
 						            <div class="option">
 						                <div>
 						                    <form onsubmit="searchPlaces(); return false;">
-						                       	 키워드 : <input type="text" value="강남구 스튜디오" id="keyword" size="15"> 
+						                       	 키워드 : <input type="text" value="강남구 예물" id="keyword" size="15"> 
 						                        <button type="submit">검색하기</button> 
 						                    </form>
 						                </div>
@@ -58,17 +53,17 @@
 						    </div>
                     	<div>
                     	<div class="row itemWrap">
-                        <c:forEach var="sdm" items="${sdmeList}">
-                                <div class="col-md-4 itemBox" data-href="${sdm.comInfoNo}">
+                        <c:forEach var="j" items="${jewelryCompanyList}">
+                                <div class="col-md-4 itemBox" data-href="${j.comInfoNo}">
                                     <div class="item">
                                         <div class="imgBox">
-                                            <a href="#"><img src="/marryus/img/comProfile/${sdm.comFileName}" alt="" class="img-responsive center-block" onError="javascript:this.src='<c:url value="/resources/img/sorry.png"/>'"></a>
+                                            <a href="#"><img src="/marryus/img/comProfile/${j.comFileName}" alt="" class="img-responsive center-block" onError="javascript:this.src='<c:url value="/resources/img/sorry.png"/>'"></a>
                                         </div>
                                         <div class="textBox">
-                                            <h5><a href="#">${sdm.comInfoName}</a></h5>
+                                            <h5><a href="#">${j.comInfoName}</a></h5>
                                             <p>
-                                                ${sdm.comInfoAddr} <br/>
-                                                ${sdm.comInfoAddrDetail}
+                                                ${j.comInfoAddr} <br/>
+                                                ${j.comInfoAddrDetail}
                                             </p>
                                         </div>
                                         <div class="infoBox">
@@ -382,7 +377,7 @@ function detail(comInfoNo){
 	var slideBox = $(".slideBox")
 	slideBox.find("ul").html("")
 	$.ajax({
-		url : "<c:url value='/service/sdme/companyDetail.json'/>",
+		url : "<c:url value='/service/jewelry/companyDetail.json'/>",
 		data : "comInfoNo="+comInfoNo
 	}).done(function(data){
 		console.log(data)

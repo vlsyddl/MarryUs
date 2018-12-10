@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.co.marryus.repository.mapper.SDMeMapper">
+<mapper namespace="kr.co.marryus.repository.mapper.JewelryMapper">
+
 	<resultMap type="CompanyInfo" id="comInfoMap">
 		<result column="com_info_no" property="comInfoNo" />
 		<result column="mem_no" property="memNo" />
@@ -16,28 +17,26 @@
 		<result column="com_file_name" property="comFileName" />
 		<result column="com_file_path" property="comFilePath" />
 	</resultMap>
-	
-	<resultMap id="comFileMap" type="CompanyFile">
-		<result  property="comFileNo"   column="com_file_no"/>
-		<result  property="comInfoNo"   column="com_info_no"/>
-		<result  property="comFileName"   column="com_file_name"/>
-		<result  property="comFileOriname"   column="com_file_oriname"/>
-		<result  property="comFilePath"   column="com_file_path"/>
-		<result  property="comFileRepr"   column="com_file_repr"/>
+
+	<resultMap type="CompanyFile" id="comFileMap">
+		<result column="com_file_no" property="comFileNo" />
+		<result column="com_info_no" property="comInfoNo" />
+		<result column="com_file_name" property="comFileName" />
+		<result column="com_file_oriname" property="comFileOriname" />
+		<result column="com_file_path" property="comFilePath" />
+		<result column="com_file_repr" property="comFileRepr" />
 	</resultMap>
 	
-	<resultMap id="auctionMap" type="Auction">
-		<result property="auctionNo" column="auction_no" />
-		<result property="memNo" column="mem_no" />
-		<result property="auctionType" column="auction_type" />
-		<result property="auctionStatus" column="auction_status" />
-		<result property="auctionSdate" column="auction_sdate" />
-		<result property="auctionEdate" column="auction_edate" />
-		<result property="memName" column="mem_name" />
+	<resultMap type="Auction" id="auctionMap">
+		<result column="auction_no" property="auctionNo" />
+		<result column="mem_no" property="memNo" />
+		<result column="auction_type" property="auctionType" />
+		<result column="auction_status" property="auctionStatus" />
+		<result column="auction_sdate" property="auctionSdate" />
+		<result column="auction_edate" property="auctionEdate" />
+		<result column="mem_name" property="memName" />
 		<collection property="member" resultMap="memberMap"></collection>
-		<collection property="studio" resultMap="studioMap"></collection>
-		<collection property="dress" resultMap="dressMap"></collection>
-		<collection property="makeup" resultMap="makeupMap"></collection>
+		<collection property="jewelry" resultMap="jewelryMap"></collection>
 	</resultMap>
 	
 	<resultMap type="Member" id="memberMap">
@@ -51,36 +50,6 @@
 		<collection property="comInfo" resultMap="comInfoMap"></collection>
 	</resultMap>
 	
-	<resultMap type="Studio" id="studioMap">
-		<result column="auction_no" property="auctionNo" />
-		<result column="studio_place" property="studioPlace" />
-		<result column="studio_outdoor" property="studioOutdoor" />
-		<result column="studio_snapshot" property="studioSnapshot" />
-		<result column="studio_video" property="studioVideo" />
-		<result column="studio_pickup" property="studioPickup" />
-		<result column="studio_more" property="studioMore" />
-		<result column="studio_budget" property="studioBudget" />
-	</resultMap>
-	
-	<resultMap type="Dress" id="dressMap">
-		<result column="auction_no" property="auctionNo" />
-		<result column="dress_place" property="dressPlace" />
-		<result column="dress_price" property="dressPrice" />
-		<result column="dress_neckline" property="dressNeckline" />
-		<result column="dress_type" property="dressType" />
-		<result column="dress_more" property="dressMore" />
-	</resultMap>
-	
-	<resultMap type="Makeup" id="makeupMap">
-		<result column="auction_no" property="auctionNo" />
-		<result column="mku_place" property="mkuPlace" />
-		<result column="mku_makeup" property="mkuMakeup" />
-		<result column="mku_mom" property="mkuMom" />
-		<result column="mku_budget" property="mkuBudget" />
-		<result column="mku_workout" property="mkuWorkout" />
-		<result column="mku_more" property="mkuMore" />
-	</resultMap>
-	
 	<resultMap type="Tender" id="tenderMap">
 		<result column="tender_no" property="tenderNo" />
 		<result column="auction_no" property="auctionNo" />
@@ -92,33 +61,33 @@
 		<result column="tender_info" property="tenderInfo" />
 		<result column="com_info_no" property="comInfoNo" />
 	</resultMap>
+
+	<resultMap type="Jewelry" id="jewelryMap">
+		<result column="auction_no" property="auctionNo" />
+		<result column="jewelry_type" property="jewelryType" />
+		<result column="jewelry_budget" property="jewelryBudget" />
+		<result column="jewelry_more" property="jewelryMore" />
+		<result column="jewelry_place" property="jewelryPlace" />
+	</resultMap>
 	
-	<select id="sdmeCompanyList" parameterType="Page" resultMap="comInfoMap">
+	<select id="jewelryCompanyList" parameterType="Page" resultMap="comInfoMap">
 		select f.*, i.*
 		  from mu_company_file f
 		 inner join mu_company_info i
 			on f.com_info_no = i.com_info_no
 		 where f.com_file_repr = 'Y'
-		   and i.com_info_type = 's'
-		    or f.com_file_repr = 'Y'
-		   and i.com_info_type = 'd'
-			or f.com_file_repr = 'Y'
-		   and i.com_info_type = 'm'
+		   and i.com_info_type = 'j'
 		 order by i.com_info_no desc
 		 limit #{begin}, 12
 	</select>
 	
-	<select id="sdmeCompanyCount" resultType="int">
+	<select id="jewelryCompanyCount" resultType="int">
 		select count(*)
 		  from mu_company_file f
 		 inner join mu_company_info i
 			on f.com_info_no = i.com_info_no
 		 where f.com_file_repr = 'Y'
-		   and i.com_info_type = 's'
-		    or f.com_file_repr = 'Y'
-		   and i.com_info_type = 'd'
-			or f.com_file_repr = 'Y'
-		   and i.com_info_type = 'm'
+		   and i.com_info_type = 'j'
 	</select>
 	
 	<select	id="comInfoDetail" parameterType="int" resultMap="comInfoMap">
@@ -139,37 +108,23 @@
 		  from mu_auction a
 		 inner join mu_member m
 		    on a.mem_no = m.mem_no , (select @rownum:=0) TMP
-		 where a.auction_type = 's'
-		    or a.auction_type = 'd'
-		    or a.auction_type = 'm'
+		 where a.auction_type = 'j'
 		 order by a.auction_no desc
 	</select>
 	
 	<select id="auctionCount" resultType="int">
 		select count(*)
 		  from mu_auction
-		 where auction_type = 's'
-		    or auction_type = 'd'
-		    or auction_type = 'm'
+		 where auction_type = 'j'
 	</select>
 	
 	<select id="auctionDetail" parameterType="Auction" resultMap="auctionMap">
-		select a.*, m.*, sdm.*
+		select a.*, m.*, j.*
 		  from mu_auction a
 		 inner join mu_member m
 		    on a.mem_no = m.mem_no
-	 	<choose>
-	 		<when test='auctionType=="s"'>
-	 			inner join mu_studio sdm
-	 		</when>
-	 		<when test='auctionType=="d"'>
-	 			inner join mu_dress sdm
-	 		</when>
-	 		<when test='auctionType=="m"'>
-	 			inner join mu_makeup sdm
-	 		</when>
-		</choose>
-		    on a.auction_no = sdm.auction_no
+	 	 inner join mu_jewelry j
+		    on a.auction_no = j.auction_no
 		 where a.auction_no = #{auctionNo}
 	</select>
 	
@@ -181,63 +136,19 @@
 		)
 	</insert>
 	
-	<insert id="insertStudioAuction" parameterType="Studio">
-		insert into mu_studio (
+	<insert id="insertJewelryAuction" parameterType="Jewelry">
+		insert into mu_jewelry (
 			auction_no,
-			studio_place,
-			studio_outdoor,
-			studio_snapshot,
-			studio_video,
-			studio_pickup,
-			studio_budget,
-			studio_more
+			jewelry_place,
+			jewelry_type,
+			jewelry_budget,
+			jewelry_more
 		) values (
 			#{auctionNo},
-			#{studioPlace},
-			#{studioOutdoor},
-			#{studioSnapshot},
-			#{studioVideo},
-			#{studioPickup},
-			#{studioBudget},
-			#{studioMore}
-		)
-	</insert>
-	
-	<insert id="insertDressAuction" parameterType="Dress">
-		insert into mu_dress(
-			auction_no,
-			dress_place,
-			dress_price,
-			dress_neckline,
-			dress_type,
-			dress_more
-		) values (
-			#{auctionNo},
-			#{dressPlace},
-			#{dressPrice},
-			#{dressNeckline},
-			#{dressType},
-			#{dressMore}
-		)
-	</insert>
-	
-	<insert id="insertMakeupAuction" parameterType="Makeup">
-		insert into mu_makeup(
-			auction_no,
-			mku_place,
-			mku_makeup,
-			mku_mom,
-			mku_budget,
-			mku_workout,
-			mku_more
-		) values (
-			#{auctionNo},
-			#{mkuPlace},
-			#{mkuMakeup},
-			#{mkuMom},
-			#{mkuBudget},
-			#{mkuWorkout},
-			#{mkuMore}
+			#{jewelryPlace},
+			#{jewelryType},
+			#{jewelryBudget},
+			#{jewelryMore}
 		)
 	</insert>
 	
@@ -280,6 +191,7 @@
 		 where m.mem_no = #{memNo}
 		   and i.com_info_type = #{comInfoType}
 	</select>
+	
 </mapper>
 
 

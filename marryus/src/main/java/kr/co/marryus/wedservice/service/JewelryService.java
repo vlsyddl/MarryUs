@@ -5,25 +5,23 @@ import java.util.List;
 import kr.co.marryus.repository.domain.Auction;
 import kr.co.marryus.repository.domain.CompanyFile;
 import kr.co.marryus.repository.domain.CompanyInfo;
-import kr.co.marryus.repository.domain.Dress;
-import kr.co.marryus.repository.domain.Makeup;
+import kr.co.marryus.repository.domain.Jewelry;
+import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.Page;
-import kr.co.marryus.repository.domain.Studio;
 import kr.co.marryus.repository.domain.Tender;
 
-public interface SDMeService {
-	List<CompanyInfo> sdmeCompanyList(Page page);
-	int sdmeCompanyCount();
+public interface JewelryService {
+	List<CompanyInfo> jewelryCompanyList(Page page);
+	int jewelryCompanyCount();
 	CompanyInfo comInfoDetail(int comInfoNo);
 	List<CompanyFile> comInfoFiles(int comInfoNo);
-	List<Auction> sdmeAuctionList(Page page);
-	int sdmeAuctionCount();
-	Auction sdmeAuctionDetail(Auction auction);
+	List<Auction> jewelryAuctionList(Page page);
+	int jewelryAuctionCount();
+	Auction jewelryAuctionDetail(Auction auction);
 	void writeAuction(Auction auction);
-	void writeStudio(Studio studio);
-	void writeDress(Dress dress);
-	void writeMakeup(Makeup makeup);
+	void writeJewelry(Jewelry jewelry);
 	Auction auctionCheck(int auctionNo);
 	CompanyInfo comInfoCheck(CompanyInfo companyInfo);
 	void writeTender(Tender tender);
+	Member loginCheck(CompanyInfo companyInfo);
 }
