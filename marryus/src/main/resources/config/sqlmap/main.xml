@@ -20,7 +20,7 @@
 		<result property="auctionType" column="auction_type" />
 		<result property="auctionStatus" column="auction_status" />
 		<result property="auctionSdate" column="auction_sdate" />
-		<result property="auctionEDate" column="auction_edate" />
+		<result property="auctionEdate" column="auction_edate" />
 		<result property="memName" column="mem_name" />
 		<collection property="member" resultMap="memberMap" />
 		<collection property="weddingPlan" resultMap="weddingPlanMap"/>
@@ -86,7 +86,7 @@
 		where auction_type = #{auctionType}
 	</select>
 	
-	<!-- 나만으 ㅣ웨딩 플랜 -->
+	<!-- 나만의 웨딩 플랜 todoList 분류작업 -->
 	
 	<update id="sortingPlan" parameterType="Todo"  >
 		update mu_todo
@@ -105,7 +105,7 @@
 		order by todo_dday desc
 	</select>
 	
-	<!-- 마감 임박 검색 -->
+	<!-- 마감 임박 역경매건  검색 -->
 	<select id="selectAuctionEDate" parameterType="Auction" resultMap="auctionMap">
 		<![CDATA[
 			SELECT * 
@@ -113,10 +113,21 @@
 			on a.mem_no = m.mem_no
 			WHERE DATEDIFF(DATE(NOW()), a.auction_edate) > -8 
 			and a.auction_status =#{auctionStatus}
-		
 		]]>
-	
 	</select>
 	
+	<!-- todo list -->
+	<select id="countTotalTODO" parameterType="int" resultType="int">
+		select count(*)
+		from mu_todo
+		where mem_no = #{memNo}
+	</select>
+	<select id="countTODOdone" parameterType="int" resultType="int">
+		select count(*)
+		from mu_todo 
+		where mem_no = #{memNo}
+		and todo_check = 'y'
+	</select>
+
 	
 </mapper>

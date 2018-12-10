@@ -73,11 +73,29 @@ public class MainServiceImpl implements MainService{
 		
 		return mapper.selectTodoListByWP(todo);
 	}
-
+	
+	/**
+	 * 마감 임박 역경매 건 가져오기 D-7일부터 
+	 */
 	@Override
 	public List<Auction> selectAuctionEDate(Auction auction) {
 		
 		return mapper.selectAuctionEDate(auction);
+	}
+
+	/**
+	 * TodoList 총 갯수 
+	 */
+	@Override
+	public int countTotalTODO(int memNo) {
+		return mapper.countTotalTODO(memNo);
+	}
+	/**
+	 * TodoList done 갯수 
+	 */
+	@Override
+	public int countTODOdone(int memNo) {
+		return mapper.countTODOdone(memNo);
 	}
 
 	

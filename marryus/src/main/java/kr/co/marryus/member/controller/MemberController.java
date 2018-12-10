@@ -81,7 +81,8 @@ public class MemberController {
 			member = null;
 			return member;
 		}
-		
+		System.out.println("파일 경로:"+member.getGeneral().getGenProfilename());
+		System.out.println("파일 경로:"+member.getGeneral().getGenProfilepath());
 
 		return member;
 	}

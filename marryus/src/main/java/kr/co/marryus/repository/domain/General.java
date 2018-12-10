@@ -7,5 +7,8 @@ public class General {
 	private int genNo;
 	private String genBirth;
 	private String genGender;
+	private String genProfilepath;
+	private String genProfilename;
+
 	
 }

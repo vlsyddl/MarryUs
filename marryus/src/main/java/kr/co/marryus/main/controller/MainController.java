@@ -146,8 +146,18 @@ public class MainController {
 	@RequestMapping(value="/deadlineList.json",method= RequestMethod.POST)
 	@ResponseBody
 	public List<Auction> listofDeadline(Auction auction) throws Exception{
-		System.out.println(auction.getAuctionEDate());
+		System.out.println(auction.getAuctionEdate());
 		return service.selectAuctionEDate(auction);
+	}
+	
+	@RequestMapping(value="/todoList.json",method= RequestMethod.POST)
+	@ResponseBody
+	public int TodoList(int memNo)throws Exception {
+		System.out.println("MyProfile||||"+memNo );
+		
+	
+		
+		return service.countTotalTODO(memNo);
 	}
  	
 }

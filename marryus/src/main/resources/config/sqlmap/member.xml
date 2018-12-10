@@ -17,6 +17,8 @@
 		<result column="gen_no" property="genNo" />
 		<result column="gen_birth" property="genBirth" />
 		<result column="gen_gender" property="genGender" />
+		<result column="gen_profilepath" property="genProfilepath" />
+		<result column="gen_profilename" property="genProfilename" />
 	</resultMap>
 	<resultMap id="companyMap" type="Company">
 		<result column="com_no" property="comNo" />

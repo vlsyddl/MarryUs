@@ -14,6 +14,10 @@
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/locale/ko.js" charset="utf-8"></script>
 
+<style>
+.bx-viewport{ height: 200px; }
+</style>
+
 </head>
 <body>
 	<c:import url="/common/importHeader.jsp" />
@@ -60,17 +64,19 @@
 			</div>
 		</div>
 		<!--메인비쥬얼-->
+		<c:if test="${user.email ne null }">
+		<input type="hidden" id="memNo" name="memNo" value="${user.no}">
 		<div class="marriageInfo">
 			<div class="container">
 				<div class="col-md-3 infoLeft">
 					<div class="prifile cf">
 						<div class="imgWrap">
-							<img src="<c:url value="/resources/"/>img/seungjae.jpg" alt=""
+							<img src="<c:url value='/${user.general.genProfilepath}/${user.general.genProfilename}' />" alt=""
 								class="img-responsive center-block">
 						</div>
 						<dl>
-							<dt>이승재</dt>
-							<dd>1990.04.30</dd>
+							<dt>${user.name}</dt>
+							<dd>${user.general.genBirth}</dd>
 						</dl>
 					</div>
 					<div class="time cf">
@@ -146,6 +152,7 @@
 				</div>
 			</div>
 		</div>
+		</c:if>
 		<!-- 역경매 현황 -->
 		<section class="contents contents01">
 		<div class="container">
@@ -1110,11 +1117,7 @@
 				type:"post"
 			}).done(function(result){
 				//ing 
-				
-
- 
-
-
+			
 				 	var html ='';
 					for(var i = 0 ; i<result.length ; i++){
 						if(result[i].auctionStatus == "ing"){
@@ -1125,9 +1128,7 @@
 							html +='<span class="w18">D-'+countDay(result[i].auctionEDate) +'</span>'
 							html +='<span class="w18">접수중</span>'	 
 							html +='</li>'	
-							
 						}
-						
 					} 
 				 	$("#venueAuctionIng ul").html(html)
 				 	$('#venueAuctionIng ul').bxSlider({
@@ -1144,41 +1145,33 @@
 				 	
 				 
 					//done
-					
-				/* 	$("#venueAuctionDone").html(
-					 		"<h5 class='v-roll-title'>"
-					 		+"<a href='#'>입찰중 역경매</a></h5>"
-					 		+"<div class='bx-wrapper' style='max-width: 100%;'>"
-					 		+"<div class='bx-viewport' aria-live='polite' style='width: 100%; overflow: hidden; position: relative; height: 190px;'>"
-					 		+"<ul class='v-roll' id='vDoneAcution'>"
-					 		
-					 ); 
-					for(var i = 0 ; i<result.length ; i++){
+				 	var html2 ='';
+				 	for(var i = 0 ; i<result.length ; i++){
 						if(result[i].auctionStatus == "done"){
-							$("#vDoneAcution").append(
-							
-							"<li style='float: none; list-style: none; position: relative;' aria-hidden='false'>"
-							+"<span class='w18'>"+result[i].auctionNo+"</span>"
-							+"<span class='w18'>"+result[i].memNo+"</span>"
-							+"<span class='w18'>"+result[i].member.name+"</span>"
-							+"</li>"
-							); 
-							
+							html2 +='<li>'
+							html2 +='<span class="w18"><span>'+getAuctionStatus(result[i].auctionStatus)+'</span></span>'	 
+							html2 +='<span class="w18">'+result[i].member.name+'</span>'	 
+							html2 +='<span class="w28">서울시 강동구</span>'
+							html2 +='<span class="w36">총 1,1501,5400원</span>'
+							html2 +='</li>'	
 						}
-					}  */
+					} 
+					$("#venueAuctionDone ul").html(html2);
+					$('#venueAuctionDone ul').bxSlider({
+		                auto: true,
+		                speed: 3000,
+		                pause : 3000,
+		                mode: 'vertical',
+		                controls : false,
+		                moveSlides: 1,
+		                minSlides: 3, 
+		                maxSlides: 3,
+		                pager:false
+		            });
+			
 			});
 			
 		});
-		function countDay(auctionEDate){
-			console.log(auctionEDate)
-			var endDate = moment(auctionEDate).format('YYYY-MM-DD');
-			console.log(endDate);
-			var startDate = moment();
-			
-			return Math.floor(Math.abs(moment.duration(startDate.diff(endDate)).asDays()));
-
-		}
-		
 		
 	
 		// 입찰 현황 버튼 클릭시 
@@ -1200,44 +1193,19 @@
 			}).done(function(result){
 				console.log(result)
 				//ing
-		 	/* 	$("#venueAuctionIng").html(
-			 		"<h5 class='v-roll-title'>"
-			 		+"<a href='#'>입찰중 역경매</a></h5>"
-			 		+"<div class='bx-wrapper' style='max-width: 100%;'>"
-			 		+"<div class='bx-viewport' aria-live='polite' style='width: 100%; overflow: hidden; position: relative; height: 190px;'>"
-			 		+"<ul class='v-roll' id='vIngAcution'>"
-			 		
-			 	);  */
-				var html ='';
+			 	var html ='';
 				for(var i = 0 ; i<result.length ; i++){
 					if(result[i].auctionStatus == "ing"){
 						html +='<li>'
 						html +='<span class="w18"><span>'+getAuctionStatus(result[i].auctionStatus)+'</span></span>'	 
 						html +='<span class="w18">'+result[i].member.name+'</span>'	 
 						html +='<span class="w28">서울시 강동구</span>'
-						html +='<span class="w18">D-21일</span>'
+						html +='<span class="w18">D-'+countDay(result[i].auctionEDate) +'</span>'
 						html +='<span class="w18">접수중</span>'	 
 						html +='</li>'	
-						
-					}
-					
-				} 
-				
-			 	var html ='';
-				for(var i = 0 ; i<result.length ; i++){
-					if(result[i].auctionStatus == "ing"){
-						$("#vIngAcution").append(
-						
-						"<li style='float: none; list-style: none; position: relative;' aria-hidden='false'>"
-						+"<span class='w18'>"+result[i].auctionNo+"</span>"
-						+"<span class='w18'>"+result[i].memNo+"</span>"
-						+"<span class='w18'>"+result[i].member.name+"</span>"
-						+"</li>"
-						); 
-						
 					}
 				} 
-				$("#venueAuctionIng ul").html(html)
+			 	$("#venueAuctionIng ul").html(html)
 			 	$('#venueAuctionIng ul').bxSlider({
 	                auto: true,
 	                speed: 3000,
@@ -1249,6 +1217,7 @@
 	                maxSlides: 5,
 	                pager:false
 	            });
+			 	
 				//done
 				$("#venueAuctionDone").html(
 				 		"<h5 class='v-roll-title'>"
@@ -1494,14 +1463,30 @@
 			});
         	
         });
-       
+     
+        /*
+        	입찰중/낙찰 변환해주는 함수
+        */
         function getAuctionStatus(auctionStatus){
         	switch(auctionStatus){
         	case "ing": return "입찰중";
         	case "done": return "낙찰";
         	}
         }
-      
+        
+        /*
+    		D-? 남았는지 변환해주는 함수 
+   		 */
+		function countDay(auctionEDate){
+			/* console.log(auctionEDate) */
+			var endDate = moment(auctionEDate).format('YYYY-MM-DD');
+			/* console.log(endDate); */
+			var startDate = moment();
+			
+			return Math.floor(Math.abs(moment.duration(startDate.diff(endDate)).asDays()));
+
+		}
+		
         
  /**********************************************************************************
          	마감임박  불러오기 D-7일 
@@ -1515,11 +1500,11 @@
 	 		type:"POST"
 	 	})
 	 	.done(function(result){
-	 		console.log(result);
+	 		/* console.log(result); */
 	 		var html ='';
 			for(var i = 0 ; i<result.length ; i++){
 					html +='<li>'
-					html +='<a href="#">'+result[i].memName+'님의 입찰건이'+countDay(result[i].auctionEDate) +'일 남았습니다.</a>' 
+					html +='<a href="#">'+result[i].memName+'님의 입찰건이'+countDay(result[i].auctionEdate) +'일 남았습니다.</a>' 
 					html +='</li>'	
 			} 
 			
@@ -1527,8 +1512,22 @@
 	 	});
 	  
   });
-
- 
+ /**********************************************************************************
+	프로필 
+**********************************************************************************/ 
+ 	$(document).ready(function(){
+ 		var memNo =  $("#memNo").val();
+ 		
+ 		$.ajax({
+ 			url:"/marryus/main/todoList.json",
+ 			data:{memNo:memNo },
+ 			type:"post"
+ 		})
+ 		.done(function(result){
+ 			console.log(result)
+ 			
+ 		});
+ 	});
       
 
 	</script>

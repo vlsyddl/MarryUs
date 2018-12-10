@@ -24,5 +24,8 @@ public interface MainMapper {
 	List<Todo> selectTodoListByWP(Todo todo);
 	// 마감임박 경매 건 가져오기  - 7일 
 	List<Auction> selectAuctionEDate(Auction auction);
-	
+	//TodoList 총 갯수
+	int countTotalTODO(int memNo);
+	//TodoList Done 갯수
+	int countTODOdone(int memNo);
 }
