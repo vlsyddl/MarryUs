@@ -53,7 +53,7 @@
 		<result property="auctionType" column="auction_type" />
 		<result property="auctionStatus" column="auction_status" />
 		<result property="auctionSdate" column="auction_sdate" />
-		<result property="auctionEDate" column="auction_edate" />
+		<result property="auctionEdate" column="auction_edate" />
 		<result property="memName" column="mem_name" />
 	</resultMap>
 	

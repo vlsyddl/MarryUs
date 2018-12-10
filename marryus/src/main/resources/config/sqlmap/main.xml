@@ -116,7 +116,8 @@
 		]]>
 	</select>
 	
-	<!-- todo list -->
+	<!-- profile -->
+		<!-- todo list -->
 	<select id="countTotalTODO" parameterType="int" resultType="int">
 		select count(*)
 		from mu_todo
@@ -128,6 +129,16 @@
 		where mem_no = #{memNo}
 		and todo_check = 'y'
 	</select>
-
-	
+		<!-- 입찰  -->
+	<select id="countTotalAuction" parameterType="int" resultType="int">
+		select count(*)
+		from mu_auction
+		where mem_no = #{memNo}
+	</select>
+		<select id="countAuctiondone" parameterType="int" resultType="int">
+		select count(*)
+		from mu_auction 
+		where mem_no = #{memNo}
+		and auction_status = 'done'
+	</select>
 </mapper>

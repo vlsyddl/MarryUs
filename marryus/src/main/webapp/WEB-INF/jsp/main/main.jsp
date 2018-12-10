@@ -65,7 +65,7 @@
 		</div>
 		<!--메인비쥬얼-->
 		<c:if test="${user.email ne null }">
-		<input type="hidden" id="memNo" name="memNo" value="${user.no}">
+		<input type="hidden" id="no" name="no" value="${user.no}">
 		<div class="marriageInfo">
 			<div class="container">
 				<div class="col-md-3 infoLeft">
@@ -109,7 +109,7 @@
 									<dt>
 										<i class="far fa-list-alt"></i>
 									</dt>
-									<dd>
+									<dd  id="profileAuction">
 										<b>0</b> <br> <span>out of 20</span>
 									</dd>
 								</dl>
@@ -120,8 +120,8 @@
 									<dt>
 										<i class="fas fa-list-ol"></i>
 									</dt>
-									<dd>
-										<b>7</b> <br> <span>out of 70</span>
+									<dd id="profileTodo">
+										<b>7</b> <br> <span ></span>
 									</dd>
 								</dl>
 								<p>Tasks Completed</p>
@@ -1125,7 +1125,7 @@
 							html +='<span class="w18"><span>'+getAuctionStatus(result[i].auctionStatus)+'</span></span>'	 
 							html +='<span class="w18">'+result[i].member.name+'</span>'	 
 							html +='<span class="w28">서울시 강동구</span>'
-							html +='<span class="w18">D-'+countDay(result[i].auctionEDate) +'</span>'
+							html +='<span class="w18">D-'+countDay(result[i].auctionEdate) +'</span>'
 							html +='<span class="w18">접수중</span>'	 
 							html +='</li>'	
 						}
@@ -1200,7 +1200,7 @@
 						html +='<span class="w18"><span>'+getAuctionStatus(result[i].auctionStatus)+'</span></span>'	 
 						html +='<span class="w18">'+result[i].member.name+'</span>'	 
 						html +='<span class="w28">서울시 강동구</span>'
-						html +='<span class="w18">D-'+countDay(result[i].auctionEDate) +'</span>'
+						html +='<span class="w18">D-'+countDay(result[i].auctionEdate) +'</span>'
 						html +='<span class="w18">접수중</span>'	 
 						html +='</li>'	
 					}
@@ -1477,9 +1477,9 @@
         /*
     		D-? 남았는지 변환해주는 함수 
    		 */
-		function countDay(auctionEDate){
-			/* console.log(auctionEDate) */
-			var endDate = moment(auctionEDate).format('YYYY-MM-DD');
+		function countDay(auctionEdate){
+			/* console.log(auctionEdate) */
+			var endDate = moment(auctionEdate).format('YYYY-MM-DD');
 			/* console.log(endDate); */
 			var startDate = moment();
 			
@@ -1516,15 +1516,24 @@
 	프로필 
 **********************************************************************************/ 
  	$(document).ready(function(){
- 		var memNo =  $("#memNo").val();
+ 		var memNo =  $("#no").val();
  		
  		$.ajax({
- 			url:"/marryus/main/todoList.json",
+ 			url:"/marryus/main/proFileDetail.json",
  			data:{memNo:memNo },
  			type:"post"
  		})
  		.done(function(result){
  			console.log(result)
+ 			var html =""
+ 			html += '<b>'+result.auctionDone+'</b> <br>'
+ 	 		html += '<span>out of'+result.auctionTotal+'</span>';
+ 			$("#profileAuction").html(html)
+ 			
+ 			var html2="";
+ 			html2 += '<b>'+result.todoDone+'</b> <br>'
+ 			html2 += '<span>out of'+result.todoTotal+'</span>';
+ 			$("#profileTodo").html(html2)
  			
  		});
  	});

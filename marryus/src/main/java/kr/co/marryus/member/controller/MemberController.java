@@ -51,8 +51,6 @@ public class MemberController {
 		// 비밀번호 암호화
 		String rawPassword = member.getPass();
 		
-		System.out.println("rawPassword||"+rawPassword);
-		
 		member=service.login(member);
 		
 		String encodedPassword = member.getPass();
@@ -60,29 +58,24 @@ public class MemberController {
 		
 		// 비밀번호 암호화
 		if(passwordEncoder.matches(rawPassword, encodedPassword)) {
-			System.out.println("로그인 되었습니다.");
-			System.out.println("아이디:" + member.getEmail());
-			System.out.println("비밀번호:" + member.getPass());
-			System.out.println("회원타입:" + member.getType());
 			String type=member.getType();
 			String mg = "mg";
 			
 			if(type.equals(mg)) {
-				System.out.println("일반");
-				member = service.loginGeneral(member);
+			
+				member = service.loginGeneral(member); // 일반 회원 
 				
 			}else {
-				System.out.println("기업");
-				member = service.loginCompany(member);
+				
+				member = service.loginCompany(member); //기업 회원
 			}
 			
-			session.setAttribute("user", member);
+			session.setAttribute("user", member); // 세션에 담기
 		}else {
-			member = null;
-			return member;
+			member = null;   // 회원이 아닐시 null 내보내기 
+			return member;   
 		}
-		System.out.println("파일 경로:"+member.getGeneral().getGenProfilename());
-		System.out.println("파일 경로:"+member.getGeneral().getGenProfilepath());
+	
 
 		return member;
 	}

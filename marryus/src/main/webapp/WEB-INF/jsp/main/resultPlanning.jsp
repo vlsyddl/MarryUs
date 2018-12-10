@@ -11,6 +11,7 @@
 <c:import url="/common/importCss.jsp"/>
 <c:import url="/common/importJs.jsp"/>
 <c:import url="/common/webSocket.jsp"/>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/printThis/1.14.0/printThis.js"></script>
 <style>
 html {
   box-sizing: border-box;
@@ -59,7 +60,7 @@ p {
   margin: 0.6rem 0;
   color: #999999;
 }
-main {
+.container-main {
   margin: auto;
 }
 .description {
@@ -89,25 +90,18 @@ main {
   bottom: -8px;
   left: 0px;
 }
-@media (min-width: 630px) {
+@media (min-width: 700px) {
   .receipt {
     margin: auto;
     top:100px;
-    width: 600px;
+    width: 700px;
     padding: 5rem;
   }
 }
 header {
   margin-bottom: 5rem;
 }
-footer {
-  margin: 4rem 0;
-  text-align: center;
-  color: #aaaaaa;
-}
-footer p {
-  font-size: 1.2rem;
-}
+
 address {
   font-weight: 400;
   font-style: normal;
@@ -124,21 +118,19 @@ table td {
   font-weight: 400;
   vertical-align: top;
   border-top: 1px solid #dddddd;
-  padding: 2rem 0;
+  padding: 2.3rem 0;
 }
 .table__img {
-  width: 20%;
+  width: 25%;
+  text-align: center;
 }
 .table__desc {
   width: 65%;
   padding: 2rem 2rem;
+  text-align: center;
 }
-.table__price {
-  width: 15%;
-  text-align: right;
-}
+
 .table__total {
-  text-align: right;
   border-width: 3px;
   border-color: #444;
 }
@@ -153,10 +145,11 @@ table td {
 	display: none;
 }
 #CheckBtn{
-display: block;
+
 }
 
-.CheckBtn{
+#CheckBtn{
+  display: block;
   background:#1AAB8A;
   color:#fff;
   border:none;
@@ -167,12 +160,15 @@ display: block;
   cursor:pointer;
   transition:800ms ease all;
   outline:none;
+  margin: 20px;
+  float: right;
+  
 }
-.CheckBtn:hover{
+#CheckBtn:hover{
   background:#fff;
   color:#1AAB8A;
 }
-.CheckBtn:before,button:after{
+#CheckBtn:before,#CheckBtn:after{
   content:'';
   position:absolute;
   top:0;
@@ -182,13 +178,93 @@ display: block;
   background: #1AAB8A;
   transition:400ms ease all;
 }
-.CheckBtn:after{
+#CheckBtn:after{
   right:inherit;
   top:inherit;
   left:0;
   bottom:0;
 }
-.CheckBtn:hover:before,.CheckBtn:hover:after{
+#CheckBtn:hover:before,#CheckBtn:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
+
+.printBtn{
+ 
+  background:#ff9b9b;
+  color:#fff;
+  border:none;
+  position:relative;
+  height:60px;
+  font-size:1.6em;
+  padding:0 2em;
+  cursor:pointer;
+  transition:800ms ease all;
+  outline:none;
+  float: right;
+  margin: -10px;
+  
+}
+.printBtn:hover{
+  background:#fff;
+  color:	#920000;
+}
+.printBtn:before,.printBtn:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: #920000;
+  transition:400ms ease all;
+}
+.printBtn:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+.printBtn:hover:before,.printBtn:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
+.downLoadBtn{
+ 
+  background:#ff9b9b;
+  color:#fff;
+  border:none;
+  position:relative;
+  height:60px;
+  font-size:1.6em;
+  padding:0 2em;
+  cursor:pointer;
+  transition:800ms ease all;
+  outline:none;
+  float: right;
+  margin: -10px;
+}
+.downLoadBtn:hover{
+  background:#fff;
+  color:	#920000;
+}
+.downLoadBtn:before,.downLoadBtn:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: #920000;
+  transition:400ms ease all;
+}
+.downLoadBtn:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+.downLoadBtn:hover:before,.downLoadBtn:hover:after{
   width:100%;
   transition:800ms ease all;
 }
@@ -199,18 +275,19 @@ display: block;
         <main class="container-main">
         
                 <div class="receipt">
+	                        <form action="downExcel.do">
+	        				 <input type="hidden" id="memNo" name="memNo" value="${user.no}">
+	                       	 <button class="downLoadBtn">download</button>
+	                        </form>
+	                         <button class="printBtn">Print</button>
                       <div class="header">
                       	
                         <h1>
                           Your To do List
                         </h1>
-                        <form action="downExcel.do">
-        <input type="hidden" id="memNo" name="memNo" value="${user.no}">
-                        <button>download</button>
-                        </form>
                       </div>
                         <input id="CheckBtn" onclick="openList()" type="button" value="todoList 확인하기" >
-                    <div class="lists" >
+                   <div class="lists" >
                     <hr>
                     <p class="dDay">상세 내역보기</p>
                       <hr>
@@ -218,7 +295,7 @@ display: block;
                         <p>결혼 날짜 : </p>
                         <p>결혼 예정일 : </p>
                         <p>결혼 예정 장소 : </p>
-                      </div>
+                   </div>
                     <hr>
                     <div class="description">
                         <p class="dDay">D-120</p>
@@ -291,6 +368,126 @@ display: block;
                 
                
             </main>
+         
+<!-- 로그인 -->
+	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body Page Page--login .Util-not-loaded">
+					<nav class="Login-navigation">
+					<ul class="Login-navigation__list">
+						<li class="Login-navigation__list-item"><a
+							class="Login-navigation__link" data-goto="Login-card--login">Login</a>
+						</li>
+						<li class="Login-navigation__list-item"><a
+							class="Login-navigation__link" data-goto="Login-card--register">비밀번호를 잊으셨나요?</a>
+						</li>
+						<!-- <li class="Login-navigation__list-item"><a
+							class="Login-navigation__link" data-goto="Login-card--connect">Connect
+								directly</a></li> -->
+					</ul>
+					</nav>
+
+					<main class="Login-main">
+					<div class="Login-card-container">
+						<section class="Login-card Login-card--login" data-order="1">
+						<h2 class="Login-card__title">Login</h2>
+						
+						<form id="loginForm"  name="loginForm" method="post" >
+
+							<div class="Form__form-group">
+
+								<div class="Form__input-group">
+									<input type="text" id="email" name="email" placeholder="E-mail address"
+										 class="Form__input Login-card__email-input">
+								</div>
+
+								<div class="Form__input-group">
+									<input  type="password" id="pass" name="pass" placeholder="Password"
+										class="Form__input Login-card__password-input">
+								</div>
+
+								<div class="Form__input-group">
+									<input  id="loginBtn" type="submit" value="Login"
+										class="Form__button Login-card__submit-button">
+								</div>
+
+							</div>
+
+						</form>
+						</section>
+
+						<section
+							class="Login-card Login-card--register Login-card--hidden"
+							data-order="2" id="checkIdCard">
+						<h2 class="Login-card__title">비밀번호 찾기</h2>
+						<form id="findPassForm" action="findPass.do"  method="post">
+
+							<div class="Form__form-group">
+
+								<div class="Form__input-group">
+									<input  type="text" id="passemail" name="email" placeholder="E-mail address"
+										class="Form__input Login-card__email-input">
+								</div>
+
+								<div class="Form__input-group">
+									<input id="passname" type="text" name="name" placeholder="이름"
+										class="Form__input Login-card__password-input">
+								</div> 
+								<div  class="Form__input-group" id="checkEmailnName">
+									<input   type="button" value="아이디 체크" 
+										class="Form__button Login-card__submit-button">
+								</div>
+									
+							<!-- 아이디가 있으므로 아이디 찾기로 감!-->
+								<div class="Form__input-group" id="nextStep" style="display: none">
+									<div class="Form__input-group">
+										<input  type="text" id="sendemail" name="email" placeholder="E-mail address"
+										class="Form__input Login-card__email-input">
+									</div>
+									<div class="Form__input-group">
+									 	<input  type="submit" value="비밀번호 찾기"
+											class="Form__button Login-card__submit-button">
+									</div>
+								</div>
+							<!-- 아이디가 없으므로 회원가입으로 진행  -->
+								<div class="Form__input-group" id="goToSignUp" style="display: none">
+									<div>
+										<h1>저희의 회원이 되어주세요 : )</h1>
+									</div>
+									<div class="Form__input-group">
+									 	<input   type="button" value="Marry Us 회원가입하기" onclick="gotoSignUp()"
+											class="Form__button Login-card__submit-button">
+									</div>
+								</div>
+
+							</div>
+
+						</form>
+						</section>
+
+					</main>
+				<!-- 네이버아이디로로그인 버튼 노출 영역 -->
+				<!-- 	
+					  <div id="naver_id_login"></div>
+					  //네이버아이디로로그인 버튼 노출 영역
+					  <script type="text/javascript">
+					  	var naver_id_login = new naver_id_login("80pYiQzDzkdBypcTxTyp", "http://localhost:8000/marryus/main/main.do");
+					  	var state = naver_id_login.getUniqState();
+					  	naver_id_login.setButton("white", 2,40);
+					  	naver_id_login.setDomain("YOUR_SERVICE_URL");
+					  	naver_id_login.setState(state);
+					  	naver_id_login.setPopup();
+					  	naver_id_login.init_naver_id_login();
+					  </script>
+				-->
+					<footer class="Login-footer"> Made with <i
+						class="fa fa-heart"></i> </footer>
+				</div>
+			</div>
+		</div>
+	</div>
 <script>
 
 $(document).ready(function(){
@@ -317,10 +514,9 @@ function openList(){
 	})
 	.done(function(result){
 		console.log(result);
-
-		/*
-			상세내역 뽑기 
-		*/
+/****************************************************************************************
+ *     list 뽑기
+ ***************************************************************************************/
 		var detail = '';
 		for(i=0; i<1 ; i++){
 		detail += ' <p>결혼 장소 : '+result[i].weddingPlan.planPlace+'</p>'
@@ -435,9 +631,157 @@ function categoryName(todoCategory) {
 		
 	}
 }
-
+/****************************************************************************************
+ *      printThis plugin 
+ ***************************************************************************************/
+$(".printBtn").on("click", function(){
+	$('.receipt').printThis({
+		
+	});
+});
 
 </script>            
-            
+<script>
+
+/****************************************************************************
+ * 엔터이벤트  로그인 
+ *****************************************************************************/
+
+ 
+     $("#pass").keydown(function (e) {
+    	   if (e.keyCode == 13) {
+    			e.preventDefault();
+    			var email = $("#email").val();
+    			var pass =  $("#pass").val();
+    			
+    			$.ajax({
+    				url:"/marryus/main/login.json",
+    				data:{email:email, pass: pass},
+    				type: "post"
+    			})
+    			.done(function(member){
+    				console.log(member)
+    				if(member == ""){
+    					alert("아이디 또는 비밀번호를 잘못 입력했습니다.");
+    					
+    					return;
+    				} else{
+    					alert("로그인 되었습니다.");
+    					$("#loginModal").modal("hide");
+    					var url = "${requestScope['javax.servlet.forward.request_uri']}"
+    					if(url == "/marryus/main/main.do"){
+    						location.href = "/marryus/main/main.do";
+    						return;
+    					}
+    					location.href = "${requestScope['javax.servlet.forward.request_uri']}";
+    				}
+    				
+    			});
+    			
+    	   }   
+    	});
+
+
+/****************************************************************************
+ * 마우스 클릭  로그인 
+ *****************************************************************************/
+	$("#loginBtn").on('click',function(e){
+		e.preventDefault();
+		var email = $("#email").val();
+		var pass =  $("#pass").val();
+		
+		$.ajax({
+			url:"/marryus/main/login.json",
+			data:{email:email, pass: pass},
+			type: "post"
+		})
+		.done(function(member){
+			console.log(member)
+			if(member == ""){
+				alert("아이디 또는 비밀번호를 잘못 입력했습니다.");
+				
+				return;
+			} else{
+				alert("로그인 되었습니다.");
+				$("#loginModal").modal("hide");
+				var url = "${requestScope['javax.servlet.forward.request_uri']}"
+				if(url == "/marryus/main/main.do"){
+					location.href = "/marryus/main/main.do";
+					return;
+				}
+				location.href = "${requestScope['javax.servlet.forward.request_uri']}";
+			}
+			
+		});
+		
+	});
+
+ /**********************************************************************************
+  	비밀번호 찾기 
+       	1. 아이디와 이름을 검색해서 회원인지 여부 회원이 아닐시  회원가입 유도 
+       	2. 회원이 맞을시아이디 비번 찾도록 유도 
+ **********************************************************************************/
+ 
+ /*
+ 	keydown
+ */
+ 
+ $("#passname").keydown(function (e) {
+	   if (e.keyCode == 13) {
+		   var email = $("#passemail").val()
+        	var name = $("#passname").val()
+       	$.ajax({
+       		url:"/marryus/main/checkID.json",
+       		data:"email="+email+"&name="+name
+       	}).done(function(result){
+       		if(result==1){
+       			alert("회원입니다. 이메일 인증을 진행해주세요")
+       			  e.preventDefault()
+       			$("#findPassForm").html($("#nextStep").html());
+				
+       		}else{
+       			alert("Marry Us 회원이 아닙니다. 회원가입먼저 진행해주세요.")
+       			 e.preventDefault()
+       			$("#findPassForm").html($("#goToSignUp").html());
+       		}
+    	   
+       	});
+		   
+		   
+	   }
+ });
+ 
+ /*
+	click
+*/
+ 
+        $("#checkEmailnName").on('click',function(e){
+     	   
+     	    var email = $("#passemail").val()
+         	var name = $("#passname").val()
+        	$.ajax({
+        		url:"/marryus/main/checkID.json",
+        		data:"email="+email+"&name="+name
+        	}).done(function(result){
+        		if(result==1){
+        			alert("회원입니다. 이메일 인증을 진행해주세요")
+        			  e.preventDefault()
+        			$("#findPassForm").html($("#nextStep").html());
+        		}else{
+        			alert("Marry Us 회원이 아닙니다. 회원가입먼저 진행해주세요.")
+        			 e.preventDefault()
+        			$("#findPassForm").html($("#goToSignUp").html());
+        		}
+     	   
+        	});
+        });
+         
+        
+       function gotoSignUp(){
+     	  location.href = 'http://localhost:8000/marryus/signup/signupPro.do';
+       }
+       
+
+</script>            
 </body>
 </html>

@@ -189,7 +189,7 @@
                                 <td>허니문</td>
                                 <td>${a.auctionStatus}</td>
                                 <td><fmt:formatDate value="${a.auctionSdate}" pattern="yyyy-MM-dd" /></td>
-                                <td><fmt:formatDate value="${a.auctionEDate}" pattern="yyyy-MM-dd" /></td>
+                                <td><fmt:formatDate value="${a.auctionEdate}" pattern="yyyy-MM-dd" /></td>
                             </tr>
                             </c:forEach>
                     </table>

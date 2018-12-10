@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.marryus.main.service.MainServiceImpl;
 import kr.co.marryus.repository.domain.Auction;
+
 import kr.co.marryus.repository.domain.Todo;
 import kr.co.marryus.repository.domain.WeddingPlan;
 
@@ -33,18 +35,18 @@ public class MainController {
 	 */
 	@Autowired
 	MainServiceImpl service;
+
 	
-	@RequestMapping("/myWeddingPlanSorting.do")
-	public void MyWedding() {};
+	@RequestMapping("/weddingPlanSort.do")
+	public void WeddingPlan() {};
+	
 	@RequestMapping("/resultPlanning.do")
 	public void resultPlanning() {};
 	/**
 	 * main 페이지 호출
 	 */
 	@RequestMapping("/main.do")
-	public Model loginMain(Auction auction,Model model ) {
-		model.addAttribute("auction", service.selectActionlist(auction));
-		return model;
+	public void loginMain( ) {
 		
 	}
 	
@@ -56,9 +58,9 @@ public class MainController {
 	 */
 	@RequestMapping("/submitWeddingPlan.do")
 	public String submitWeddingPlan(WeddingPlan weddingPlan) throws Exception {
+		System.out.println("DD::"+weddingPlan.getMemNo());
 		service.insertWedPlan(weddingPlan);
-		
-		return "redirect:myWeddingPlanSorting.do";
+		return "redirect:weddingPlanSort.do";
 	}
 	
 	
@@ -83,8 +85,6 @@ public class MainController {
 	@RequestMapping(value ="/sortingPlan.json" ,method= RequestMethod.POST)
 	@ResponseBody
 	public void sortingPlan(Todo todo) throws Exception {
-		System.out.println("실행");
-		System.out.println("todo"+todo.getMemNo());
 		
 		/*service.sortingPlan(todo);*/
 		for(String t: todo.getTodoCategoryList() ) {
@@ -92,10 +92,7 @@ public class MainController {
 			to.setMemNo(todo.getMemNo());
 			to.setTodoCategory(t);
 			service.sortingPlan(to);
-			System.out.println("todo!"+to.getTodoCategory());
-			System.out.println("todo!"+to.getMemNo());
-			System.out.println("todo!"+to.getTodoDelete());
-			System.out.println("완료");
+		
 		}
 		
 	}
@@ -146,18 +143,26 @@ public class MainController {
 	@RequestMapping(value="/deadlineList.json",method= RequestMethod.POST)
 	@ResponseBody
 	public List<Auction> listofDeadline(Auction auction) throws Exception{
-		System.out.println(auction.getAuctionEdate());
 		return service.selectAuctionEDate(auction);
 	}
 	
-	@RequestMapping(value="/todoList.json",method= RequestMethod.POST)
+	/**
+	 * main profil - planning Progress 
+	 * @param memNo
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/proFileDetail.json",method= RequestMethod.POST)
 	@ResponseBody
-	public int TodoList(int memNo)throws Exception {
-		System.out.println("MyProfile||||"+memNo );
+	public HashMap<String, Integer> TodoList(int memNo)throws Exception {
+		HashMap<String, Integer> proFileMap = new HashMap<>();
+		proFileMap.put("todoTotal", service.countTotalTODO(memNo));
+		proFileMap.put("todoDone", service.countTODOdone(memNo));
+		proFileMap.put("auctionTotal", service.countTotalAuction(memNo));
+		proFileMap.put("auctionDone", service.countAuctiondone(memNo));
 		
-	
 		
-		return service.countTotalTODO(memNo);
+		return proFileMap;
 	}
  	
 }

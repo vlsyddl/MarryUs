@@ -84,18 +84,34 @@ public class MainServiceImpl implements MainService{
 	}
 
 	/**
-	 * TodoList 총 갯수 
+	 * profile - TodoList 총 개수
 	 */
 	@Override
 	public int countTotalTODO(int memNo) {
 		return mapper.countTotalTODO(memNo);
 	}
 	/**
-	 * TodoList done 갯수 
+	 * profile - TodoList Done 개수 
 	 */
 	@Override
 	public int countTODOdone(int memNo) {
 		return mapper.countTODOdone(memNo);
+	}
+	
+	/**
+	 * profile - 총 auction건 수
+	 */
+	@Override
+	public int countTotalAuction(int memNo) {
+		return mapper.countTotalAuction(memNo);
+	}
+	
+	/**
+	 * profile - auction 끝난 건 수
+	 */
+	@Override
+	public int countAuctiondone(int memNo) {
+		return mapper.countAuctiondone(memNo);
 	}
 
 	

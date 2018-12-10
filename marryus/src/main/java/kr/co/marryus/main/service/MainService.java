@@ -59,16 +59,30 @@ public interface MainService {
 	List<Auction> selectAuctionEDate(Auction auction);
 	
 	/**
-	 * TodoList 총갯수 
+	 * profile - TodoList 총 개수  
 	 * @param memNo
 	 * @return
 	 */
 	int countTotalTODO(int memNo);
 	
 	/**
-	 * TodoList done 갯수
+	 * profile - TodoList Done 개수
 	 * @param memNo
 	 * @return
 	 */
 	int countTODOdone(int memNo);
+	
+	/**
+	 * profile - 총 auction건 수 
+	 * @param memNo
+	 * @return
+	 */
+	int countTotalAuction(int memNo);
+	
+	/**
+	 * profile - auction 끝난 건 수 
+	 * @param memNo
+	 * @return
+	 */
+	int countAuctiondone(int memNo);
 }
