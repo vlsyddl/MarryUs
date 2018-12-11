@@ -48,6 +48,19 @@
 		<collection property="weddingPlan" resultMap="weddingPlanMap" />
 	</resultMap>
 	
+	<resultMap id="boardMap" type="board">
+		<result column="board_no" property="boardNo" />
+		<result column="writer" property="writer" />
+		<result column="title" property="title" />
+		<result column="content" property="content" />
+		<result column="reg_date" property="regDate" />
+		<result column="view_cnt" property="viewCnt"/>
+		<result column="category" property="category" />
+		<result column="answer" property="answer" />
+		<result column="secret" property="secret" />
+		<collection property="attach" resultMap="attachMap" />
+	</resultMap>
+	
 	<!-- 나만의 웨딩 데이터 입력 -->
 	<insert id="insertWedPlan" parameterType="WeddingPlan">
 		insert into
@@ -72,73 +85,124 @@
 	<!-- 역경매 리스트 불러오기 -->
 	<select id="selectActionlist" parameterType="Auction" resultMap="auctionMap">
 		select *
-		from mu_auction
-		where auction_type = #{auctionType}
-		and auction_status = #{auctionStatus}
+		  from mu_auction
+		 where auction_type = #{auctionType}
+		   and auction_status = #{auctionStatus}
 	</select>
-
+	
 	<select id="auctionList" parameterType="Auction" resultMap="auctionMap">
 		select *
-		from mu_auction a left join mu_member m
-		on a.mem_no = m.mem_no
-		left join mu_wedding_plan w
-		on a.mem_no = w.mem_no
-		where auction_type = #{auctionType}
+		  from mu_auction a left join mu_member m
+		    on a.mem_no = m.mem_no
+		  left join mu_wedding_plan w
+		    on a.mem_no = w.mem_no
+		 where auction_type = #{auctionType}
 	</select>
+	<select id="auctionListSDM" parameterType="Auction" resultMap="auctionMap">
+		select *
+		  from mu_auction a left join mu_member m
+		    on a.mem_no = m.mem_no
+		  left join mu_wedding_plan w
+		    on a.mem_no = w.mem_no
+		 where auction_type IN ('s' , 'd', 'm')
+	</select>
+	
 	
 	<!-- 나만의 웨딩 플랜 todoList 분류작업 -->
 	
 	<update id="sortingPlan" parameterType="Todo"  >
 		update mu_todo
-		set todo_delete='y'
-		where mem_no=#{memNo}
-		and todo_category=#{todoCategory}
+		   set todo_delete='y'
+		 where mem_no=#{memNo}
+		   and todo_category=#{todoCategory}
 	</update>
 	
 	<!-- 나만의 웨딩플랜 결과 todoList -->
 	<select id="selectTodoListByWP" parameterType="Todo" resultMap="todoMap">
 	  	select * 
-		from mu_todo t left join mu_wedding_plan w
-		on t.mem_no = w.mem_no
-		where t.mem_no = #{memNo}
-		and todo_delete= 'n'
-		order by todo_dday desc
+		  from mu_todo t left join mu_wedding_plan w
+		    on t.mem_no = w.mem_no
+		 where t.mem_no = #{memNo}
+		   and todo_delete= 'n'
+		 order by todo_dday desc
 	</select>
 	
 	<!-- 마감 임박 역경매건  검색 -->
 	<select id="selectAuctionEDate" parameterType="Auction" resultMap="auctionMap">
 		<![CDATA[
 			SELECT * 
-			FROM mu_auction a left join mu_member m
-			on a.mem_no = m.mem_no
-			WHERE DATEDIFF(DATE(NOW()), a.auction_edate) > -8 
-			and a.auction_status =#{auctionStatus}
+			  FROM mu_auction a left join mu_member m
+			    on a.mem_no = m.mem_no
+			 WHERE DATEDIFF(DATE(NOW()), a.auction_edate) > -8 
+			   and a.auction_status =#{auctionStatus}
 		]]>
 	</select>
 	
-	<!-- profile -->
+	<!-- profile pla-->
 		<!-- todo list -->
 	<select id="countTotalTODO" parameterType="int" resultType="int">
 		select count(*)
-		from mu_todo
-		where mem_no = #{memNo}
+		  from mu_todo
+		 where mem_no = #{memNo}
 	</select>
 	<select id="countTODOdone" parameterType="int" resultType="int">
 		select count(*)
-		from mu_todo 
-		where mem_no = #{memNo}
-		and todo_check = 'y'
+		  from mu_todo 
+		 where mem_no = #{memNo}
+		   and todo_check = 'y'
 	</select>
 		<!-- 입찰  -->
 	<select id="countTotalAuction" parameterType="int" resultType="int">
 		select count(*)
-		from mu_auction
-		where mem_no = #{memNo}
+		  from mu_auction
+		 where mem_no = #{memNo}
 	</select>
-		<select id="countAuctiondone" parameterType="int" resultType="int">
+		
+	<select id="countAuctiondone" parameterType="int" resultType="int">
 		select count(*)
-		from mu_auction 
-		where mem_no = #{memNo}
-		and auction_status = 'done'
+		  from mu_auction 
+	     where mem_no = #{memNo}
+		   and auction_status = 'done'
+	</select>
+	
+		<!-- wedding date  -->
+	<select id="getWedDate" parameterType="int" resultType="String">
+		select plan_wed_date
+		  from mu_wedding_plan 
+		 where mem_no= #{memNo}; 
+	</select>
+	
+		<!-- 관심업체 -->
+	<select id="countCompanyLike" parameterType="int" resultType="int">
+		select count(*)
+		  from mu_company_like l
+		 inner join mu_company_info ci
+		    on l.com_info_no = ci.com_info_no
+		 where l.mem_no=#{memNo};
+	</select>
+	
+		<!-- wedding budget -->
+	<select id="totalBudget" parameterType="int" resultType="int">
+		select sum(budg_budget) 
+		  from mu_budget 
+		 where mem_no = #{memNo};
+	</select>
+	<select id="spendBudget" parameterType="int" resultType="int">
+		select sum(budg_expenses) 
+		  from mu_budget 
+		 where mem_no = #{memNo};
+	</select>
+	
+	<select id="reviewList" parameterType="SearchForm" resultMap="boardMap">
+	select * 
+	 from mu_board b
+		inner join mu_attach a
+	    on b.board_no = a.board_no
+	    where category = 'rv'
+		 <if test="content != 'null' and content!=null and content!=''" >
+	 	      and ${type} like CONCAT('%',#{content},'%')
+	 	   </if>
+		order by b.board_no desc
+		 limit #{begin}, 9
 	</select>
 </mapper>

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.marryus.repository.domain.Auction;
+import kr.co.marryus.repository.domain.Board;
+import kr.co.marryus.repository.domain.SearchForm;
 import kr.co.marryus.repository.domain.Todo;
 import kr.co.marryus.repository.domain.WeddingPlan;
 import kr.co.marryus.repository.mapper.MainMapper;
@@ -112,6 +114,51 @@ public class MainServiceImpl implements MainService{
 	@Override
 	public int countAuctiondone(int memNo) {
 		return mapper.countAuctiondone(memNo);
+	}
+
+	/**
+	 * profile - wedding date
+	 */
+	@Override
+	public String getWedDate(int memNo) {
+		
+		return mapper.getWedDate(memNo);
+	}
+
+	/**
+	 * profile - 북마크 업체 수
+	 */
+	@Override
+	public int countCompanyLike(int memNo) {
+		
+		return mapper.countCompanyLike(memNo);
+	}
+
+	/**
+	 *  profile - 총 예산
+	 */
+	@Override
+	public int totalBudget(int memNo) {
+		return mapper.totalBudget(memNo);
+	}
+	/**
+	 *  profile - 지출 예산
+	 */
+	@Override
+	public int spendBudget(int memNo) {
+		return mapper.spendBudget(memNo);
+	}
+
+	@Override
+	public List<Auction> auctionListSDM(Auction auction) {
+		
+		return mapper.auctionListSDM(auction);
+	}
+
+	@Override
+	public List<Board> reviewList(SearchForm form) {
+		
+		return mapper.reviewList(form);
 	}
 
 	

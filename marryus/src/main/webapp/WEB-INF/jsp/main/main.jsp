@@ -76,32 +76,32 @@
 						</div>
 						<dl>
 							<dt>${user.name}</dt>
-							<dd>${user.general.genBirth}</dd>
+							<dd id="genBirth">${user.general.genBirth}</dd>
 						</dl>
 					</div>
 					<div class="time cf">
 						<dl class="day">
 							<dt>Days</dt>
-							<dd>203</dd>
+							<dd>0</dd>
 						</dl>
 						<dl class="hours">
 							<dt>Hours</dt>
-							<dd>22</dd>
+							<dd>0</dd>
 						</dl>
 						<dl class="min">
 							<dt>Min</dt>
-							<dd>30</dd>
+							<dd>0</dd>
 						</dl>
 						<dl class="sec">
 							<dt>Sec</dt>
-							<dd>99</dd>
+							<dd>0</dd>
 						</dl>
 					</div>
 				</div>
 				<div class="col-md-9 infoRight">
 					<div class="titleBox">
 						<h3>Planning Progress</h3>
-						<a href="#">My Wedding > </a>
+						<a href="<c:url value='/mypage/mywedding.do' />" >My Wedding > </a>
 					</div>
 					<ul>
 						<li><a href="#">
@@ -110,10 +110,10 @@
 										<i class="far fa-list-alt"></i>
 									</dt>
 									<dd  id="profileAuction">
-										<b>0</b> <br> <span>out of 20</span>
+										<b>0</b> <br> <span>out of 0</span>
 									</dd>
 								</dl>
-								<p>Vendors hired</p>
+								<p>Auction List</p>
 						</a></li>
 						<li><a href="#">
 								<dl>
@@ -121,7 +121,7 @@
 										<i class="fas fa-list-ol"></i>
 									</dt>
 									<dd id="profileTodo">
-										<b>7</b> <br> <span ></span>
+										<b>0</b> <br> <span>out of0</span>
 									</dd>
 								</dl>
 								<p>Tasks Completed</p>
@@ -131,19 +131,19 @@
 									<dt>
 										<i class="fas fa-male"></i><i class="fas fa-female"></i>
 									</dt>
-									<dd>
-										<b>0</b> <br> <span>out of 20</span>
+									<dd id="profileLikeCompany">
+										<b>0</b> <br> <span>out of 0</span>
 									</dd>
 								</dl>
-								<p>Guests confirmed</p>
+								<p>Like Companies</p>
 						</a></li>
 						<li><a href="#">
 								<dl>
 									<dt>
 										<i class="fas fa-calculator"></i>
 									</dt>
-									<dd>
-										<b>0</b> <br> <span>out of 20</span>
+									<dd id="profileBudget">
+										<b>0</b> <br> <span>out of 0</span>
 									</dd>
 								</dl>
 								<p>Budget spent</p>
@@ -810,8 +810,6 @@
 									class="img-responsive center-block">
 							</div> 스&middot;드&middot;메
 							  <input type="hidden" id="auctionType2" name="auctionType" value="s">
-							  <input type="hidden" id="auctionType7" name="auctionType" value="d">
-							  <input type="hidden" id="auctionType8" name="auctionType" value="m">
 					</a></li>
 					<li><a href="#" id="honeyMoonList">
 							<div class="imgWrap">
@@ -963,7 +961,7 @@
 						</div>
 						<form action="submitWeddingPlan.do" method="post" id="sign-form" class="sign-form">
 							<!-- 로그인했을때 세션에 담기 회원번호 hidden 으로 받기  -->
-							<input type="hidden" name="memNo" value="${user.no}"/>
+							<input type="hidden" id="memNo" name="memNo" value="${user.no}"/>
 							<ol class="questions">
 							<c:if test="${user.general.genGender == 'bri'}">
 								<li>
@@ -1095,7 +1093,10 @@
 			}
 			$('#sideBar').Floater(options);
             //날짜 카운트
-           $.fn.CountDownTimer('11/22/2019 00:00 AM'); 
+       
+
+     /*    $.fn.CountDownTimer('2019-12-20');  */
+ 			
         });
        
    
@@ -1117,15 +1118,19 @@
 				type:"post"
 			}).done(function(result){
 				//ing 
-			
-				 	var html ='';
-					for(var i = 0 ; i<result.length ; i++){
-						if(result[i].auctionStatus == "ing"){
+				
+					console.log(result.auctionList);
+					console.log(result.auctionListSDM);
+				
+					
+				    var html ='';
+					for(var i = 0 ; i<result.auctionList.length ; i++){
+						if(result.auctionList[i].auctionStatus == "ing"){
 							html +='<li>'
-							html +='<span class="w18"><span>'+getAuctionStatus(result[i].auctionStatus)+'</span></span>'	 
-							html +='<span class="w18">'+result[i].member.name+'</span>'	 
+							html +='<span class="w18"><span>'+getAuctionStatus(result.auctionList[i].auctionStatus)+'</span></span>'	 
+							html +='<span class="w18">'+result.auctionList[i].member.name+'</span>'	 
 							html +='<span class="w28">서울시 강동구</span>'
-							html +='<span class="w18">D-'+countDay(result[i].auctionEdate) +'</span>'
+							html +='<span class="w18">D-'+countDay(result.auctionList[i].auctionEdate) +'</span>'
 							html +='<span class="w18">접수중</span>'	 
 							html +='</li>'	
 						}
@@ -1146,11 +1151,11 @@
 				 
 					//done
 				 	var html2 ='';
-				 	for(var i = 0 ; i<result.length ; i++){
-						if(result[i].auctionStatus == "done"){
+				 	for(var i = 0 ; i<result.auctionList.length ; i++){
+						if(result.auctionList[i].auctionStatus == "done"){
 							html2 +='<li>'
-							html2 +='<span class="w18"><span>'+getAuctionStatus(result[i].auctionStatus)+'</span></span>'	 
-							html2 +='<span class="w18">'+result[i].member.name+'</span>'	 
+							html2 +='<span class="w18"><span>'+getAuctionStatus(result.auctionList[i].auctionStatus)+'</span></span>'	 
+							html2 +='<span class="w18">'+result.auctionList[i].member.name+'</span>'	 
 							html2 +='<span class="w28">서울시 강동구</span>'
 							html2 +='<span class="w36">총 1,1501,5400원</span>'
 							html2 +='</li>'	
@@ -1166,22 +1171,16 @@
 		                moveSlides: 1,
 		                minSlides: 3, 
 		                maxSlides: 3,
-		                pager:false
+		                pager:false,
+		                adaptiveHeight:true
 		            });
 			
 			});
 			
-		});
+		}); // 바로 
+
 		
-	
-		// 입찰 현황 버튼 클릭시 
-		/*
-			auctioType만 보내서 auctionStatus는 다 가져와서 
-			뿌려줄때 ing 와  done을 걸러 보기 
-			
-			- issue script.. 잘안먹는데 ..? 이건 어떻게 해결하지??
-		*/
-        $("#weddingHallList").click(function(){
+			$("#weddingHallList").click(function(){
         	var hall = $("#auctionType").val();
         	var auctionStatus = $("#auctionStatus").val();
         	console.log(hall);
@@ -1191,16 +1190,16 @@
 				data:"auctionType="+hall ,
 				type:"post"
 			}).done(function(result){
-				console.log(result)
+				
 				//ing
 			 	var html ='';
-				for(var i = 0 ; i<result.length ; i++){
-					if(result[i].auctionStatus == "ing"){
+				for(var i = 0 ; i<result.auctionList.length ; i++){
+					if(result.auctionList[i].auctionStatus == "ing"){
 						html +='<li>'
-						html +='<span class="w18"><span>'+getAuctionStatus(result[i].auctionStatus)+'</span></span>'	 
-						html +='<span class="w18">'+result[i].member.name+'</span>'	 
+						html +='<span class="w18"><span>'+getAuctionStatus(result.auctionList[i].auctionStatus)+'</span></span>'	 
+						html +='<span class="w18">'+result.auctionList[i].member.name+'</span>'	 
 						html +='<span class="w28">서울시 강동구</span>'
-						html +='<span class="w18">D-'+countDay(result[i].auctionEdate) +'</span>'
+						html +='<span class="w18">D-'+countDay(result.auctionList[i].auctionEdate) +'</span>'
 						html +='<span class="w18">접수중</span>'	 
 						html +='</li>'	
 					}
@@ -1215,254 +1214,304 @@
 	                moveSlides: 1,
 	                minSlides: 5, 
 	                maxSlides: 5,
-	                pager:false
+	                pager:false,
+	                adaptiveHeight:true
 	            });
 			 	
 				//done
-				$("#venueAuctionDone").html(
-				 		"<h5 class='v-roll-title'>"
-				 		+"<a href='#'>입찰중 역경매</a></h5>"
-				 		+"<div class='bx-wrapper' style='max-width: 100%;'>"
-				 		+"<div class='bx-viewport' aria-live='polite' style='width: 100%; overflow: hidden; position: relative; height: 190px;'>"
-				 		+"<ul class='v-roll' id='vDoneAcution'>"
-				 		
-				 ); 
-				for(var i = 0 ; i<result.length ; i++){
-					if(result[i].auctionStatus == "done"){
-				
-						$("#vDoneAcution").append(
-						
-						"<li style='float: none; list-style: none; position: relative;' aria-hidden='false'>"
-						+"<span class='w18'>"+result[i].auctionNo+"</span>"
-						+"<span class='w18'>"+result[i].memNo+"</span>"
-						+"<span class='w18'>"+result[i].member.name+"</span>"
-						+"<span class='w18'>"+result[i].auctionStatus+"</span>"
-						+"</li>"
-						); 
-						
+			 	var html2 ='';
+			 	for(var i = 0 ; i<result.auctionList.length ; i++){
+					if(result.auctionList[i].auctionStatus == "done"){
+						html2 +='<li>'
+						html2 +='<span class="w18"><span>'+getAuctionStatus(result.auctionList[i].auctionStatus)+'</span></span>'	 
+						html2 +='<span class="w18">'+result.auctionList[i].member.name+'</span>'	 
+						html2 +='<span class="w28">서울시 강동구</span>'
+						html2 +='<span class="w36">총 1,1501,5400원</span>'
+						html2 +='</li>'	
 					}
 				} 
+				$("#venueAuctionDone ul").html(html2);
+				$('#venueAuctionDone ul').bxSlider({
+	                auto: true,
+	                speed: 3000,
+	                pause : 3000,
+	                mode: 'vertical',
+	                controls : false,
+	                moveSlides: 1,
+	                minSlides: 3, 
+	                maxSlides: 3,
+	                pager:false,
+	                adaptiveHeight:true
+	            });
+			});
 
-			});
-        	
-        });
-        $("#sdmList").click(function(){
+		});
+		//웨딩 끝 
+		
+			$("#sdmList").click(function(){
         	var sdm = $("#auctionType2").val();
-        	var auctionStatus = $("#auctionStatus").val();
-        	console.log(sdm);
-        	console.log(auctionStatus);
+		
         	$.ajax({
 				url:"/marryus/main/auctionList.json",
-				data:"auctionType="+sdm  ,
+				data:"auctionType="+sdm ,
 				type:"post"
 			}).done(function(result){
+				console.log(result)
 				//ing
-				$("#sdmAuctionIng").html(
-			 		"<h5 class='v-roll-title'>"
-			 		+"<a href='#'>입찰중 역경매</a></h5>"
-			 		+"<div class='bx-wrapper' style='max-width: 100%;'>"
-			 		+"<div class='bx-viewport' aria-live='polite' style='width: 100%; overflow: hidden; position: relative; height: 190px;'>"
-			 		+"<ul class='v-roll' id='sdmIngAcution'>"
-			 		
-			 	); 
-				for(var i = 0 ; i<result.length ; i++){
-					$("#sdmIngAcution").append(
-						"<li style='float: none; list-style: none; position: relative;' aria-hidden='false'>"
-						+"<span class='w18'>입찰중</span>"
-						+"<span class='w18'>"+result[i].memNo+"</span>"
-						+"<span class='w18'>"+result[i].member.name+"</span>"
-						+"</li>"
-					); 
-				} 
-				//done
-				$("#sdmAuctionDone").html(
-				 		"<h5 class='v-roll-title'>"
-				 		+"<a href='#'>입찰중 역경매</a></h5>"
-				 		+"<div class='bx-wrapper' style='max-width: 100%;'>"
-				 		+"<div class='bx-viewport' aria-live='polite' style='width: 100%; overflow: hidden; position: relative; height: 190px;'>"
-				 		+"<ul class='v-roll' id='sdmDoneAcution'>"
-				 		
-				 ); 
-				for(var i = 0 ; i<result.length ; i++){
-					if(result[i].auctionStatus == "done"){
-						$("#sdmDoneAcution").append(
-						
-						"<li style='float: none; list-style: none; position: relative;' aria-hidden='false'>"
-						+"<span class='w18'>"+result[i].auctionNo+"</span>"
-						+"<span class='w18'>"+result[i].memNo+"</span>"
-						+"<span class='w18'>"+result[i].member.name+"</span>"
-						+"</li>"
-						); 
-						
+			 	var html ='';
+				for(var i = 0 ; i<result.auctionListSDM.length ; i++){
+					if(result.auctionListSDM[i].auctionStatus == "ing"){
+						html +='<li>'
+						html +='<span class="w18"><span>'+getAuctionStatus(result.auctionListSDM[i].auctionStatus)+'</span></span>'	 
+						html +='<span class="w18">'+result.auctionListSDM[i].member.name+'</span>'	 
+						html +='<span class="w28">서울시 강동구</span>'
+						html +='<span class="w18">D-'+countDay(result.auctionListSDM[i].auctionEdate) +'</span>'
+						html +='<span class="w18">접수중</span>'	 
+						html +='</li>'	
 					}
-				}
-				
+				} 
+			 	$("#sdmAuctionIng ul").html(html)
+			 	$('#sdmAuctionIng ul').bxSlider({
+	                auto: true,
+	                speed: 3000,
+	                pause : 3000,
+	                mode: 'vertical',
+	                controls : false,
+	                moveSlides: 1,
+	                minSlides: 5, 
+	                maxSlides: 5,
+	                pager:false,
+	                adaptiveHeight:true
+	            });
+			 	
+				//done
+			 	var html2 ='';
+			 	for(var i = 0 ; i<result.auctionListSDM.length ; i++){
+					if(result.auctionListSDM[i].auctionStatus == "done"){
+						html2 +='<li>'
+						html2 +='<span class="w18"><span>'+getAuctionStatus(result.auctionListSDM[i].auctionStatus)+'</span></span>'	 
+						html2 +='<span class="w18">'+result.auctionListSDM[i].member.name+'</span>'	 
+						html2 +='<span class="w28">서울시 강동구</span>'
+						html2 +='<span class="w36">총 1,1501,5400원</span>'
+						html2 +='</li>'	
+					}
+				} 
+				$("#sdmAuctionDone ul").html(html2);
+				$('#sdmAuctionDone ul').bxSlider({
+	                auto: true,
+	                speed: 3000,
+	                pause : 3000,
+	                mode: 'vertical',
+	                controls : false,
+	                moveSlides: 1,
+	                minSlides: 3, 
+	                maxSlides: 3,
+	                pager:false,
+	                adaptiveHeight:true
+	            });
 			});
-        	
-        });
-        $("#honeyMoonList").click(function(){
+
+		}); // sdm 끝
+	
+		
+			$("#honeyMoonList").click(function(){
         	var honeyMoon = $("#auctionType3").val();
-        	var auctionStatus = $("#auctionStatus").val();
-        	console.log(honeyMoon);
-        	console.log(auctionStatus);
+		
         	$.ajax({
 				url:"/marryus/main/auctionList.json",
-				data:"auctionType="+honeyMoon  ,
+				data:"auctionType="+honeyMoon ,
 				type:"post"
 			}).done(function(result){
+				console.log(result)
 				//ing
-				$("#honeyAuctionIng").html(
-			 		"<h5 class='v-roll-title'>"
-			 		+"<a href='#'>입찰중 역경매</a></h5>"
-			 		+"<div class='bx-wrapper' style='max-width: 100%;'>"
-			 		+"<div class='bx-viewport' aria-live='polite' style='width: 100%; overflow: hidden; position: relative; height: 190px;'>"
-			 		+"<ul class='v-roll' id='hIngAcution'>"
-			 		
-			 	); 
-				for(var i = 0 ; i<result.length ; i++){
-					$("#hIngAcution").append(
-		
-						"<li style='float: none; list-style: none; position: relative;' aria-hidden='false'>"
-						+"<span class='w18'>"+result[i].auctionNo+"</span>"
-						+"<span class='w18'>"+result[i].memNo+"</span>"
-						+"<span class='w18'>"+result[i].member.name+"</span>"
-						+"</li>"
-					); 
-				} 
-				//done
-				$("#honeyAuctionDone").html(
-				 		"<h5 class='v-roll-title'>"
-				 		+"<a href='#'>입찰중 역경매</a></h5>"
-				 		+"<div class='bx-wrapper' style='max-width: 100%;'>"
-				 		+"<div class='bx-viewport' aria-live='polite' style='width: 100%; overflow: hidden; position: relative; height: 190px;'>"
-				 		+"<ul class='v-roll' id='hDoneAcution'>"
-				 		
-				 ); 
-				for(var i = 0 ; i<result.length ; i++){
-					if(result[i].auctionStatus == "done"){
-						$("#hDoneAcution").append(
-						
-						"<li style='float: none; list-style: none; position: relative;' aria-hidden='false'>"
-						+"<span class='w18'>"+result[i].auctionNo+"</span>"
-						+"<span class='w18'>"+result[i].memNo+"</span>"
-						+"<span class='w18'>"+result[i].member.name+"</span>"
-						+"</li>"
-						); 
-						
+			 	var html ='';
+				for(var i = 0 ; i<result.auctionList.length ; i++){
+					if(result.auctionList[i].auctionStatus == "ing"){
+						html +='<li>'
+						html +='<span class="w18"><span>'+getAuctionStatus(result.auctionList[i].auctionStatus)+'</span></span>'	 
+						html +='<span class="w18">'+result.auctionList[i].member.name+'</span>'	 
+						html +='<span class="w28">서울시 강동구</span>'
+						html +='<span class="w18">D-'+countDay(result.auctionList[i].auctionEdate) +'</span>'
+						html +='<span class="w18">접수중</span>'	 
+						html +='</li>'	
 					}
-				}
-				
+				} 
+			 	$("#honeyAuctionIng ul").html(html)
+			 	$('#honeyAuctionIng ul').bxSlider({
+	                auto: true,
+	                speed: 3000,
+	                pause : 3000,
+	                mode: 'vertical',
+	                controls : false,
+	                moveSlides: 1,
+	                minSlides: 5, 
+	                maxSlides: 5,
+	                pager:false,
+	                adaptiveHeight:true
+	            });
+			 	
+				//done
+			 	var html2 ='';
+			 	for(var i = 0 ; i<result.auctionList.length ; i++){
+					if(result.auctionList[i].auctionStatus == "done"){
+						html2 +='<li>'
+						html2 +='<span class="w18"><span>'+getAuctionStatus(result.auctionList[i].auctionStatus)+'</span></span>'	 
+						html2 +='<span class="w18">'+result.auctionList[i].member.name+'</span>'	 
+						html2 +='<span class="w28">서울시 강동구</span>'
+						html2 +='<span class="w36">총 1,1501,5400원</span>'
+						html2 +='</li>'	
+					}
+				} 
+				$("#honeyAuctionDone ul").html(html2);
+				$('#honeyAuctionDone ul').bxSlider({
+	                auto: true,
+	                speed: 3000,
+	                pause : 3000,
+	                mode: 'vertical',
+	                controls : false,
+	                moveSlides: 1,
+	                minSlides: 3, 
+	                maxSlides: 3,
+	                pager:false,
+	                adaptiveHeight:true
+	            });
 			});
-        	
-        });
-        $("#jewelryList").click(function(){
+
+		});
+		// 허니문 끝
+		
+			$("#jewelryList").click(function(){
         	var jewelry = $("#auctionType4").val();
-        	var auctionStatus = $("#auctionStatus").val();
-        	console.log(jewelry);
-        	console.log(auctionStatus);
+		
         	$.ajax({
 				url:"/marryus/main/auctionList.json",
-				data:"auctionType="+jewelry  ,
+				data:"auctionType="+jewelry ,
 				type:"post"
 			}).done(function(result){
+				console.log(result)
 				//ing
-				$("#jewelryAuctionIng").html(
-			 		"<h5 class='v-roll-title'>"
-			 		+"<a href='#'>입찰중 역경매</a></h5>"
-			 		+"<div class='bx-wrapper' style='max-width: 100%;'>"
-			 		+"<div class='bx-viewport' aria-live='polite' style='width: 100%; overflow: hidden; position: relative; height: 190px;'>"
-			 		+"<ul class='v-roll' id='jIngAcution'>"
-			 		
-			 	); 
-				for(var i = 0 ; i<result.length ; i++){
-					$("#jIngAcution").append(
-		
-						"<li style='float: none; list-style: none; position: relative;' aria-hidden='false'>"
-						+"<span class='w18'>"+result[i].auctionNo+"</span>"
-						+"<span class='w18'>"+result[i].memNo+"</span>"
-						+"<span class='w18'>"+result[i].member.name+"</span>"
-						+"</li>"
-					); 
-				} 
-				//done
-				$("#jewelryAuctionDone").html(
-				 		"<h5 class='v-roll-title'>"
-				 		+"<a href='#'>입찰중 역경매</a></h5>"
-				 		+"<div class='bx-wrapper' style='max-width: 100%;'>"
-				 		+"<div class='bx-viewport' aria-live='polite' style='width: 100%; overflow: hidden; position: relative; height: 190px;'>"
-				 		+"<ul class='v-roll' id='jDoneAcution'>"
-				 		
-				 ); 
-				for(var i = 0 ; i<result.length ; i++){
-					if(result[i].auctionStatus == "done"){
-						$("#jDoneAcution").append(
-						
-						"<li style='float: none; list-style: none; position: relative;' aria-hidden='false'>"
-						+"<span class='w18'>"+result[i].auctionNo+"</span>"
-						+"<span class='w18'>"+result[i].memNo+"</span>"
-						+"<span class='w18'>"+result[i].member.name+"</span>"
-						+"</li>"
-						); 
-						
+			 	var html ='';
+				for(var i = 0 ; i<result.auctionList.length ; i++){
+					if(result.auctionList[i].auctionStatus == "ing"){
+						html +='<li>'
+						html +='<span class="w18"><span>'+getAuctionStatus(result.auctionList[i].auctionStatus)+'</span></span>'	 
+						html +='<span class="w18">'+result.auctionList[i].member.name+'</span>'	 
+						html +='<span class="w28">서울시 강동구</span>'
+						html +='<span class="w18">D-'+countDay(result.auctionList[i].auctionEdate) +'</span>'
+						html +='<span class="w18">접수중</span>'	 
+						html +='</li>'	
 					}
-				}
+				} 
+			 	$("#jewelryAuctionIng ul").html(html)
+			 	$('#jewelryAuctionIng ul').bxSlider({
+	                auto: true,
+	                speed: 3000,
+	                pause : 3000,
+	                mode: 'vertical',
+	                controls : false,
+	                moveSlides: 1,
+	                minSlides: 5, 
+	                maxSlides: 5,
+	                pager:false,
+	                adaptiveHeight:true
+	            });
+			 	
+				//done
+			 	var html2 ='';
+			 	for(var i = 0 ; i<result.auctionList.length ; i++){
+					if(result.auctionList[i].auctionStatus == "done"){
+						html2 +='<li>'
+						html2 +='<span class="w18"><span>'+getAuctionStatus(result.auctionList[i].auctionStatus)+'</span></span>'	 
+						html2 +='<span class="w18">'+result.auctionList[i].member.name+'</span>'	 
+						html2 +='<span class="w28">서울시 강동구</span>'
+						html2 +='<span class="w36">총 1,1501,5400원</span>'
+						html2 +='</li>'	
+					}
+				} 
+				$("#jewelryAuctionDone ul").html(html2);
+				$('#jewelryAuctionDone ul').bxSlider({
+	                auto: true,
+	                speed: 3000,
+	                pause : 3000,
+	                mode: 'vertical',
+	                controls : false,
+	                moveSlides: 1,
+	                minSlides: 3, 
+	                maxSlides: 3,
+	                pager:false,
+	                adaptiveHeight:true
+	            });
 			});
-        	
-        });
-        $("#extraList").click(function(){
+
+		});
+		// 예물 끝
+			$("#extraList").click(function(){
         	var extra = $("#auctionType5").val();
-        	var auctionStatus = $("#auctionStatus").val();
-        	console.log(extra);
-        	console.log(auctionStatus);
+		
         	$.ajax({
 				url:"/marryus/main/auctionList.json",
-				data:"auctionType="+extra  ,
+				data:"auctionType="+extra ,
 				type:"post"
 			}).done(function(result){
+				console.log(result)
 				//ing
-				$("#eventAuctionIng").html(
-			 		"<h5 class='v-roll-title'>"
-			 		+"<a href='#'>입찰중 역경매</a></h5>"
-			 		+"<div class='bx-wrapper' style='max-width: 100%;'>"
-			 		+"<div class='bx-viewport' aria-live='polite' style='width: 100%; overflow: hidden; position: relative; height: 190px;'>"
-			 		+"<ul class='v-roll' id='eIngAcution'>"
-			 		
-			 	); 
-				for(var i = 0 ; i<result.length ; i++){
-					$("#eIngAcution").append(
-		
-						"<li style='float: none; list-style: none; position: relative;' aria-hidden='false'>"
-						+"<span class='w18'>"+result[i].auctionNo+"</span>"
-						+"<span class='w18'>"+result[i].memNo+"</span>"
-						+"<span class='w18'>"+result[i].member.name+"</span>"
-						+"</li>"
-					); 
-				} 
-				//done
-				$("#eventAuctionDone").html(
-				 		"<h5 class='v-roll-title'>"
-				 		+"<a href='#'>입찰중 역경매</a></h5>"
-				 		+"<div class='bx-wrapper' style='max-width: 100%;'>"
-				 		+"<div class='bx-viewport' aria-live='polite' style='width: 100%; overflow: hidden; position: relative; height: 190px;'>"
-				 		+"<ul class='v-roll' id='eDoneAcution'>"
-				 		
-				 ); 
-				for(var i = 0 ; i<result.length ; i++){
-					if(result[i].auctionStatus == "done"){
-						$("#eDoneAcution").append(
-						
-						"<li style='float: none; list-style: none; position: relative;' aria-hidden='false'>"
-						+"<span class='w18'>"+result[i].auctionNo+"</span>"
-						+"<span class='w18'>"+result[i].memNo+"</span>"
-						+"<span class='w18'>"+result[i].member.name+"</span>"
-						+"</li>"
-						); 
-						
+			 	var html ='';
+				for(var i = 0 ; i<result.auctionList.length ; i++){
+					if(result.auctionList[i].auctionStatus == "ing"){
+						html +='<li>'
+						html +='<span class="w18"><span>'+getAuctionStatus(result.auctionList[i].auctionStatus)+'</span></span>'	 
+						html +='<span class="w18">'+result.auctionList[i].member.name+'</span>'	 
+						html +='<span class="w28">서울시 강동구</span>'
+						html +='<span class="w18">D-'+countDay(result.auctionList[i].auctionEdate) +'</span>'
+						html +='<span class="w18">접수중</span>'	 
+						html +='</li>'	
 					}
-				}
+				} 
+			 	$("#eventAuctionIng ul").html(html)
+			 	$('#eventAuctionIng ul').bxSlider({
+	                auto: true,
+	                speed: 3000,
+	                pause : 3000,
+	                mode: 'vertical',
+	                controls : false,
+	                moveSlides: 1,
+	                minSlides: 5, 
+	                maxSlides: 5,
+	                pager:false,
+	                adaptiveHeight:true
+	            });
+			 	
+				//done
+			 	var html2 ='';
+			 	for(var i = 0 ; i<result.auctionList.length ; i++){
+					if(result.auctionList[i].auctionStatus == "done"){
+						html2 +='<li>'
+						html2 +='<span class="w18"><span>'+getAuctionStatus(result.auctionList[i].auctionStatus)+'</span></span>'	 
+						html2 +='<span class="w18">'+result.auctionList[i].member.name+'</span>'	 
+						html2 +='<span class="w28">서울시 강동구</span>'
+						html2 +='<span class="w36">총 1,1501,5400원</span>'
+						html2 +='</li>'	
+					}
+				} 
+				$("#eventAuctionDone ul").html(html2);
+				$('#eventAuctionDone ul').bxSlider({
+	                auto: true,
+	                speed: 3000,
+	                pause : 3000,
+	                mode: 'vertical',
+	                controls : false,
+	                moveSlides: 1,
+	                minSlides: 3, 
+	                maxSlides: 3,
+	                pager:false,
+	                adaptiveHeight:true
+	            });
 			});
+
+		});
+		// 이벤트 끝 
         	
-        });
+    
      
         /*
         	입찰중/낙찰 변환해주는 함수
@@ -1518,6 +1567,16 @@
  	$(document).ready(function(){
  		var memNo =  $("#no").val();
  		
+ 		// 생년월일 'yyyy.MM.dd로 바꿔주기'
+ 		var birth = $("#genBirth").text();
+ 		var year=birth.substring(0,4);
+ 		var month=birth.substring(4,6);
+ 		var day=birth.substring(6,8);
+ 		var memBrithday = year+"."+month+"."+day;
+ 		$("#genBirth").text(memBrithday);
+ 		
+ 		
+ 		//Planning progress  부분 
  		$.ajax({
  			url:"/marryus/main/proFileDetail.json",
  			data:{memNo:memNo },
@@ -1535,9 +1594,36 @@
  			html2 += '<span>out of'+result.todoTotal+'</span>';
  			$("#profileTodo").html(html2)
  			
+ 			var html3="";
+ 			html3 += '<b>'+result.likeCompany+'</b> <br>'
+ 			html3 += '<span>I like that!</span>';
+ 			$("#profileLikeCompany").html(html3)
+ 			
+ 			var html4="";
+ 			html4 += '<b>spend : '+result.spendBudget+'</b> <br>'
+ 			html4 += '<span>Total : '+result.totalBudget+'</span>';
+ 			$("#profileBudget").html(html4)
+ 			
  		});
+ 		
+ 	});
+ 	
+ 	//profile - 웨딩 데이 날짜 카운트 
+ 	$(document).ready(function(){
+ 		 var no =  $("#memNo").val();
+  		
+  		$.ajax({
+  			url:"/marryus/main/proFileWeddingDate.json",
+  			data:{memNo:no },
+  			type:"post"
+  		})
+  		.done(function(result){
+  			var wd = moment(result.wedDate).format('YYYY-MM-DD');
+  		   $.fn.CountDownTimer(wd); 
+  		});
  	});
       
+ 	
 
 	</script>
 </body>

@@ -1,10 +1,11 @@
 package kr.co.marryus.main.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.marryus.main.service.MainServiceImpl;
 import kr.co.marryus.repository.domain.Auction;
-
 import kr.co.marryus.repository.domain.Todo;
 import kr.co.marryus.repository.domain.WeddingPlan;
 
@@ -72,9 +72,11 @@ public class MainController {
 	 */
 	@RequestMapping(value="/auctionList.json",  method= RequestMethod.POST)
 	@ResponseBody
-	public List<Auction> auctionList(Auction auction) throws Exception{
-		
-		return service.auctionList(auction);
+	public HashMap<String, List<Auction>> auctionList(Auction auction) throws Exception{
+		HashMap<String, List<Auction>> auctionLists = new HashMap<>();
+		auctionLists.put("auctionList", service.auctionList(auction));
+		auctionLists.put("auctionListSDM", service.auctionListSDM(auction));
+		return auctionLists;
 		
 	}
 	/**
@@ -160,9 +162,27 @@ public class MainController {
 		proFileMap.put("todoDone", service.countTODOdone(memNo));
 		proFileMap.put("auctionTotal", service.countTotalAuction(memNo));
 		proFileMap.put("auctionDone", service.countAuctiondone(memNo));
+		proFileMap.put("likeCompany", service.countCompanyLike(memNo));
+		proFileMap.put("totalBudget", service.totalBudget(memNo));
+		proFileMap.put("spendBudget", service.spendBudget(memNo));
 		
 		
 		return proFileMap;
 	}
  	
+	@RequestMapping(value="/proFileWeddingDate.json",method= RequestMethod.POST)
+	@ResponseBody
+	public HashMap<String, Object> getWeddingDate(int memNo) throws Exception{
+		HashMap<String, Object> wdMap= new HashMap<>();
+		
+		//String 값 Date로 parse
+		String weddingDate=service.getWedDate(memNo);  
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+		Date date=sdf.parse(weddingDate);
+		
+		wdMap.put("wedDate", date);
+		return wdMap;
+	}
+	
+	
 }

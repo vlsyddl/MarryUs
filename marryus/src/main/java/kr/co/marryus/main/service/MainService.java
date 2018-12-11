@@ -3,6 +3,8 @@ package kr.co.marryus.main.service;
 import java.util.List;
 
 import kr.co.marryus.repository.domain.Auction;
+import kr.co.marryus.repository.domain.Board;
+import kr.co.marryus.repository.domain.SearchForm;
 import kr.co.marryus.repository.domain.Todo;
 import kr.co.marryus.repository.domain.WeddingPlan;
 
@@ -25,7 +27,7 @@ public interface MainService {
 	void insertWedPlan(WeddingPlan weddingPlan);
 	
 	/**
-	 * 역경매 리스트 불러오기 
+	 * 역경매 리스트 불러오기 x
 	 * @param auction
 	 * @return
 	 */
@@ -37,6 +39,13 @@ public interface MainService {
 	 * @return
 	 */
 	List<Auction> auctionList(Auction auction);
+	
+	/**
+	 * 역경매 리스트 불러오기 2-sdm
+	 * @param auction
+	 * @return
+	 */
+	List<Auction> auctionListSDM(Auction auction);
 	
 	/**
 	 * 나만의 웨딩플랜
@@ -85,4 +94,39 @@ public interface MainService {
 	 * @return
 	 */
 	int countAuctiondone(int memNo);
+	
+	/**
+	 * profile - wedding date
+	 * @param memNo
+	 * @return
+	 */
+	String getWedDate(int memNo);
+	
+	/**
+	 * profile - 관심 업체 수
+	 * @param memNo
+	 * @return
+	 */
+	int countCompanyLike(int memNo);
+	
+	/**
+	 * profile - 총 예산
+	 * @param memNo
+	 * @return
+	 */
+	int totalBudget(int memNo);
+	
+	/**
+	 * profile - 지출한 예산
+	 * @param memNo
+	 * @return
+	 */
+	int spendBudget(int memNo);
+
+	/**
+	 * 리뷰 리스트 
+	 * @param form
+	 * @return
+	 */
+	List<Board> reviewList(SearchForm form);
 }
