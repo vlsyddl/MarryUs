@@ -324,3 +324,109 @@ table.table.list > tbody > tr:last-child > td{
 .user .table tbody tr td:nth-child(2){
     text-align: left;
 }
+
+.chatAdmin{
+    width: 400px;
+    height: 600px;
+    border-radius: 10px;
+    background: #fff;
+    position: fixed;
+    bottom: 100px;
+    right: 100px;
+    border: 1px solid #d9d9d9;
+    box-shadow: 5px 5px 5px #333;
+    padding: 30px 15px;
+}
+.chatAdmin .textWrap{
+    width: 100%;
+    height: 79%;
+    background: #fff4f4;
+    border: 1px solid #aaa;
+    border-radius: 15px;
+    padding: 10px ;
+}
+
+.chatAdmin .textWrap .textBox{
+    height: 100%;
+    overflow-y:scroll; 
+    padding-right:15px;
+    position: relative;
+}
+/*chatAdmin*/
+.chatAdmin .textWrap .textBox .chatAdmin{
+    float: right;
+    width: 80%;
+}
+.chatAdmin .textWrap .textBox .chatAdmin dl::after{
+    display: block;
+    clear: both;
+    content: '';
+}
+.chatAdmin .textWrap .textBox .chatAdmin dl dt{
+    float: right;
+    width: 20%;
+}
+.chatAdmin .textWrap .textBox .chatAdmin dl dt img{
+    max-width: 50px;
+}
+.chatAdmin .textWrap .textBox .chatAdmin dl dd{
+    float: left;
+    width: 75%;
+    padding: 10px 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+    border: 1px solid #d9d9d9;
+}
+/*chatCustomer*/
+.chatAdmin .textWrap .textBox .chatCustomer{
+    float: left;
+    width: 80%;
+}
+.chatAdmin .textWrap .textBox .chatCustomer dl::after{
+    display: block;
+    clear: both;
+    content: '';
+}
+.chatAdmin .textWrap .textBox .chatCustomer dl dt{
+    float: left;
+    width: 20%;
+}
+.chatAdmin .textWrap .textBox .chatCustomer dl dt img{
+    max-width: 50px;
+}
+.chatAdmin .textWrap .textBox .chatCustomer dl dd{
+    float: right;
+    width: 75%;
+    padding: 10px 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+    border: 1px solid #d9d9d9;
+}
+
+.chatAdmin .inputBox{
+    margin-top: 2%;
+    height: 19%;
+}
+.chatAdmin .inputBox textarea{
+    height: 100%;
+    width: 80%;
+    float: left;
+    border-radius: 15px;
+}
+.chatAdmin .inputBox button{
+    height: 100%;
+    width: 19%;
+    float: right;
+    border-radius: 15px;
+    background: #fffeee;
+}
+.chatAdmin .btnClosed{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+.chatAdmin .btnClosed i{
+    font-size: 1.6em;
+}

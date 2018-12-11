@@ -10,6 +10,7 @@
     <title>Marry Us</title>
     <c:import url="/common/importCss.jsp"/>
 	 <c:import url="/common/importJs.jsp"/>
+    <c:import url="/common/importAdminChat.jsp"/>
     <link rel="stylesheet" href="<c:url value="/resources/css/admin.css"/>">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
 </head>
@@ -39,6 +40,7 @@
                 <li><a href="#"><i class="fas fa-gift"></i> Event</a></li>
             </ul>
         </nav>
+       
     </aside>
     <div id="wrap" class="main cf">
         <h2 class="title">
@@ -81,31 +83,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>aaa</td>
-                                <td>일반회원</td>
-                                <td>2018.11.22</td>
-                            </tr>
-                            <tr>
-                                <td>aaa</td>
-                                <td>일반회원</td>
-                                <td>2018.11.22</td>
-                            </tr>
-                            <tr>
-                                <td>aaa</td>
-                                <td>일반회원</td>
-                                <td>2018.11.22</td>
-                            </tr>
-                            <tr>
-                                <td>aaa</td>
-                                <td>일반회원</td>
-                                <td>2018.11.22</td>
-                            </tr>
-                            <tr>
-                                <td>aaa</td>
-                                <td>일반회원</td>
-                                <td>2018.11.22</td>
-                            </tr>
+                           
                         </tbody>
                     </table>
 
@@ -138,6 +116,7 @@
                 </div>
             </div>
         </section>
+        
     </div>
     <script>
     	$(function(){
@@ -147,7 +126,7 @@
     		countAuction();
     		noAgreeMember();
     	})
-    	
+    		
     	var ccCount = new Array(); //일자별 접속자 수
     	var ccDate = new Array(); // 일주일
     	

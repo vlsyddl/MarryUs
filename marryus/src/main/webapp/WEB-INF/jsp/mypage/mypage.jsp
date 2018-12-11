@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="us">
 <head>
     <meta charset="utf-8">
@@ -9,11 +12,7 @@
  
     <title>Start Up</title>
     
-    
-     <script
-  src="https://code.jquery.com/jquery-3.3.1.js"
-  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-  crossorigin="anonymous"></script>
+   
      <c:import url="/common/importCss.jsp"/>
 	 <c:import url="/common/importJs.jsp"/>
   
@@ -68,7 +67,7 @@
         }
  
         function handleImgFileSelect(e) {
- 
+ ÂÂ
             sel_files = [];
             $(".imgs_wrap").empty();
  
@@ -78,7 +77,7 @@
             var index = 0;
             filesArr.forEach(function(f) {
                 if(!f.type.match("image.*")) {
-                    alert("올바른 형식이 아닙니다.");
+                    alert("ì¬ë°ë¥¸ íìì´ ìëëë¤.");
                     return;
                 }
  
