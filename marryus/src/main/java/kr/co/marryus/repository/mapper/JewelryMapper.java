@@ -5,6 +5,7 @@ import java.util.List;
 import kr.co.marryus.repository.domain.Auction;
 import kr.co.marryus.repository.domain.CompanyFile;
 import kr.co.marryus.repository.domain.CompanyInfo;
+import kr.co.marryus.repository.domain.CompanyLike;
 import kr.co.marryus.repository.domain.Jewelry;
 import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.Page;
@@ -24,4 +25,7 @@ public interface JewelryMapper {
 	CompanyInfo selectComInfoCheck(CompanyInfo companyInfo);
 	void insertTender(Tender tender);
 	Member selectLoginCheck(CompanyInfo companyInfo);
+	int selectCompanyLike(CompanyLike companyLike);
+	void insertCompanyLike(CompanyLike companyLike);
+	void deleteCompanyLike(CompanyLike companyLike);
 }

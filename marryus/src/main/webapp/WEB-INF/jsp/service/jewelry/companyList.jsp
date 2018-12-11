@@ -54,7 +54,7 @@
                     	<div>
                     	<div class="row itemWrap">
                         <c:forEach var="j" items="${jewelryCompanyList}">
-                                <div class="col-md-4 itemBox" data-href="${j.comInfoNo}">
+                                <div class="col-md-4 itemBox" data-comNo="${j.comInfoNo}" data-no="${j.memNo}" >
                                     <div class="item">
                                         <div class="imgBox">
                                             <a href="#"><img src="/marryus/img/comProfile/${j.comFileName}" alt="" class="img-responsive center-block" onError="javascript:this.src='<c:url value="/resources/img/sorry.png"/>'"></a>
@@ -71,7 +71,7 @@
                                                 <li><span>별점</span> <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></li>
                                             </ul>
                                         </div>
-                                        <a href="#" class="itemBtn">관심업체 등록</a>
+	                                    <a href="#" class="comLikeBtn">관심업체 등록</a>
                                     </div>
                                     </div>
                             </c:forEach>
@@ -133,10 +133,11 @@
     </div>
     <c:import url="/common/importSideBar.jsp" />
     <c:import url="/common/importFooter.jsp" />
-
-
-<!-- 카카오지도 -->
 <script>
+
+var comLikeCnt;
+var userNo = "${user.no}";
+
 var options = {
         'speed' : 500,				 		//스피드
         'initTop' : 300, 					//기본top위치
@@ -363,12 +364,7 @@ function removeAllChildNods(el) {
 }
 
   $(document).ready(function(){
-	    $("#date_pretty").datepicker({ 
-	    });
-	    var myDate = new Date();
-	    var month = myDate.getMonth() + 1;
-	    var prettyDate = month + '/' + myDate.getDate() + '/' + myDate.getFullYear();
-	    $("#date_pretty").val(prettyDate);
+	  
 	});
 
 //디테일 모달
@@ -381,11 +377,26 @@ function detail(comInfoNo){
 		data : "comInfoNo="+comInfoNo
 	}).done(function(data){
 		console.log(data)
+		
 		modal.find(".modal-title").html(data.info.comInfoName)
-        modal.find(".infoBox").find(".adress").children("dd").html(data.info.comInfoAddr+" "+data.info.comInfoAddrDetail)
-        modal.find(".infoBox").find(".phone").children("dd").html(data.info.comInfoPhone)
-        modal.find(".infoBox").find(".profile").children("dd").html(data.info.comInfoProfile)
-        modal.find(".contentsBox").html(data.info.comInfoContent)
+		var html = "";
+		html += '<dl class="addr">'
+		html += '<dt>주소 : </dt>'
+		html += '<dd>'+data.info.comInfoAddr + data.info.comInfoAddrDetail+'</dd>'
+		html += '</dl>'
+		html += '<dl class="phone">'
+		html += '<dt>번호 : </dt>'
+		html += '<dd>'+data.info.comInfoPhone+'</dd>'
+		html += '</dl>'
+		html += '<dl class="profile">'
+		html += '<dl class="contentsBox">'
+		html += '<dt>업체소개 : </dt>'
+		html += '<dd>'+data.info.comInfoContent+'</dd>'
+		html += '</dl>'
+		
+        $(".detailInfoBox").html(html);
+		$(".detailLikeBtn").attr("data-comno", data.info.comInfoNo);
+		
         var fileList="";
         for(var f of data.files){
 			fileList +='<li>'        	
@@ -394,13 +405,47 @@ function detail(comInfoNo){
         }
         slideBox.find("ul").html(fileList)
 	})
-   
+};
 
-}
+function comLikeCheck(comNo) {
+	
+	$.ajax({
+		url : "<c:url value='/service/jewelry/comLikeCheck.json' />",
+		data : {
+			"memNo" : userNo,
+			"comInfoNo" : comNo
+		},
+		cache : false
+	}).done(function (result) {
+		console.log(result);
+		console.log(comNo);
+		if (result == 0) {
+			$('.detailLikeBtn').text("추천할거면 눌러봐 ^^");
+		} else {
+			$('.detailLikeBtn').text("이미 추천했어. 취소할거면 눌러 ^^");
+		}
+		comLikeCnt = result;
+	});
+	
+};
+
+function detailBtn() {
+	var html = "";
+	html += '<button type="button" class="detailLikeBtn" ></button>';
+	$("#detailBtn").html(html);
+
+	comLikeCheck($(this).data("comno"));
+	 $(".detailLikeBtn").click(function(){
+		  likeBtn($(this).data("comno")); 
+	  })
+};
+
 $(function(){
 	$(".itemBox").click(function(e){
 		  e.preventDefault();
-		  detail($(this).data("href"))
+		  comLikeCheck($(this).data("comno"));
+		  detailBtn($(this).data("comno"));
+		  detail($(this).data("comno"));
 	      $('#detailModal').modal('show')
 	      var bx;
 		  $('#detailModal').on('shown.bs.modal', function () {
@@ -415,10 +460,39 @@ $(function(){
 		  });
 	    
 	  })
+	 
+});
 
-})
-  
-  
+function likeBtn(comNo) {
+			var likeUrl = "comLike";
+			
+			if (comLikeCnt == 1) {
+				likeUrl = "comLikeCancel";
+			}
+			console.log("this.data(comno)"+comNo);
+			$.ajax({
+				url : "/marryus/service/jewelry/"+ likeUrl + ".json",
+				data : {
+					"comInfoNo" : comNo,
+					"memNo" : userNo
+				},
+				cache : false
+			}).done(function (result) {
+				console.log(result);
+				if (comLikeCnt == 0) {
+					alert("관심업체로 등록하셨습니다..");
+					comLikeCnt = 1;
+					$('.detailLikeBtn').text("이미 추천했어. 취소할거면 눌러 ^^");
+				} else {
+					alert("관심업체 등록을 취소하셨습니다.");
+					comLikeCnt = 0;
+					$('.detailLikeBtn').text("추천할거면 눌러봐 ^^");
+				}
+			});
+
+		};
+
+
   </script>
 <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog  modal-lg">
@@ -435,22 +509,16 @@ $(function(){
         		<li>3</li>
         	</ul>
         </div>
-        <div class="infoBox">
+        <div class="detailInfoBox">
             <dl class="adress">
                 <dt>주소 : </dt>
                 <dd></dd>
             </dl>
-            <dl class="phone">
-                <dt>연락처 : </dt>
-                <dd></dd>
-            </dl>
-            <dl class="Profile">
-                <dt>정보 : </dt>
-                <dd></dd>
-            </dl>
         </div>
         <div class="contentsBox">
-
+        </div>
+        <div id="detailBtn">
+        
         </div>
       </div>
       <div class="modal-footer">

@@ -7,6 +7,7 @@ import kr.co.marryus.repository.domain.CompanyFile;
 import kr.co.marryus.repository.domain.CompanyInfo;
 import kr.co.marryus.repository.domain.Dress;
 import kr.co.marryus.repository.domain.Makeup;
+import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.Page;
 import kr.co.marryus.repository.domain.Studio;
 import kr.co.marryus.repository.domain.Tender;
@@ -26,4 +27,5 @@ public interface SDMeService {
 	Auction auctionCheck(int auctionNo);
 	CompanyInfo comInfoCheck(CompanyInfo companyInfo);
 	void writeTender(Tender tender);
+	Member loginCheck(CompanyInfo companyInfo);
 }

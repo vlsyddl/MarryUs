@@ -3,6 +3,8 @@ package kr.co.marryus.service.controller;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,11 +12,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 import kr.co.marryus.repository.domain.Auction;
 import kr.co.marryus.repository.domain.CompanyFile;
 import kr.co.marryus.repository.domain.CompanyInfo;
+import kr.co.marryus.repository.domain.CompanyLike;
 import kr.co.marryus.repository.domain.Jewelry;
 import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.Page;
@@ -52,7 +57,7 @@ public class JewelryController {
 		model.addAttribute("jewelryCompanyList", service.jewelryCompanyList(page));
 	}
 	
-	@RequestMapping("/comDetail.json")
+	@RequestMapping("/companyDetail.json")
 	@ResponseBody
 	public HashMap<String, Object> comDetail(int comInfoNo) {
 		HashMap<String, Object> listMap = new HashMap();
@@ -69,9 +74,9 @@ public class JewelryController {
 		page.setPageNo(pageNo);
 		
 		int count = service.jewelryAuctionCount();
-		int lastPage = (int) Math.ceil(count / 12d);
+		int lastPage = (int) Math.ceil(count / 10d);
 		
-		int pageSize = 12;
+		int pageSize = 10;
 		int currTab = (pageNo - 1) / pageSize + 1;
 		int beginPage = (currTab - 1) * pageSize + 1;
 		int endPage = currTab * pageSize < lastPage ? currTab * pageSize : lastPage;
@@ -133,6 +138,24 @@ public class JewelryController {
 	public Member loginCheck(CompanyInfo companyInfo) {
 		System.out.println("service.loginCheck(companyInfo)" + service.loginCheck(companyInfo));
 		return service.loginCheck(companyInfo);
+	}
+	
+	@RequestMapping("/comLikeCheck.json")
+	@ResponseBody
+	public int comLikeCheck(CompanyLike companyLike) {
+		return service.comLikeCheck(companyLike);
+	}
+	
+	@RequestMapping("/comLike.json")
+	@ResponseBody
+	public void comLike(CompanyLike companyLike) {
+		service.comLike(companyLike);
+	}
+	
+	@RequestMapping("/comLikeCancel.json")
+	@ResponseBody
+	public void comLikeCancel(CompanyLike companyLike) {
+		service.comLikeCancel(companyLike);
 	}
 }
 

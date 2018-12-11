@@ -229,9 +229,6 @@ $('document').ready(function() {
 function detail(auctionNo, auctionType, no){
 	var modal = $("#detailModal")
 	var slideBox = $(".slideBox")
-	console.log("auctionNo === "+ auctionNo);
-	console.log("auctionType === "+ auctionType);
-	console.log("memNo === "+ no);
 	slideBox.find("ul").html("")
 	$.ajax({
 		url : "<c:url value='/service/jewelry/auctionDetail.json' />",
@@ -351,9 +348,7 @@ $(function(){
 	$(".selectTenderModal").click(function(e){
 		  e.preventDefault();
 		  selectAuction($(this).data("href"));
-		  console.log("$(memNo).val()" + $(".mem > #memNo").val());
-		  console.log('$(this).data("aucType")' + $(this).data("auctype"));
-		  selectComInfo($(".memberNo > #memNo").val(), $(this).data("auctype"));
+		  selectComInfo($("#memCheckNo").val(), $(this).data("auctype"));
 	      $('#detailModal').modal('hide');
 	      $('#insertTenderModal').modal('show');
 	    
@@ -370,9 +365,7 @@ $(function(){
         <h4 class="modal-title" id="myModalLabel"></h4>
       </div>
       <div class="modal-body">
-        	<div class="memberNo">
-		      <input type="hidden" id="memNo" name="memNo" value="${user.no}" />
-        	</div>
+	      <input type="hidden" id="memCheckNo" name="memNo" value="${user.no}" />
         <div class="infoBox">
             <dl class="memName">
                 <dt>이름 : </dt>

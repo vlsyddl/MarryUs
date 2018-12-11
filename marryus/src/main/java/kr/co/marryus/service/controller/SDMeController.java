@@ -17,6 +17,7 @@ import kr.co.marryus.repository.domain.CompanyFile;
 import kr.co.marryus.repository.domain.CompanyInfo;
 import kr.co.marryus.repository.domain.Dress;
 import kr.co.marryus.repository.domain.Makeup;
+import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.Page;
 import kr.co.marryus.repository.domain.Studio;
 import kr.co.marryus.repository.domain.Tender;
@@ -70,10 +71,10 @@ public class SDMeController {
 		page.setPageNo(pageNo);
 
 		int count = service.sdmeAuctionCount();
-		int lastPage = (int) Math.ceil(count / 12d);
+		int lastPage = (int) Math.ceil(count / 10d);
 
 		// 페이지 블럭 시작
-		int pageSize = 12;
+		int pageSize = 10;
 		int currTab = (pageNo - 1) / pageSize + 1;
 		// 11번 부터 2페이지가 되는것
 		int beginPage = (currTab - 1) * pageSize + 1;
@@ -155,6 +156,13 @@ public class SDMeController {
 		service.writeTender(tender);
 		
 		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "auctionList.do";
+	}
+	
+	@RequestMapping("/sdme/loginCheck.json")
+	@ResponseBody
+	public Member loginCheck(CompanyInfo companyInfo) {
+		System.out.println("service.loginCheck(companyInfo)" + service.loginCheck(companyInfo));
+		return service.loginCheck(companyInfo);
 	}
 	
 	

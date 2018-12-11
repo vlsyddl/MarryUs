@@ -13,11 +13,6 @@
     <c:import url="/common/importCss.jsp"/>
 	 <c:import url="/common/importJs.jsp"/>
     <link rel="stylesheet" href="<c:url value="/resources/css/wedding.css"/>">
-<style>
-	
-
-
-</style>
 </head>
 <body>
 	<c:import url="/common/importHeader.jsp" />
@@ -63,7 +58,7 @@
 						      <form action="writeStudio.do"  method="post" enctype="multipart/form-data">
 							      <div class="modal-body">
 								        
-								        <input type="hidden" id="memCheckNo" name="memNo" value="${user.no}" />
+								        <input type="hidden" name="memNo" value="${user.no}" />
 								        <input type="hidden" id="aucTypeCheck" name="auctionType" value="s" />
 							        	<h2 class="hopePlace">희망 위치</h2>	
 								        <div class="form-group">
@@ -411,7 +406,7 @@ function detail(auctionNo, auctionType, no){
 			},
 		cache : false
 	}).done(function(data){
-		console.log("data ========== " + data);
+		console.log(data);
 		$(".modal-title").html(data.memName + "님의 역경매 신청내역입니다.");
 		var html = "";
 		if( auctionType == "s") {
@@ -553,7 +548,7 @@ function detail(auctionNo, auctionType, no){
 function loginCheck(type) {
 	
 	$.ajax({
-		url : '<c:url value="/service/jewelry/loginCheck.json" />',
+		url : '<c:url value="/service/sdme/loginCheck.json" />',
 		method : 'POST',
 		data : {
 			"memNo" : $("#memCheckNo").val(),
@@ -561,11 +556,6 @@ function loginCheck(type) {
 		},
 		cache : false
 	}).done(function (data) {
-		console.log($("#memCheckNo").val());
-		console.log(type);
-		console.log("logInCheck" + data.type);
-		console.log("loginCheck ===== " + data.comInfo.comInfoType);
-		
 		if ( data.type == "mc" && data.comInfo.comInfoType == type ) {
 			$(".selectTenderModal").attr("disabled", false);
 		}
@@ -621,9 +611,7 @@ $(function(){
 	$(".selectTenderModal").click(function(e){
 		  e.preventDefault();
 		  selectAuction($(this).data("href"));
-		  console.log("$(memNo).val()" + $(".mem > #memNo").val());
-		  console.log('$(this).data("aucType")' + $(this).data("auctype"));
-		  selectComInfo($(".memberNo > #memNo").val(), $(this).data("auctype"));
+		  selectComInfo($("#memCheckNo").val(), $(this).data("auctype"));
 	      $('#detailModal').modal('hide');
 	      $('#insertTenderModal').modal('show');
 	    
@@ -661,9 +649,7 @@ function writeFormShow(index) {
         <h4 class="modal-title" id="myModalLabel"></h4>
       </div>
       <div class="modal-body">
-        	<div class="memberNo">
-		      <input type="hidden" id="memNo" name="memNo" value="${user.no}" />
-        	</div>
+		      <input type="hidden" id="memCheckNo" name="memNo" value="${user.no}" />
         <div class="infoBox">
             <dl class="memName">
                 <dt>이름 : </dt>

@@ -10,6 +10,7 @@ import kr.co.marryus.repository.domain.CompanyFile;
 import kr.co.marryus.repository.domain.CompanyInfo;
 import kr.co.marryus.repository.domain.Dress;
 import kr.co.marryus.repository.domain.Makeup;
+import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.Page;
 import kr.co.marryus.repository.domain.Studio;
 import kr.co.marryus.repository.domain.Tender;
@@ -89,6 +90,11 @@ public class SDMeServiceImpl implements SDMeService {
 	@Override
 	public void writeTender(Tender tender) {
 		mapper.insertTender(tender);
+	}
+
+	@Override
+	public Member loginCheck(CompanyInfo companyInfo) {
+		return mapper.selectLoginCheck(companyInfo);
 	}
 
 }

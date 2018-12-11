@@ -143,6 +143,7 @@
 		    or a.auction_type = 'd'
 		    or a.auction_type = 'm'
 		 order by a.auction_no desc
+		 limit #{begin}, 10
 	</select>
 	
 	<select id="auctionCount" resultType="int">
