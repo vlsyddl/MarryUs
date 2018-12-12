@@ -21,6 +21,7 @@ import kr.co.marryus.repository.domain.ServiceAdd;
 import kr.co.marryus.repository.domain.Studio;
 import kr.co.marryus.repository.domain.Tender;
 import kr.co.marryus.repository.domain.Todo;
+import kr.co.marryus.repository.domain.Todolist;
 import kr.co.marryus.repository.domain.Venue;
 
 
@@ -107,7 +108,7 @@ public class MyPageServiceImpl implements MypageService{
 
 
 	@Override
-	public List<CompanyInfo> selectGeneralAuction(Auction auction) {
+	public List<Auction> selectGeneralAuction(Auction auction) {
 		return mapper.selectGeneralAuction(auction);
 	}
 
@@ -239,8 +240,8 @@ public class MyPageServiceImpl implements MypageService{
 
 
 	@Override
-	public List<Todo> selectTodo(int memNo) {
-		return mapper.selectTodo(memNo);
+	public List<Todolist> selectTodoSortByDate(int memNo) {
+		return mapper.selectTodoSortByDate(memNo);
 	}
 
 
@@ -253,6 +254,24 @@ public class MyPageServiceImpl implements MypageService{
 	@Override
 	public int updateTodo(Todo todo) {
 		return mapper.updateTodo(todo);
+	}
+
+
+	@Override
+	public List<Todolist> selectTodoSortByCategory(int memNo) {
+		return mapper.selectTodoSortByCategory(memNo);
+	}
+
+
+	@Override
+	public int deleteTodo(Todo todo) {
+		return mapper.deleteTodo(todo);
+	}
+
+
+	@Override
+	public String[] selectComInfoType(int memNo) {
+		return mapper.selectComInfoType(memNo);
 	}
 
 

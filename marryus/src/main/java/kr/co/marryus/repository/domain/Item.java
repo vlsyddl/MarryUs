@@ -30,10 +30,7 @@ public class Item {
 	
 	public Todo getTodo() {
 		Todo todo = new Todo();
-		System.out.println(this.listId);
-		if(!this.listId.isEmpty()) {
-			todo.setTodoCategory(this.listId.substring(14));
-		}
+
 		if(!this.title.isEmpty()) {
 			todo.setTodoTitle(this.title);
 		}
@@ -42,6 +39,11 @@ public class Item {
 		}
 		if(this.dueDate != null) {
 			todo.setTodoDay(this.dueDate);
+		}
+		
+		System.out.println(this.listId);
+		if(!this.listId.isEmpty()) {
+			todo.setTodoCategory(this.listId.substring(14));
 		}
 	
 		if(done==true) {

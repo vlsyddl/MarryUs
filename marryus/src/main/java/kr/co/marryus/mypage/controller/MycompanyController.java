@@ -39,9 +39,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 
-@Controller("kr.co.marryus.mypage.controller.MypageController")
-@RequestMapping("/mypage")
-public class MypageController {
+@Controller("kr.co.marryus.mypage.controller.MycompanyController")
+@RequestMapping("/mycompany")
+public class MycompanyController {
 	
 	@Autowired
 	ServletContext context;
@@ -56,8 +56,8 @@ public class MypageController {
 	PasswordEncoder passwordEncoder;
 	
 
-	@RequestMapping("/mywedding.do")
-	public void mywedding() {
+	@RequestMapping("/myCompany.do")
+	public void mycompany() {
 	}
 	
 	@RequestMapping("/myService.do")
@@ -66,10 +66,6 @@ public class MypageController {
 	}
 	
 
-	
-	@RequestMapping("/fileUpload.do")
-	public void fileUPload() {
-	}
 	
 	
 	
@@ -178,11 +174,7 @@ public class MypageController {
 	}
 	
 	
-	/** 개인회원 정보 보기(정보수정)*/
-	@RequestMapping("/generalUpdateForm.do")
-	public void generalUpdateForm(HttpSession session,  Model model) {
-		model.addAttribute("member",service.selectGeneralMember(((Member)session.getAttribute("user")).getNo()));
-	}
+	
 	
 	/** 업체회원 정보 보기(정보수정)*/	
 	@RequestMapping("/companyUpdateForm.do")
@@ -190,41 +182,8 @@ public class MypageController {
 		model.addAttribute("member",service.selectCompanyMember(((Member)session.getAttribute("user")).getNo()));
 	}
 	
-	/** 개인회원 정보 수정*/
-	@ResponseBody
-	@RequestMapping("/generalUpdate.do")
-	public void generalUpdate( GeneralMember genMem, Member member, String prePass, MultipartFile file) throws Exception{
-		if(member.getPass().isEmpty()) {
-			member.setPass(passwordEncoder.encode(prePass));
-		}else {
-			member.setPass(passwordEncoder.encode(member.getPass()));
-		}
 	
-        String imgPath = context.getRealPath("/img/genProfile");
-        File filePath = new File(imgPath);
-        if(filePath.exists()==false) {
-        	filePath.mkdirs();}
-        
-        System.out.println(file);
-        if(!(file.isEmpty())) {
-          String fileName = file.getOriginalFilename();
-          String ext = fileName.substring(fileName.indexOf("."),fileName.length());
-          fileName =UUID.randomUUID().toString()+ext;
-          genMem.setGenProfilepath("img/genProfile");
-          genMem.setGenProfilename(fileName);
-          System.out.println(file.getOriginalFilename());
-          System.out.println(fileName);
-          file.transferTo(new File(imgPath, fileName));
-        }
-        System.out.println(genMem.getGenProfilename()+"프로필 이름");
-        System.out.println(genMem.getGenProfilepath()+"프로필 경로");
-		service.updateGeneralMember(genMem);
-		service.updateMember(member);
-
-
-	}
-	
-	/* 업체회원 정보 수정*/
+	/** 업체회원 정보 수정*/
 	@ResponseBody
 	@RequestMapping("/companyUpdate.do")
 	public void companyUpdate( CompanyMember comMem, Member member, String prePass) {
@@ -238,7 +197,7 @@ public class MypageController {
 		service.updateCompanyMember(comMem);
 	}
 	
-	/*정보 수정시 비밀번호 확인*/
+	/**정보 수정시 비밀번호 확인*/
 	@ResponseBody
 	@RequestMapping("/validMember.do")
 	public String validMember(Member member, String prePass, Model model) {
@@ -248,91 +207,6 @@ public class MypageController {
 		}
 			return "fail";
 	}
-	
-	/**/
-	@RequestMapping("/myAuction.do")
-	public void myAuction(String choo, Auction auction, Model model, @RequestParam(value="pageNo", defaultValue = "1")int pageNo){
-
-		try {
-
-		Auction auction1 = auction;
-		auction1.setPageNo(pageNo-1);
-	    model.addAttribute("pageNo", pageNo);
-		model.addAttribute("count", service.selectGeneralAuctionCnt(auction));
-		System.out.println(choo);
-		model.addAttribute("choose", choo);
-		model.addAttribute("myAuction", service.selectGeneralAuction(auction1));
-
-		}catch(Exception e) {e.getStackTrace();}
-		
-	}
-	
-	@RequestMapping("/likeCompany.do")
-	public void likeCompany(HttpSession session,int memNo, Model model, @RequestParam(value = "pageNo", defaultValue = "1") int pageNo) {
-        int pageSize=12;
-        int lastPage = (int) Math.ceil(service.selectCompanyLikeCnt(((Member)session.getAttribute("user")).getNo()) / 12d);
-        int currTab = (pageNo - 1) / pageSize + 1;
-
-        Page page = new Page();
-        page.setMemNo(((Member)session.getAttribute("user")).getNo());
-        page.setPageNo(pageNo);
-        
-        
-        model.addAttribute("like",service.selectCompanyLike(memNo));
-        model.addAttribute("beginPage", ((currTab - 1) * pageSize + 1));
-        model.addAttribute("endPage", currTab * pageSize < lastPage ? currTab * pageSize : lastPage);
-        model.addAttribute("lastPage", lastPage);
-        model.addAttribute("pageNo", 1);
-		
-	}
-	
-	@RequestMapping("/likeCompanyDelete.do")
-	public String likeCompanyDelete(CompanyLike comLike) {
-		service.deleteCompanyLike(comLike);
-		return "redirect:likeCompany.do?memNo="+comLike.getMemNo();
-	}
-	
-	@RequestMapping("/myweddingService.do")
-	public void myweddingService() {
-		
-	}
-	
-	@RequestMapping("/myTodo.do")
-	public void myTodo(Model model) {
-		model.addAttribute("todo", new Gson().toJson(service.selectTodoSortByCategory(75)));
-	}
-
-	@RequestMapping("/myTodoInsert.do")
-	@ResponseBody 
-	public void myTodoInsert(Item item) {
-		System.out.println("HJKHKJHKHK");
-		System.out.println(item.toString());
-		System.out.println("sdfjdslkfjl");
-		Todo todo =item.getTodo();
-		todo.setMemNo(75);
-		System.out.println((Integer)todo.getMemNo());
-		service.insertTodo(todo);
-		
-	}
-
-	@RequestMapping("/myTodoUpdate.do")
-	@ResponseBody 
-	public void myTodoUpdate(Item item) throws Exception{
-		System.out.println("dfjslf");
-		service.updateTodo(item.getTodo());
-	}
-
-	@RequestMapping("/myTodoDelete.do")	
-	@ResponseBody 
-	public void myTodoDelete(Item item) throws Exception{
-		service.deleteTodo(item.getTodo());
-	}
-	
-	@RequestMapping("/myBudget.do")
-	public void myBudget(Model model) {
-		
-	}
-	
 	
 	
 }

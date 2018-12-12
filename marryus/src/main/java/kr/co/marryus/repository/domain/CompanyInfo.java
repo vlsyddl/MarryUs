@@ -31,6 +31,9 @@ public class CompanyInfo {
 	private Date auctionEdate;
 	private int tenderBudget;
 	private Date tenderRegdate;
+	private String tenderTitle;
+	private String tenderInfo;
+	private String codeValue;
 
 	
 	private String Type;

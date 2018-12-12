@@ -562,8 +562,6 @@ $(function () {
 
         },
 
-        
-        //폼 만들기
         _createForm: function () {
             var me = this;
             var $form = $('<form>', {
@@ -573,54 +571,23 @@ $(function () {
             $('<div class="form-group">').append(
                 $('<input>', {
                     'type': 'text',
-                    name: 'todoTitle',
+                    name: 'title',
                     'class': 'form-control',
                     placeholder: 'TODO title'
                 })
             ).appendTo($form);
             $('<div class="form-group">').append(
-            		"<select name='todoCategory' class='form-control'>"
-            		+"<option value='terdsf'>dsfsf</option>" +
-            		+"<select>"
-                ).appendTo($form);
-            
-            
-            
-/*            $('<div class="form-group">').append(
-            		"<select name='todoCategory' class='form-control'>"
-            		+"<option value='terdsf'>dsfsf<select>"
-                    $('<select>', {
-                        name: 'todoCategory',
-                        'class': 'form-control'
-                    })
-                ).appendTo($form);*/
-                    
-                    
-                    
-                    
-//             $($form).append(
-//                    		/*"<select name='todoCategory' class='form-control'>"
-//                    		+"<option value='terdsf'>dsfsf<select>"*/
-//            		 $('<option>', {
-//                     	value: 'tdfjdsl'
-//                     	
-//                     })
-//                        ).appendTo($form);
-                            
-                            
-            $('<div class="form-group">').append(
-                    $('<textarea>', {
-                        rows: '2',
-                        name: 'todoDescription',
-                        'class': 'form-control',
-                        'placeholder': 'TODO description'
-                    })
-                ).appendTo($form);             
-                            
+                $('<textarea>', {
+                    rows: '2',
+                    name: 'description',
+                    'class': 'form-control',
+                    'placeholder': 'TODO description'
+                })
+            ).appendTo($form);
             $('<div class="form-group">').append(
                 $('<input>', {
                     'type': 'text',
-                    name: 'todoDate',
+                    name: 'dueDate',
                     'class': 'form-control',
                     placeholder: 'Due Date'
                 })
@@ -653,7 +620,7 @@ $(function () {
                 me._submitForm();
             });
         },
-        //보내기 
+
         _submitForm: function () {
             var me = this;
             if (!me.$form[0].title.value) {
@@ -662,7 +629,6 @@ $(function () {
             }
             var formData = {},
                 $inputs = me.$form.find('[name]');
-            console.log(formData)
             $inputs.each(function (ind, el) {
                 formData[el.name] = el.value;
             });
@@ -948,24 +914,18 @@ $(function () {
             });
             $li.append($('<div>', {
                 'class': 'lobilist-item-title',
-                'html': item.todoTitle
+                'html': item.title
             }));
-            if (item.todoDescription) {
+            if (item.description) {
                 $li.append($('<div>', {
                     'class': 'lobilist-item-description',
-                    html: item.todoDescription
+                    html: item.description
                 }));
             }
-            if (item.todoDate) {
+            if (item.dueDate) {
                 $li.append($('<div>', {
-                    'class': 'lobilist-item-tododate',
-                    html: item.todoDate
-                }));
-            }
-            if (item.todoCategory) {
-                $li.append($('<div>', {
-                    'class': 'lobilist-item-category',
-                    html: item.todoCategory
+                    'class': 'lobilist-item-duedate',
+                    html: item.dueDate
                 }));
             }
             $li = me._addItemControls($li);
@@ -1028,13 +988,13 @@ $(function () {
             $li.find('input[type=checkbox]').prop('checked', item.done);
             $li.find('.lobilist-item-title').html(item.title);
             $li.find('.lobilist-item-description').remove();
-            $li.find('.lobilist-item-tododate').remove();
+            $li.find('.lobilist-item-duedate').remove();
 
-            if (item.todoDescription) {
-                $li.append('<div class="lobilist-item-description">' + item.todoDescription + '</div>');
+            if (item.description) {
+                $li.append('<div class="lobilist-item-description">' + item.description + '</div>');
             }
-            if (item.todoDate) {
-                $li.append('<div class="lobilist-item-tododate">' + item.todoDate + '</div>');
+            if (item.dueDate) {
+                $li.append('<div class="lobilist-item-duedate">' + item.dueDate + '</div>');
             }
             $li.data('lobiListItem', item);
             $.extend(me.$items[item.id], item);
@@ -1362,14 +1322,12 @@ $(function () {
             title: '',
             items: []
         },
-        //투두 아이템 리스트
         // Default options for all todo items
         itemOptions: {
             id: false,
-            todoTitle: '',
-            todoCategory:'',
-            todoDescription: '',
-            todoDate: '',
+            title: '',
+            description: '',
+            dueDate: '',
             done: false
         },
 

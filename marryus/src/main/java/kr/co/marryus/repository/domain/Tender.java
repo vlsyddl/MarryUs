@@ -12,6 +12,7 @@ public class Tender {
 	private int tenderBudget;
 	private Date tenderRegdate;
 	private int memNo;
+	private String memName;
 	private String tenderInfo;
 	private int comInfoNo;
 	private String tenderTitle;

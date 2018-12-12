@@ -22,19 +22,19 @@
             <div class="container">
                     <ul>
                         <li class="on">
-                            <a href="#">
+                            <a href="<c:url value='/mycompany/mycompany.do'/>">
                                 <img src="<c:url value="/resources/"/>img/company_ico.png" alt="" class="img-responsive center-block">
                                 My Company
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="<c:url value='/mycompany/service.do'/>">
                                     <img src="<c:url value="/resources/"/>img/card_ico.png" alt="" class="img-responsive center-block">
                                 My Service
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="<c:url value='/mycompany/auctionList.do'/>">
                                 <img src="<c:url value="/resources/"/>img/graph_ico.png" alt="" class="img-responsive center-block">
                                 Auction List
                             </a>
@@ -50,11 +50,13 @@
                        
                     </div>
                     <div class="col-md-8 no-padding info_right">
+                    <a href="<c:url value='/mycompany/companyUpdateForm.do'/>">
                         <div class="profile">
                             <div class="name">
                                 <h2>Seungjae Lee</h2>
                             </div>
                         </div>
+                        </a>
                         <div class="infoCount">
                             <ul>
                                 <li class="price">

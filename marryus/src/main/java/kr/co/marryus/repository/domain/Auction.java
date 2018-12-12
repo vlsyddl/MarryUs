@@ -1,7 +1,7 @@
 package kr.co.marryus.repository.domain;
 
 import java.util.Date;
-
+import java.util.List;
 
 import lombok.Data;
 
@@ -21,5 +21,8 @@ public class Auction {
 	private Makeup makeup;
 	private Dress dress;
 	private Tender tender;
-	private Jewelry jewelry;
+	private List<CompanyInfo> tenderList;
+	private int tenderCnt;
+	
+	private int pageNo;
 }

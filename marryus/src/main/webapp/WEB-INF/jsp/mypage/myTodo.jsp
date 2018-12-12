@@ -136,7 +136,7 @@
 		<script type="text/javascript" src="<c:url value="/resources/todo/jquery/jquery-ui.min.js"/>" charset="utf-8"></script>
 		<script type="text/javascript" src="<c:url value="/resources/todo/jquery/jquery.ui.touch-punch-improved.js"/>" charset="utf-8"></script>
 		<script type="text/javascript" src="<c:url value="/resources/todo/bootstrap/js/bootstrap.min.js"/>" charset="utf-8"></script>
-		<script type="text/javascript" src="<c:url value="/resources/todo/dist/lobilist.js?45"/>" charset="utf-8"></script>
+		<script type="text/javascript" src="<c:url value="/resources/todo/dist/lobilist.js?553"/>" charset="utf-8"></script>
 
 
 	 

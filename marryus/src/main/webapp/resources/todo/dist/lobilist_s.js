@@ -6,9 +6,8 @@
  * @version 1.0.0
  * @licence MIT
  */
-var itemId=0;
-var optionsId =0;
 
+var itemId = 1;
 $(function () {
 
     var StorageLocal = function () {
@@ -135,7 +134,6 @@ $(function () {
             return !!this.$el.attr('id') && this.$lobiList.storageObject;
         },
 
-
         /**
          *
          * @private
@@ -144,9 +142,7 @@ $(function () {
             var me = this;
             me.suppressEvents();
             if (!me.$options.id) {
-//                me.$options.id = me.$lobiList.getNextListId();
-//                me.$options.id ="lobilist-list-"+(++optionsId);
-                me.$options.id ="lobilist-list-"+me.$options.common;
+                me.$options.id = me.$lobiList.getNextListId();
                 me.$hasGeneratedId = true;
             }
             me.$elWrapper = $('<div class="lobilist-wrapper"></div>');
@@ -214,11 +210,8 @@ $(function () {
             if (me._triggerEvent('beforeItemAdd', [me, item]) === false) {
                 return me;
             }
-            
-
-
+            //item => itemId
             item = me._processItemData(item);
-
             if (me.$globalOptions.actions.insert) {
                 $.ajax(me.$globalOptions.actions.insert, {
                     data: item,
@@ -228,8 +221,7 @@ $(function () {
                     .done(function (res) {
                         if (res.success) {
                             item.id = res.id;
-//                            item.id = ++item.id;
-                            me._addItemToList(item);
+                            me._addItemToList(itemId++);
                         } else {
                             if (errorCallback && typeof errorCallback === 'function') {
                                 errorCallback(res)
@@ -237,20 +229,8 @@ $(function () {
                         }
                     });
             } else {
-                item.id = me.$lobiList.getNextId();
-                me._addItemToList(item);
-            }
-            if(!item.todoNo||item.todoNo!=""||item.todoNo==null){
-            	item.listId = me.$options.id;
-                console.log("후보지2");
-                console.log(item,"아이템 정보");
-            $.ajax({
-            	url : "/marryus/mypage/myTodoInsert.do",
-            	type : "POST",
-            	data : item
-            }).done(function () {
-            	console.log("투두 삽입");
-            });
+                /*item.id = me.$lobiList.getNextId();*/
+                me._addItemToList(itemId);
             }
             return me;
         },
@@ -305,7 +285,7 @@ $(function () {
          * <code>response.success=false</code>
          * @returns {List}
          */
-        deleteItem: function (item, errorCallback) { 
+        deleteItem: function (item, errorCallback) {
             var me = this;
             if (me._triggerEvent('beforeItemDelete', [me, item]) === false) {
                 return me
@@ -345,27 +325,8 @@ $(function () {
             var me = this;
             if (item.id) {
                 me.updateItem(item, errorCallback);
-                item.listId = me.$options.id;
-                console.log(item);
-                $.ajax({
-                	url : "/marryus/mypage/myTodoUpdate.do",
-                	type : "POST",
-                	data : item
-                }).done(function () {
-                	console.log("투두 업데이트");
-                });
             } else {
                 me.addItem(item, errorCallback);
-                item.listId = me.$options.id;
-                    console.log("후보지3");
-                    console.log(item,"아이템 정보");
-                    $.ajax({
-                    	url : "/marryus/mypage/myTodoInsert.do",
-                    	type : "POST",
-                    	data : item
-                    }).done(function () {
-                    	console.log("투두 삽입");
-                    });
             }
             return me;
         },
@@ -610,34 +571,28 @@ $(function () {
             });
             $('<input type="hidden" name="id">').appendTo($form);
             $('<div class="form-group">').append(
-            		$('<input>', {
-            			'type': 'hidden',
-            			name: 'todoNo',
-            			'class': 'form-control'
-            		})
-            ).appendTo($form);
-            $('<div class="form-group">').append(
                 $('<input>', {
                     'type': 'text',
-                    name: 'title',
+                    name: 'todoTitle',
                     'class': 'form-control',
-                    placeholder: 'TODO title'
+                    placeholder: '할 일'
                 })
             ).appendTo($form);
             $('<div class="form-group">').append(
                 $('<textarea>', {
                     rows: '2',
-                    name: 'description',
+                    name: 'todoDetail',
                     'class': 'form-control',
-                    'placeholder': 'TODO description'
+                    'placeholder': '설명'
                 })
             ).appendTo($form);
             $('<div class="form-group">').append(
                 $('<input>', {
                     'type': 'text',
-                    name: 'dueDate',
+                    name: 'todoDay',
+                   /* id='datePicker',*/
                     'class': 'form-control',
-                    placeholder: 'Due Date'
+                    'placeholder': '날짜'
                 })
             ).appendTo($form);
             var $ft = $('<div class="lobilist-form-footer">');
@@ -660,7 +615,7 @@ $(function () {
             me.$el.append($form);
             return $form;
         },
-        // 드래그
+
         _formHandler: function ($form) {
             var me = this;
             $form.on('submit', function (ev) {
@@ -668,7 +623,7 @@ $(function () {
                 me._submitForm();
             });
         },
-        //한 번 보기 업데이트 이부분 수정해야 할 것 같음.
+
         _submitForm: function () {
             var me = this;
             if (!me.$form[0].title.value) {
@@ -680,7 +635,6 @@ $(function () {
             $inputs.each(function (ind, el) {
                 formData[el.name] = el.value;
             });
-            
             me.saveOrUpdateItem(formData);
             me.$form.addClass('hide');
             me.$footer.removeClass('hide');
@@ -704,7 +658,6 @@ $(function () {
             return $footer;
         },
 
-        
         _createList: function () {
             var me = this;
             var $list = $('<ul>', {
@@ -729,15 +682,13 @@ $(function () {
          */
         _addItem: function (item) {
             var me = this;
-/*            if (!item.id) {
+            if (!item.id) {
                 item.id = me.$lobiList.getNextId();
-                console.log(item.id);
-            }*/
+            }
             if (me._triggerEvent('beforeItemAdd', [me, item]) !== false) {
                 item = me._processItemData(item);
                 me._addItemToList(item);
             }
-
         },
 
         _createCheckbox: function () {
@@ -767,15 +718,6 @@ $(function () {
             }
 
             $this.closest('.lobilist-item').toggleClass('item-done');
-            console.log(item,"아이템 정보");
-            $.ajax({
-            	url : "/marryus/mypage/myTodoUpdate.do",
-            	type : "POST",
-            	data : item
-            }).done(function () {
-            	console.log("투두 체크상태 변경");
-            });
-            
         },
 
         _createDropdownForStyleChange: function () {
@@ -969,40 +911,31 @@ $(function () {
 
         _addItemToList: function (item) {
             var me = this;
-            if (!item.id) {
-                item.id = ++itemId;
-            }
             var $li = $('<li>', {
-                'data-id': item.id,
+                'data-id': itemId++,
                 'class': 'lobilist-item'
             });
-            
+            item.id=item.id+1;
             $li.append($('<div>', {
-                'class': 'lobilist-item-title',
-                'html': item.title
+                'class': 'lobilist-item-todoTitle',
+                'html': item.todoTitle
             }));
-            console.log(item.todoNo);
-            if(item.todoNo){
+            if (item.todoDetail) {
                 $li.append($('<div>', {
-                    'class': 'lobilist-item-todoNo',
-                    html: item.todoNo
+                    'class': 'lobilist-item-todoDetail',
+                    html: item.todoDetail
                 }));
             }
-            if (item.description) {
+            if (item.todoDay) {
                 $li.append($('<div>', {
-                    'class': 'lobilist-item-description',
-                    html: item.description
-                }));
-            }
-            if (item.dueDate) {
-                $li.append($('<div>', {
-                    'class': 'lobilist-item-duedate',
-                    html: item.dueDate
+                    'class': 'lobilist-item-todoDay',
+                    html: item.todoDay
                 }));
             }
             $li = me._addItemControls($li);
-            if (item.todoCheck=="Y") {
-                $li.find('input[type=checkbox]').prop('checked', false);
+            if (item.todoCheck=='Y'||item.todoCheck=='y') {
+     /*       	item.todoCheck='N' ? false : true;*/
+                $li.find('input[type=checkbox]').prop('checked', true);
                 $li.addClass('item-done');
             }
             $li.data('lobiListItem', item);
@@ -1012,12 +945,7 @@ $(function () {
             if (me.isStateful()) {
                 me.$lobiList.storageObject.addTodo(me.$lobiList.getId(), me.getId());
             }
-            console.log(item.todoNo,"")
-
-
-
             me._triggerEvent('afterItemAdd', [me, item]);
-            
 
             return $li;
         },
@@ -1041,7 +969,6 @@ $(function () {
             }
 
             if (me.$options.enableTodoRemove) {
-
                 $itemControlsDiv.append($('<div>', {
                     'class': 'delete-todo todo-action',
                     html: '<i class="glyphicon glyphicon-remove"></i>'
@@ -1058,37 +985,25 @@ $(function () {
 
         _onDeleteItemClick: function (item) {
             this.deleteItem(item);
-            console.log(item,"아이템 정보");
-            $.ajax({
-            	url : "/marryus/mypage/myTodoDelete.do",
-            	type : "POST",
-            	data : item
-            }).done(function () {
-            	console.log("투두 삭제");
-            });
         },
 
         _updateItemInList: function (item) {
             var me = this;
             var $li = me.$lobiList.$el.find('li[data-id="' + item.id + '"]');
             $li.find('input[type=checkbox]').prop('checked', item.done);
-            $li.find('.lobilist-item-title').html(item.title);
-            $li.find('.lobilist-item-description').remove();
-            $li.find('.lobilist-item-duedate').remove();
+            $li.find('.lobilist-item-todoTitle').html(item.todoTitle);
+            $li.find('.lobilist-item-todoDetail').remove();
+            $li.find('.lobilist-item-todoDay').remove();
 
-            if (item.description) {
-                $li.append('<div class="lobilist-item-description">' + item.description + '</div>');
+            if (item.todoDetail) {
+                $li.append('<div class="lobilist-item-todoDetail">' + item.todoDetail + '</div>');
             }
-            if (item.dueDate) {
-                $li.append('<div class="lobilist-item-duedate">' + item.dueDate + '</div>');
+            if (item.todoDay) {
+                $li.append('<div class="lobilist-item-todoDay">' + item.todoDay + '</div>');
             }
             $li.data('lobiListItem', item);
             $.extend(me.$items[item.id], item);
             me._triggerEvent('afterItemUpdate', [me, item]);
-            
-           
-            
-            
         },
 
         _triggerEvent: function (type, data) {
@@ -1211,7 +1126,6 @@ $(function () {
          */
         _handleSortable: function () {
             var me = this;
-            console.log("핸들러 같지는 않은데22");
             if (me.$options.sortable) {
                 me.$el.sortable({
                     items: '.lobilist-wrapper',
@@ -1236,7 +1150,6 @@ $(function () {
             } else {
                 me.$el.addClass('no-sortable');
             }
-
             return me;
         },
 
@@ -1410,16 +1323,17 @@ $(function () {
         'listStyles': ['lobilist-default', 'lobilist-danger', 'lobilist-success', 'lobilist-warning', 'lobilist-info', 'lobilist-primary'],
         // Default options for all lists
         listsOptions: {
-            id: false,
+            id: 11,
             title: '',
             items: []
         },
         // Default options for all todo items
         itemOptions: {
-            id: false ,
-            title: '',
-            description: '',
-            dueDate: '',
+            id: 10,
+            todoTitle: '',
+            todoDetail: '',
+            todoDay: '',
+            todoCheck : '',
             done: false
         },
 
@@ -1445,7 +1359,8 @@ $(function () {
         // Whether to make lists and todos sortable
         sortable: true,
         // Default action buttons for all lists
-        controls: ['edit', 'add', 'remove', 'styleChange'],
+        /*controls: ['edit', 'add', 'remove', 'styleChange'],*/
+        controls: ['styleChange'],
         //List style
         defaultStyle: 'lobilist-default',
         // Whether to show lists on single line or not
@@ -1567,15 +1482,7 @@ $(function () {
          * @param {List} The <code>List</code> instance
          * @param {Object} The jQuery object of item
          */
-        afterItemReorder: function(me, oldList, currentIndex, oldIndex, item){
-        	item.listId = me.$options.id;
-        	console.log(item);
-        	$.ajax({
-            	url : "/marryus/mypage/myTodoUpdate.do",
-            	type : "POST",
-        		data : item
-        	}).done(function(){console.log("드로그 앤드 드롭 - 성공!")});
-        },
+        afterItemReorder: null,
 
         /**
          * @event afterMarkAsDone

@@ -7,6 +7,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script> 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
    <c:import url="/common/importCss.jsp"/>
 	 <c:import url="/common/importJs.jsp"/>
@@ -53,6 +56,10 @@
     position: relative;
     font-size: 12px;
     background: #f4e2ec;
+  }
+  
+  img{
+  	width: 90%;
   }
 
   input, section {
@@ -157,22 +164,22 @@
 	font-weight: 500;
 	font-size: 18px;
 }
-.detail_box h.highlight{
+.simple_box h.highlight{
   background: #f1d6d6; 
   padding: 3px 9px;
   font-weight: 800;
   color: rgb(78, 78, 78);
   clear: both;
 }
-.detail_box .picture{
+.simple_box .picture{
 	float: left;
 }
-.detail_box .detail div{
+.simple_box .detail div{
   font-weight: 500;
   text-indent: 30px;
 }
 
-.detail_box .red{
+.simple_box .red{
 	font-size: 12px;
 	color: rgb(212, 37, 37);
 }
@@ -195,7 +202,7 @@ button{
 }
 
 
-img{
+.img_eff{
   height: 130px;
   width: 200px;
    object-fit:contain;
@@ -210,7 +217,7 @@ img{
   border: 1px solid rgb(243, 243, 243);
 }
 
-img:hover {
+.img_eff:hover {
   opacity: 1;
 	-webkit-filter: grayscale(30%) blur(1px);
 	filter: grayscale(30%) blur(1px);
@@ -224,11 +231,11 @@ body .left{
 }
 
 
-.info_box div, .detail_box div{
+.info_box div, .simple_box div{
 	font-size: 16px;
 	line-height: 1.5em;
 }
-.detail_box{
+.simple_box{
 	height: 130px;
 	vertical-align: bottom;}
 
@@ -239,6 +246,17 @@ h4{
 	margin-bottom: 10px;
 }
 .auction_box{  	padding-top: 70px;}
+ .more_btn{
+ 	clear:  both;
+ 	width: 80%;
+ 	margin: 18px 40px;
+ 	padding : 10px 30px;
+ }
+ 
+ .hidden{
+ 	dispaly : hidden;
+ }
+ 
  
 
   </style>
@@ -332,7 +350,6 @@ h4{
 
 
 
-
 <div class="auction_box">
 		<div class="tab_container">
 		
@@ -362,26 +379,25 @@ h4{
 			<input id="tab7" type="radio" name="tabs"  onClick="window.location.href='myAuction.do?choo=tab7&auctionType=e&memNo=${user.no}'" ${choose == 'tab7' ? 'checked="checked"' : '' } >
 			<label for="tab7"><span>기타 서비스</span></label>
 			
-			
 			<section id="content" class="tab-content">
-			<c:choose>
-			<c:when test="${not empty myAuction[0].comInfoName}">
+    		<c:choose>
+			<c:when test="${not empty myAuction[0].auctionNo}">
             <div class="info_box left">
                <div><fmt:formatDate value='${myAuction[0].auctionSdate}' pattern='yyyy-MM-dd' />~<fmt:formatDate value='${myAuction[0].auctionEdate}' pattern='yyyy-MM-dd' /></div>
-             <%--  <div>${count}개의 입찰서</div> --%>
-              <div><button >> 내 경매 조건 보기</button></div>
+             <div>${myAuction[0].tenderCnt}개의 입찰서</div>
+              <div><a href="#" class="btn1" data-toggle="modal" data-target="#signUpModal">> 내 경매 조건 보기</a></div>
               <div></div>
             </div>
             </c:when>
             <c:otherwise><h3>입찰한 내역이 없습니다.</h3></c:otherwise>
-            </c:choose>
+          </c:choose> 
             
             
-             <c:forEach var="auction" items="${myAuction}" varStatus="status">
-             <div class="detail_box">
+             <c:forEach var="auction" items="${myAuction[0].tenderList}" varStatus="status">
+             <div class="simple_box">
      		<h4><h class="highlight">${status.count}</h>  ${auction.comInfoName}<span class="left">      <fmt:formatDate value='${auction.tenderRegdate}' pattern='yyyy-MM-dd' /></span></h4>
               <div class="picture">
-                <img src="<c:url value="/${auction.comFilePath}/${auction.comFileName}"/>" />
+                <img class="img_eff" src="<c:url value="/${auction.comFilePath}/${auction.comFileName}"/>" />
               </div>
               <div class="detail">
                 <div>${auction.comInfoAddr} </div>
@@ -391,7 +407,64 @@ h4{
               </div>
               <button class="btn2"></button>
               </div>
-          	</c:forEach>
+              
+              
+              
+              
+              <p>
+  <button class="more_btn" data-toggle="collapse" href="#collapseExample${status.count}" role="button" aria-expanded="false" aria-controls="collapseExample${status.count}">
+     경매 상세사항 보기
+  </button>
+</p>
+
+
+
+
+<div class="collapse" id="collapseExample${status.count}">
+  <div class="card card-body">
+                  <div class="inner_box" >
+              <div id="title">${auction.tenderTitle}</div>
+              <div id="content">${auction.tenderInfo}
+                <a class="more_btn" data-toggle="collapse" href="#collapseExample${status.count}" role="button" aria-expanded="false" aria-controls="collapseExample${status.count}">접기</a>
+              </div>
+              </div>
+  </div>
+</div>
+
+          	</c:forEach> 
+
+
+              </div>
+
+          	
+          	 <c:if test="${count != 0}">
+			<nav>
+			  <ul class="pagination">
+			    <li <c:if test="${pageNo==1||pageNo==null}">class="disabled"</c:if> >
+			    <c:choose>
+			    	<c:when test="${pageNo!=1}">
+			    		<a href="myAuction.do?choo=${choose}&memNo=${user.no}&auctionType=${myAuction[0].auctionType}&pageNo=${pageNo-1}" aria-label="Previous">
+			    	</c:when>
+			    	<c:otherwise><a href="#" aria-label="Previous"></c:otherwise>
+			    </c:choose>
+			      
+			        <span aria-hidden="true">&laquo;</span>
+			      </a>
+			    </li>
+			    
+			    <li <c:if test="${pageNo==count}">class="disabled"</c:if> >
+			        <c:choose>
+				    	<c:when test="${pageNo!=count}">
+				    		<a href="myAuction.do?choo=${choose}&memNo=${user.no}&auctionType=${myAuction[0].auctionType}&pageNo=${pageNo+ 1}" aria-label="Next">
+				    	</c:when>
+				    	<c:otherwise><a href="#" aria-label="Next"></c:otherwise>
+			    	</c:choose>
+			    	<span aria-hidden="true">&raquo;</span>
+			      </a>
+			    </li>
+			  </ul>
+			</nav>
+		</c:if>
 			
 			
 			</section>
@@ -399,12 +472,51 @@ h4{
 
 	</div>
 
-
+<div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog ">
+    <div class="modal-content">
+    	modal입니다.
+    	<c:if test="${myAuction[0].auctionType=='v'}">
+    		<p><span class="title">희망예식장소</span></p>
+	    	<p><span class="title">희망예식날짜</span></p>
+	    	<p><span class="title">시간</span></p>
+	    	<p><span class="title">예식 타입</span></p>
+	    	<p><span class="title">하객 수</span></p>
+	    	<p><span class="title">기타의견 사항</span></p>
+	    	<p><span class="title">희망예산</span></p>
+    	</c:if>
+    	<c:if test="${myAuction[0].auctionType=='s'}">
+	    	<p><span class="title">희망 위치</span></p>
+	    	<p><span class="title">야외촬영여부</span></p>
+	    	<p><span class="title">스냅샷촬영여부</span></p>
+	    	<p><span class="title">비디오촬영여부</span></p>
+	    	<p><span class="title">픽업여부</span></p>
+	    	<p><span class="title">희망 예산</span></p>
+	    	<p><span class="title">희망 사항</span></p>
+    	</c:if>
+    	<c:if test="${myAuction[0].auctionType=='d'}">
+	    	<p><span class="title">희망 위치</span></p>
+	    	<p><span class="title">넥라인</span></p>
+	    	<p><span class="title">드레스타입</span></p>
+	    	<p><span class="title">예상견적</span></p>
+	    	<p><span class="title">희망 사항</span></p>
+    	</c:if>
+    	<c:if test="${myAuction[0].auctionType=='m'}">
+	    	<p><span class="title">희망 위치</span></p>
+	    	<p><span class="title">신부화장</span></p>
+	    	<p><span class="title">혼주화장</span></p>
+	    	<p><span class="title">출장희망</span></p>
+	    	<p><span class="title">희망 예산</span></p>
+	    	<p><span class="title">희망 사항</span></p>
+    	</c:if>
+    </div>
+    </div>
+    </div>
 
   
   
 
-    <script  src="js/index.js"></script>
+
 
 
 

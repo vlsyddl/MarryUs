@@ -23,20 +23,8 @@ public class Todo {
 	
 	private String[] todoCategoryList;
 	
-	/*public String getTodoCategory() {
-		if(todoCategory.equals("w")) {
-			todoCategory="웨딩";
-		}else if(todoCategory.equals("wp")) {
-			todoCategory="스,드,메";
-		}else if(todoCategory.equals("p")) {
-			todoCategory="예물,예단";
-		}else if(todoCategory.equals("h")) {
-			todoCategory="신혼집";
-		}else if(todoCategory.equals("e")) {
-			todoCategory="기타";
-		}
-		return todoCategory;
-	}*/
+
+
 }
 
 

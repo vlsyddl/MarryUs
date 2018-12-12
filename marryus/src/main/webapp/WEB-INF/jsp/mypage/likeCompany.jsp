@@ -134,6 +134,7 @@
 	                        <a class="card-description" >
 	                            <h2>${l.comInfoAddr}</h2>
 	                            <p>${l.comInfoAddrDetail}</p>
+	                            <p>${l.codeValue}</p>
 	                        </a>
 	                        <ul>
 	                            <li>
@@ -146,7 +147,7 @@
 	                      
 	                        </ul>
 	                        <div class="btn-group" role="group">
-	                            <button type="button" class="btn btn-default"  onclick="location.href='likeCompanyDelete.do?comInfoNo=${l.comInfoNo}&memNo=${user.no}'">관심업체 등록</button>
+	                            <button type="button" class="btn btn-default"  onclick="location.href='likeCompanyDelete.do?comInfoNo=${l.comInfoNo}&memNo=${user.no}'">관심업체 제거</button>
 	                        </div>
 	                    </li>
                   </c:forEach>

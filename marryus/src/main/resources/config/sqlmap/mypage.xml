@@ -14,14 +14,18 @@
 		<result  property="comInfoType"   column="com_info_type"/>
 		<result  property="comInfoOkay"   column="com_info_okay"/>
 		<result  property="comFileName"   column="com_file_name"/>
-		<result  property="comFilePath"   column="com_file_path"/>
-		
+		<result  property="comFilePath"   column="com_file_path"/>	
 		<result  property="aucionType"   column="aucion_type"/>
 		<result  property="auctionSdate"   column="auction_sdate"/>
 		<result  property="auctionEdate"   column="auction_edate"/>
 		<result  property="tenderBudget"   column="tender_budget"/>
 		<result  property="tenderRegdate"   column="tender_regdate"/>
+		<result  property="tenderTitle"   column="tender_title"/>
+		<result  property="tenderInfo"   column="tender_info"/>
+		<result  property="codeValue"   column="code_value"/>
 	</resultMap>
+	
+	
 	
 
 	
@@ -55,8 +59,30 @@
 		<result property="auctionSdate" column="auction_sdate" />
 		<result property="auctionEdate" column="auction_edate" />
 		<result property="memName" column="mem_name" />
+		<collection property="tenderList" column="auction_no" select="selectTenderByauctionNo"/>
+		<collection property="tenderCnt" column="auction_no" select="selectTenderCnt"/>
 	</resultMap>
 	
+	
+ 	<select id="selectTenderByauctionNo" parameterType="int" resultMap="comInfoMap">
+		select *
+		from mu_tender t
+ 		inner join mu_company_info ci
+		on t.com_info_no = ci.com_info_no
+        inner join mu_company_file cf
+        on ci.com_info_no = cf.com_info_no
+        where t.auction_no=#{auctionNo}
+         and cf.com_file_repr = 'Y'  
+	</select>
+	
+	
+	 <select id="selectTenderCnt" parameterType="int"  resultType="int">
+		select count(*)
+		from mu_tender t
+ 		inner join mu_company_info ci
+		on t.com_info_no = ci.com_info_no
+        where t.auction_no=#{auctionNo}
+	</select>
 	
 	
 	
@@ -158,15 +184,6 @@
 	
 	
 	
-	<resultMap id="todoMap" type="Todo">
-		<result property="todoSchedule" column="todo_schedule" />
-		<result property="todoContent" column="todo_content" />
-		<result property="todoDday" column="todo-dday" />
-		<result property="todoCategory" column="todo_category" />
-		<result property="todoNo" column="todo_no" />
-		<result property="todoCheck" column="todo_check" />
-		<result property="todoDelete" column="todo_delete" />
-	</resultMap>
 	
 	<resultMap id="budgetMap" type="Budget">
 		<result property="budgNo" column="budg_no" />
@@ -183,19 +200,84 @@
 	
 	
 
+	<resultMap id="todoMap" type="Todo">
+		<result property="todoPeriod" column="todo_period" />
+		<result property="todoTitle" column="todo_title" />
+		<result property="memNo" column="mem_no" />
+		<result property="todoDdday" column="todo_dday" />
+		<result property="todoDay" column="todo_day" />
+		<result property="todoCategory" column="todo_category" />
+		<result property="todoNo" column="todo_no" />
+		<result property="todoCheck" column="todo_check" />
+		<result property="todoDelete" column="todo_delete" />
+		<result property="todoDetail" column="todo_detail" />
+	</resultMap>
 	
 	
+	
+	<resultMap id="codeMap" type="Code">
+		<result property="codeNo" column="code_no" />
+		<result property="codeTable" column="code_table" />
+		<result property="codeColumn" column="code_column" />
+		<result property="codeName" column="code_name" />
+		<result property="codeValue" column="code_value" />
+
+	</resultMap>
+	
+
 
 	
 	
 	
+	<resultMap id="todolistMap" type="Todolist">
+		<result property="title" column="title" />
+		<result property="common" column="common" />
+		<collection property="items" column="common" select="selectItemByPeriod"/>
+	</resultMap>
 
 	
 	
+	<resultMap id="todolistSortByCategoryMap" type="Todolist">
+		<result property="title" column="title" />
+		<result property="common" column="common" />
+		<result property="memNo" column="memNo" />
+		<collection property="items" column="{common=common, memNo=memNo}"   javaType="java.util.ArrayList" ofType="kr.co.marryus.repository.domain.Item" select="selectItemByCategory"/>
+	</resultMap>
 	
 	
 	
+ 	<resultMap id="itemMap" type="Item">
+		<result property="title" column="todo_title" />
+		<result property="description" column="todo_detail" />
+		<result property="dueDate" column="todo_day" />
+		<result property="todoCheck" column="todo_check" />
+		<result property="todoDelete" column="todo_delete" />
+		<result property="todoDday" column="todo_dday" />
+		<result property="todoNo" column="todo_no" />
+	</resultMap>
 	
+	<select id="selectItemByPeriod"  parameterType="String"  resultMap="itemMap">
+		select  t.todo_title, t.todo_category category, t.todo_detail, t.todo_day, t.todo_check, t.todo_delete, c.code_value todo_category
+		from mu_todo t
+		inner join mu_code c
+		on c.code_name = t.todo_category
+		where t.todo_period = #{common}
+		and c.code_table='mu_todo' and c.code_column = 'todo_category'
+	</select>
+	
+	<select id="selectItemByCategory"  parameterType="java.util.Map" resultMap="itemMap">
+		select  t.todo_title, t.todo_period category, t.todo_detail, t.todo_day, t.todo_check, t.todo_delete, t.todo_dday, c.code_value todo_category, t.todo_no
+		from mu_todo t
+		inner join mu_code c
+		on c.code_name = t.todo_period
+		where t.todo_category=#{common}
+        and t.mem_no = #{memNo}
+		and c.code_table='mu_todo' and c.code_column = 'todo_period'
+		order by t.todo_check, t.todo_day desc, t.todo_dday desc
+	</select>
+
+
+
 	
 	
 	
@@ -223,6 +305,14 @@
         and com_info_type in('v','s','d','m','h','j','e')
         order by field(com_info_type,'v','s','d','m','h','j','e')
 	</select>
+	
+	
+	<select id="selectComInfoType"  parameterType="int" resultType="String">
+		select DISTINCT com_info_type
+        from mu_company_info
+        where mem_no=#{memNo}
+	</select>
+	
 										
 	
 	
@@ -380,9 +470,9 @@
 	
 
 	
-	
+	<!-- 이거야 -->
 	<!-- 나의 역경매 현황보기(개인) -->
-	<select id="selectGeneralAuction" parameterType="Auction" resultMap="comInfoMap">
+	<!-- <select id="selectGeneralAuction" parameterType="Auction" resultMap="comInfoMap">
 		select *
 		from mu_auction a 
 		left join mu_tender t
@@ -393,7 +483,7 @@
         on ci.com_info_no = cf.com_info_no
 		where a.mem_no=#{memNo}
 		and a.auction_type=#{auctionType}
-		and a.auction_status='ing'
+		and a.auction_status='진행중'
 	</select>
 	
 	
@@ -406,7 +496,28 @@
         having a.mem_no=#{memNo}
 		and a.auction_type=#{auctionType}
 		and a.auction_status='ing' 
+	</select> -->
+	<select id="selectGeneralAuction" parameterType="Auction" resultMap="auctionMap">
+		select *
+		from mu_auction
+		where mem_no=#{memNo} 
+		and auction_type=#{auctionType}
+		limit #{pageNo}, 1
 	</select>
+	
+	
+	<select id="selectGeneralAuctionCnt" parameterType="Auction" resultType="int">
+		select count(*)
+		from mu_auction a 
+        where a.mem_no=#{memNo}
+		and a.auction_type=#{auctionType}
+		group by a.auction_type
+	</select> 
+	
+	
+	
+	
+	
 	
 	
 	
@@ -421,6 +532,8 @@
 		on l.com_info_no = ci.com_info_no
         inner join mu_company_file cf
         on ci.com_info_no = cf.com_info_no
+        inner join mu_code c
+        on ci.com_info_type=c.code_name
 		where l.mem_no=#{memNo}
         and cf.com_file_repr='Y'
 	</select>
@@ -597,27 +710,59 @@
 	
 	
 	<!-- 웨딩 체크리스트 -->
-	<select id="selectTodo" parameterType="int" resultMap="todoMap">
-		select *
-		from mu_todo
-		where mem_no=#{memNo}
+ 	<select id="selectTodoSortByDate" parameterType="int" resultMap="todolistMap">
+		select  DISTINCT t.todo_period common, c.code_value title
+		from mu_todo t
+		inner join mu_code c
+		on c.code_name = t.todo_period
+		where t.mem_no=#{memNo}
+		and c.code_table='mu_todo' and c.code_column = 'todo_period'
+	</select> 
+	
+	
+	
+	<select id="selectTodoSortByCategory" parameterType="int" resultMap="todolistSortByCategoryMap">
+		select  DISTINCT t.todo_category common, c.code_value title, t.mem_no memNo
+		from mu_todo t
+		inner join mu_code c
+		on c.code_name = t.todo_category
+		where t.mem_no=#{memNo}
+		and c.code_table='mu_todo' and c.code_column = 'todo_category'
+		and todo_delete='N'
 	</select>
+
 	
 	<insert id="insertTodo" parameterType="Todo" >
-		insert into mu_todo(todo_schedule, todo_content, todo_dday, todo_category, mem_no) 
-		values(#{todoSchedule},#{todoContent},#{todoDday},#{todoCategory},#{memNo})
+		insert into mu_todo(todo_title, todo_day, todo_category,todo_detail,mem_no, todo_check,todo_delete) 
+		values(#{todoTitle},#{todoDay}, #{todoCategory},#{todoDetail},#{memNo},'N','N')
 	</insert>
 	
 	<update id="updateTodo" parameterType="Todo">
 		update mu_todo 
-		set todo_schedule=#{todoSchedule},
-		todo_content=#{todoContent},
-		todo_dday=#{todoDday},
-		todo_category=#{todoCategory},
-		todo_check=#{todoCheck},
-    	todo_delete=#{todoDelete}
-		where mem_no=#{memNo}
-	</update>
+		set todo_title=#{todoTitle},
+		todo_day=#{todoDay},
+    	todo_detail=#{todoDetail},
+    	todo_category=#{todoCategory}
+    	<if test="todoCheck!=null and !todoCheck.equals('')">
+    	,todo_check=#{todoCheck}
+    	</if>
+		where todo_no=#{todoNo}
+	</update> 
+	
+ 	<update id="deleteTodo" parameterType="Todo">
+		update mu_todo 
+		set todo_delete='Y'
+		where todo_no=#{todoNo}
+	</update> 
+	
+	
+	
+	
+	
+
+	
+	
+
 	
 	<!-- 결혼 예산 -->
 	<select id="selectBudget" parameterType="int" resultMap="budgetMap">
