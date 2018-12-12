@@ -14,6 +14,6 @@
 			class="far fa-kiss-wink-heart"></i>신부대기실</a></li>
 	<li><a href="<c:url value='/board/list.do?category=mm'/>">
 		<i class="far fa-comments"></i>1 : 1 질문</a></li>
-	<li><a href="/board/list.do?category=fq"><i class="far fa-question-circle"></i>FAQ</a></li>
+	<li><a href="<c:url value="/board/list.do?category=fq"/>"><i class="far fa-question-circle"></i>FAQ</a></li>
 </ul>
 </aside>

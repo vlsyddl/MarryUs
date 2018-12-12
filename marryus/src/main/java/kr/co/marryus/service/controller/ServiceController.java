@@ -16,6 +16,7 @@ import kr.co.marryus.repository.domain.Auction;
 import kr.co.marryus.repository.domain.Board;
 import kr.co.marryus.repository.domain.CompanyFile;
 import kr.co.marryus.repository.domain.CompanyInfo;
+import kr.co.marryus.repository.domain.CompanyLike;
 import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.Page;
 import kr.co.marryus.repository.domain.PageResult;
@@ -34,7 +35,7 @@ public class ServiceController {
 	@Autowired
 	private WeddingService service;
 	
-	@RequestMapping("/weddingHall.do")
+	@RequestMapping("/weddingCompanyList.do")
 	public void weddingHall(@RequestParam(value = "pageNo", defaultValue = "1") int pageNo, Model model, CompanyInfo companyInfo,
 			CompanyFile companyFile,  Auction auction) {
 		Page page = new Page();
@@ -56,11 +57,37 @@ public class ServiceController {
 		model.addAttribute("pageNo", pageNo);
 		// System.out.println(service.listNotice(page).size());
 		model.addAttribute("weddinigList", service.WeddingList(page));
-		model.addAttribute("AuctionList", service.auctionList(page));
 //		System.out.println(service.WeddingList(page));
-		model.addAttribute("count", service.selectWeddingCount());
-		model.addAttribute("Auctioncount", service.selectAuctionCount());
 	}
+	
+	
+	@RequestMapping("/weddingAuctionList.do")
+	public void auctionList(@RequestParam(value = "pageNo", defaultValue = "1") int pageNo, Model model, Auction auction) {
+		Page page = new Page();
+		page.setPageNo(pageNo);
+
+		int count = service.selectAuctionCount();
+		int lastPage = (int) Math.ceil(count / 10d);
+
+		// 페이지 블럭 시작
+		int pageSize = 10;
+		int currTab = (pageNo - 1) / pageSize + 1;
+		// 11번 부터 2페이지가 되는것
+		int beginPage = (currTab - 1) * pageSize + 1;
+		int endPage = currTab * pageSize < lastPage ? currTab * pageSize : lastPage;
+
+		model.addAttribute("beginPage", beginPage);
+		model.addAttribute("endPage", endPage);
+		model.addAttribute("lastPage", lastPage);
+		model.addAttribute("pageNo", pageNo);
+		System.out.println("List ============ " + service.auctionList(page));
+		model.addAttribute("AuctionList", service.auctionList(page));
+	}
+	
+	
+	
+	
+	
 	
 	@RequestMapping("/weddingDetail.do")
 	@ResponseBody
@@ -116,7 +143,7 @@ public class ServiceController {
 		venue.setAuctionNo(auctionNo);
 		System.out.println(venue);
 		service.weddingWrite(venue);
-		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "weddingHall.do";
+		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "weddingAuctionList.do";
 	}
 	
 	
@@ -174,7 +201,7 @@ public class ServiceController {
 	public String Tenderwrite(Tender tender) {
 		System.out.println(tender);
 		service.insertTender(tender);
-		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "addauctionList.do";
+		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "weddingAuctionList.do";
 	}
 	
 	
@@ -209,6 +236,31 @@ public class ServiceController {
 		return service.loginCheck(companyInfo);
 	}
 	
+	//지도
+	@RequestMapping("/kakaoMap.do")
+	public void kakaoList(Model model){
+		model.addAttribute("kakao", service.kakaoMap());
+		System.out.println("kakao=====" + service.kakaoMap());
+	}
+	
+	//추천업체
+	@RequestMapping("/comLikeCheck.json")
+	@ResponseBody
+	public int comLikeCheck(CompanyLike companyLike) {
+		return service.comLikeCheck(companyLike);
+	}
+	
+	@RequestMapping("/comLike.json")
+	@ResponseBody
+	public void comLike(CompanyLike companyLike) {
+		service.comLike(companyLike);
+	}
+	
+	@RequestMapping("/comLikeCancel.json")
+	@ResponseBody
+	public void comLikeCancel(CompanyLike companyLike) {
+		service.comLikeCancel(companyLike);
+	}
 	
 	
 }

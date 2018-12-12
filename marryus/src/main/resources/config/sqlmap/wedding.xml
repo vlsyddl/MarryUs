@@ -87,16 +87,18 @@
 <!-- 	</select> -->
 	
 	<select id="weddingList" parameterType="Page" resultMap="comInfoMap">
-		select  f.com_file_name, f.com_file_path, f.com_file_oriname, i.com_info_no, i.com_info_name, i.com_info_addr, i.com_info_profile
+		select  i.*, f.*
 		 from mu_company_file f
 		inner join mu_company_info i
 		 on f.com_info_no = i.com_info_no
 		 where i.com_info_type = 'v'
-		 and com_file_repr='Y'
+		 and f.com_file_repr='Y'
 		 order by i.com_info_no desc
 		 limit #{begin}, 12
 		 
 	</select>
+	
+	
 	
 	<select id="selectComFiles" parameterType="CompanyInfo" resultMap="comFileMap">
 		select  *
@@ -262,7 +264,7 @@
 	
 	
 	
-		<select id="selectLoginCheck" parameterType="CompanyInfo" resultMap="memberMap">
+	<select id="selectLoginCheck" parameterType="CompanyInfo" resultMap="memberMap">
 		select *
 		  from mu_member m
 		 inner join mu_company_info i
@@ -271,8 +273,34 @@
 		   and i.com_info_type = #{comInfoType}
 	</select>
 	
+
+	<!-- 지도 마커추가 -->
+	<select id="kakaoMap" parameterType="CompanyInfo" resultMap="comInfoMap">
+		select com_info_addr, com_info_name
+		from mu_company_info
+		where com_info_type = 'v';
+	</select>
 	
+	<select id="selectCompanyLike" parameterType="CompanyLike" resultType="int">
+		select count(*)
+		  from mu_company_like
+		 where mem_no = #{memNo}
+		   and com_info_no = #{comInfoNo}
+	</select>
 	
+	<insert id="insertCompanyLike" parameterType="CompanyLike">
+		insert into mu_company_like(
+			mem_no, com_info_no
+		) values (
+			#{memNo}, #{comInfoNo}
+		)
+	</insert>
+	
+	<delete id="deleteCompanyLike" parameterType="CompanyLike">
+		delete from mu_company_like
+		 where mem_no = #{memNo}
+		   and com_info_no = #{comInfoNo}
+	</delete>
 	
 </mapper>
 

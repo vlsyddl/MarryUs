@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import kr.co.marryus.repository.domain.Auction;
 import kr.co.marryus.repository.domain.CompanyFile;
 import kr.co.marryus.repository.domain.CompanyInfo;
+import kr.co.marryus.repository.domain.CompanyLike;
 import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.Page;
 import kr.co.marryus.repository.domain.Search;
@@ -105,16 +106,29 @@ public class WeddingServiceImpl implements WeddingService{
 		return mapper.selectLoginCheck(companyInfo);
 	}
 
+	@Override
+	public List<CompanyInfo> kakaoMap() {
+		return mapper.kakaoMap();
+	}
+
+	@Override
+	public int comLikeCheck(CompanyLike companyLike) {
+		return mapper.selectCompanyLike(companyLike);
+	}
+
+	@Override
+	public void comLike(CompanyLike companyLike) {
+		mapper.insertCompanyLike(companyLike);
+	}
+
+	@Override
+	public void comLikeCancel(CompanyLike companyLike) {
+		mapper.deleteCompanyLike(companyLike);
+	}
 
 //	@Override
 //	public CompanyInfo weddingDetail(int comInfoNo) {
 //		return mapper.weddingDetail(comInfoNo);
 //	}
 
-	
-	
-	
-	
-	
-	
 }

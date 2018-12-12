@@ -20,13 +20,13 @@
 </style>
 </head>
 <body>
-	<c:import url="/common/importHeader.jsp" />
+     <c:import url="/common/importHeader.jsp" />
     <div id="wrap" class="wedding">
         <div class="sub_visual">
             <div class="titleBox">
-                <h2>웨딩홀</h2>
+                <h2>허니문</h2>
                 <p>
-                    웨딩홀 &middot; 스몰웨딩 &middot; 셀프웨딩
+                    하와이 &middot; 괌 &middot; 몰디브
                 </p>
             </div>
         </div>
@@ -34,8 +34,8 @@
             <div class="container">
                 <div class="contentsTab">
                     <ul>
-                        <li data-target="tab1"><a href="<c:url value='/service/serviceAdd/addcompanyList.do' />">업체리스트</a></li>
-                        <li data-target="tab2" class="on"><a href="<c:url value='/service/serviceAdd/addauctionList.do' />">경매리스트</a></li>
+                        <li data-target="tab1" class="on"><a href="<c:url value='/service/honeymoon/honeymoonCompanyList.do' />">업체리스트</a></li>
+                        <li data-target="tab2"><a href="<c:url value='/service/honeymoon/honeymoonAuctionList.do'/>">경매리스트</a></li>
                     </ul>
                     <div class="tabContents">
                         <div class="tab2 on">
@@ -52,23 +52,23 @@
 						        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						        <h4 class="modal-title" id="myModalLabel">웨딩홀 역경매 신청서</h4>
 						      </div>
-						      <form action="serviceAddwrite.do"  method="post" enctype="multipart/form-data">
+						      	      <form action="Honeywrite.do"  method="post" enctype="multipart/form-data">
 							      <div class="modal-body">
-								        
 								        <input type="hidden" name="memNo" value="${user.no}" />
-								        <input type="hidden" name="auctionType" value="e" />
-									  	<h2>기타서비스 사항</h2>
-									  	<div class="form-group">
-									  		<div class="col-md-12">
-									  			 <textarea name="serviceTitle" id="" class="wish form-control" rows="3" cols="30"></textarea>
-									  		</div>
-									  	</div>
-									  	<h2>기타서비스 상세</h2>
-									  	<div class="form-group">
-									  		<div class="col-md-4">
-									  			<textarea name="serviceDetail" id="" class="wish form-control" rows="3" cols="30"></textarea>
-									  		</div>
-									  	</div>
+								        <input type="hidden" name="auctionType" value="h" />
+								       
+								        <br>
+											희망여행지: <input type="text" name="honeyPlace">
+											<br>
+	
+										  <div class="input" >
+		                                  	희망여행날짜 :  <input type="text" name="honeyDate" id="date_pretty"/> ~ 
+		                                  	            <input type="text" name="honeyDate" id="datepicker1">
+		                                  </div>
+				                                                              기타의견사항: <textarea name="honeyHope" id="" class="wish" rows="3" cols="30"></textarea><br>
+				                            <div>
+				                                                             희망예산:<input type="text" name="honeyBudget">
+				                            </div>                                 
 							      </div>
 							      <div class="modal-footer">
 							        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
@@ -82,29 +82,29 @@
                    <table class="table table-hover serviceTable">
                             <tr>
                                 <th>경매번호</th>
-                                <th>경매신청인</th>
+                                <th>경매신청자</th>
                                 <th>경매타입</th>
                                 <th>경매상태</th>
                                 <th>역경매 시작일</th>
                                 <th>역경매 종료일</th>
                             </tr>
-                         <c:forEach var="a" items="${AuctionList}">
+                          <c:forEach var="a" items="${AuctionList}">
                             <tr>
                                 <td>${a.auctionNo}</td>
-                                <td><a href="#" data-href="${a.auctionNo}" data-type="${a.auctionType}" data-no="${a.member.no}" class="col-md-4 serviceAddBox">${a.member.name}</a></td>
-                                <td>기타서비스</td>
+                                <td><a href="#" data-href="${a.auctionNo}" data-type="${a.auctionType}" data-no="${a.member.no}" class="col-md-4 TravelBox">${a.member.name}</a></td>
+                                <td>허니문</td>
                                 <td>${a.auctionStatus}</td>
                                 <td><fmt:formatDate value="${a.auctionSdate}" pattern="yyyy-MM-dd" /></td>
                                 <td><fmt:formatDate value="${a.auctionEdate}" pattern="yyyy-MM-dd" /></td>
                             </tr>
-						</c:forEach>
+                            </c:forEach>
                     </table>
                       <nav>
 		                    	<div class="text-center">
 		                    	<ul class="pagination">
 								<li><a
 								<c:choose>
-							      <c:when test="${beginPage!=1}">href="auctionList.do?pageNo=${beginPage-1}"</c:when>
+							      <c:when test="${beginPage!=1}">href="honeymoonAuctionList.do?pageNo=${beginPage-1}"</c:when>
 							      <c:otherwise>href="#"</c:otherwise>
 							    </c:choose>
 								aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
@@ -112,12 +112,12 @@
 								<c:forEach var="i" begin="${beginPage}" end="${endPage}">
 									<li><a
 									<c:choose>
-							   		<c:when test='${requestScope["javax.servlet.forward.request_uri"].substring(20) eq "/search.json"}'>
-							    	href="<c:url value='search.json?pageNo=${i-1}&type=${result.type}&content=${result.content}' />"
+							   		<c:when test='${requestScope["javax.servlet.forward.request_uri"].substring(20) eq "/category.do"}'>
+							    	href="<c:url value='category.do?pageNo=${i-1}&select=${result.select}&text=${result.text}' />"
 							    </c:when>
 								
 							    <c:otherwise>
-							     href="auctionList.do?pageNo=${i}"
+							     href="honeymoonAuctionList.do?pageNo=${i}"
 							     </c:otherwise>
 							      </c:choose>>
 		
@@ -126,7 +126,7 @@
 		
 							<li><a
 								<c:choose>
-							      	<c:when test="${endPage != lastPage}"> href="weddingHall.do?pageNo=${endPage+1}" </c:when>
+							      	<c:when test="${endPage != lastPage}"> href="honeymoonAuctionList.do?pageNo=${endPage+1}" </c:when>
 							    	<c:otherwise>href="#"</c:otherwise>
 						    	</c:choose>
 								aria-label="Next"> <span aria-hidden="true">&raquo;</span>
@@ -143,7 +143,19 @@
     <c:import url="/common/importFooter.jsp" />
 
 
+<!-- 카카오지도 -->
 <script>
+
+
+
+
+
+
+
+
+
+
+
 var options = {
         'speed' : 500,				 		//스피드
         'initTop' : 300, 					//기본top위치
@@ -151,36 +163,91 @@ var options = {
         'default_x' : false 				//레이어가 붙는 아이디 
     }
     $('#sideBar').Floater(options);
-    
-// 역경매 리스트 디테일
-function serviceAddAuctionDetail(auctionNo, auctionType){
-	var modal = $("#serviceAddDetailModal")
+
+
+
+
+
+
+
+
+
+  $(document).ready(function(){
+	    $("#date_pretty").datepicker({ 
+	    });
+	    var myDate = new Date();
+	    var month = myDate.getMonth() + 1;
+	    var prettyDate = month + '/' + myDate.getDate() + '/' + myDate.getFullYear();
+	    $("#date_pretty").val(prettyDate);
+	});
+  $(document).ready(function(){
+	    $("#datepicker1").datepicker({ 
+	    });
+	    var myDate = new Date();
+	    var month = myDate.getMonth() + 1;
+	    var prettyDate = month + '/' + myDate.getDate() + '/' + myDate.getFullYear();
+	    $("#datepicker1").val(prettyDate);
+	});
+
+//디테일 모달
+function detail(comInfoNo){
+	var modal = $("#detailModal")
 	var slideBox = $(".slideBox")
+	slideBox.find("ul").html("")
 	$.ajax({
-		url : "<c:url value='/service/serviceAdd/serviceAddAuctionDetail.do'/>",
+		url : "<c:url value='/service/honeymoon/comHoneyDetail.do'/>",
+		data : "comInfoNo="+comInfoNo
+	}).done(function(data){
+		console.log(data)
+		modal.find(".modal-title").html(data.info.comInfoName)
+        modal.find(".infoBox").find(".adress").children("dd").html(data.info.comInfoAddr+" "+data.info.comInfoAddrDetail)
+        modal.find(".infoBox").find(".phone").children("dd").html(data.info.comInfoPhone)
+        modal.find(".infoBox").find(".profile").children("dd").html(data.info.comInfoProfile)
+        modal.find(".contentsBox").html(data.info.comInfoContent)
+        var fileList="";
+        for(var f of data.files){
+			fileList +='<li>'        	
+			fileList +='<img src="/marryus/img/comProfile/'+f.comFileName+'" alt="" class="img-responsive center-block">'        	
+			fileList +='</li>'        	
+        }
+        slideBox.find("ul").html(fileList)
+	})
+   
+
+}
+
+//역경매 리스트 디테일
+function honeyDetail(auctionNo, auctionType){
+	var modal = $("#TravelBoxModal")
+	var slideBox = $(".slideBox")
+	console.log("auctionNo: =====" + auctionNo)
+	$.ajax({
+		url : "<c:url value='/service/honeymoon/honeyAuctionDetail.do'/>",
 		data : "auctionNo="+auctionNo
 	}).done(function(data){
-		console.log("auctiondetail ======== " + data)
-        modal.find(".ServiceAdd").find(".OtherTitle").children("dd").html(data.auction.serviceTitle)
-        modal.find(".ServiceAdd").find(".OtherDetail").children("dd").html(data.auction.serviceDetail)
-       
+		console.log(data)
+        modal.find(".Teavel").find(".hopeTravel").children("dd").html(data.auction.honeyPlace)
+        modal.find(".Teavel").find(".TravelDate").children("dd").html(data.auction.honeyDate)
+        modal.find(".Teavel").find(".Hope").children("dd").html(data.auction.honeyHope)
+        modal.find(".contentsBox").html(data.auction.comInfoContent)
         slideBox.find("dd").html()
         $(".insertBox").attr('data-href', auctionNo);
 		$(".insertBox").attr("data-auctype", auctionType);
 		$(".insertBox").attr("disabled", true);
-		
+
 		loginCheck(auctionType);
-	});
+	})
    
 
-};
+}
+
 
 
 
 function loginCheck(type) {
 	
 	$.ajax({
-		url : '<c:url value="/service/serviceAdd/loginCheck.json" />',
+		url : '<c:url value="/service/honeymoon/loginCheck.json" />',
 		method : 'POST',
 		data : {
 			"memNo" : $("#memCheckNo").val(),
@@ -210,7 +277,7 @@ function loginCheck(type) {
 function tenderWrite(auctionNo){
 	console.log("tenderWrite...auctionNo ======= " + auctionNo);
 	$.ajax({
-		url: "<c:url value='/service/serviceAdd/TenderwriteForm.do'/>",
+		url: "<c:url value='/service/honeymoon/TenderwriteForm.do'/>",
 		data: "auctionNo=" + auctionNo
 	}).done(function(data){
 		console.dir("dir ======= " + data)
@@ -229,7 +296,7 @@ function tenderWrite(auctionNo){
 function comInfoWrite(memNo){
 	console.log("comInfoWrite...memNo ======= " + memNo);
 	$.ajax({
-		url: "<c:url value='/service/serviceAdd/comInfoWrite.do'/>",
+		url: "<c:url value='/service/honeymoon/comInfoWrite.do'/>",
 		data: "memNo=" + memNo
 	}).done(function(data){
 		console.dir("dir ======= " + data)
@@ -239,7 +306,6 @@ function comInfoWrite(memNo){
 // 		var html="";
 		var comInfo= "";
 // 		html += '<input type="hidden" name="auctionNo" value="'+auctionNo+'"/>'
-		console.log("data.comInfoNo"+ data.comInfoNo);
 		comInfo += '<input type="hidden" name="comInfoNo" value="'+data.comInfoNo+'"/>'
 		
 // 		$(".auction-no").html(html);
@@ -251,14 +317,13 @@ function comInfoWrite(memNo){
 
 
 
-
 $(function(){
 	$(".itemBox").click(function(e){
 		  e.preventDefault();
-		  serviceAddAuctionDetail($(this).data("href"))
-	      $('#serviceAddDetailModal').modal('show')
+		  detail($(this).data("href"))
+	      $('#detailModal').modal('show')
 	      var bx;
-		  $('#serviceAddDetailModal').on('shown.bs.modal', function () {
+		  $('#detailModal').on('shown.bs.modal', function () {
 		    if(bx === undefined){
 		      bx= slider = $('.slideBox ul').bxSlider({
 		  	    mode: 'fade',
@@ -269,55 +334,75 @@ $(function(){
 		    }
 		  });
 	    
-	  });
+	  })
 
-});
+})
 
-// 역경매 리스트 디테일
-
-	$(".serviceAddBox").click(function(e){
+$(function(){
+	$(".TravelBox").click(function(e){
 		  e.preventDefault();
-		  serviceAddAuctionDetail($(this).data("href"), $(this).data("type"), $(this).data("no"))
-	      $('#serviceAddDetailModal').modal('show')
-	      $('#serviceAddDetailModal').on('shown.bs.modal', function () {
+		  honeyDetail($(this).data("href"), $(this).data("type"), $(this).data("no"))
+	      $('#TravelBoxModal').modal('show')
+	    
+	  });
+	      $(".insertBox").click(function(e){
+			  e.preventDefault();
+			  console.log("입찰하기 클릭" + $(this).data("href"));
+			  tenderWrite($(this).data("href"));
+		      comInfoWrite($("#memCheckNo").val());
+		      $('#TravelBoxModal').modal('hide')
+		      $('#insertAuction').modal('show')
+		    
 		  });
-	    
-	$(".insertBox").click(function(e){
-		  e.preventDefault();
-		  console.log("입찰하기 클릭" + $(this).data("href"));
-	      tenderWrite($(this).data("href"));
-	      comInfoWrite($(".mem > #memNo").val());
-	      $('#serviceAddDetailModal').modal('hide')
-	      $('#insertAuction').modal('show')
-	    
-	  });
-	  });
-	  
-	  
-	function doAction(){   
-	    var f = document.auctionForm
-	    
-	    if(f.tenderTitle.value == "" ){
-	        alert("제목을 입력해주세요")
-	        f.tenderTitle.focus()
-	        return false
-	    }
-	    
-	    if(f.tenderInfo.value == ""){
-	        alert("소개를 입력해주세요")
-	        f.tenderInfo.focus()
-	        return false
-	    }
-	    if(f.tenderBudget.value == ""){
-	        alert("희마예산을 입력하세요")
-	        f.tenderBudget.focus()    
-	        return false
-	    }
-	    
-	    alert("입찰을 하셨습니다.")
-	}
-</script>
-<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+})
+
+
+
+
+
+
+
+function maskingName(strName) {
+    if(strName === undefined || strName === '') {
+        return '';
+    }
+    var pattern = /.$/; // 정규식
+    return strName.replace(pattern, "*");
+}
+
+
+
+function doAction(){   
+    var f = document.auctionForm
+    
+    if(f.tenderTitle.value == "" ){
+        alert("제목을 입력해주세요")
+        f.tenderTitle.focus()
+        return false
+    }
+    
+    if(f.tenderInfo.value == ""){
+        alert("소개를 입력해주세요")
+        f.tenderInfo.focus()
+        return false
+    }
+    if(f.tenderBudget.value == ""){
+        alert("희마예산을 입력하세요")
+        f.tenderBudget.focus()    
+        return false
+    }
+    
+    alert("입찰을 하셨습니다.")
+}
+
+
+
+  
+  </script>
+
+
+<div class="modal fade" id="TravelBoxModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog  modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -325,24 +410,20 @@ $(function(){
         <h4 class="modal-title" id="myModalLabel"></h4>
       </div>
       <div class="modal-body">
-        <div class="slideBox">
-        	<ul>
-        		<li>1</li>
-        		<li>2</li>
-        		<li>3</li>
-        	</ul>
-        </div>
-        <div class="infoBox">
-            <dl class="adress">
-                <dt>주소 : </dt>
+        <div class="Teavel">
+	        <dl class="mem">
+	            <input type="hidden" id="memCheckNo" value="${user.no}"/>
+            </dl>
+            <dl class="hopeTravel">
+                <dt>희망여행지 : </dt>
                 <dd></dd>
             </dl>
-            <dl class="phone">
-                <dt>연락처 : </dt>
+            <dl class="TravelDate">
+                <dt>여행일자: </dt>
                 <dd></dd>
             </dl>
-            <dl class="Profile">
-                <dt>정보 : </dt>
+            <dl class="Hope">
+                <dt>희망사항 : </dt>
                 <dd></dd>
             </dl>
         </div>
@@ -352,37 +433,7 @@ $(function(){
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<div class="modal fade" id="serviceAddDetailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog  modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel"></h4>
-      </div>
-      <div class="modal-body">
-        <div class="ServiceAdd">
-            <dl class="mem">
-            <input type="hidden" id="memCheckNo" value="${user.no}"/>
-            </dl>
-            <dl class="OtherTitle">
-                <dt>기타서비스 제목: </dt>
-                <dd></dd>
-            </dl>
-            <dl class="OtherDetail">
-                <dt> 기타서비스 상세 : </dt>
-                <dd></dd>
-            </dl>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button"   class="btn btn-primary insertBox"><a href="#">입찰하기</a></button>
+        <button type="button" class="btn btn-primary insertBox"><a href="#">입찰하기</a></button>
       </div>
     </div>
   </div>
@@ -390,7 +441,16 @@ $(function(){
 
 
 
-     
+
+
+
+
+
+
+
+
+
+
 	<div class="modal fade" id="insertAuction" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	  <div class="modal-dialog  modal-lg">
 	    <div class="modal-content">
@@ -398,27 +458,26 @@ $(function(){
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 	        <h4 class="modal-title" id="myModalLabel"></h4>
 	      	</div>
-				<form action="Tenderwrite.do"  method="post" id="frm" name="auctionForm" onsubmit="return doAction()" enctype="multipart/form-data">
+				<form action="Tenderwrite.do"  method="post" name="auctionForm" onsubmit="return doAction()" enctype="multipart/form-data">
 				      <div class="modal-body">
 				      <div class="form-group">
-				      <div class="mem">
-				      	<input type="hidden" id="memNo" name="memNo" value="${user.no}" />
+				      <input type="hidden" name="memNo" value="${user.no}" />
 <%-- 				      <input type="hidden" name="auctionNo" value="1" /> --%>
 					  	</div>
-					  </div>
 					  	<div class="auction-no">
 					  	</div>
 					  	<div class="comInfo-no">
 					  	</div>
-					  	<div class="form-group">
+						<div class="form-group">
 					  		<div class="col-md-4">
 					  			제목:<textarea class="form-control" id="tenderTitle" type="text" name="tenderTitle" placeholder="제목을 입력 해 주세요" /></textarea>	
 					  		</div>
 					  	</div><br>
+						
 					  	<h2>서비스 소개</h2>
 					  	<div class="form-group">
-					  		<div class="col-md-4">
-					  			<textarea name="tenderInfo" id="smarteditor" rows="10" cols="100" style="width:100%; height:350px;"></textarea>
+					  		<div class="col-md-4">	
+					  			<textarea name="tenderInfo" id="tenderInfo" class="wish form-control" rows="3" cols="30"></textarea>
 					  		</div>
 					  	</div><br>
 					  	
@@ -431,12 +490,13 @@ $(function(){
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				        <button type="submit" class="btn btn-primary" id="savebutton">입찰하기</button>
+				        <button type="submit" class="btn btn-primary">입찰하기</button>
 				      </div>
 				</form>
 	    </div>
 	  </div>
 	</div>
+
 
 
 </body>

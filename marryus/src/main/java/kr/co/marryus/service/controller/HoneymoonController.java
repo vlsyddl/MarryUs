@@ -29,13 +29,41 @@ public class HoneymoonController {
 	@Autowired
 	private HoneymoonService service;
 	
-	@RequestMapping("/honeymoon.do")
+	@RequestMapping("/honeymoonCompanyList.do")
 	public void honeyMoon(@RequestParam(value = "pageNo", defaultValue = "1") int pageNo, Model model, CompanyInfo companyInfo,
 			CompanyFile companyFile,  Auction auction) {
 		Page page = new Page();
 		page.setPageNo(pageNo);
 
 		int count = service.selectHoneymoonCount();
+		int lastPage = (int) Math.ceil(count / 12d);
+
+		// 페이지 블럭 시작
+		int pageSize = 12;
+		int currTab = (pageNo - 1) / pageSize + 1;
+		// 11번 부터 2페이지가 되는것
+		int beginPage = (currTab - 1) * pageSize + 1;
+		int endPage = currTab * pageSize < lastPage ? currTab * pageSize : lastPage;
+
+		model.addAttribute("beginPage", beginPage);
+		model.addAttribute("endPage", endPage);
+		model.addAttribute("lastPage", lastPage);
+		model.addAttribute("pageNo", pageNo);
+		// System.out.println(service.listNotice(page).size());
+		model.addAttribute("honeymoonList", service.HoneymoonList(page));
+
+//		System.out.println(service.WeddingList(page));
+		model.addAttribute("count", service.selectHoneymoonCount());
+
+	}
+	
+	
+	@RequestMapping("/honeymoonAuctionList.do")
+	public void auctionList(@RequestParam(value = "pageNo", defaultValue = "1") int pageNo, Model model, Auction auction) {
+		Page page = new Page();
+		page.setPageNo(pageNo);
+
+		int count = service.selectAuctionCount();
 		int lastPage = (int) Math.ceil(count / 10d);
 
 		// 페이지 블럭 시작
@@ -49,13 +77,12 @@ public class HoneymoonController {
 		model.addAttribute("endPage", endPage);
 		model.addAttribute("lastPage", lastPage);
 		model.addAttribute("pageNo", pageNo);
-		// System.out.println(service.listNotice(page).size());
-		model.addAttribute("honeymoonList", service.HoneymoonList(page));
 		model.addAttribute("AuctionList", service.auctionList(page));
-//		System.out.println(service.WeddingList(page));
-		model.addAttribute("count", service.selectHoneymoonCount());
-		model.addAttribute("Auctioncount", service.selectAuctionCount());
+		model.addAttribute("count", service.selectAuctionCount());
 	}
+	
+	
+	
 	
 	
 	
@@ -74,7 +101,7 @@ public class HoneymoonController {
 		honeymoon.setAuctionNo(auctionNo);
 		System.out.println(honeymoon);
 		service.honeymoonAuction(honeymoon);
-		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "honeymoon.do";
+		return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "honeymoonAuctionList.do";
 	}
 	
 	
@@ -145,7 +172,7 @@ public class HoneymoonController {
 		public String Tenderwrite(Tender tender) {
 			System.out.println(tender);
 			service.insertTender(tender);
-			return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "honeymoon.do";
+			return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "honeymoonAuctionList.do";
 		}
 		
 		

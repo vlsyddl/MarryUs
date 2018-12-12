@@ -325,7 +325,7 @@ var memNo= $("#memNo").val();
 	  type: "post"
   });
   
-  location.href ="http://localhost:8000/marryus/main/resultPlanning.do";
+  location.href ="http://192.168.0.74:8000/marryus/main/resultPlanning.do";
       alert("감사합니다!");
    
 }

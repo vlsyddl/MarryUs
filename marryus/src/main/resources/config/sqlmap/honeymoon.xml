@@ -78,14 +78,14 @@
 <!-- 	</select> -->
 	
 	<select id="honeymoonList" parameterType="Page" resultMap="comInfoMap">
-		select  f.com_file_name, f.com_file_path, f.com_file_oriname, i.com_info_no, i.com_info_name, i.com_info_addr, i.com_info_profile
+		select  i.*, f.*
 		 from mu_company_file f
 		inner join mu_company_info i
 		 on f.com_info_no = i.com_info_no
 		 where i.com_info_type = 'h'
-		 and com_file_repr='Y'
+		 and f.com_file_repr='Y'
 		 order by i.com_info_no desc
-		 limit #{begin}, 9
+		 limit #{begin}, 12
 		 
 	</select>
 	
