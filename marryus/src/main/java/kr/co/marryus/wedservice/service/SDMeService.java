@@ -5,6 +5,7 @@ import java.util.List;
 import kr.co.marryus.repository.domain.Auction;
 import kr.co.marryus.repository.domain.CompanyFile;
 import kr.co.marryus.repository.domain.CompanyInfo;
+import kr.co.marryus.repository.domain.CompanyLike;
 import kr.co.marryus.repository.domain.Dress;
 import kr.co.marryus.repository.domain.Makeup;
 import kr.co.marryus.repository.domain.Member;
@@ -28,4 +29,7 @@ public interface SDMeService {
 	CompanyInfo comInfoCheck(CompanyInfo companyInfo);
 	void writeTender(Tender tender);
 	Member loginCheck(CompanyInfo companyInfo);
+	int comLikeCheck(CompanyLike companyLike);
+	void comLike(CompanyLike companyLike);
+	void comLikeCancel(CompanyLike companyLike);
 }

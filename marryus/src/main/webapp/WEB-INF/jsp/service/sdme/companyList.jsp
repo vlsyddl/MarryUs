@@ -71,12 +71,6 @@
                                                 ${sdm.comInfoAddrDetail}
                                             </p>
                                         </div>
-                                        <div class="infoBox">
-                                            <ul>
-                                                <li><span>별점</span> <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></li>
-                                            </ul>
-                                        </div>
-                                        <a href="#" class="itemBtn">관심업체 등록</a>
                                     </div>
                                     </div>
                             </c:forEach>
@@ -140,8 +134,11 @@
     <c:import url="/common/importFooter.jsp" />
 
 
-<!-- 카카오지도 -->
 <script>
+
+var comLikeCnt;
+var userNo = "${user.no}";
+
 var options = {
         'speed' : 500,				 		//스피드
         'initTop' : 300, 					//기본top위치
@@ -391,6 +388,7 @@ function detail(comInfoNo){
         modal.find(".infoBox").find(".phone").children("dd").html(data.info.comInfoPhone)
         modal.find(".infoBox").find(".profile").children("dd").html(data.info.comInfoProfile)
         modal.find(".contentsBox").html(data.info.comInfoContent)
+		$(".detailLikeBtn").attr("data-comno", data.info.comInfoNo);
         var fileList="";
         for(var f of data.files){
 			fileList +='<li>'        	
@@ -400,12 +398,47 @@ function detail(comInfoNo){
         slideBox.find("ul").html(fileList)
 	})
    
+};
 
-}
+function comLikeCheck(comNo) {
+	console.log(comNo);
+	
+	$.ajax({
+		url : "<c:url value='/service/sdme/comLikeCheck.json' />",
+		data : {
+			"memNo" : userNo,
+			"comInfoNo" : comNo
+		},
+		cache : false
+	}).done(function (result) {
+		console.log("result +++ " + result);
+		console.log("userNo" + userNo);
+		if (result == 0) {
+			$('.detailLikeBtn').text("추천할거면 눌러봐 ^^");
+		} else {
+			$('.detailLikeBtn').text("이미 추천했어. 취소할거면 눌러 ^^");
+		}
+		comLikeCnt = result;
+	});
+	
+};
+
+function detailBtn() {
+	var html = "";
+	html += '<button type="button" class="detailLikeBtn" >업체 추천</button>';
+	$("#detailBtn").html(html);
+
+	 $(".detailLikeBtn").click(function(){
+		  likeBtn($(this).data("comno")); 
+	  })
+};
+
 $(function(){
 	$(".itemBox").click(function(e){
 		  e.preventDefault();
 		  detail($(this).data("href"))
+		  comLikeCheck($(this).data("href"));
+		  detailBtn($(this).data("href"));
 	      $('#detailModal').modal('show')
 	      var bx;
 		  $('#detailModal').on('shown.bs.modal', function () {
@@ -420,8 +453,34 @@ $(function(){
 		  });
 	    
 	  })
+});
 
-})
+function likeBtn(comNo) {
+	var likeUrl = "comLike";
+	
+	if (comLikeCnt == 1) {
+		likeUrl = "comLikeCancel";
+	}
+	$.ajax({
+		url : "/marryus/service/sdme/"+ likeUrl + ".json",
+		data : {
+			"comInfoNo" : comNo,
+			"memNo" : userNo
+		},
+		cache : false
+	}).done(function (result) {
+		console.log("btn" + result);
+		if (comLikeCnt == 0) {
+			alert("관심업체로 등록하셨습니다..");
+			comLikeCnt = 1;
+			$('.detailLikeBtn').text("이미 추천했어. 취소할거면 눌러 ^^");
+		} else {
+			alert("관심업체 등록을 취소하셨습니다.");
+			comLikeCnt = 0;
+			$('.detailLikeBtn').text("추천할거면 눌러봐 ^^");
+		}
+	});
+};
   
   
   </script>
@@ -455,12 +514,12 @@ $(function(){
             </dl>
         </div>
         <div class="contentsBox">
-
+        </div>
+        <div id="detailBtn">
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
       </div>
     </div>
   </div>

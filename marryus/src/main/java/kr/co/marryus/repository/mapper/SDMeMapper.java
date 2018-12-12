@@ -5,6 +5,7 @@ import java.util.List;
 import kr.co.marryus.repository.domain.Auction;
 import kr.co.marryus.repository.domain.CompanyFile;
 import kr.co.marryus.repository.domain.CompanyInfo;
+import kr.co.marryus.repository.domain.CompanyLike;
 import kr.co.marryus.repository.domain.Dress;
 import kr.co.marryus.repository.domain.Makeup;
 import kr.co.marryus.repository.domain.Member;
@@ -28,4 +29,7 @@ public interface SDMeMapper {
 	CompanyInfo selectComInfoCheck(CompanyInfo companyInfo);
 	void insertTender(Tender tender);
 	Member selectLoginCheck(CompanyInfo companyInfo);
+	int selectCompanyLike(CompanyLike companyLike);
+	void insertCompanyLike(CompanyLike companyLike);
+	void deleteCompanyLike(CompanyLike companyLike);
 }

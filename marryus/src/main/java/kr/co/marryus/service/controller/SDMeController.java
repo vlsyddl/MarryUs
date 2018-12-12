@@ -15,6 +15,7 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import kr.co.marryus.repository.domain.Auction;
 import kr.co.marryus.repository.domain.CompanyFile;
 import kr.co.marryus.repository.domain.CompanyInfo;
+import kr.co.marryus.repository.domain.CompanyLike;
 import kr.co.marryus.repository.domain.Dress;
 import kr.co.marryus.repository.domain.Makeup;
 import kr.co.marryus.repository.domain.Member;
@@ -165,5 +166,22 @@ public class SDMeController {
 		return service.loginCheck(companyInfo);
 	}
 	
+	@RequestMapping("/sdme/comLikeCheck.json")
+	@ResponseBody
+	public int comLikeCheck(CompanyLike companyLike) {
+		return service.comLikeCheck(companyLike);
+	}
+	
+	@RequestMapping("/sdme/comLike.json")
+	@ResponseBody
+	public void comLike(CompanyLike companyLike) {
+		service.comLike(companyLike);
+	}
+	
+	@RequestMapping("/sdme/comLikeCancel.json")
+	@ResponseBody
+	public void comLikeCancel(CompanyLike companyLike) {
+		service.comLikeCancel(companyLike);
+	}
 	
 } // end class

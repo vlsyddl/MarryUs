@@ -66,12 +66,6 @@
                                                 ${j.comInfoAddrDetail}
                                             </p>
                                         </div>
-                                        <div class="infoBox">
-                                            <ul>
-                                                <li><span>별점</span> <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></li>
-                                            </ul>
-                                        </div>
-	                                    <a href="#" class="comLikeBtn">관심업체 등록</a>
                                     </div>
                                     </div>
                             </c:forEach>
@@ -376,11 +370,9 @@ function detail(comInfoNo){
 		url : "<c:url value='/service/jewelry/companyDetail.json'/>",
 		data : "comInfoNo="+comInfoNo
 	}).done(function(data){
-		console.log(data)
-		
 		modal.find(".modal-title").html(data.info.comInfoName)
 		var html = "";
-		html += '<dl class="addr">'
+		html += '<dl class="adress">'
 		html += '<dt>주소 : </dt>'
 		html += '<dd>'+data.info.comInfoAddr + data.info.comInfoAddrDetail+'</dd>'
 		html += '</dl>'
@@ -388,7 +380,7 @@ function detail(comInfoNo){
 		html += '<dt>번호 : </dt>'
 		html += '<dd>'+data.info.comInfoPhone+'</dd>'
 		html += '</dl>'
-		html += '<dl class="profile">'
+		html += '<dl class="Profile">'
 		html += '<dl class="contentsBox">'
 		html += '<dt>업체소개 : </dt>'
 		html += '<dd>'+data.info.comInfoContent+'</dd>'
@@ -408,6 +400,7 @@ function detail(comInfoNo){
 };
 
 function comLikeCheck(comNo) {
+	console.log(comNo);
 	
 	$.ajax({
 		url : "<c:url value='/service/jewelry/comLikeCheck.json' />",
@@ -417,8 +410,8 @@ function comLikeCheck(comNo) {
 		},
 		cache : false
 	}).done(function (result) {
-		console.log(result);
-		console.log(comNo);
+		console.log("result +++ " + result);
+		console.log("userNo" + userNo);
 		if (result == 0) {
 			$('.detailLikeBtn').text("추천할거면 눌러봐 ^^");
 		} else {
@@ -431,10 +424,9 @@ function comLikeCheck(comNo) {
 
 function detailBtn() {
 	var html = "";
-	html += '<button type="button" class="detailLikeBtn" ></button>';
+	html += '<button type="button" class="detailLikeBtn" >업체 추천</button>';
 	$("#detailBtn").html(html);
 
-	comLikeCheck($(this).data("comno"));
 	 $(".detailLikeBtn").click(function(){
 		  likeBtn($(this).data("comno")); 
 	  })
@@ -443,9 +435,9 @@ function detailBtn() {
 $(function(){
 	$(".itemBox").click(function(e){
 		  e.preventDefault();
+		  detail($(this).data("comno"));
 		  comLikeCheck($(this).data("comno"));
 		  detailBtn($(this).data("comno"));
-		  detail($(this).data("comno"));
 	      $('#detailModal').modal('show')
 	      var bx;
 		  $('#detailModal').on('shown.bs.modal', function () {
@@ -464,33 +456,31 @@ $(function(){
 });
 
 function likeBtn(comNo) {
-			var likeUrl = "comLike";
-			
-			if (comLikeCnt == 1) {
-				likeUrl = "comLikeCancel";
-			}
-			console.log("this.data(comno)"+comNo);
-			$.ajax({
-				url : "/marryus/service/jewelry/"+ likeUrl + ".json",
-				data : {
-					"comInfoNo" : comNo,
-					"memNo" : userNo
-				},
-				cache : false
-			}).done(function (result) {
-				console.log(result);
-				if (comLikeCnt == 0) {
-					alert("관심업체로 등록하셨습니다..");
-					comLikeCnt = 1;
-					$('.detailLikeBtn').text("이미 추천했어. 취소할거면 눌러 ^^");
-				} else {
-					alert("관심업체 등록을 취소하셨습니다.");
-					comLikeCnt = 0;
-					$('.detailLikeBtn').text("추천할거면 눌러봐 ^^");
-				}
-			});
-
-		};
+	var likeUrl = "comLike";
+	
+	if (comLikeCnt == 1) {
+		likeUrl = "comLikeCancel";
+	}
+	$.ajax({
+		url : "/marryus/service/jewelry/"+ likeUrl + ".json",
+		data : {
+			"comInfoNo" : comNo,
+			"memNo" : userNo
+		},
+		cache : false
+	}).done(function (result) {
+		console.log("btn" + result);
+		if (comLikeCnt == 0) {
+			alert("관심업체로 등록하셨습니다..");
+			comLikeCnt = 1;
+			$('.detailLikeBtn').text("이미 추천했어. 취소할거면 눌러 ^^");
+		} else {
+			alert("관심업체 등록을 취소하셨습니다.");
+			comLikeCnt = 0;
+			$('.detailLikeBtn').text("추천할거면 눌러봐 ^^");
+		}
+	});
+};
 
 
   </script>
@@ -518,12 +508,10 @@ function likeBtn(comNo) {
         <div class="contentsBox">
         </div>
         <div id="detailBtn">
-        
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
       </div>
     </div>
   </div>
