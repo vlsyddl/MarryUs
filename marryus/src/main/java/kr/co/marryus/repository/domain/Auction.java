@@ -21,6 +21,7 @@ public class Auction {
 	private Makeup makeup;
 	private Dress dress;
 	private Tender tender;
+	private Jewelry jewelry;
 	private List<CompanyInfo> tenderList;
 	private int tenderCnt;
 	
