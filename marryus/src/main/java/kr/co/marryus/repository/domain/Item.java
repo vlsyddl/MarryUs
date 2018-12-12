@@ -40,19 +40,21 @@ public class Item {
 		if(this.dueDate != null) {
 			todo.setTodoDay(this.dueDate);
 		}
-		
-		System.out.println(this.listId);
-		if(!this.listId.isEmpty()) {
-			todo.setTodoCategory(this.listId.substring(14));
-		}
 	
 		if(done==true) {
 			todo.setTodoCheck("Y");
 		}else if(done==false) {
 			todo.setTodoCheck("N");
 		}	
-		if(this.todoNo!=null) {
+		
+
+		if(!this.todoNo.isEmpty()) {
 			todo.setTodoNo(Integer.parseInt(this.todoNo));
+		}
+		
+		
+		if(!this.listId.isEmpty()) {
+			todo.setTodoCategory(this.listId.substring(14));
 		}
 
 		return todo;

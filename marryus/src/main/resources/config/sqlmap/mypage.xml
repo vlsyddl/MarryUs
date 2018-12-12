@@ -263,6 +263,7 @@
 		on c.code_name = t.todo_category
 		where t.todo_period = #{common}
 		and c.code_table='mu_todo' and c.code_column = 'todo_category'
+		and t.todo_delete='N'
 	</select>
 	
 	<select id="selectItemByCategory"  parameterType="java.util.Map" resultMap="itemMap">
@@ -749,7 +750,7 @@
 		where todo_no=#{todoNo}
 	</update> 
 	
- 	<update id="deleteTodo" parameterType="Todo">
+ 	<update id="deleteTodo" parameterType="int">
 		update mu_todo 
 		set todo_delete='Y'
 		where todo_no=#{todoNo}
