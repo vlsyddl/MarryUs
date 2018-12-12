@@ -274,6 +274,7 @@
 		where t.todo_category=#{common}
         and t.mem_no = #{memNo}
 		and c.code_table='mu_todo' and c.code_column = 'todo_period'
+		and t.todo_delete='N'
 		order by t.todo_check, t.todo_day desc, t.todo_dday desc
 	</select>
 
@@ -343,7 +344,6 @@
 		com_info_phone=#{comInfoPhone},
 		com_info_addr=#{comInfoAddr},
 		com_info_addr_detail=#{comInfoAddrDetail},
-		com_info_type=#{comInfoType},
 		com_info_okay=#{comInfoOkay}
 		where com_info_no=#{comInfoNo} 
 	</update>
@@ -729,7 +729,6 @@
 		on c.code_name = t.todo_category
 		where t.mem_no=#{memNo}
 		and c.code_table='mu_todo' and c.code_column = 'todo_category'
-		and todo_delete='N'
 	</select>
 
 	

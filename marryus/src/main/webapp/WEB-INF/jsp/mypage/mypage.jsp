@@ -66,8 +66,7 @@
             $("#input_imgs").trigger('click');
         }
  
-        function handleImgFileSelect(e) {
- ÂÂ
+        function handleImgFileSelect(e) {
             sel_files = [];
             $(".imgs_wrap").empty();
  

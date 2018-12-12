@@ -245,7 +245,7 @@ $(function () {
                 console.log("후보지2");
                 console.log(item,"아이템 정보");
             $.ajax({
-            	url : "/marryus/mypage/myTodoInsert.do",
+            	url : "/marryus/mypage/myTodoWrite.do",
             	type : "POST",
             	data : item
             }).done(function () {
@@ -360,7 +360,7 @@ $(function () {
                     console.log("후보지3");
                     console.log(item,"아이템 정보");
                     $.ajax({
-                    	url : "/marryus/mypage/myTodoInsert.do",
+                    	url : "/marryus/mypage/myTodoWrite.do",
                     	type : "POST",
                     	data : item
                     }).done(function () {

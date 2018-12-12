@@ -22,7 +22,7 @@
             <div class="container">
                     <ul>
                         <li class="on">
-                            <a href="<c:url value='/mycompany/mycompany.do'/>">
+                            <a href="<c:url value='/mycompany/myCompany.do'/>">
                                 <img src="<c:url value="/resources/"/>img/company_ico.png" alt="" class="img-responsive center-block">
                                 My Company
                             </a>

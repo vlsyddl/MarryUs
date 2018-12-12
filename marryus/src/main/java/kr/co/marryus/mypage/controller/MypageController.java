@@ -298,29 +298,24 @@ public class MypageController {
 	}
 	
 	@RequestMapping("/myTodo.do")
-	public void myTodo(Model model) {
-		model.addAttribute("todo", new Gson().toJson(service.selectTodoSortByCategory(75)));
+	public void myTodo(Model model, HttpSession session) {
+		model.addAttribute("todo", new Gson().toJson(service.selectTodoSortByCategory(((Member)session.getAttribute("user")).getNo())));
 	}
 
 	@RequestMapping("/myTodoInsert.do")
 	@ResponseBody 
-	public void myTodoInsert(Item item) {
-		System.out.println("들어옴... 삽입");
-		System.out.println(item.toString());
-		System.out.println("들어옴... 삽입22");
+	public void myTodoInsert(Item item, HttpSession session) {
 		Todo todo =item.getTodo();
-		todo.setMemNo(75);
-		System.out.println((Integer)todo.getMemNo());
+		todo.setMemNo((((Member)session.getAttribute("user")).getNo()));
 		service.insertTodo(todo);
 		
 	}
 	
 	@RequestMapping("/myTodoWrite.do")
 	@ResponseBody 
-	public void myTodoWrite(Item item) throws Exception{
-		System.out.println("dfjslfadsfd");
+	public void myTodoWrite(Item item, HttpSession session) throws Exception{
 		Todo todo =item.getTodo();
-		todo.setMemNo(75);
+		todo.setMemNo((((Member)session.getAttribute("user")).getNo()));
 		service.insertTodo(todo);
 	}
 	
