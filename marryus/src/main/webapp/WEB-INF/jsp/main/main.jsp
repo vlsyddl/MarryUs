@@ -153,6 +153,7 @@
 			</div>
 		</div>
 		</c:if>
+		
 		<!-- 역경매 현황 -->
 		<section class="contents contents01">
 		<div class="container">
@@ -165,8 +166,17 @@
 								<a href="#">입찰중 역경매</a>
 							</h5>
 							<ul class="v-roll">
-							
-								<li><span class="w18"><span>입찰중</span></span> <span
+							<c:forEach var="auction" items="${totalauctionList}">
+								<c:if test="${auction.auctionType eq 'v'}">
+									<c:if test="${auction.auctionStatus eq 'ing'}">
+										
+									<li><span class="w18"><span>입찰중</span></span> <span
+										class="w18">${auction.member.name}</span> <span class="w28">서울시 강동구</span> <span
+										class="w18">D-21일</span> <span class="w18">접수중</span></li>
+									</c:if>
+								</c:if>
+							</c:forEach>
+						<!-- 		<li><span class="w18"><span>입찰중</span></span> <span
 									class="w18">이O재</span> <span class="w28">서울시 강동구</span> <span
 									class="w18">D-21일</span> <span class="w18">접수중</span></li>
 								<li><span class="w18"><span>입찰중</span></span> <span
@@ -183,10 +193,7 @@
 									class="w18">D-21일</span> <span class="w18">접수중</span></li>
 								<li><span class="w18"><span>입찰중</span></span> <span
 									class="w18">이O재</span> <span class="w28">서울시 강동구</span> <span
-									class="w18">D-21일</span> <span class="w18">접수중</span></li>
-								<li><span class="w18"><span>입찰중</span></span> <span
-									class="w18">이O재</span> <span class="w28">서울시 강동구</span> <span
-									class="w18">D-21일</span> <span class="w18">접수중</span></li>
+									class="w18">D-21일</span> <span class="w18">접수중</span></li> -->
 							
 							</ul> 
 						</div>
@@ -195,7 +202,18 @@
 								<a href="#">입찰중 역경매</a>
 							</h5>
 							<ul class="v-roll">
-								<li><span class="w18"><span>낙찰</span></span> <span
+							
+							<c:forEach var="auction" items="${totalauctionList}">
+								<c:if test="${auction.auctionType eq 'v'}">
+									<c:if test="${auction.auctionStatus eq 'done'}">
+										
+									<li><span class="w18"><span>낙찰</span></span> <span
+									class="w18">${auction.member.name }</span> <span class="w28">서울시 강동구</span> <span
+									class="w36">총 1,1501,5400원</span></li>
+									</c:if>
+								</c:if>
+							</c:forEach>
+								<!-- <li><span class="w18"><span>낙찰</span></span> <span
 									class="w18">이O재</span> <span class="w28">서울시 강동구</span> <span
 									class="w36">총 1,1501,5400원</span></li>
 								<li><span class="w18"><span>낙찰</span></span> <span
@@ -215,12 +233,28 @@
 									class="w36">총 1,1501,5400원</span></li>
 								<li><span class="w18"><span>낙찰</span></span> <span
 									class="w18">이O재</span> <span class="w28">서울시 강동구</span> <span
-									class="w36">총 1,1501,5400원</span></li>
+									class="w36">총 1,1501,5400원</span></li> -->
 							</ul>
 						</div>
 					</div>
 					<h2>웨딩홀 추천</h2>
 					<ul class="recommList">
+					<%-- <c:forEach var="recVenue" items="${recVenue}" >
+						<li>
+							<div class="imgWrap">
+								<img src="/marryus/${recVenue.companyFile.comFilePath}/${recVenue.companyFile.comFileName}"
+									alt="${recVenue.comInfoName}" title="${recVenue.comInfoName}" class="img-responsive center-block">
+							</div>
+							<div class="textBox">
+								<dl>
+									<dt>${recVenue.comInfoName}</dt>
+									<dd>${recVenue.comInfoAddr}</dd>
+								</dl>
+							</div>
+						</li>
+					
+						
+					</c:forEach> --%>
 						<li>
 							<div class="imgWrap">
 								<img src="<c:url value="/resources/"/>img/wedding-hall01.jpg"
@@ -284,7 +318,7 @@
 							</div>
 						</li>
 					</ul>
-				</li>
+				</li> 
 				<li>
 					<h2>스&middot;드&middot;메 경매 현황</h2>
 					<div class="row">
@@ -294,7 +328,17 @@
 							</h5>
 						<div>
 							<ul class="v-roll">
-								<li><span class="w18"><span>입찰중</span></span> <span
+							
+							<c:forEach var="auction" items="${totalauctionList}">
+								<c:if test="${auction.auctionType eq 's'|| auction.auctionType eq 'd' || auction.auctionType eq 'm'}">
+									<c:if test="${auction.auctionStatus eq 'ing'}">
+									<li><span class="w18"><span>입찰중</span></span> <span
+										class="w18">${auction.member.name}</span> <span class="w28">서울시 강동구</span> <span
+										class="w18">D-21일</span> <span class="w18">접수중</span></li>
+									</c:if>
+								</c:if>
+							</c:forEach>
+								<!-- <li><span class="w18"><span>입찰중</span></span> <span
 									class="w18">이O재</span> <span class="w28">서울시 강동구</span> <span
 									class="w18">D-21일</span> <span class="w18">접수중</span></li>
 								<li><span class="w18"><span>입찰중</span></span> <span
@@ -314,7 +358,7 @@
 									class="w18">D-21일</span> <span class="w18">접수중</span></li>
 								<li><span class="w18"><span>입찰중</span></span> <span
 									class="w18">이O재</span> <span class="w28">서울시 강동구</span> <span
-									class="w18">D-21일</span> <span class="w18">접수중</span></li>
+									class="w18">D-21일</span> <span class="w18">접수중</span></li> -->
 							</ul>
 						</div>
 						
@@ -324,7 +368,16 @@
 								<a href="#">입찰중 역경매</a>
 							</h5>
 							<ul class="v-roll">
-								<li><span class="w18"><span>낙찰</span></span> <span
+							<c:forEach var="auction" items="${totalauctionList}">
+								<c:if test="${auction.auctionType eq 's'|| auction.auctionType eq 'd' || auction.auctionType eq 'm'}">
+									<c:if test="${auction.auctionStatus eq 'done'}">
+								    <li><span class="w18"><span>낙찰</span></span> <span
+									class="w18">${auction.member.name}</span> <span class="w28">서울시 강동구</span> <span
+									class="w36">총 1,1501,5400원</span></li>
+									</c:if>
+								</c:if>
+							</c:forEach>
+							<!-- 	<li><span class="w18"><span>낙찰</span></span> <span
 									class="w18">이O재</span> <span class="w28">서울시 강동구</span> <span
 									class="w36">총 1,1501,5400원</span></li>
 								<li><span class="w18"><span>낙찰</span></span> <span
@@ -344,12 +397,28 @@
 									class="w36">총 1,1501,5400원</span></li>
 								<li><span class="w18"><span>낙찰</span></span> <span
 									class="w18">이O재</span> <span class="w28">서울시 강동구</span> <span
-									class="w36">총 1,1501,5400원</span></li>
+									class="w36">총 1,1501,5400원</span></li> -->
 							</ul>
 						</div>
 					</div>
 					<h2>스&middot;드&middot;메 추천</h2>
 					<ul class="recommList">
+			<%-- 		<c:forEach var="recCompany" items="${recommend}">
+						<c:if test="${recCompany.comInfoType eq 's' || recCompany.comInfoType eq 'd' || recCompany.comInfoType eq 'm' }">
+						<li>
+							<div class="imgWrap">
+								<img src="/marryus/${recCompany.companyFile.comFilePath}/${recCompany.companyFile.comFileName}"
+									alt="${recCompany.comInfoName}" title="${recCompany.comInfoName}" class="img-responsive center-block">
+							</div>
+							<div class="textBox">
+								<dl>
+									<dt>${recCompany.comInfoName}</dt>
+									<dd>${recCompany.comInfoAddr}</dd>
+								</dl>
+							</div>
+						</li>
+						</c:if>
+					</c:forEach> --%>
 						<li>
 							<div class="imgWrap">
 								<img src="<c:url value="/resources/"/>img/studio01.jpg"
@@ -422,7 +491,16 @@
 								<a href="#">입찰중 역경매</a>
 							</h5>
 							<ul class="v-roll">
-								<li><span class="w18"><span>입찰중</span></span> <span
+							<c:forEach var="auction" items="${totalauctionList}">
+								<c:if test="${auction.auctionType eq 'h'}">
+								 <c:if test="${auction.auctionStatus eq 'ing'}">
+									<li><span class="w18"><span>입찰중</span></span> <span
+									class="w18">${auction.member.name}</span> <span class="w28">서울시 강동구</span> <span
+									class="w18">D-21일</span> <span class="w18">접수중</span></li>
+									</c:if>
+								</c:if>
+							</c:forEach>
+							<!-- 	<li><span class="w18"><span>입찰중</span></span> <span
 									class="w18">이O재</span> <span class="w28">서울시 강동구</span> <span
 									class="w18">D-21일</span> <span class="w18">접수중</span></li>
 								<li><span class="w18"><span>입찰중</span></span> <span
@@ -442,7 +520,7 @@
 									class="w18">D-21일</span> <span class="w18">접수중</span></li>
 								<li><span class="w18"><span>입찰중</span></span> <span
 									class="w18">이O재</span> <span class="w28">서울시 강동구</span> <span
-									class="w18">D-21일</span> <span class="w18">접수중</span></li>
+									class="w18">D-21일</span> <span class="w18">접수중</span></li> -->
 							</ul>
 						</div>
 						<div class="col-md-6" id="honeyAuctionDone">
@@ -450,7 +528,16 @@
 								<a href="#">입찰중 역경매</a>
 							</h5>
 							<ul class="v-roll">
-								<li><span class="w18"><span>낙찰</span></span> <span
+							<c:forEach var="auction" items="${totalauctionList}">
+								<c:if test="${auction.auctionType eq 'h'}">
+								 <c:if test="${auction.auctionStatus eq 'done'}">
+									<li><span class="w18"><span>낙찰</span></span> <span
+									class="w18">${auction.member.name}</span> <span class="w28">서울시 강동구</span> <span
+									class="w36">총 1,1501,5400원</span></li>
+									</c:if>
+								</c:if>
+							</c:forEach>
+							<!-- 	<li><span class="w18"><span>낙찰</span></span> <span
 									class="w18">이O재</span> <span class="w28">서울시 강동구</span> <span
 									class="w36">총 1,1501,5400원</span></li>
 								<li><span class="w18"><span>낙찰</span></span> <span
@@ -470,7 +557,7 @@
 									class="w36">총 1,1501,5400원</span></li>
 								<li><span class="w18"><span>낙찰</span></span> <span
 									class="w18">이O재</span> <span class="w28">서울시 강동구</span> <span
-									class="w36">총 1,1501,5400원</span></li>
+									class="w36">총 1,1501,5400원</span></li> -->
 							</ul>
 						</div>
 					</div>
@@ -548,7 +635,17 @@
 								<a href="#">입찰중 역경매</a>
 							</h5>
 							<ul class="v-roll">
-								<li><span class="w18"><span>입찰중</span></span> <span
+							<c:forEach var="auction" items="${totalauctionList}">
+								<c:if test="${auction.auctionType eq 'j'}">
+								 <c:if test="${auction.auctionStatus eq 'ing'}">
+									
+									<li><span class="w18"><span>입찰중</span></span> <span
+									class="w18">${auction.member.name}</span> <span class="w28">서울시 강동구</span> <span
+									class="w18">D-21일</span> <span class="w18">접수중</span></li>
+									</c:if>
+								</c:if>
+							</c:forEach>
+							<!-- 	<li><span class="w18"><span>입찰중</span></span> <span
 									class="w18">이O재</span> <span class="w28">서울시 강동구</span> <span
 									class="w18">D-21일</span> <span class="w18">접수중</span></li>
 								<li><span class="w18"><span>입찰중</span></span> <span
@@ -568,7 +665,7 @@
 									class="w18">D-21일</span> <span class="w18">접수중</span></li>
 								<li><span class="w18"><span>입찰중</span></span> <span
 									class="w18">이O재</span> <span class="w28">서울시 강동구</span> <span
-									class="w18">D-21일</span> <span class="w18">접수중</span></li>
+									class="w18">D-21일</span> <span class="w18">접수중</span></li> -->
 							</ul>
 						</div>
 						<div class="col-md-6" id="jewelryAuctionDone">
@@ -576,7 +673,16 @@
 								<a href="#">입찰중 역경매</a>
 							</h5>
 							<ul class="v-roll">
-								<li><span class="w18"><span>낙찰</span></span> <span
+							<c:forEach var="auction" items="${totalauctionList}">
+								<c:if test="${auction.auctionType eq 'j'}">
+								 <c:if test="${auction.auctionStatus eq 'done'}">
+									<li><span class="w18"><span>낙찰</span></span> <span
+									class="w18">${auction.member.name}</span> <span class="w28">서울시 강동구</span> <span
+									class="w36">총 1,1501,5400원</span></li>
+									</c:if>
+								</c:if>
+							</c:forEach>
+							<!-- 	<li><span class="w18"><span>낙찰</span></span> <span
 									class="w18">이O재</span> <span class="w28">서울시 강동구</span> <span
 									class="w36">총 1,1501,5400원</span></li>
 								<li><span class="w18"><span>낙찰</span></span> <span
@@ -596,7 +702,7 @@
 									class="w36">총 1,1501,5400원</span></li>
 								<li><span class="w18"><span>낙찰</span></span> <span
 									class="w18">이O재</span> <span class="w28">서울시 강동구</span> <span
-									class="w36">총 1,1501,5400원</span></li>
+									class="w36">총 1,1501,5400원</span></li> -->
 							</ul>
 						</div>
 					</div>
@@ -674,7 +780,16 @@
 								<a href="#">입찰중 역경매</a>
 							</h5>
 							<ul class="v-roll">
-								<li><span class="w18"><span>입찰중</span></span> <span
+							<c:forEach var="auction" items="${totalauctionList}">
+								<c:if test="${auction.auctionType eq 'e'}">
+								 <c:if test="${auction.auctionStatus eq 'ing'}">
+									<li><span class="w18"><span>입찰중</span></span> <span
+									class="w18">${auction.member.name}</span> <span class="w28">서울시 강동구</span> <span
+									class="w18">D-21일</span> <span class="w18">접수중</span></li>
+									</c:if>
+								</c:if>
+							</c:forEach>
+								<!-- <li><span class="w18"><span>입찰중</span></span> <span
 									class="w18">이O재</span> <span class="w28">서울시 강동구</span> <span
 									class="w18">D-21일</span> <span class="w18">접수중</span></li>
 								<li><span class="w18"><span>입찰중</span></span> <span
@@ -694,7 +809,7 @@
 									class="w18">D-21일</span> <span class="w18">접수중</span></li>
 								<li><span class="w18"><span>입찰중</span></span> <span
 									class="w18">이O재</span> <span class="w28">서울시 강동구</span> <span
-									class="w18">D-21일</span> <span class="w18">접수중</span></li>
+									class="w18">D-21일</span> <span class="w18">접수중</span></li> -->
 							</ul>
 						</div>
 						<div class="col-md-6" id="eventAuctionDone">
@@ -702,7 +817,16 @@
 								<a href="#">입찰중 역경매</a>
 							</h5>
 							<ul class="v-roll">
-								<li><span class="w18"><span>낙찰</span></span> <span
+							<c:forEach var="auction" items="${totalauctionList}">
+								<c:if test="${auction.auctionType eq 'e'}">
+								 <c:if test="${auction.auctionStatus eq 'done'}">
+									<li><span class="w18"><span>낙찰</span></span> <span
+									class="w18">${auction.member.name}</span> <span class="w28">서울시 강동구</span> <span
+									class="w36">총 1,1501,5400원</span></li>
+									</c:if>
+								</c:if>
+							</c:forEach>
+								<!-- <li><span class="w18"><span>낙찰</span></span> <span
 									class="w18">이O재</span> <span class="w28">서울시 강동구</span> <span
 									class="w36">총 1,1501,5400원</span></li>
 								<li><span class="w18"><span>낙찰</span></span> <span
@@ -722,13 +846,29 @@
 									class="w36">총 1,1501,5400원</span></li>
 								<li><span class="w18"><span>낙찰</span></span> <span
 									class="w18">이O재</span> <span class="w28">서울시 강동구</span> <span
-									class="w36">총 1,1501,5400원</span></li>
+									class="w36">총 1,1501,5400원</span></li> -->
 							</ul>
 						</div>
 					</div>
 					<h2>이벤트업체 추천</h2>
 					<ul class="recommList">
+					<%-- <c:forEach var="recCompany" items="${recommend}">
+						<c:if test="${recCompany.comInfoType eq 'e' }">
 						<li>
+							<div class="imgWrap">
+								<img src="/marryus/${recCompany.companyFile.comFilePath}/${recCompany.companyFile.comFileName}"
+									alt="${recCompany.comInfoName}" title="${recCompany.comInfoName}" class="img-responsive center-block">
+							</div>
+							<div class="textBox">
+								<dl>
+									<dt>${recCompany.comInfoName}</dt>
+									<dd>${recCompany.comInfoAddr}</dd>
+								</dl>
+							</div>
+						</li>
+						</c:if>
+					</c:forEach> --%>
+						 <li>
 							<div class="imgWrap">
 								<img src="<c:url value="/resources/"/>img/studio01.jpg"
 									alt="미학스튜디오" title="미학스튜디오" class="img-responsive center-block">
@@ -789,7 +929,7 @@
 									<dd>서울시 강남구</dd>
 								</dl>
 							</div>
-						</li>
+						</li> 
 					</ul>
 				</li>
 			</ul>
@@ -803,6 +943,7 @@
 									class="img-responsive center-block">
 							</div> 웨딩홀
 							  <input type="hidden" id="auctionType" name="auctionType" value="v">
+							  <input type="hidden" id="ComInfoType" name="ComInfoType" value="v">
 					</a></li>
 					<li><a href="#" id="sdmList">
 							<div class="imgWrap">
@@ -810,6 +951,7 @@
 									class="img-responsive center-block">
 							</div> 스&middot;드&middot;메
 							  <input type="hidden" id="auctionType2" name="auctionType" value="s">
+							  <input type="hidden" id="ComInfoType2" name="ComInfoType" value="s">
 					</a></li>
 					<li><a href="#" id="honeyMoonList">
 							<div class="imgWrap">
@@ -817,6 +959,7 @@
 									alt="" class="img-responsive center-block">
 							</div> 허니문
 							  <input type="hidden" id="auctionType3" name="auctionType" value="h">
+							  <input type="hidden" id="ComInfoType3" name="ComInfoType" value="h">
 					</a></li>
 					<li><a href="#" id="jewelryList">
 							<div class="imgWrap">
@@ -824,6 +967,7 @@
 									class="img-responsive center-block">
 							</div> 예물
 							  <input type="hidden" id="auctionType4" name="auctionType" value="j">
+							  <input type="hidden" id="ComInfoType4" name="ComInfoType" value="j">
 					</a></li>
 					<li><a href="#" id="extraList">
 							<div class="imgWrap">
@@ -831,6 +975,7 @@
 									alt="" class="img-responsive center-block">
 							</div> 추가서비스
 							  <input type="hidden" id="auctionType5" name="auctionType" value="e">
+							  <input type="hidden" id="ComInfoType5" name="ComInfoType" value="e">
 					</a></li>
 				</ul>
 			</div>
@@ -838,12 +983,13 @@
 		</div>
 		</section>
 		
-		<!-- 후기 -->
+	<!-- 후기 -->
 		<section class="contents contents02">
+		<input type="hidden" id="categroy" name="category" value="rv">
 		<div class="container">
 			<h2>다녀간 고객님들</h2>
 			<div id="columns">
-				<figure class="wow bounceIn" data-wow-delay="0.5s"> <img
+				<%-- <figure class="wow bounceIn" data-wow-delay="0.5s"> <img
 					src="<c:url value="/resources/"/>img/review01.jpg"
 					class="img-responsive center-block"> <figcaption>
 				<dl>
@@ -931,7 +1077,7 @@
 					<dd>
 						<span class="name">aawsdaa</span>님 <span class="date">2018.11.16</span>
 					</dd>
-				</dl>
+				</dl> --%>
 				</figcaption> </figure>
 			</div>
 		</div>
@@ -1071,7 +1217,7 @@
                     $(".statusList").animate({"left":-cWidth*index},300)
                 })
             })
-            /* 
+            
             $('.v-roll').bxSlider({
                 auto: true,
                 speed: 3000,
@@ -1082,7 +1228,7 @@
                 minSlides: 5, 
                 maxSlides: 5,
                 pager:false
-            }); */
+            }); 
 
 			var options = {
 				'speed' : 500, //스피드
@@ -1107,6 +1253,34 @@
       	 ver1. 미완
       	
 **********************************************************************************/
+		/*
+		$(document).ready(function(){
+			var comInfoType = $("#ComInfoType").val();
+			$.ajax({
+				url: "/marryus/main/recommendCompany.json",
+				data: "comInfoType="+comInfoType,
+				type:"post"
+			}).done(function(result){
+				console.log(result);
+				var html="";
+				for(var b of result.recommendList){
+				html+='<li>'
+				html+='<div class="imgWrap">'
+				html+='<img src="/marryus/'+b.comFilePath+'/'+b.comFileName+'" alt="'+b.comInfoName+'" title="'+b.comInfoName+'" class="img-responsive center-block">'
+				html+='</div>'
+				html+='<div class="textBox">'
+				html+='<dl>'
+				html+='<dt>'+b.comInfoName+'</dt>'
+				html+='<dd>'+b.comInfoAddr+'</dd>'
+				html+='</dl>'
+				html+='</div>'
+				html+='</li>'
+				
+				$("#recommList").html(html);
+				}
+			});
+			
+		});
 
 		$(document).ready(function(){
 			var auctionType = $("#auctionType").val();
@@ -1509,6 +1683,7 @@
 			});
 
 		});
+		*/
 		// 이벤트 끝 
         	
     
@@ -1523,7 +1698,7 @@
         	}
         }
         
-        /*
+      	/*
     		D-? 남았는지 변환해주는 함수 
    		 */
 		function countDay(auctionEdate){
@@ -1535,7 +1710,7 @@
 			return Math.floor(Math.abs(moment.duration(startDate.diff(endDate)).asDays()));
 
 		}
-		
+	
         
  /**********************************************************************************
          	마감임박  불러오기 D-7일 
@@ -1623,6 +1798,44 @@
   		});
  	});
       
+ 	
+ 	$(document).ready(function(){
+ 		var category = $("#categroy").val();
+ 		var rSec
+ 		$.ajax({
+ 			url: "/marryus/main/reviewList.json",
+ 			type: "post",
+ 			data:"category="+category
+ 		})
+ 		 .done(function(result){
+ 			console.log(result);
+ 			var html= "";
+ 			for(var b of result.rvList){
+				
+				rSec = Math.floor(Math.random()*10)/10;
+				html+='<figure class="wow bounceIn" data-wow-delay="'+rSec+'s" data-href="'+b.boardNo+'">'
+  				html+='<div class="figureWrap">'
+				html+='<img src="/marryus/'+b.attach.filePath+'/'+b.attach.fileName+'" onError="javascript:this.src=\'<c:url value="/resources/img/sorry.png"/>\'"class="img-responsive center-block">' 
+				html+='<figcaption>'
+				html+='<dl>'	
+				html+='<dt>'+b.title+'</dt>'		
+				html+='<dd>'		
+				html+='<span class="name">'+b.writer+'</span>님 <span class="date">'+moment(b.regDate).format("YYYY.MM.DD")+'</span>'			
+				html+='</dd>'		
+				html+='<dd>'		
+				html+='<ul>'
+				html+='<li class="views"><i class="far fa-kiss-wink-heart"></i>'+b.viewCnt+'</li>'
+				html+='<li class="comment"><i class="far fa-comment-dots"></i> 123</li>'
+				html+='</ul>'				
+				html+='</dd>'			
+				html+='</dl>'									
+				html+='</figcaption>'	
+				html+='</div>'
+  				html+='</figure>' 
+			}
+ 			$("#columns").append(html)
+ 		});
+ 	});
  	
 
 	</script>

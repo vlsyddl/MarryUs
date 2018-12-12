@@ -4,6 +4,7 @@ import java.util.List;
 
 import kr.co.marryus.repository.domain.Auction;
 import kr.co.marryus.repository.domain.Board;
+import kr.co.marryus.repository.domain.CompanyInfo;
 import kr.co.marryus.repository.domain.SearchForm;
 import kr.co.marryus.repository.domain.Todo;
 import kr.co.marryus.repository.domain.WeddingPlan;
@@ -59,5 +60,13 @@ public interface MainMapper {
 	int spendBudget(int memNo);
 	
 	// 리뷰
-	List<Board> reviewList(SearchForm form);
+	List<Board> mainReviewList(String cateory);
+	
+	// 업체 추천
+	List<CompanyInfo> selectCompanyRecommned();
+	
+	//total Auction List
+	List<Auction> totalAuctionList();
+	
+	List<CompanyInfo> recVenue();
 }

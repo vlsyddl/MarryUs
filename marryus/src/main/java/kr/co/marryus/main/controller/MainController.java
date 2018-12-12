@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.marryus.main.service.MainServiceImpl;
 import kr.co.marryus.repository.domain.Auction;
+import kr.co.marryus.repository.domain.Board;
+import kr.co.marryus.repository.domain.CompanyInfo;
 import kr.co.marryus.repository.domain.Todo;
 import kr.co.marryus.repository.domain.WeddingPlan;
 
@@ -46,8 +48,11 @@ public class MainController {
 	 * main 페이지 호출
 	 */
 	@RequestMapping("/main.do")
-	public void loginMain( ) {
-		
+	public Model loginMain( Model model) {
+		model.addAttribute("totalauctionList", service.totalAuctionList());
+		model.addAttribute("recommend", service.selectCompanyRecommned());
+		model.addAttribute("recVenue", service.recVenue());
+		return model;
 	}
 	
 	/**
@@ -64,12 +69,12 @@ public class MainController {
 	}
 	
 	
-	/**
+/*	*//**
 	 * 역경매 현황 리스트 !!
 	 * @param auction
 	 * @return
 	 * @throws Exception
-	 */
+	 *//*
 	@RequestMapping(value="/auctionList.json",  method= RequestMethod.POST)
 	@ResponseBody
 	public HashMap<String, List<Auction>> auctionList(Auction auction) throws Exception{
@@ -78,7 +83,7 @@ public class MainController {
 		auctionLists.put("auctionListSDM", service.auctionListSDM(auction));
 		return auctionLists;
 		
-	}
+	}*/
 	/**
 	 * 나만의 웨딩 플랜 솔팅
 	 * @param todoCategory
@@ -170,6 +175,12 @@ public class MainController {
 		return proFileMap;
 	}
  	
+	/**
+	 *  main profile - 카운트 다운
+	 * @param memNo
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/proFileWeddingDate.json",method= RequestMethod.POST)
 	@ResponseBody
 	public HashMap<String, Object> getWeddingDate(int memNo) throws Exception{
@@ -184,5 +195,28 @@ public class MainController {
 		return wdMap;
 	}
 	
+	/**
+	 * 리뷰 리스트 
+	 * @param category
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/reviewList.json", method= RequestMethod.POST)
+	@ResponseBody
+	public HashMap<String, List<Board>> mainReviewList(String category) throws Exception{
+		HashMap<String, List<Board>> rvList= new HashMap<>();
+		rvList.put("rvList", service.mainReviewList(category));
+		
+		return rvList;
+	}
+	
+	/*@RequestMapping(value="/recommendCompany.json", method= RequestMethod.POST)
+	@ResponseBody
+	public HashMap<String, List<CompanyInfo>> recommendCompany(String comInfoType)throws Exception{
+		HashMap<String, List<CompanyInfo>> recomList= new HashMap<>();
+		recomList.put("recommendList", service.selectCompanyRecommned(comInfoType));
+		return recomList;
+		
+	}*/
 	
 }

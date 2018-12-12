@@ -60,7 +60,43 @@
 		<result column="secret" property="secret" />
 		<collection property="attach" resultMap="attachMap" />
 	</resultMap>
+	<resultMap type="attach" id="attachMap">
+		<result column="file_no" property="fileNo"/>
+		<result column="board_no" property="boardNo"/>
+		<result column="file_name" property="fileName"/>
+		<result column="file_path" property="filePath"/>
+	</resultMap>
 	
+	<resultMap id="comInfoMap" type="CompanyInfo">
+		<result  property="comInfoNo"   column="com_info_no"/>
+		<result  property="memNo"   column="mem_no"/>
+        <result  property="comInfoContent"   column="com_info_content"/>
+		<result  property="comInfoProfile"   column="com_info_profile"/>
+		<result  property="comInfoName"   column="com_info_name"/>
+		<result  property="comInfoPhone"   column="com_info_phone"/>
+		<result  property="comInfoAddr"   column="com_info_addr"/>
+		<result  property="comInfoAddrDetail"   column="com_info_addr_detail"/>
+		<result  property="comInfoType"   column="com_info_type"/>
+		<result  property="comInfoOkay"   column="com_info_okay"/>
+		<result  property="comFileName"   column="com_file_name"/>
+		<result  property="comFilePath"   column="com_file_path"/>
+		
+		<result  property="aucionType"   column="aucion_type"/>
+		<result  property="auctionSdate"   column="auction_sdate"/>
+		<result  property="auctionEdate"   column="auction_edate"/>
+		<result  property="tenderBudget"   column="tender_budget"/>
+		<result  property="tenderRegdate"   column="tender_regdate"/>
+		<collection  property="companyFile"   resultMap="comFileMap"/>
+	</resultMap>
+	
+	<resultMap id="comFileMap" type="CompanyFile">
+		<result  property="comFileNo"   column="com_file_no"/>
+		<result  property="comInfoNo"   column="com_info_no"/>
+		<result  property="comFileName"   column="com_file_name"/>
+		<result  property="comFileOriname"   column="com_file_oriname"/>
+		<result  property="comFilePath"   column="com_file_path"/>
+		<result  property="comFileRepr"   column="com_file_repr"/>
+	</resultMap>
 	<!-- 나만의 웨딩 데이터 입력 -->
 	<insert id="insertWedPlan" parameterType="WeddingPlan">
 		insert into
@@ -107,6 +143,31 @@
 		 where auction_type IN ('s' , 'd', 'm')
 	</select>
 	
+	<select id="selectCompanyRecommned" resultMap="comInfoMap">
+		select * 
+		  from mu_company_info i
+		 inner join mu_company_file f 
+            on i.com_info_no = f.com_info_no
+		 where com_file_repr = 'y'
+	</select>
+	<select id="recVenue" resultMap="comInfoMap">
+			select * 
+		  from mu_company_info i
+		 inner join mu_company_file f 
+            on i.com_info_no = f.com_info_no
+		 where com_file_repr = 'y'
+         and com_info_type = 'v'
+         order by mem_no desc
+         limit 5;
+	</select>
+	<!--  전체 리스트 부르기  -->
+	<select id="totalAuctionList" resultMap="auctionMap">
+		select *
+		  from mu_auction a left join mu_member m
+		    on a.mem_no = m.mem_no
+		  left join mu_wedding_plan w
+		    on a.mem_no = w.mem_no
+	</select>
 	
 	<!-- 나만의 웨딩 플랜 todoList 분류작업 -->
 	
@@ -126,6 +187,8 @@
 		   and todo_delete= 'n'
 		 order by todo_dday desc
 	</select>
+	
+	
 	
 	<!-- 마감 임박 역경매건  검색 -->
 	<select id="selectAuctionEDate" parameterType="Auction" resultMap="auctionMap">
@@ -193,16 +256,13 @@
 		 where mem_no = #{memNo};
 	</select>
 	
-	<select id="reviewList" parameterType="SearchForm" resultMap="boardMap">
+	<select id="mainReviewList" parameterType="String" resultMap="boardMap">
 	select * 
 	 from mu_board b
 		inner join mu_attach a
 	    on b.board_no = a.board_no
-	    where category = 'rv'
-		 <if test="content != 'null' and content!=null and content!=''" >
-	 	      and ${type} like CONCAT('%',#{content},'%')
-	 	   </if>
+	    where category = #{category}
 		order by b.board_no desc
-		 limit #{begin}, 9
+		limit 9
 	</select>
 </mapper>

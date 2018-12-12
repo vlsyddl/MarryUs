@@ -38,4 +38,5 @@ public class CompanyInfo {
 	
 	private String Type;
 	
+	CompanyFile companyFile;
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.marryus.repository.domain.Auction;
 import kr.co.marryus.repository.domain.Board;
+import kr.co.marryus.repository.domain.CompanyInfo;
 import kr.co.marryus.repository.domain.SearchForm;
 import kr.co.marryus.repository.domain.Todo;
 import kr.co.marryus.repository.domain.WeddingPlan;
@@ -149,16 +150,45 @@ public class MainServiceImpl implements MainService{
 		return mapper.spendBudget(memNo);
 	}
 
+	/**
+	 * profile - 역경매 Sdm
+	 */
 	@Override
 	public List<Auction> auctionListSDM(Auction auction) {
 		
 		return mapper.auctionListSDM(auction);
 	}
 
+	
+	/**
+	 * 리뷰 
+	 */
 	@Override
-	public List<Board> reviewList(SearchForm form) {
+	public List<Board> mainReviewList(String cateory) {
+		return mapper.mainReviewList(cateory);
+	}
+	
+	/**
+	 * 추천 업체 
+	 */
+	@Override
+	public List<CompanyInfo> selectCompanyRecommned() {
 		
-		return mapper.reviewList(form);
+		return mapper.selectCompanyRecommned();
+	}
+
+	/**
+	 * total auction List
+	 */
+	@Override
+	public List<Auction> totalAuctionList() {
+		return mapper.totalAuctionList();
+	}
+
+	@Override
+	public List<CompanyInfo> recVenue() {
+		// TODO Auto-generated method stub
+		return mapper.recVenue();
 	}
 
 	
