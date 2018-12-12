@@ -264,8 +264,8 @@ public class MyPageServiceImpl implements MypageService{
 
 
 	@Override
-	public int deleteTodo(Todo todo) {
-		return mapper.deleteTodo(todo);
+	public int deleteTodo(int todoNo) {
+		return mapper.deleteTodo(todoNo);
 	}
 
 

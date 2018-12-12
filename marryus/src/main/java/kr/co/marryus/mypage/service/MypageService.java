@@ -77,7 +77,7 @@ public interface MypageService {
 	public List<Todolist> selectTodoSortByCategory(int memNo);
 	public int insertTodo(Todo todo);
 	public int updateTodo(Todo todo);	
-	public int deleteTodo(Todo todo);
+	public int deleteTodo(int todoNo);
 
 	
 }

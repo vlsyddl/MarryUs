@@ -305,15 +305,25 @@ public class MypageController {
 	@RequestMapping("/myTodoInsert.do")
 	@ResponseBody 
 	public void myTodoInsert(Item item) {
-		System.out.println("HJKHKJHKHK");
+		System.out.println("들어옴... 삽입");
 		System.out.println(item.toString());
-		System.out.println("sdfjdslkfjl");
+		System.out.println("들어옴... 삽입22");
 		Todo todo =item.getTodo();
 		todo.setMemNo(75);
 		System.out.println((Integer)todo.getMemNo());
 		service.insertTodo(todo);
 		
 	}
+	
+	@RequestMapping("/myTodoWrite.do")
+	@ResponseBody 
+	public void myTodoWrite(Item item) throws Exception{
+		System.out.println("dfjslfadsfd");
+		Todo todo =item.getTodo();
+		todo.setMemNo(75);
+		service.insertTodo(todo);
+	}
+	
 
 	@RequestMapping("/myTodoUpdate.do")
 	@ResponseBody 
@@ -325,7 +335,10 @@ public class MypageController {
 	@RequestMapping("/myTodoDelete.do")	
 	@ResponseBody 
 	public void myTodoDelete(Item item) throws Exception{
-		service.deleteTodo(item.getTodo());
+		System.out.println(item.getTodo().getTodoNo());
+		System.out.println("삭제입니다.");
+		int no = service.deleteTodo(item.getTodo().getTodoNo());
+		System.out.println(no);
 	}
 	
 	@RequestMapping("/myBudget.do")
