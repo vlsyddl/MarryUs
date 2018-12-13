@@ -135,34 +135,7 @@
  
      $("#pass").keydown(function (e) {
     	   if (e.keyCode == 13) {
-    			e.preventDefault();
-    			var email = $("#email").val();
-    			var pass =  $("#pass").val();
-    			
-    			$.ajax({
-    				url:"/marryus/main/login.json",
-    				data:{email:email, pass: pass},
-    				type: "post"
-    			})
-    			.done(function(member){
-    				console.log(member)
-    				if(member == ""){
-    					alert("아이디 또는 비밀번호를 잘못 입력했습니다.");
-    					
-    					return;
-    				} else{
-    					alert("로그인 되었습니다.");
-    					$("#loginModal").modal("hide");
-    					var url = "${requestScope['javax.servlet.forward.request_uri']}"
-    					if(url == "/marryus/main/main.do"){
-    						location.href = "/marryus/main/main.do";
-    						return;
-    					}
-    					location.href = "${requestScope['javax.servlet.forward.request_uri']}";
-    				}
-    				
-    			});
-    			
+    			$("#loginBtn").click();
     	   }   
     	});
 

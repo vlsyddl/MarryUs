@@ -30,35 +30,53 @@
       </div>
 <script type="text/javascript">
 $(document).ready(function(){
+	
 	var ws = null;
     var loginId = null;
     var textBox = $("#chatBot .textWrap .textBox");
     var inputBox = $("#chatBotInput");
     var adminBox = '<div class="chatAdmin"><dl><dt><img src="/marryus/resources/img/chat_adm.png" alt="" class="img-responsive center-block"></dt><dd></dd></dl></div>';
    	var btnBox = $("#chatBot .textWrap .textBox .btnBox")
-   	var user;
+   	var customerCnt = 1;
+   	var user = "${user.name}";
+   /* 	
+   	if(user==""||user==null){
+   		user = "비회원고객"+customerCnt;
+   		customerCnt++;
+   	} */
+   	
+   	console.log(user);
+   	
    	btnBox.hide();
    	
    	$(function () {
-	    ws = new WebSocket('ws://192.168.0.88:8000/marryus/websocket.do');
-		ws.onopen = function() {
-	   	    console.log('웹소켓 서버 접속 성공');
-	    };
+   		if(user != "" ){   			
+		    ws = new WebSocket('ws://192.168.0.88:8000/marryus/websocket.do');
+			
+		    ws.onopen = function() {
+		   	    console.log('웹소켓 서버 접속 성공');
+		    };
+		    
+   		}
 	    // 메세지 받기
 	    ws.onmessage = function(evt) {
 	    	textBox.append('<div class="chatAdmin"><dl><dt><img src="/marryus/resources/img/chat_adm.png" alt="" class="img-responsive center-block"></dt><dd>'+evt.data+'</dd></dl></div>')
 	    	textBox.animate({scrollTop: textBox.prop("scrollHeight")}, 500);
 	    };
+	    
 	    ws.onerror = function(evt) {
 	    	textBox.append('<div class="chatAdmin"><dl><dt><img src="/marryus/resources/img/chat_adm.png" alt="" class="img-responsive center-block"></dt><dd>웹소켓 에러 발생 : ' + evt.data+'</dd></dl></div>')
 	    	textBox.animate({scrollTop: textBox.prop("scrollHeight")}, 500);
-	    };
-	    ws.onclose = function() {
-	    	textBox.append('<div class="chatAdmin"><dl><dt><img src="/marryus/resources/img/chat_adm.png" alt="" class="img-responsive center-block"></dt><dd>웹소켓 연결이 종료됨.</dd></dl></div>')
-	    	textBox.animate({scrollTop: textBox.prop("scrollHeight")}, 500);
+	    	console.log(evt)
 	    };
 	    
-	});
+	    ws.onclose = function(evt) {
+	    	textBox.append('<div class="chatAdmin"><dl><dt><img src="/marryus/resources/img/chat_adm.png" alt="" class="img-responsive center-block"></dt><dd>웹소켓 연결이 종료됨.</dd></dl></div>')
+	    	textBox.animate({scrollTop: textBox.prop("scrollHeight")}, 500);
+	    	console.log(evt)
+	    };
+	    
+	}); 
    	
     $("#chatBot .title").click(function(){
         $("#chatBot").addClass("on")
@@ -68,7 +86,7 @@ $(document).ready(function(){
    	        },1000)
     	}else{
    		setTimeout(function(){
-   	         sendAdmin("안녕하세요 ${user.name}님</br>어떤 점이 궁금하신가요?")
+   	         sendAdmin("안녕하세요 "+user+"님</br>어떤 점이 궁금하신가요?")
    	        },1000)
     	}        
     })
@@ -146,7 +164,6 @@ $(document).ready(function(){
 	$("#startWebSocket").click(function(e){
 		e.preventDefault();
 		btnBox.fadeOut(300)
-		ws.send("start/${user.name}/로그인")
 		$(".inputChatbot").css({"display":"none"})
         $(".inputWebSocket").css({"display":"block"})
 	})
@@ -165,14 +182,31 @@ $(document).ready(function(){
     	}
 	})
 	
-	$('#webSocketSend').click(function() { 
-	    var $msg = $("#webSocketInput");
-	    // 보낼 수 있는 데이터는 String, Blob, ArrayBuffer 입니다. 
-	    // 웹소켓 서버에 데이터 전송하기
-	    ws.send("message/${user.name}-admin/" + $msg.val());
-	    textBox.append('<div class="chatCustomer"><dl><dt><img src="/marryus/resources/img/chat_cut.png" alt="" class="img-responsive center-block"></dt><dd>'+ $msg.val()+'</dd></dl></div>')
-	    textBox.animate({scrollTop: textBox.prop("scrollHeight")}, 500);
-	    $msg.val(""); 
+	
+	 $("#webSocketInput").keydown(function (key) {
+         if (key.keyCode == 13) {
+            $("#sendMessage").click();
+         }
+      });
+	
+	$('#webSocketSend').click(function() {
+		 var $msg = $("#webSocketInput");
+		 console.log($msg.val())
+		if( $msg.val() != "") {
+            message={};
+            message.message = $msg.val();
+            message.type = "message";
+            message.to = "admin";
+            if(user!=""){
+            	message.from = "${user.email}";
+            }
+            ws.send(JSON.stringify(message));
+            textBox.append('<div class="chatCustomer"><dl><dt><img src="/marryus/resources/img/chat_cut.png" alt="" class="img-responsive center-block"></dt><dd>'+$msg.val()+'</dd></dl></div>')
+            inputBox.val("");
+            textBox.animate({scrollTop: textBox.prop("scrollHeight")}, 500);
+             
+            $msg.val("");
+        }
 	});
 	
 	/*

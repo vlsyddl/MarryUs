@@ -193,9 +193,10 @@ public class MainController {
 		//String 값 Date로 parse
 		String weddingDate=service.getWedDate(memNo);  
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-		Date date=sdf.parse(weddingDate);
-		
-		wdMap.put("wedDate", date);
+		if(weddingDate!=null) {			
+			Date date=sdf.parse(weddingDate);
+			wdMap.put("wedDate", date);
+		}
 		return wdMap;
 	}
 	

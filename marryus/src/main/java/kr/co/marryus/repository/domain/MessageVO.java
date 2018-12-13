@@ -10,6 +10,7 @@ public class MessageVO {
 	private String message;
 	private String type;
 	private String to;
+	private String from;
 	
 	public static MessageVO converMessage(String source) {
 	    MessageVO message = new MessageVO();

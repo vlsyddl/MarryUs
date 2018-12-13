@@ -652,35 +652,11 @@
 	<!--모달 끝-->
 	<!--사이드 바-->
 	<c:import url="/common/importSideBar.jsp" />
-	<div id="chatBot">
-		<h1 class="title">
-			<i class="fas fa-question"></i>
-		</h1>
-		<div class="btnClosed">
-			<a href="#"><i class="fas fa-times"></i></a>
-		</div>
-		<div class="textWrap">
-			<div class="textBox">
-				<div class="btnBox">
-					<a href="#">예</a>
-					<a href="#">아니오</a>
-				</div>
-			</div>
-          </div>
-          <div class="inputBox inputChatbot">
-              <textarea name="chatBotInput" style="resize: none;" id="chatBotInput" cols="30"  class="form-control"></textarea>
-              <button class="send">보내기</button>
-          </div>
-          <div class="inputBox inputWebSocket" style="display: none;">
-              <textarea name="webSocketInput" style="resize: none;" id="webSocketInput" cols="30"  class="form-control"></textarea>
-              <button class="send" id="webSocketSend">보내기</button>
-          </div>
-          
-      </div>
-    
+	
     <script>
-		
-        $(function(){
+		var user = "${user}";
+		console.log(user)
+		$(function(){
             new WOW().init();
 
             $('.bxslider').bxSlider({
@@ -780,8 +756,9 @@
 			}
  /**********************************************************************************
 	프로필 
-**********************************************************************************/ 
+**********************************************************************************/
  	$(document).ready(function(){
+ 		if(user!=""){
  		var no =  $("#no").val();
  		
  		// 생년월일 'yyyy.MM.dd로 바꿔주기'
@@ -798,7 +775,6 @@
  			url:"/marryus/main/proFileDetail.json",
  			data:"memNo="+no ,
  			type:"post"
- 			
  		})
  		.done(function(result){
  			console.log(result)
@@ -811,34 +787,37 @@
  			html2 += '<b>'+result.todoDone+'</b> <br>'
  			html2 += '<span>out of'+result.todoTotal+'</span>';
  			$("#profileTodo").html(html2)
- 			
- 			var html3="";
- 			html3 += '<b>'+result.likeCompany+'</b> <br>'
- 			html3 += '<span>I like that!</span>';
- 			$("#profileLikeCompany").html(html3)
- 			
- 			var html4="";
- 			html4 += '<b>spend : '+result.spendBudget+'</b> <br>'
- 			html4 += '<span>Total : '+result.totalBudget+'</span>';
- 			$("#profileBudget").html(html4)
- 			
- 		});
- 		
+	 			
+	 			var html3="";
+	 			html3 += '<b>'+result.likeCompany+'</b> <br>'
+	 			html3 += '<span>I like that!</span>';
+	 			$("#profileLikeCompany").html(html3)
+	 			
+	 			var html4="";
+	 			html4 += '<b>spend : '+result.spendBudget+'</b> <br>'
+	 			html4 += '<span>Total : '+result.totalBudget+'</span>';
+	 			$("#profileBudget").html(html4)
+	 			
+	 		});
+	 		
+ 		}
  	});
  	
  	//profile - 웨딩 데이 날짜 카운트 
  	$(document).ready(function(){
- 		 var no =  $("#memNo").val();
-  		
-  		$.ajax({
-  			url:"/marryus/main/proFileWeddingDate.json",
-  			data:{memNo:no },
-  			type:"post"
-  		})
-  		.done(function(result){
-  			var wd = moment(result.wedDate).format('YYYY-MM-DD');
-  		   $.fn.CountDownTimer(wd); 
-  		});
+ 		if(user !=""){ 			
+	 		 var no =  $("#memNo").val();
+	  		
+	  		$.ajax({
+	  			url:"/marryus/main/proFileWeddingDate.json",
+	  			data:{memNo:no },
+	  			type:"post"
+	  		})
+	  		.done(function(result){
+	  			var wd = moment(result.wedDate).format('YYYY-MM-DD');
+	  		   $.fn.CountDownTimer(wd); 
+	  		});
+ 		}
  	});
       
  	

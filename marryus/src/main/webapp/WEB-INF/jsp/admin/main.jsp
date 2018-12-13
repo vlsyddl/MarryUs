@@ -10,7 +10,7 @@
     <title>Marry Us</title>
     <c:import url="/common/importCss.jsp"/>
 	 <c:import url="/common/importJs.jsp"/>
-    <!--<c:import url="/common/importAdminChat.jsp"/>-->
+    <c:import url="/common/importAdminChat.jsp"/>
     <link rel="stylesheet" href="<c:url value="/resources/css/admin.css"/>">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
 </head>

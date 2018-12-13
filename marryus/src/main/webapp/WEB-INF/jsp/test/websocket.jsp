@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var = "user" scope = "session" value = "이승재"/>
+<%
+	response.addHeader("user", "${user}") ;
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,14 +19,15 @@
  
     $(document).ready(function(){
          
-        chatSock = new WebSocket("ws://192.168.0.88:8000/marryus/websocket.do");
-         
+        chatSock = new WebSocket("ws://192.168.0.88:8000/marryus/websocket.do?name=${user}");
+        
         chatSock.onopen = function() {
              
             message={};
             message.message = "반갑습니다.";
             message.type = "all";
             message.to = "all";
+            message.from = "${user}";
             chatSock.send(JSON.stringify(message));
         };
          
@@ -49,6 +54,7 @@
                 message.message = $("#message").val();
                 message.type = "all";
                 message.to = "all";
+                message.from = "${user}";
                  
                 var to = $("#to").val();
                 if ( to != "") {

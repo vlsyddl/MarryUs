@@ -45,15 +45,18 @@
     var adminBox = '<div class="chatAdmin"><dl><dt><img src="/marryus/resources/img/chat_adm.png" alt="" class="img-responsive center-block"></dt><dd></dd></dl></div>';
    	var btnBox = $("#chatBot .textWrap .textBox .btnBox")
    	var user = new Array();
-   	
+   	var admin = "${admin}"
   
    		
 $(function () {	
+	if(admin != "" ){   			
 	    ws = new WebSocket('ws://192.168.0.88:8000/marryus/websocket.do');
-		ws.onopen = function() {
-			ws.send("start/admin/로그인")
+		
+	    ws.onopen = function() {
 	   	    console.log('웹소켓 서버 접속 성공');
 	    };
+	    
+	}
 	    // 메세지 받기
 	    ws.onmessage = function(evt) {
 	    	
@@ -63,7 +66,7 @@ $(function () {
 	    	var userName = data.split(":")[0]
 	    	console.log(userName)
 	    	console.log(user.length)
-			
+	    	
 	    	if(user.length != 0){
 				for(var i = 0; i<user.length; i++){
 					if(user[i] != userName){
@@ -85,9 +88,11 @@ $(function () {
 				    		autoHide: false,
 				    		className: ['success'],
 				    	});
+						
 					}
+					createChatBox(evt);
 				}
-			}else{
+	    	}else{
 				user.push(userName)
 				
 				$.notify.addStyle('foo', {
@@ -106,8 +111,8 @@ $(function () {
 		    		autoHide: false,
 		    		className: ['success'],
 		    	});
-				createChatBox(evt)
-			}
+				createChatBox(evt);
+	    	}
 	    	
 	    	console.log(user)
 	    	$('.chatAdmin[data-href="'+userName+'"] .textBox').append('<div class="chatCustomer"><dl><dt><img src="/marryus/resources/img/chat_cut.png" alt="" class="img-responsive center-block"></dt><dd>'+evt.data+'</dd></dl></div>')
@@ -126,8 +131,8 @@ $(function () {
 	 							'</div>'+
 	 						'</div>'+
 	 						'<div class="inputBox inputWebSocket" >'+
-		 						'<textarea name="webSocketInput" style="resize: none;" id="webSocketInput" cols="30"  class="form-control"></textarea>'+
-		 						'<button class="send" id="webSocketSend" onclick="'+sendAdmin(userName)+'">보내기</button>'+
+		 						'<textarea name="webSocketInput" style="resize: none;"  cols="30"  class="form-control webSocketInput"></textarea>'+
+		 						'<button class="send webSocketSend" onclick="+sendAdmin('+userName+')">보내기</button>'+
 	 						'</div>'+
  						'</div>';
  			$("body").append(html);
