@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <script type="text/javascript" src="<c:url value="/resources/js/notify.js"/>"></script>
-<div class="chatAdmin">
+<!-- <div class="chatAdmin">
 
 <div class="btnClosed">
 	<a href="#"><i class="fas fa-times"></i></a>
@@ -19,7 +19,7 @@
         <button class="send" id="webSocketSend">보내기</button>
     </div>
     
-</div>
+</div> -->
 <style>
 	.notifyjs-foo-base {
   opacity: 0.85;
@@ -33,17 +33,12 @@
   width: 100%;
 }
 
-
 </style>
 <script type="text/javascript">
 
 
 	var ws = null;
     var loginId = null;
-    var textBox = $("#chatAdmin .textWrap .textBox");
-    var inputBox = $("#webSocketInput");
-    var adminBox = '<div class="chatAdmin"><dl><dt><img src="/marryus/resources/img/chat_adm.png" alt="" class="img-responsive center-block"></dt><dd></dd></dl></div>';
-   	var btnBox = $("#chatBot .textWrap .textBox .btnBox")
    	var user = new Array();
    	var admin = "${admin}"
   
@@ -68,30 +63,26 @@ $(function () {
 	    	console.log(user.length)
 	    	
 	    	if(user.length != 0){
-				for(var i = 0; i<user.length; i++){
-					if(user[i] != userName){
-						user.push(userName)
-						
-						$.notify.addStyle('foo', {
-					   	  html: 
-					   	    "<div>" +
-					   	      "<div class='clearfix'>" +
-					   	        "<div class='name' data-notify-html='title' data-href='"+userName+"'/>" +
-					   	      "</div>" +
-					   	    "</div>"
-					   	});
-						
-						$.notify({
-				    		title : data
-				    	}, {
-				    		style:"foo",
-				    		autoHide: false,
-				    		className: ['success'],
-				    	});
-						
-					}
+	    		if(user.indexOf(userName) == -1){
+	    			user.push(userName)				
 					createChatBox(evt);
-				}
+	    		}
+	    		$.notify.addStyle('foo', {
+				   	  html: 
+				   	    "<div>" +
+				   	      "<div class='clearfix'>" +
+				   	        "<div class='name' data-notify-html='title' data-href='"+userName+"'/>" +
+				   	      "</div>" +
+				   	    "</div>"
+				   	});
+					
+					$.notify({
+			    		title : data.split(":")[1]
+			    	}, {
+			    		style:"foo",
+			    		autoHide: false,
+			    		className: ['success'],
+			    	});		
 	    	}else{
 				user.push(userName)
 				
@@ -105,7 +96,7 @@ $(function () {
 			   	});
 				
 				$.notify({
-		    		title : data
+		    		title : data.split(":")[1]
 		    	}, {
 		    		style:"foo",
 		    		autoHide: false,
@@ -115,8 +106,8 @@ $(function () {
 	    	}
 	    	
 	    	console.log(user)
-	    	$('.chatAdmin[data-href="'+userName+'"] .textBox').append('<div class="chatCustomer"><dl><dt><img src="/marryus/resources/img/chat_cut.png" alt="" class="img-responsive center-block"></dt><dd>'+evt.data+'</dd></dl></div>')
-	    	textBox.animate({scrollTop: textBox.prop("scrollHeight")}, 500);
+	    	$('.chatAdmin[data-href="'+userName+'"] .textBox').append('<div class="chatCustomer"><dl><dt><img src="/marryus/resources/img/chat_cut.png" alt="" class="img-responsive center-block"></dt><dd>'+data.split(":")[1]+'</dd></dl></div>')
+	    	$('.chatAdmin[data-href="'+userName+'"] .textBox').animate({scrollTop: textBox.prop("scrollHeight")}, 500);
 	    };
 	    
 	    function createChatBox(evt){
@@ -132,7 +123,7 @@ $(function () {
 	 						'</div>'+
 	 						'<div class="inputBox inputWebSocket" >'+
 		 						'<textarea name="webSocketInput" style="resize: none;"  cols="30"  class="form-control webSocketInput"></textarea>'+
-		 						'<button class="send webSocketSend" onclick="+sendAdmin('+userName+')">보내기</button>'+
+		 						'<button class="send webSocketSend" onclick="sendAdmin(\''+userName+'\')">보내기</button>'+
 	 						'</div>'+
  						'</div>';
  			$("body").append(html);
@@ -151,13 +142,15 @@ $(function () {
 	    };
 	    
 	});
-	$(document).on('click', '.notifyjs-foo-base .no', function() {
+	$(document).on('click', '.notifyjs-foo-base .name', function() {
 	  //programmatically trigger propogating hide event
 	  console.log("!!!!")
+	  var target = $(this).data("href")
+	  console.log(target)
+	  $('.chatAdmin').animate({"right":"-100%"},300) 
+	  $('.chatAdmin[data-href="'+target+'"]').animate({"right":"100px"},300) 
 	});
-	$("#webSocketSend").click(function(){
-		sendAdmin();
-	})
+	
 $(".btnClosed").click(function(e){
     e.preventDefault();
      sendCustom("실시간 상담 을 종료합니다.")
@@ -166,19 +159,23 @@ $(".btnClosed").click(function(e){
      textBox.html("");
     },1500)
 })
-function sendCustomer(){
-        var msg = inputBox.val();
-         textBox.append('<div class="chatCustomer"><dl><dt><img src="/marryus/resources/img/chat_cut.png" alt="" class="img-responsive center-block"></dt><dd>'+msg+'</dd></dl></div>')
-         inputBox.val("");
-         textBox.animate({scrollTop: textBox.prop("scrollHeight")}, 500);
-         reciveBot(msg)
-    }
+  
  function sendAdmin(userName){
-	 var msg = inputBox.val();
-	 textBox.append('<div class="chatAdmin"><dl><dt><img src="/marryus/resources/img/chat_adm.png" alt="" class="img-responsive center-block"></dt><dd>'+msg+'</dd></dl></div>')
-	    ws.send("message/admin-"+userName+"/" +msg);
-  		inputBox.val("");
-     textBox.animate({scrollTop: textBox.prop("scrollHeight")}, 500);
-      
+	 var $msg = $('.chatAdmin[data-href="'+userName+'"] .webSocketInput') 
+	 var textBox = $('.chatAdmin[data-href="'+userName+'"] .textBox');
+	 if( $msg.val() != "") {
+	        message={};
+	        message.message = $msg.val();
+	        message.type = "message";
+	        message.to = userName;
+	        message.from = "admin";
+	        ws.send(JSON.stringify(message));
+	        textBox.append('<div class="chatAdm"><dl><dt><img src="/marryus/resources/img/chat_cut.png" alt="" class="img-responsive center-block"></dt><dd>'+$msg.val()+'</dd></dl></div>')
+	        textBox.animate({scrollTop: textBox.prop("scrollHeight")}, 500);
+	        $msg.val("");
+	    }      
     }
+ 
+ 
+ 
 </script>

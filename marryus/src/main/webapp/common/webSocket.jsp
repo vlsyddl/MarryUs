@@ -56,26 +56,24 @@ $(document).ready(function(){
 		    ws.onopen = function() {
 		   	    console.log('웹소켓 서버 접속 성공');
 		    };
+		 // 메세지 받기
+		    ws.onmessage = function(evt) {
+		    	textBox.append('<div class="chatAdmin"><dl><dt><img src="/marryus/resources/img/chat_adm.png" alt="" class="img-responsive center-block"></dt><dd>'+evt.data.split(":")[1]+'</dd></dl></div>')
+		    	textBox.animate({scrollTop: textBox.prop("scrollHeight")}, 500);
+		    };
 		    
+		    ws.onerror = function(evt) {
+		    	textBox.append('<div class="chatAdmin"><dl><dt><img src="/marryus/resources/img/chat_adm.png" alt="" class="img-responsive center-block"></dt><dd>웹소켓 에러 발생 : ' + evt.data+'</dd></dl></div>')
+		    	textBox.animate({scrollTop: textBox.prop("scrollHeight")}, 500);
+		    	console.log(evt)
+		    };
+		    
+		    ws.onclose = function(evt) {
+		    	textBox.append('<div class="chatAdmin"><dl><dt><img src="/marryus/resources/img/chat_adm.png" alt="" class="img-responsive center-block"></dt><dd>웹소켓 연결이 종료됨.</dd></dl></div>')
+		    	textBox.animate({scrollTop: textBox.prop("scrollHeight")}, 500);
+		    	console.log(evt)
+		    };
    		}
-	    // 메세지 받기
-	    ws.onmessage = function(evt) {
-	    	textBox.append('<div class="chatAdmin"><dl><dt><img src="/marryus/resources/img/chat_adm.png" alt="" class="img-responsive center-block"></dt><dd>'+evt.data+'</dd></dl></div>')
-	    	textBox.animate({scrollTop: textBox.prop("scrollHeight")}, 500);
-	    };
-	    
-	    ws.onerror = function(evt) {
-	    	textBox.append('<div class="chatAdmin"><dl><dt><img src="/marryus/resources/img/chat_adm.png" alt="" class="img-responsive center-block"></dt><dd>웹소켓 에러 발생 : ' + evt.data+'</dd></dl></div>')
-	    	textBox.animate({scrollTop: textBox.prop("scrollHeight")}, 500);
-	    	console.log(evt)
-	    };
-	    
-	    ws.onclose = function(evt) {
-	    	textBox.append('<div class="chatAdmin"><dl><dt><img src="/marryus/resources/img/chat_adm.png" alt="" class="img-responsive center-block"></dt><dd>웹소켓 연결이 종료됨.</dd></dl></div>')
-	    	textBox.animate({scrollTop: textBox.prop("scrollHeight")}, 500);
-	    	console.log(evt)
-	    };
-	    
 	}); 
    	
     $("#chatBot .title").click(function(){
@@ -139,18 +137,30 @@ $(document).ready(function(){
         	 agreeWebsocket();
          },1000)
      }else if(msg.indexOf('스튜디오')!=-1||msg.indexOf('드레스')!=-1||msg.indexOf('메이크업')!=-1||msg.indexOf('메이크 업')!=-1||msg.indexOf('스드메')!=-1||msg.indexOf('스 드 메')!=-1||msg.indexOf('스,드,메')!=-1){
-         sendAdmin("스튜디오,메이크업,드레스에 관하여 궁금하신가요? </br> 담당자를 연결해 드릴게요. ")
+         sendAdmin("스튜디오,메이크업,드레스에 관하여 궁금하신가요? </br> 담당자를 연결해 드릴까요. ?")
+         setTimeout(function(){
+        	 agreeWebsocket();
+         },1000)
      }else if(msg.indexOf('허니문')!=-1||msg.indexOf('허니 문')!=-1||msg.indexOf('신혼여행')!=-1||msg.indexOf('신혼 여행')!=-1||msg.indexOf('여행지')!=-1){
-         sendAdmin("허니문,신혼여행에 관하여 궁금하신가요? </br> 담당자를 연결해 드릴께요")
+         sendAdmin("허니문,신혼여행에 관하여 궁금하신가요? </br> 담당자를 연결해 드릴까요?")
+         setTimeout(function(){
+        	 agreeWebsocket();
+         },1000)
      }else if(msg.indexOf('예물')!=-1||msg.indexOf('예단')!=-1){
-         sendAdmin("예물 예단에 관하여 궁금 하신가요? </br> 담당자를 연결해 드릴게요")
+         sendAdmin("예물 예단에 관하여 궁금 하신가요? </br> 담당자를 연결해 드릴까요 ?")
+         setTimeout(function(){
+        	 agreeWebsocket();
+         },1000)
      }else if(msg.indexOf('프로포즈')!=-1||msg.indexOf('케이터링')!=-1||msg.indexOf('이벤트')!=-1){
-         sendAdmin("프로포즈,케이터링,이벤트 등이 궁하신가요? </br> 담당자를 연경해 드릴게요")
+         sendAdmin("프로포즈,케이터링,이벤트 등이 궁하신가요? </br> 담당자를 연결해 드릴까요?")
+         setTimeout(function(){
+        	 agreeWebsocket();
+         },1000)
      }else if(msg.indexOf('추가서비스')!=-1||msg.indexOf('추가 서비스')!=-1||msg.indexOf('추가')!=-1||msg.indexOf('서비스')!=-1){
          sendAdmin("추가서비스에 관하여 궁금하신가요?","추가서비스는 프로포즈 케이터링 이벤트 축가등을 소개해드립니다","추가서비스 담당자를 연결해 드릴까요?")
      }else if(msg.indexOf('씨발')!=-1||msg.indexOf('시발')!=-1||msg.indexOf('ㅅㅂ')!=-1||msg.indexOf('ㅅ1발')!=-1||msg.indexOf('미친')!=-1||msg.indexOf('병신')!=-1||msg.indexOf('ㅄ')!=-1||msg.indexOf('개새끼')!=-1||msg.indexOf('개새')!=-1||msg.indexOf('ㄳㄲ')!=-1||msg.indexOf('ㄳㅋ')!=-1){
          sendAdmin("반사","욕하지마라","나도 욕한다?")
-         agreeWebsocket()
+ 
         
      }else{
          sendAdmin("무슨말인지 잘모르겠어요 ㅠㅠ","웨딩홀,스드메,예물,허니문,추가 서비스등 ","웨딩에 관련된 질문을 해주시면 ","답변해드릴게요")
@@ -164,6 +174,7 @@ $(document).ready(function(){
 	$("#startWebSocket").click(function(e){
 		e.preventDefault();
 		btnBox.fadeOut(300)
+		sendAdmin("담당자와 연결 되었습니다")
 		$(".inputChatbot").css({"display":"none"})
         $(".inputWebSocket").css({"display":"block"})
 	})
@@ -209,34 +220,6 @@ $(document).ready(function(){
         }
 	});
 	
-	/*
-	$(function () {
-	    ws = new WebSocket('ws://localhost:8000/marryus/websocket.do');
-		ws.onopen = function() {
-	   	    console.log('웹소켓 서버 접속 성공');
-	   	 	ws.send("user:TestUser")
-	    };
-	    // 메세지 받기
-	    ws.onmessage = function(evt) {
-	        $("div").prepend(evt.data + "<br>");
-	    };
-	    ws.onerror = function(evt) {
-	   	    $("div").prepend('웹소켓 에러 발생 : ' + evt.data)
-	    };
-	    ws.onclose = function() {
-	   	    $("div").prepend("웹소켓 연결이 종료됨.");
-	    };
-	    
-	});
-
-	$('#sendBtn').click(function() { 
-	    var $msg = $("#message");
-	    // 보낼 수 있는 데이터는 String, Blob, ArrayBuffer 입니다. 
-	    // 웹소켓 서버에 데이터 전송하기
-	    ws.send("user-admin:" + $msg.val());
-	    $msg.val(""); 
-	});
-   */
 })
 	
 </script>
