@@ -8,10 +8,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
+<!-- Remember to include jQuery :) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 <c:import url="/common/importCss.jsp"/>
 <c:import url="/common/importJs.jsp"/>
 <c:import url="/common/webSocket.jsp"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
 <style>
 @font-face {
   font-family: 'Lato';
@@ -32,9 +36,11 @@
   src: local('Lato Black'), local('Lato-Black'), url(https://fonts.gstatic.com/s/lato/v14/S6u9w4BMUTPHh50XSwiPHA.ttf) format('truetype');
 }
 
+
+
 .form {
   max-width: 520px;
-  background: #ffb5b5;
+  background: #ffb5b5a6;
   margin: 1em auto;
   padding-bottom: 1em;
   border-radius: 8px;
@@ -187,11 +193,18 @@ font-weight:bold;
 	margin-left: 25%;
     padding: 10px;
 }
+.modal  {
+max-width:700px;
+}
+
 </style>
 </head>
 <body>
 <c:import url="/common/importHeader.jsp" />
+
+
     <div class="container-form">
+
         <div class="form">
                 <p class="headLine">나만의 웨딩 Todo List</p>
                 <p class="subheadLine">원하는 카테고리를 선택해주세요.</p>  
@@ -243,7 +256,7 @@ font-weight:bold;
                           </div>
                   </li>
                     <li class="question" id="question4" style="display: none">
-                  		<p class="questionHead">신혼집, 혼수</p>
+                  		<p class="questionHead">신혼집</p>
                   		<div class="btnConainer">
                     	<label class="choice">
                             <input type="checkbox" name="todoCategory" value="h" onclick="next4()" />
@@ -268,6 +281,32 @@ font-weight:bold;
                           </label>
                           </div>
                   </li>
+                  <li class="question" id="question6" style="display: none">
+                   		<p class="questionHead">허니문</p>
+                   		<div class="btnConainer">
+                        <label class="choice">
+                            <input type="checkbox" name="todoCategory" value="hm" onclick="next6()" />
+                              <span>필요없어요</span>
+                          </label>
+                          <label class="choice">
+                            <input type="checkbox" name="Category" onclick="next6()" />
+                              <span>완전! 필요해요!</span>
+                          </label>
+                          </div>
+                  </li>
+                  <li class="question" id="question7" style="display: none">
+                   		<p class="questionHead">혼수</p>
+                   		<div class="btnConainer">
+                        <label class="choice">
+                            <input type="checkbox" name="todoCategory" value="ha" onclick="next7()" />
+                              <span>필요없어요</span>
+                          </label>
+                          <label class="choice">
+                            <input type="checkbox" name="Category" onclick="next7()" />
+                              <span>완전! 필요해요!</span>
+                          </label>
+                          </div>
+                  </li>
                 </ul>
                 <input type="hidden" id="memNo" name="memNo" value="${user.no }">
                 </form>
@@ -276,6 +315,17 @@ font-weight:bold;
                  </div>
             </div>
         </div>
+       <div id="motaltest">
+       		<h1 style="font-size:50px; font-weight:bold;">Marry Us♥ Todo List 만들기</h1>
+       		<div style="font-size:20px; font-weight:bold;">
+       			안녕하세요 :D<br>
+       			Marry Us TodoList 작성에 도움을 주는 페이지 입니다 ^^<br>
+       			여기서는 <span>'나만의 웨딩 TodoList'</span> 입니다.<br>
+       			원하시는 카테고리를 선택하면 저희가 웨딩 TodoList를 만들어 드려요~<br>
+       			한번 시작해볼까요!?<br>
+       			
+       		</div>
+       </div>
 <c:import url="/common/importFooter.jsp" />
 <script>
 /*
@@ -295,6 +345,12 @@ function next4(){
     $("#question5").css("display", "block");
 }
 function next5(){
+    $("#question6").css("display", "block");
+}
+function next6(){
+    $("#question7").css("display", "block");
+}
+function next7(){
     $("#sumitBtn").css("display", "block");
 }
 function startSelectList(){
@@ -330,7 +386,28 @@ var memNo= $("#memNo").val();
    
 }
 
+$(document).ready(function() {
 
+	$('.simple-ajax-popup-align-top').magnificPopup({
+		type: 'ajax',
+		alignTop: true,
+		overflowY: 'scroll' // as we know that popup content is tall we set scroll overflow by default to avoid jump
+	});
+
+	$('.simple-ajax-popup').magnificPopup({
+		type: 'ajax'
+	});
+	
+});
+
+$("#motaltest").modal({
+	  fadeDuration: 100,
+	  showClose: false
+	});
+$("#custom-close").modal({
+	  closeClass: 'icon-remove',
+	  closeText: 'x'
+	  });
 </script>
 </body>
 </html>

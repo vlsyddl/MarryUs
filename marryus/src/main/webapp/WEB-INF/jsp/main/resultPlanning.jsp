@@ -36,7 +36,7 @@ body {
   color: #333333;
   padding: 2rem;
 }
-h1 {
+.titleHead {
   font-family: 'Crete Round', serif;
   margin: 0;
   font-size: 4rem;
@@ -282,7 +282,7 @@ table td {
 	                         <button class="printBtn">Print</button>
                       <div class="header">
                       	
-                        <h1>
+                        <h1 class="titleHead">
                           Your To do List
                         </h1>
                       </div>
