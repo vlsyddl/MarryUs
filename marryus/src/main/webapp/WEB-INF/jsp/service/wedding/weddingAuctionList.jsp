@@ -12,6 +12,7 @@
     
 <script type="text/javascript" src="/marryus/resources/se2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript" src="/marryus/resources/se2/photo_uploader/plugin/hp_SE2M_AttachQuickPhoto.js" charset="utf-8"></script>
+<script src="https://unpkg.com/sweetalert2@latest/dist/sweetalert2.all.js"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dc6291b36d6e91a7fc6b30e92a9171d3&libraries=services"></script>
     <c:import url="/common/importCss.jsp"/>
 	 <c:import url="/common/importJs.jsp"/>
@@ -44,7 +45,7 @@
                     <div class="tabContents">
                         <div class="tab2 on">
                         <!-- Button trigger modal -->
-						<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#insertModal">
+						<button type="button" name="wedBtn" class="btn btn-primary btn-lg"  data-toggle="modal" data-target="#insertModal">
 						  역경매 신청하기
 						</button>
 						
@@ -53,15 +54,15 @@
 						  <div class="modal-dialog">
 						    <div class="modal-content">
 						      <div class="modal-header">
-						        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						        <button type="button"  class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						        <h4 class="modal-title" id="myModalLabel">웨딩홀 역경매 신청서</h4>
 						      </div>
-						      <form action="write.do"  method="post" name="wedAuctionForm" onsubmit="return doAction1()" enctype="multipart/form-data">
+						      <form action="write.do"  method="post" name="wedAuctionForm" onsubmit="return formCheck()" enctype="multipart/form-data">
 							      <div class="modal-body">
 								        
 								        <input type="hidden" name="memNo" value="${user.no}" />
 								        <input type="hidden" name="auctionType" value="v" />
-							        	<h2 class="hopeVenue">희망예식장소</h2>	
+							        	<h2 class="hopeVenue">희망예식장소(필수)</h2>	
 								        <div class="form-group">
 								        	<div class="col-md-6">
 								        		<select name="weddingVenue" id="sido1" class="form-control"></select>
@@ -80,16 +81,13 @@
 								        	</div>
 								        	
 								        </div>
-		                                <div class="btn-group" data-toggle="buttons" name="weddingTime">
-											  <label class="btn btn-primary active" >
-											    <input name="weddingTime" type="checkbox" value="열두시이전" /> 12시 이전 가능
-											  </label>
-											  <label  class="btn btn-primary">
-											    <input name="weddingTime" type="checkbox" value="12시부터2시" />12시 ~ 2시
-											  </label>
-											  <label  class="btn btn-primary">
-											    <input name="weddingTime" type="checkbox" value="2시이후" /> 2시 이후 시간대 가능
-											  </label>
+		                                <div class="btn-group" name="weddingTime">
+											  <select class="selectBox1 form-control" name="weddingTime" id="weddingTime" >
+				                                    <option value="선택하세요">선택하세요</option>
+				                                    <option value="열두시이전">열두시이전</option>
+				                                    <option value="12시부터2시">12시부터2시</option>
+				                                    <option value="2시이후">2시이후</option>
+	                            				</select>
 										</div>
 									  	<h2>예식 타입</h2>
 									  	<div class="form-group">
@@ -122,7 +120,7 @@
 									  	<h2>희망 예산</h2>
 									  	<div class="form-group">
 									  		<div class="col-md-4">
-									  			<input type="text" id="weddingBudget" name="weddingBudget" class="form-control"/>
+									  			<input type="text" id="weddingBudget" name="weddingBudget" class="form-control"/>만원
 									  		</div>
 									  	</div>
 							      </div>
@@ -144,7 +142,7 @@
                                 <th>역경매 시작일</th>
                                 <th>역경매 종료일</th>
                             </tr>
-                         <c:forEach var="a" items="${AuctionList}">
+                         <c:forEach var="a" items="${auctionList}">
                             <tr>
                                 <td>${a.auctionNo}</td>
                                 <td><a href="#" data-href="${a.auctionNo}" data-type="${a.auctionType}" data-no="${a.member.no}" class="col-md-4 weddingBox">${a.member.name}</a></td>
@@ -341,7 +339,7 @@ function loginCheck(type) {
 function tenderWrite(auctionNo){
 	console.log("tenderWrite...auctionNo ======= " + auctionNo);
 	$.ajax({
-		url: "<c:url value='/service/wedding/TenderwriteForm.do'/>",
+		url: "<c:url value='/service/wedding/tenderwriteForm.do'/>",
 		data: "auctionNo=" + auctionNo
 	}).done(function(data){
 		console.dir("dir ======= " + data)
@@ -423,10 +421,8 @@ $(function(){
 	  });
 	  });
 	  
-
-
-
-
+	  
+	 
 	function doAction(){   
 	    var f = document.auctionForm
 	    
@@ -447,14 +443,37 @@ $(function(){
 	        return false
 	    }
 	    
-	    alert("입찰을 하셨습니다.")
+	    Swal({
+	    	  position: 'center',
+	    	  type: 'success',
+	    	  title: '입찰이 완료되었습니다. 감사합니다.',
+	    	  showConfirmButton: false,
+	    	  timer: 11000
+	    	})
 	}
 	
-	function doAction1(){   
-	    var f = document.wedAuctionForm
+	
+	function formCheck(){   
+		
+	    var d = document.wedAuctionForm
 	    
-	    
-	    alert("역경매 신청을 완료했습니다.")
+	    if(d.weddingWish.value == "" ){
+	        alert("의견사항을 적어주세요")
+	        d.weddingWish.focus()
+	        return false
+	    }
+	    if(d.weddingBudget.value == "" ){
+	        alert("희망 예산을 적어주세요")
+	        d.weddingBudget.focus()
+	        return false
+	    }
+	    Swal({
+	    	  position: 'center',
+	    	  type: 'success',
+	    	  title: '역경매 신청이 완료되었습니다. 감사합니다.',
+	    	  showConfirmButton: false,
+	    	  timer: 11000
+	    	})
 	}
 
 
@@ -522,7 +541,7 @@ $(function(){
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 	        <h4 class="modal-title" id="myModalLabel"></h4>
 	      	</div>
-				<form action="Tenderwrite.do"  method="post" id="frm" name="auctionForm" onsubmit="return doAction()" enctype="multipart/form-data">
+				<form action="tenderwrite.do"  method="post" id="frm" name="auctionForm" onsubmit="return doAction()" enctype="multipart/form-data">
 				      <div class="modal-body">
 				      <div class="form-group">
 				      <input type="hidden" name="memNo" value="${user.no}" />

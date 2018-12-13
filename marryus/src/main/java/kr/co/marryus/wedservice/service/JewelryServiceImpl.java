@@ -12,6 +12,7 @@ import kr.co.marryus.repository.domain.CompanyLike;
 import kr.co.marryus.repository.domain.Jewelry;
 import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.Page;
+import kr.co.marryus.repository.domain.Search;
 import kr.co.marryus.repository.domain.Tender;
 import kr.co.marryus.repository.mapper.JewelryMapper;
 
@@ -99,6 +100,11 @@ public class JewelryServiceImpl implements JewelryService {
 	@Override
 	public void comLikeCancel(CompanyLike companyLike) {
 		mapper.deleteCompanyLike(companyLike);
+	}
+
+	@Override
+	public List<CompanyInfo> selectJewelrySearch(Search search) {
+		return mapper.selectJewelrySearch(search);
 	}
 
 }

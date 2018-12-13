@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import kr.co.marryus.repository.domain.Auction;
 import kr.co.marryus.repository.domain.CompanyFile;
 import kr.co.marryus.repository.domain.CompanyInfo;
+import kr.co.marryus.repository.domain.CompanyLike;
 import kr.co.marryus.repository.domain.Honeymoon;
 import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.Page;
@@ -107,6 +108,21 @@ public class HoneymoonServiceImpl implements HoneymoonService{
 	@Override
 	public Member loginCheck(CompanyInfo companyInfo) {
 		return mapper.selectLoginCheck(companyInfo);
+	}
+	
+	@Override
+	public int comLikeCheck(CompanyLike companyLike) {
+		return mapper.selectCompanyLike(companyLike);
+	}
+
+	@Override
+	public void comLike(CompanyLike companyLike) {
+		mapper.insertCompanyLike(companyLike);
+	}
+
+	@Override
+	public void comLikeCancel(CompanyLike companyLike) {
+		mapper.deleteCompanyLike(companyLike);
 	}
 
 

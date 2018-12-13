@@ -87,12 +87,12 @@
 <!-- 	</select> -->
 	
 	<select id="weddingList" parameterType="Page" resultMap="comInfoMap">
-		select  i.*, f.*
+		select  f.*, i.*
 		 from mu_company_file f
 		inner join mu_company_info i
 		 on f.com_info_no = i.com_info_no
-		 where i.com_info_type = 'v'
-		 and f.com_file_repr='Y'
+		 where f.com_file_repr = 'y'
+		 and i.com_info_type='v'
 		 order by i.com_info_no desc
 		 limit #{begin}, 12
 		 
@@ -274,12 +274,6 @@
 	</select>
 	
 
-	<!-- 지도 마커추가 -->
-	<select id="kakaoMap" parameterType="CompanyInfo" resultMap="comInfoMap">
-		select com_info_addr, com_info_name
-		from mu_company_info
-		where com_info_type = 'v';
-	</select>
 	
 	<select id="selectCompanyLike" parameterType="CompanyLike" resultType="int">
 		select count(*)

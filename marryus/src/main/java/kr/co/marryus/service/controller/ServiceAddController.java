@@ -15,6 +15,7 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import kr.co.marryus.repository.domain.Auction;
 import kr.co.marryus.repository.domain.CompanyFile;
 import kr.co.marryus.repository.domain.CompanyInfo;
+import kr.co.marryus.repository.domain.CompanyLike;
 import kr.co.marryus.repository.domain.Honeymoon;
 import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.Page;
@@ -56,7 +57,7 @@ public class ServiceAddController {
 	}
 	
 	
-	@RequestMapping("/AddcompanyDetail.do")
+	@RequestMapping("/addcompanyDetail.do")
 	@ResponseBody
 	public HashMap<String, Object> comDetail(int comInfoNo){
 		HashMap<String, Object> listMap = new HashMap();
@@ -75,10 +76,10 @@ public class ServiceAddController {
 		page.setPageNo(pageNo);
 
 		int count = service.addauctionCount();
-		int lastPage = (int) Math.ceil(count / 12d);
+		int lastPage = (int) Math.ceil(count / 10d);
 
 		// 페이지 블럭 시작
-		int pageSize = 12;
+		int pageSize = 10;
 		int currTab = (pageNo - 1) / pageSize + 1;
 		// 11번 부터 2페이지가 되는것
 		int beginPage = (currTab - 1) * pageSize + 1;
@@ -89,7 +90,7 @@ public class ServiceAddController {
 		model.addAttribute("lastPage", lastPage);
 		model.addAttribute("pageNo", pageNo);
 		System.out.println("List ============ " + service.addauctionList(page));
-		model.addAttribute("AuctionList", service.addauctionList(page));
+		model.addAttribute("auctionList", service.addauctionList(page));
 	}
 	
 	
@@ -128,7 +129,7 @@ public class ServiceAddController {
 	
 	
 	//입찰서 등록
-		@RequestMapping("/TenderwriteForm.do")
+		@RequestMapping("/tenderwriteForm.do")
 		@ResponseBody
 		public Auction TenderwriteForm(int auctionNo) {
 			
@@ -145,7 +146,7 @@ public class ServiceAddController {
 			return service.selectCominfo(memNo);
 		}
 		
-		@RequestMapping("/Tenderwrite.do")
+		@RequestMapping("/tenderwrite.do")
 		public String Tenderwrite(Tender tender) {
 			System.out.println(tender);
 			service.insertTender(tender);
@@ -169,6 +170,26 @@ public class ServiceAddController {
 		}
 		
 	
+		
+		//추천업체
+		@RequestMapping("/comLikeCheck.json")
+		@ResponseBody
+		public int comLikeCheck(CompanyLike companyLike) {
+			return service.comLikeCheck(companyLike);
+		}
+		
+		@RequestMapping("/comLike.json")
+		@ResponseBody
+		public void comLike(CompanyLike companyLike) {
+			service.comLike(companyLike);
+		}
+		
+		@RequestMapping("/comLikeCancel.json")
+		@ResponseBody
+		public void comLikeCancel(CompanyLike companyLike) {
+			service.comLikeCancel(companyLike);
+		}
+		
 	
 	
 	

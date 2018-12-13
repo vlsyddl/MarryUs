@@ -56,7 +56,7 @@ public class ServiceController {
 		model.addAttribute("lastPage", lastPage);
 		model.addAttribute("pageNo", pageNo);
 		// System.out.println(service.listNotice(page).size());
-		model.addAttribute("weddinigList", service.WeddingList(page));
+		model.addAttribute("weddingList", service.WeddingList(page));
 //		System.out.println(service.WeddingList(page));
 	}
 	
@@ -81,7 +81,7 @@ public class ServiceController {
 		model.addAttribute("lastPage", lastPage);
 		model.addAttribute("pageNo", pageNo);
 		System.out.println("List ============ " + service.auctionList(page));
-		model.addAttribute("AuctionList", service.auctionList(page));
+		model.addAttribute("auctionList", service.auctionList(page));
 	}
 	
 	
@@ -180,7 +180,7 @@ public class ServiceController {
 	}
 	
 	//입찰서 등록
-	@RequestMapping("/TenderwriteForm.do")
+	@RequestMapping("/tenderwriteForm.do")
 	@ResponseBody
 	public Auction TenderwriteForm(int auctionNo) {
 		
@@ -197,7 +197,7 @@ public class ServiceController {
 		return service.selectCompanyDetail(memNo);
 	}
 	
-	@RequestMapping("/Tenderwrite.do")
+	@RequestMapping("/tenderwrite.do")
 	public String Tenderwrite(Tender tender) {
 		System.out.println(tender);
 		service.insertTender(tender);

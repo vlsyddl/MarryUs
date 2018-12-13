@@ -5,6 +5,7 @@ import java.util.List;
 import kr.co.marryus.repository.domain.Auction;
 import kr.co.marryus.repository.domain.CompanyFile;
 import kr.co.marryus.repository.domain.CompanyInfo;
+import kr.co.marryus.repository.domain.CompanyLike;
 import kr.co.marryus.repository.domain.Honeymoon;
 import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.Page;
@@ -44,4 +45,11 @@ public interface HoneymoonService {
 	List<CompanyInfo> selectWeddingSearch(Search search);
 	
 	Member loginCheck(CompanyInfo companyInfo);
+	
+	
+	
+	//추천업체
+	int comLikeCheck(CompanyLike companyLike);
+	void comLike(CompanyLike companyLike);
+	void comLikeCancel(CompanyLike companyLike);
 }

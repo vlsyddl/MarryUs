@@ -37,19 +37,6 @@
 						   	<div class="map_wrap">
 						        <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
 						    
-						        <div id="menu_wrap" class="bg_white">
-						            <div class="option">
-						                <div>
-						                    <form onsubmit="searchPlaces(); return false;">
-						                       	 키워드 : <input type="text" value="강남구 예물" id="keyword" size="15"> 
-						                        <button type="submit">검색하기</button> 
-						                    </form>
-						                </div>
-						            </div>
-						            <hr>
-						            <ul id="placesList"></ul>
-						            <div id="pagination"></div>
-						        </div>
 						    </div>
                     	<div>
                     	<div class="row itemWrap">
@@ -106,15 +93,15 @@
 						 </nav>
 		                    
                           <div class="searchWrap">
-                          	 <form action="" id="search">
-                                <select class="form-control" id="searchType">
-                                    <option value="title" selected>제목</option>
-                                    <option value="writer">글쓴이</option>
-                                </select>
-                                <input type="text" class="form-control" id="searchContent" placeholder="Search for...">
-                                <span class="input-group-btn">
-                                  <button class="btn btn-default" type="button" id="searchBtn"><i class="fas fa-search"></i></button>
-                                </span>
+                          	 <form action="weddingsearch.do" id="searchForm">
+	                                <select class="form-control" name="type" id="searchType">
+	                                    <option value="1">홀 이름</option>
+	                                    <option value="2">홀지역</option>
+	                                </select>
+	                                <input type="text" class="form-control" name="content" id="searchContent" placeholder="Search for...">
+	                                <span class="input-group-btn">
+	                                  <button class="btn btn-default" type="button" id="searchBtn"><i class="fas fa-search"></i></button>
+	                                </span>
                                </form>
                           </div>
                         </div>
@@ -132,6 +119,81 @@
 var comLikeCnt;
 var userNo = "${user.no}";
 
+
+
+
+
+$("#searchBtn").click(function () {
+	 if ($("#searchContent").val() == "") {
+		 alert("검색어를 입력해주세요.");
+		 return false;
+	 }
+	 var serialize = $("#searchForm").serialize() 
+	 console.log("시리얼라이지====" + serialize)
+	 $.ajax({
+		url : "<c:url value='/service/jewelry/jewelrysearch.do' />",
+		method : "POST",
+		data : $("#searchForm").serialize(),
+		cache : false
+	 }).done (function (data) {
+		 $(function(){
+				$(".itemBox").click(function(e){
+					  e.preventDefault();
+					  detail($(this).data("href"))
+				      $('#detailModal').modal('show')
+				      var bx;
+					  $('#detailModal').on('shown.bs.modal', function () {
+					    if(bx === undefined){
+					      bx= slider = $('.slideBox ul').bxSlider({
+					  	    mode: 'fade',
+						    captions: true
+						});
+					    } else {
+					      bx.reloadSlider(); 
+					    }
+					  });
+				    
+				  });
+
+			});
+		 console.log(data)
+		 var html = "";
+		for(var w of data){
+			html+= '<div class="col-md-4 itemBox" data-href="'+w.comInfoNo+'">'
+        	html+='<div class="item">'
+           html+='<div class="imgBox">'
+           html+= '<a href="#"><img src="/marryus/img/comProfile/'+w.comFileName+'" alt="" class="img-responsive center-block" onError="javascript:this.src=\'/marryus/resources/img/sorry.png\'"/></a>'
+           html+='</div>'
+           html+='<div class="textBox">'
+           html+='<h5><a href="#">'+w.comInfoName+'</a></h5>'
+           html+='<p>'
+           html+=' '+w.comInfoAddr+' <br/>'
+           html+='  '+w.comInfoAddrDetail+' '
+           html+='</p>'
+           html+='</div>'
+           html+='<div class="infoBox">'
+           html+='<ul>'
+           html+='</ul>'
+           html+='</div>'
+        	html+='</div>'
+        	html+='</div>'
+        		
+		}
+		$(".itemWrap").html(html);
+		
+	 });
+});
+
+
+
+
+
+
+
+
+
+
+
 var options = {
         'speed' : 500,				 		//스피드
         'initTop' : 300, 					//기본top위치
@@ -140,222 +202,55 @@ var options = {
     }
     $('#sideBar').Floater(options);
 
-//마커를 담을 배열입니다
-var markers = [];
+var array = new Array();
 
-var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-    mapOption = {
-        center: new daum.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-        level: 3 // 지도의 확대 레벨
-    };  
+<c:forEach var="c" items="${weddinigList}" varStatus="status">
+	array["${status.index}"] = "${c.comInfoAddr}"
+</c:forEach>
 
-// 지도를 생성합니다    
+console.log(array)
+
+
+
+
+var mapContainer = document.getElementById('map');
+var mapOption = {
+    center: new daum.maps.LatLng(37.450701, 126.570667),
+    level: 14
+};  
+
+
+var array = new Array();
+
+<c:forEach var="j" items="${jewelryCompanyList}" varStatus="status">
+	array["${status.index}"] = "${j.comInfoAddr}" + "${j.comInfoName}"
+</c:forEach>
+
+console.log(array)
+
+
+
 var map = new daum.maps.Map(mapContainer, mapOption); 
+var geocoder = new daum.maps.services.Geocoder();
+var listData = array
+listData.forEach(function(addr, index) {
+    geocoder.addressSearch(addr, function(result, status) {
+        if (status === daum.maps.services.Status.OK) {
+            var coords = new daum.maps.LatLng(result[0].y, result[0].x);
 
-// 장소 검색 객체를 생성합니다
-var ps = new daum.maps.services.Places();  
-
-// 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
-var infowindow = new daum.maps.InfoWindow({zIndex:1});
-
-// 키워드로 장소를 검색합니다
-searchPlaces();
-
-// 키워드 검색을 요청하는 함수입니다
-function searchPlaces() {
-
-    var keyword = document.getElementById('keyword').value;
-
-    if (!keyword.replace(/^\s+|\s+$/g, '')) {
-        alert('키워드를 입력해주세요!');
-        return false;
-    }
-
-    // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
-    ps.keywordSearch( keyword, placesSearchCB); 
-}
-
-// 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
-function placesSearchCB(data, status, pagination) {
-    if (status === daum.maps.services.Status.OK) {
-
-        // 정상적으로 검색이 완료됐으면
-        // 검색 목록과 마커를 표출합니다
-        displayPlaces(data);
-
-        // 페이지 번호를 표출합니다
-        displayPagination(pagination);
-
-    } else if (status === daum.maps.services.Status.ZERO_RESULT) {
-
-        alert('검색 결과가 존재하지 않습니다.');
-        return;
-
-    } else if (status === daum.maps.services.Status.ERROR) {
-
-        alert('검색 결과 중 오류가 발생했습니다.');
-        return;
-
-    }
-}
-
-// 검색 결과 목록과 마커를 표출하는 함수입니다
-function displayPlaces(places) {
-
-    var listEl = document.getElementById('placesList'), 
-    menuEl = document.getElementById('menu_wrap'),
-    fragment = document.createDocumentFragment(), 
-    bounds = new daum.maps.LatLngBounds(), 
-    listStr = '';
-    
-    // 검색 결과 목록에 추가된 항목들을 제거합니다
-    removeAllChildNods(listEl);
-
-    // 지도에 표시되고 있는 마커를 제거합니다
-    removeMarker();
-    
-    for ( var i=0; i<places.length; i++ ) {
-
-        // 마커를 생성하고 지도에 표시합니다
-        var placePosition = new daum.maps.LatLng(places[i].y, places[i].x),
-            marker = addMarker(placePosition, i), 
-            itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
-
-        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-        // LatLngBounds 객체에 좌표를 추가합니다
-        bounds.extend(placePosition);
-
-        // 마커와 검색결과 항목에 mouseover 했을때
-        // 해당 장소에 인포윈도우에 장소명을 표시합니다
-        // mouseout 했을 때는 인포윈도우를 닫습니다
-        (function(marker, title) {
-            daum.maps.event.addListener(marker, 'mouseover', function() {
-                displayInfowindow(marker, title);
+            var marker = new daum.maps.Marker({
+                map: map,
+                position: coords
             });
-
-            daum.maps.event.addListener(marker, 'mouseout', function() {
-                infowindow.close();
+            var infowindow = new daum.maps.InfoWindow({
+                content: '<div style="width:150px;text-align:center;padding:6px 0;">' + listData[index] + '</div>',
+                disableAutoPan: true
             });
-
-            itemEl.onmouseover =  function () {
-                displayInfowindow(marker, title);
-            };
-
-            itemEl.onmouseout =  function () {
-                infowindow.close();
-            };
-        })(marker, places[i].place_name);
-
-        fragment.appendChild(itemEl);
-    }
-
-    // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
-    listEl.appendChild(fragment);
-    menuEl.scrollTop = 0;
-
-    // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-    map.setBounds(bounds);
-}
-
-// 검색결과 항목을 Element로 반환하는 함수입니다
-function getListItem(index, places) {
-
-    var el = document.createElement('li'),
-    itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
-                '<div class="info">' +
-                '   <h5>' + places.place_name + '</h5>';
-
-    if (places.road_address_name) {
-        itemStr += '    <span>' + places.road_address_name + '</span>' +
-                    '   <span class="jibun gray">' +  places.address_name  + '</span>';
-    } else {
-        itemStr += '    <span>' +  places.address_name  + '</span>'; 
-    }
-                 
-      itemStr += '  <span class="tel">' + places.phone  + '</span>' +
-                '</div>';           
-
-    el.innerHTML = itemStr;
-    el.className = 'item';
-
-    return el;
-}
-
-// 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
-function addMarker(position, idx, title) {
-    var imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
-        imageSize = new daum.maps.Size(36, 37),  // 마커 이미지의 크기
-        imgOptions =  {
-            spriteSize : new daum.maps.Size(36, 691), // 스프라이트 이미지의 크기
-            spriteOrigin : new daum.maps.Point(0, (idx*46)+10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
-            offset: new daum.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
-        },
-        markerImage = new daum.maps.MarkerImage(imageSrc, imageSize, imgOptions),
-            marker = new daum.maps.Marker({
-            position: position, // 마커의 위치
-            image: markerImage 
-        });
-
-    marker.setMap(map); // 지도 위에 마커를 표출합니다
-    markers.push(marker);  // 배열에 생성된 마커를 추가합니다
-
-    return marker;
-}
-
-// 지도 위에 표시되고 있는 마커를 모두 제거합니다
-function removeMarker() {
-    for ( var i = 0; i < markers.length; i++ ) {
-        markers[i].setMap(null);
-    }   
-    markers = [];
-}
-
-// 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
-function displayPagination(pagination) {
-    var paginationEl = document.getElementById('pagination'),
-        fragment = document.createDocumentFragment(),
-        i; 
-
-    // 기존에 추가된 페이지번호를 삭제합니다
-    while (paginationEl.hasChildNodes()) {
-        paginationEl.removeChild (paginationEl.lastChild);
-    }
-
-    for (i=1; i<=pagination.last; i++) {
-        var el = document.createElement('a');
-        el.href = "#";
-        el.innerHTML = i;
-
-        if (i===pagination.current) {
-            el.className = 'on';
-        } else {
-            el.onclick = (function(i) {
-                return function() {
-                    pagination.gotoPage(i);
-                }
-            })(i);
-        }
-
-        fragment.appendChild(el);
-    }
-    paginationEl.appendChild(fragment);
-}
-
-// 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
-// 인포윈도우에 장소명을 표시합니다
-function displayInfowindow(marker, title) {
-    var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
-
-    infowindow.setContent(content);
-    infowindow.open(map, marker);
-}
-
- // 검색결과 목록의 자식 Element를 제거하는 함수입니다
-function removeAllChildNods(el) {   
-    while (el.hasChildNodes()) {
-        el.removeChild (el.lastChild);
-    }
-}
+            infowindow.open(map, marker);
+        } 
+    });
+});
+	
 
   $(document).ready(function(){
 	  

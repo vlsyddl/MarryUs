@@ -9,6 +9,7 @@ import kr.co.marryus.repository.domain.CompanyLike;
 import kr.co.marryus.repository.domain.Jewelry;
 import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.Page;
+import kr.co.marryus.repository.domain.Search;
 import kr.co.marryus.repository.domain.Tender;
 
 public interface JewelryMapper {
@@ -28,4 +29,6 @@ public interface JewelryMapper {
 	int selectCompanyLike(CompanyLike companyLike);
 	void insertCompanyLike(CompanyLike companyLike);
 	void deleteCompanyLike(CompanyLike companyLike);
+	
+	List<CompanyInfo> selectJewelrySearch(Search search);
 }

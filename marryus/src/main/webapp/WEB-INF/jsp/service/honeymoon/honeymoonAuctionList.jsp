@@ -10,6 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Marry Us</title>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dc6291b36d6e91a7fc6b30e92a9171d3&libraries=services"></script>
+    <script src="https://unpkg.com/sweetalert2@latest/dist/sweetalert2.all.js"></script>
     <c:import url="/common/importCss.jsp"/>
 	 <c:import url="/common/importJs.jsp"/>
     <link rel="stylesheet" href="<c:url value="/resources/css/wedding.css"/>">
@@ -52,7 +53,7 @@
 						        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						        <h4 class="modal-title" id="myModalLabel">웨딩홀 역경매 신청서</h4>
 						      </div>
-						      	      <form action="Honeywrite.do"  method="post" enctype="multipart/form-data">
+						      	      <form action="Honeywrite.do"  method="post" name="honeyAuctionForm" onsubmit="return formCheck()" enctype="multipart/form-data">
 							      <div class="modal-body">
 								        <input type="hidden" name="memNo" value="${user.no}" />
 								        <input type="hidden" name="auctionType" value="h" />
@@ -67,7 +68,7 @@
 		                                  </div>
 				                                                              기타의견사항: <textarea name="honeyHope" id="" class="wish" rows="3" cols="30"></textarea><br>
 				                            <div>
-				                                                             희망예산:<input type="text" name="honeyBudget">
+				                                                             희망예산:<input type="text" name="honeyBudget">만원
 				                            </div>                                 
 							      </div>
 							      <div class="modal-footer">
@@ -88,7 +89,7 @@
                                 <th>역경매 시작일</th>
                                 <th>역경매 종료일</th>
                             </tr>
-                          <c:forEach var="a" items="${AuctionList}">
+                          <c:forEach var="a" items="${auctionList}">
                             <tr>
                                 <td>${a.auctionNo}</td>
                                 <td><a href="#" data-href="${a.auctionNo}" data-type="${a.auctionType}" data-no="${a.member.no}" class="col-md-4 TravelBox">${a.member.name}</a></td>
@@ -277,7 +278,7 @@ function loginCheck(type) {
 function tenderWrite(auctionNo){
 	console.log("tenderWrite...auctionNo ======= " + auctionNo);
 	$.ajax({
-		url: "<c:url value='/service/honeymoon/TenderwriteForm.do'/>",
+		url: "<c:url value='/service/honeymoon/tenderwriteForm.do'/>",
 		data: "auctionNo=" + auctionNo
 	}).done(function(data){
 		console.dir("dir ======= " + data)
@@ -393,8 +394,50 @@ function doAction(){
         return false
     }
     
-    alert("입찰을 하셨습니다.")
+    Swal({
+  	  position: 'center',
+  	  type: 'success',
+  	  title: '입찰이 완료되었습니다. 감사합니다.',
+  	  showConfirmButton: false,
+  	  timer: 11000
+  	})
 }
+
+
+
+
+
+
+function formCheck(){   
+	
+    var h = document.honeyAuctionForm
+    if(h.honeyPlace.value == "" ){
+        alert("신혼여행지를 적어주세요")
+        h.honeyPlace.focus()
+        return false
+    }
+    if(h.honeyHope.value == "" ){
+        alert("희망사항을 입력해주세요")
+        h.honeyHope.focus()
+        return false
+    }
+    if(h.honeyBudget.value == "" ){
+        alert("희망예산을 입력해주세요")
+        h.honeyBudget.focus()
+        return false
+    }
+    Swal({
+  	  position: 'center',
+  	  type: 'success',
+  	  title: '역경매 신청이 완료되었습니다. 감사합니다.',
+  	  showConfirmButton: false,
+  	  timer: 11000
+  	})
+}
+
+
+
+
 
 
 
@@ -458,7 +501,7 @@ function doAction(){
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 	        <h4 class="modal-title" id="myModalLabel"></h4>
 	      	</div>
-				<form action="Tenderwrite.do"  method="post" name="auctionForm" onsubmit="return doAction()" enctype="multipart/form-data">
+				<form action="tenderwrite.do"  method="post" name="auctionForm" onsubmit="return doAction()" enctype="multipart/form-data">
 				      <div class="modal-body">
 				      <div class="form-group">
 				      <input type="hidden" name="memNo" value="${user.no}" />

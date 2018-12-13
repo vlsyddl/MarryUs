@@ -23,6 +23,7 @@ import kr.co.marryus.repository.domain.CompanyLike;
 import kr.co.marryus.repository.domain.Jewelry;
 import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.Page;
+import kr.co.marryus.repository.domain.Search;
 import kr.co.marryus.repository.domain.Tender;
 import kr.co.marryus.wedservice.service.JewelryService;
 
@@ -157,6 +158,17 @@ public class JewelryController {
 	public void comLikeCancel(CompanyLike companyLike) {
 		service.comLikeCancel(companyLike);
 	}
+	
+	
+	//검색
+	@RequestMapping("/jewelrysearch.do")
+	@ResponseBody
+	public List<CompanyInfo> search( Search search){
+		System.out.println("search=====" + search);
+		List<CompanyInfo> scList = service.selectJewelrySearch(search);
+		return scList;
+	}
+	
 }
 
 

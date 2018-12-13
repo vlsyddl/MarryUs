@@ -270,6 +270,32 @@
 	</select>
 	
 	
+	
+	
+	<!-- 관심업체 추천 -->
+	<select id="selectCompanyLike" parameterType="CompanyLike" resultType="int">
+		select count(*)
+		  from mu_company_like
+		 where mem_no = #{memNo}
+		   and com_info_no = #{comInfoNo}
+	</select>
+	
+	<insert id="insertCompanyLike" parameterType="CompanyLike">
+		insert into mu_company_like(
+			mem_no, com_info_no
+		) values (
+			#{memNo}, #{comInfoNo}
+		)
+	</insert>
+	
+	<delete id="deleteCompanyLike" parameterType="CompanyLike">
+		delete from mu_company_like
+		 where mem_no = #{memNo}
+		   and com_info_no = #{comInfoNo}
+	</delete>
+	
+	
+	
 </mapper>
 
 

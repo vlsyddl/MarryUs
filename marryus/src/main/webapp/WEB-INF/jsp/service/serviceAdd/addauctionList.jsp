@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Marry Us</title>
+     <script src="https://unpkg.com/sweetalert2@latest/dist/sweetalert2.all.js"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dc6291b36d6e91a7fc6b30e92a9171d3&libraries=services"></script>
     <c:import url="/common/importCss.jsp"/>
 	 <c:import url="/common/importJs.jsp"/>
@@ -24,9 +25,9 @@
     <div id="wrap" class="wedding">
         <div class="sub_visual">
             <div class="titleBox">
-                <h2>웨딩홀</h2>
+                <h2>기타서비스</h2>
                 <p>
-                    웨딩홀 &middot; 스몰웨딩 &middot; 셀프웨딩
+                    축가 &middot; 케이터링 &middot; 프로포즈
                 </p>
             </div>
         </div>
@@ -52,7 +53,7 @@
 						        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						        <h4 class="modal-title" id="myModalLabel">웨딩홀 역경매 신청서</h4>
 						      </div>
-						      <form action="serviceAddwrite.do"  method="post" enctype="multipart/form-data">
+						      <form action="serviceAddwrite.do" name="addFormCheck" onsubmit="return formCheck()"  method="post" enctype="multipart/form-data">
 							      <div class="modal-body">
 								        
 								        <input type="hidden" name="memNo" value="${user.no}" />
@@ -88,7 +89,7 @@
                                 <th>역경매 시작일</th>
                                 <th>역경매 종료일</th>
                             </tr>
-                         <c:forEach var="a" items="${AuctionList}">
+                         <c:forEach var="a" items="${auctionList}">
                             <tr>
                                 <td>${a.auctionNo}</td>
                                 <td><a href="#" data-href="${a.auctionNo}" data-type="${a.auctionType}" data-no="${a.member.no}" class="col-md-4 serviceAddBox">${a.member.name}</a></td>
@@ -104,7 +105,7 @@
 		                    	<ul class="pagination">
 								<li><a
 								<c:choose>
-							      <c:when test="${beginPage!=1}">href="auctionList.do?pageNo=${beginPage-1}"</c:when>
+							      <c:when test="${beginPage!=1}">href="addauctionList.do?pageNo=${beginPage-1}"</c:when>
 							      <c:otherwise>href="#"</c:otherwise>
 							    </c:choose>
 								aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
@@ -117,7 +118,7 @@
 							    </c:when>
 								
 							    <c:otherwise>
-							     href="auctionList.do?pageNo=${i}"
+							     href="addauctionList.do?pageNo=${i}"
 							     </c:otherwise>
 							      </c:choose>>
 		
@@ -126,7 +127,7 @@
 		
 							<li><a
 								<c:choose>
-							      	<c:when test="${endPage != lastPage}"> href="weddingHall.do?pageNo=${endPage+1}" </c:when>
+							      	<c:when test="${endPage != lastPage}"> href="addauctionList.do?pageNo=${endPage+1}" </c:when>
 							    	<c:otherwise>href="#"</c:otherwise>
 						    	</c:choose>
 								aria-label="Next"> <span aria-hidden="true">&raquo;</span>
@@ -210,7 +211,7 @@ function loginCheck(type) {
 function tenderWrite(auctionNo){
 	console.log("tenderWrite...auctionNo ======= " + auctionNo);
 	$.ajax({
-		url: "<c:url value='/service/serviceAdd/TenderwriteForm.do'/>",
+		url: "<c:url value='/service/serviceAdd/tenderwriteForm.do'/>",
 		data: "auctionNo=" + auctionNo
 	}).done(function(data){
 		console.dir("dir ======= " + data)
@@ -314,8 +315,39 @@ $(function(){
 	        return false
 	    }
 	    
-	    alert("입찰을 하셨습니다.")
+	    Swal({
+		  	  position: 'center',
+		  	  type: 'success',
+		  	  title: '역경매 신청이 완료되었습니다. 감사합니다.',
+		  	  showConfirmButton: false,
+		  	  timer: 11000
+		  	})
 	}
+	
+	
+	
+	function formCheck(){   
+		
+	    var a = document.addFormCheck
+	    if(a.serviceTitle.value == "" ){
+	        alert("원하시는 추가 서비스를 적어주세요")
+	        a.serviceTitle.focus()
+	        return false
+	    }
+	    if(a.serviceDetail.value == "" ){
+	        alert("희망사항을 입력해주세요")
+	        a.serviceDetail.focus()
+	        return false
+	    }
+	    Swal({
+	  	  position: 'center',
+	  	  type: 'success',
+	  	  title: '역경매 신청이 완료되었습니다. 감사합니다.',
+	  	  showConfirmButton: false,
+	  	  timer: 11000
+	  	})
+	}
+
 </script>
 <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog  modal-lg">
@@ -398,7 +430,7 @@ $(function(){
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 	        <h4 class="modal-title" id="myModalLabel"></h4>
 	      	</div>
-				<form action="Tenderwrite.do"  method="post" id="frm" name="auctionForm" onsubmit="return doAction()" enctype="multipart/form-data">
+				<form action="tenderwrite.do"  method="post" id="frm" name="auctionForm" onsubmit="return doAction()" enctype="multipart/form-data">
 				      <div class="modal-body">
 				      <div class="form-group">
 				      <div class="mem">

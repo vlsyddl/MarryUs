@@ -28,7 +28,7 @@
     <div id="wrap" class="wedding">
         <div class="sub_visual">
             <div class="titleBox">
-                <h2>웨딩홀</h2>
+                 <h2>웨딩홀</h2>
                 <p>
                     웨딩홀 &middot; 스몰웨딩 &middot; 셀프웨딩
                 </p>
@@ -49,7 +49,7 @@
 						    </div>
                     	<div>
                     	<div class="row itemWrap">
-                        <c:forEach var="w" items="${weddinigList}">
+                        <c:forEach var="w" items="${weddingList}">
                                 <div class="col-md-4 itemBox" data-href="${w.comInfoNo}">
                                     <div class="item">
                                         <div class="imgBox">
@@ -65,10 +65,7 @@
                                     </div>
                                     </div>
                             </c:forEach>
-                           
-		                    
-                        </div>
-                         <nav>
+                            <nav>
 		                    	<div class="text-center">
 		                    	<ul class="pagination">
 								<li><a
@@ -81,8 +78,8 @@
 								<c:forEach var="i" begin="${beginPage}" end="${endPage}">
 									<li><a
 									<c:choose>
-							   		<c:when test='${requestScope["javax.servlet.forward.request_uri"].substring(20) eq "/category.do"}'>
-							    	href="<c:url value='category.do?pageNo=${i-1}&select=${result.select}&text=${result.text}' />"
+							   		<c:when test='${requestScope["javax.servlet.forward.request_uri"].substring(20) eq "/search.do"}'>
+							    	href="<c:url value='search.do?pageNo=${i-1}&type=${result.type}&content=${result.content}' />"
 							    </c:when>
 								
 							    <c:otherwise>
@@ -103,11 +100,14 @@
 							</ul>
 							</div>
 						 </nav>
-                          <div class="searchWrap">
+		                    
+                          
+                        </div>
+                        <div class="searchWrap">
                           	 <form action="weddingsearch.do" id="searchForm">
 	                                <select class="form-control" name="type" id="searchType">
 	                                    <option value="1">홀 이름</option>
-	                                    <option value="2">홀 지역</option>
+	                                    <option value="2">홀지역</option>
 	                                </select>
 	                                <input type="text" class="form-control" name="content" id="searchContent" placeholder="Search for...">
 	                                <span class="input-group-btn">
@@ -115,9 +115,13 @@
 	                                </span>
                                </form>
                           </div>
-
                   		</div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
     <c:import url="/common/importSideBar.jsp" />
     <c:import url="/common/importFooter.jsp" />
 
@@ -179,10 +183,8 @@ $("#searchBtn").click(function () {
             html+='</div>'
             html+='<div class="infoBox">'
             html+='<ul>'
-            html+='<li><span>별점</span> <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></li>'
             html+='</ul>'
             html+='</div>'
-            html+= '<a href="#" class="itemBtn">관심업체 등록</a>'
          	html+='</div>'
          	html+='</div>'
          		
@@ -202,7 +204,13 @@ var options = {
     $('#sideBar').Floater(options);
     
     
+var array = new Array();
 
+<c:forEach var="c" items="${weddinigList}" varStatus="status">
+	array["${status.index}"] = "${c.comInfoAddr}"
+</c:forEach>
+
+console.log(array)
 
 
 
@@ -213,17 +221,20 @@ var mapOption = {
     level: 14
 };  
 
+
+var array = new Array();
+
+<c:forEach var="c" items="${weddingList}" varStatus="status">
+	array["${status.index}"] = "${c.comInfoAddr}" + "${c.comInfoName}"
+</c:forEach>
+
+console.log(array)
+
+
+
 var map = new daum.maps.Map(mapContainer, mapOption); 
-
 var geocoder = new daum.maps.services.Geocoder();
-var listData = [
-    '서울특별시 송파구 오금로13길 8',
-    '서울특별시 송파구 올림픽로 25',
-    '서울특별시 광진구 동일로18길 80',
-    '서울특별시 종로구 지봉로 25',
-    '서울특별시 성북구 인촌로 73',
-];
-
+var listData = array
 listData.forEach(function(addr, index) {
     geocoder.addressSearch(addr, function(result, status) {
         if (status === daum.maps.services.Status.OK) {

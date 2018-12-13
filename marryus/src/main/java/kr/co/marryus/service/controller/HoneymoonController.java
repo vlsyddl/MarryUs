@@ -15,6 +15,7 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import kr.co.marryus.repository.domain.Auction;
 import kr.co.marryus.repository.domain.CompanyFile;
 import kr.co.marryus.repository.domain.CompanyInfo;
+import kr.co.marryus.repository.domain.CompanyLike;
 import kr.co.marryus.repository.domain.Honeymoon;
 import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.Page;
@@ -77,7 +78,7 @@ public class HoneymoonController {
 		model.addAttribute("endPage", endPage);
 		model.addAttribute("lastPage", lastPage);
 		model.addAttribute("pageNo", pageNo);
-		model.addAttribute("AuctionList", service.auctionList(page));
+		model.addAttribute("auctionList", service.auctionList(page));
 		model.addAttribute("count", service.selectAuctionCount());
 	}
 	
@@ -86,12 +87,12 @@ public class HoneymoonController {
 	
 	
 	
-	@RequestMapping("/HoneywriteForm.do")
+	@RequestMapping("/honeywriteForm.do")
 	public void writeForm() {
 		
 	}
 	// 역경매 신청
-	@RequestMapping("/Honeywrite.do")
+	@RequestMapping("/honeywrite.do")
 	public String write(@ModelAttribute Honeymoon honeymoon, @ModelAttribute Auction auction ) {
 		System.out.println(honeymoon);
 		System.out.println(auction);
@@ -105,7 +106,7 @@ public class HoneymoonController {
 	}
 	
 	
-	@RequestMapping("/SearchHoneymoon.json")
+	@RequestMapping("/searchHoneymoon.json")
 	@ResponseBody
 	public List<CompanyInfo> searchHoneymoon(@RequestParam(value = "pageNo", defaultValue = "1") int pageNo, Model model, Search search){
 		int count = service.selectHoneySearchCount(search);
@@ -151,7 +152,7 @@ public class HoneymoonController {
 	
 	
 	//입찰서 등록
-		@RequestMapping("/TenderwriteForm.do")
+		@RequestMapping("/tenderwriteForm.do")
 		@ResponseBody
 		public Auction TenderwriteForm(int auctionNo) {
 			
@@ -168,7 +169,7 @@ public class HoneymoonController {
 			return service.selectCompanyDetail(memNo);
 		}
 		
-		@RequestMapping("/Tenderwrite.do")
+		@RequestMapping("/tenderwrite.do")
 		public String Tenderwrite(Tender tender) {
 			System.out.println(tender);
 			service.insertTender(tender);
@@ -193,6 +194,25 @@ public class HoneymoonController {
 		}
 		
 		
+		
+		//추천업체
+		@RequestMapping("/comLikeCheck.json")
+		@ResponseBody
+		public int comLikeCheck(CompanyLike companyLike) {
+			return service.comLikeCheck(companyLike);
+		}
+		
+		@RequestMapping("/comLike.json")
+		@ResponseBody
+		public void comLike(CompanyLike companyLike) {
+			service.comLike(companyLike);
+		}
+		
+		@RequestMapping("/comLikeCancel.json")
+		@ResponseBody
+		public void comLikeCancel(CompanyLike companyLike) {
+			service.comLikeCancel(companyLike);
+		}
 	
 	
 	
