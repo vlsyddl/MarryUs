@@ -67,6 +67,13 @@ public interface MainMapper {
 	
 	//total Auction List
 	List<Auction> totalAuctionList();
-	
+	//
 	List<CompanyInfo> recVenue();
+	//count d day
+	List<Integer> countDday();
+	
+	List<CompanyInfo> recSDM();
+	List<CompanyInfo> recHoney();
+	List<CompanyInfo> recJewelry();
+	List<CompanyInfo> recEvent();
 }

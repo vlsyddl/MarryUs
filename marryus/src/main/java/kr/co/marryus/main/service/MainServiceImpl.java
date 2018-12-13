@@ -190,6 +190,38 @@ public class MainServiceImpl implements MainService{
 		// TODO Auto-generated method stub
 		return mapper.recVenue();
 	}
+	
+	/**
+	 * count d day
+	 */
+	@Override
+	public List<Integer> countDday() {
+		return mapper.countDday();
+	}
+
+	@Override
+	public List<CompanyInfo> recSDM() {
+		
+		return mapper.recSDM();
+	}
+
+	@Override
+	public List<CompanyInfo> recHoney() {
+		// TODO Auto-generated method stub
+		return mapper.recHoney();
+	}
+
+	@Override
+	public List<CompanyInfo> recJewelry() {
+		// TODO Auto-generated method stub
+		return mapper.recJewelry();
+	}
+
+	@Override
+	public List<CompanyInfo> recEvent() {
+		// TODO Auto-generated method stub
+		return mapper.recEvent();
+	}
 
 	
 }

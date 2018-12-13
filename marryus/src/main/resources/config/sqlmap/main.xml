@@ -16,6 +16,7 @@
 	<resultMap id="auctionMap" type="Auction">
 		<result property="auctionNo" column="auction_no" />
 		<result property="memNo" column="mem_no" />
+		<result property="dday" column="dday"/>
 		<result property="comNo" column="com_no" />
 		<result property="auctionType" column="auction_type" />
 		<result property="auctionStatus" column="auction_status" />
@@ -23,7 +24,13 @@
 		<result property="auctionEdate" column="auction_edate" />
 		<result property="memName" column="mem_name" />
 		<collection property="member" resultMap="memberMap" />
-		<collection property="weddingPlan" resultMap="weddingPlanMap"/>
+		<collection property="venue" resultMap="venueMap"/>
+		<collection property="studio" resultMap="studioMap"/>
+		<collection property="dress" resultMap="dressMap"/>
+		<collection property="makeup" resultMap="makeupMap"/>
+		<collection property="serviceAdd" resultMap="serviceAddMap"/>
+		<collection property="jewelry" resultMap="jewelryMap"/>
+		<collection property="honeyMoon" resultMap="honeymoonMap"/>
 	</resultMap>
 	<resultMap id="memberMap" type="Member">
 		<result column="mem_no" property="no" />
@@ -97,6 +104,65 @@
 		<result  property="comFilePath"   column="com_file_path"/>
 		<result  property="comFileRepr"   column="com_file_repr"/>
 	</resultMap>
+		<resultMap id="venueMap" type="Venue">
+		<result property="auctionNo" column="auction_no" />
+		<result property="weddingVenue" column="wedding_venue" />
+		<result property="weddingDate" column="wedding_date" />
+		<result property="weddingTime" column="wedding_time" />
+		<result property="weddingType" column="wedding_type" />
+		<result property="weddingVistor" column="wedding_vistor" />
+		<result property="weddingWish" column="wedding_wish" />
+		<result property="weddingBudget" column="wedding_budget" />
+	</resultMap>
+	<resultMap type="ServiceAdd" id="serviceAddMap">
+		<result column="auction_no" property="auctionNo" />
+		<result column="service_title" property="serviceTitle" />
+		<result column="service_detail" property="serviceDetail" />
+	</resultMap>
+	<resultMap type="Studio" id="studioMap">
+		<result column="auction_no" property="auctionNo" />
+		<result column="studio_place" property="studioPlace" />
+		<result column="studio_outdoor" property="studioOutdoor" />
+		<result column="studio_snapshot" property="studioSnapshot" />
+		<result column="studio_video" property="studioVideo" />
+		<result column="studio_pickup" property="studioPickup" />
+		<result column="studio_more" property="studioMore" />
+		<result column="studio_budget" property="studioBudget" />
+	</resultMap>
+	
+	<resultMap type="Dress" id="dressMap">
+		<result column="auction_no" property="auctionNo" />
+		<result column="dress_place" property="dressPlace" />
+		<result column="dress_price" property="dressPrice" />
+		<result column="dress_neckline" property="dressNeckline" />
+		<result column="dress_type" property="dressType" />
+		<result column="dress_more" property="dressMore" />
+	</resultMap>
+	
+	<resultMap type="Makeup" id="makeupMap">
+		<result column="auction_no" property="auctionNo" />
+		<result column="mku_place" property="mkuPlace" />
+		<result column="mku_makeup" property="mkuMakeup" />
+		<result column="mku_mom" property="mkuMom" />
+		<result column="mku_budget" property="mkuBudget" />
+		<result column="mku_workout" property="mkuWorkout" />
+		<result column="mku_more" property="mkuMore" />
+	</resultMap>
+		<resultMap type="Jewelry" id="jewelryMap">
+		<result column="auction_no" property="auctionNo" />
+		<result column="jewelry_type" property="jewelryType" />
+		<result column="jewelry_budget" property="jewelryBudget" />
+		<result column="jewelry_more" property="jewelryMore" />
+		<result column="jewelry_place" property="jewelryPlace" />
+	</resultMap>
+		<resultMap id="honeymoonMap" type="Honeymoon">
+		<result property="auctionNo" column="auction_no" />
+		<result property="honeyPlace" column="honey_place" />
+		<result property="honeyDate" column="honey_date" />
+		<result property="honeyHope" column="honey_hope" />
+		<result property="honeyBudget" column="honey_budget" />
+	</resultMap>
+	
 	<!-- 나만의 웨딩 데이터 입력 -->
 	<insert id="insertWedPlan" parameterType="WeddingPlan">
 		insert into
@@ -150,6 +216,7 @@
             on i.com_info_no = f.com_info_no
 		 where com_file_repr = 'y'
 	</select>
+	<!-- 웨딩홀 추천업체 -->
 	<select id="recVenue" resultMap="comInfoMap">
 			select * 
 		  from mu_company_info i
@@ -160,13 +227,71 @@
          order by mem_no desc
          limit 5;
 	</select>
+	<!-- 스드메 -->
+	<select id="recSDM" resultMap="comInfoMap">
+			select * 
+		  from mu_company_info i
+		 inner join mu_company_file f 
+            on i.com_info_no = f.com_info_no
+		 where com_file_repr = 'y'
+         and com_info_type in ('s', 'm', 'd')
+         order by mem_no desc
+         limit 5;
+	</select>
+	<!-- 허니문 -->
+	<select id="recHoney" resultMap="comInfoMap">
+			select * 
+		  from mu_company_info i
+		 inner join mu_company_file f 
+            on i.com_info_no = f.com_info_no
+		 where com_file_repr = 'y'
+         and com_info_type='h'
+         order by mem_no desc
+         limit 5;
+	</select>
+		<!-- 예물 -->
+	<select id="recJewelry" resultMap="comInfoMap">
+			select * 
+		  from mu_company_info i
+		 inner join mu_company_file f 
+            on i.com_info_no = f.com_info_no
+		 where com_file_repr = 'y'
+         and com_info_type='j'
+         order by mem_no desc
+         limit 5;
+	</select>
+		<!-- 추가 서비스  -->
+	<select id="recEvent" resultMap="comInfoMap">
+			select * 
+		  from mu_company_info i
+		 inner join mu_company_file f 
+            on i.com_info_no = f.com_info_no
+		 where com_file_repr = 'y'
+         and com_info_type='e'
+         order by mem_no desc
+         limit 5;
+	</select>
 	<!--  전체 리스트 부르기  -->
 	<select id="totalAuctionList" resultMap="auctionMap">
-		select *
-		  from mu_auction a left join mu_member m
+		select *, TIMESTAMPDIFF(DAY, now(), a.auction_edate) as dday
+		  from mu_auction a inner join mu_member m
 		    on a.mem_no = m.mem_no
 		  left join mu_wedding_plan w
 		    on a.mem_no = w.mem_no
+		  left join mu_venue v
+           on a.auction_no = v.auction_no
+		  left join mu_dress d
+           on a.auction_no = d.auction_no
+		  left join mu_studio s
+           on a.auction_no = s.auction_no
+		  left join mu_makeup u
+           on a.auction_no = u.auction_no
+          left join mu_honeymoon h
+           on a.auction_no = h.auction_no
+		  left join mu_jewelry j
+           on a.auction_no = j.auction_no
+		  left join mu_service_add e
+           on a.auction_no = e.auction_no
 	</select>
 	
 	<!-- 나만의 웨딩 플랜 todoList 분류작업 -->
@@ -264,5 +389,12 @@
 	    where category = #{category}
 		order by b.board_no desc
 		limit 9
+	</select>
+	
+	<select id="countDday" resultType="int">
+		  select TIMESTAMPDIFF(DAY,now(),auction_edate)
+            from mu_auction
+           where auction_status = 'ing'
+	
 	</select>
 </mapper>

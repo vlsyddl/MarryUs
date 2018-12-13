@@ -52,6 +52,10 @@ public class MainController {
 		model.addAttribute("totalauctionList", service.totalAuctionList());
 		model.addAttribute("recommend", service.selectCompanyRecommned());
 		model.addAttribute("recVenue", service.recVenue());
+		model.addAttribute("recSDM", service.recSDM());
+		model.addAttribute("recHoney", service.recHoney());
+		model.addAttribute("recJewelry", service.recJewelry());
+		model.addAttribute("recEvent", service.recEvent());
 		return model;
 	}
 	

@@ -146,4 +146,17 @@ public interface MainService {
 	
 	
 	List<CompanyInfo> recVenue();
+	
+	
+	/**
+	 * count d day
+	 * @return
+	 */
+	List<Integer> countDday();
+	
+	
+	List<CompanyInfo> recSDM();
+	List<CompanyInfo> recHoney();
+	List<CompanyInfo> recJewelry();
+	List<CompanyInfo> recEvent();
 }
