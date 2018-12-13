@@ -580,8 +580,9 @@ function selectAuction(auctionNo) {
 };
 
 function selectComInfo(memNo, comInfoType) {
+	console.log("selectComInfo로 왔다.");
 	$.ajax({
-		url : '<c:url value="/service/sdme/companyInfoCheck.json" />',
+		url : '<c:url value="/service/sdme/comInfoCheck.json" />',
 		method : "POST",
 		data : {
 			"memNo" : memNo,
@@ -590,9 +591,10 @@ function selectComInfo(memNo, comInfoType) {
 		cache : false
 	}).done(function (data) {
 		var html = "";
-		console.log("data."+data);
+		console.log("제발 왔다고 해줘....");
+		console.log(data);
 		console.log("data.comInfoNo"+data.comInfoNo);
-		html += '<input type="hidden" name="comInfoNo" value="'+data.comInfoNo+'" />'
+		html += '<input type="hidden" id="tenderComInfoNo" name="comInfoNo" value="'+data.comInfoNo+'" />'
 		
 		$(".comInfo-no").html(html);
 	});
