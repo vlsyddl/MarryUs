@@ -53,7 +53,7 @@
 						        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						        <h4 class="modal-title" id="myModalLabel">웨딩홀 역경매 신청서</h4>
 						      </div>
-						      	      <form action="Honeywrite.do"  method="post" name="honeyAuctionForm" onsubmit="return formCheck()" enctype="multipart/form-data">
+						      	      <form action="honeywrite.do"  method="post" name="honeyAuctionForm" onsubmit="return formCheck()" enctype="multipart/form-data">
 							      <div class="modal-body">
 								        <input type="hidden" name="memNo" value="${user.no}" />
 								        <input type="hidden" name="auctionType" value="h" />
