@@ -10,7 +10,7 @@ import lombok.Data;
 public class Item {
 	private String title;  
 	private String description;
-	private Date dueDate;
+	private String dueDate;
 	
 	
 	private boolean done;
@@ -25,7 +25,13 @@ public class Item {
 	private Todo todo;
 	
 
-	
+	public void setDone() {
+		if(this.todoCheck=="Y"||this.todoCheck=="y") {
+			this.done =true;
+		}else if(this.todoCheck=="N"||this.todoCheck=="n") {
+			this.done =false;
+		}	
+	}
 
 	
 	public Todo getTodo() {
@@ -37,7 +43,7 @@ public class Item {
 		if(!this.description.isEmpty()) {
 			todo.setTodoDetail(this.description);
 		}
-		if(this.dueDate != null) {
+       if(this.dueDate != null) {
 			todo.setTodoDay(this.dueDate);
 		}
 	

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.marryus.repository.domain.Auction;
+import kr.co.marryus.repository.domain.Budget;
 import kr.co.marryus.repository.mapper.MypageMapper;
 import kr.co.marryus.repository.domain.CompanyFile;
 import kr.co.marryus.repository.domain.CompanyInfo;
@@ -17,6 +18,7 @@ import kr.co.marryus.repository.domain.Jewelry;
 import kr.co.marryus.repository.domain.Makeup;
 import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.Page;
+import kr.co.marryus.repository.domain.Reservation;
 import kr.co.marryus.repository.domain.ServiceAdd;
 import kr.co.marryus.repository.domain.Studio;
 import kr.co.marryus.repository.domain.Tender;
@@ -201,43 +203,8 @@ public class MyPageServiceImpl implements MypageService{
 	public ServiceAdd selectJewelry(Auction auction) {
 		return mapper.selectJewelry(auction);
 	}
-
-
-	@Override
-	public int updateVenue(Venue venue) {
-		return mapper.updateVenue(venue);
-	}
-
-
-	@Override
-	public int updateStudio(Studio studio) {
-		return mapper.updateStudio(studio);
-	}
-
-
-	@Override
-	public int updateDress(Dress dress) {
-		return mapper.updateDress(dress);
-	}
-
-
-	@Override
-	public int updateMakeup(Makeup makeup) {
-		return mapper.updateMakeup(makeup);
-	}
-
-
-	@Override
-	public int updateJewelry(Jewelry jewelry) {
-		return mapper.updateJewelry(jewelry);
-	}
-
-
-	@Override
-	public int updateServiceAdd(ServiceAdd serviceAdd) {
-		return mapper.updateServiceAdd(serviceAdd);
-	}
-
+	
+	
 
 	@Override
 	public List<Todolist> selectTodoSortByDate(int memNo) {
@@ -272,9 +239,134 @@ public class MyPageServiceImpl implements MypageService{
 	@Override
 	public String[] selectComInfoType(int memNo) {
 		return mapper.selectComInfoType(memNo);
+	}	
+	
+	
+	// 내 예산
+
+	@Override
+	public List<Budget> selectBudget(int memNo) {
+		return mapper.selectBudget(memNo);
 	}
 
 
+	@Override
+	public void insertBudget(Budget budget) {
+		mapper.insertBudget(budget);
+	}
+
+
+	@Override
+	public void updateBudget(Budget budget) {
+		mapper.updateBudget(budget);
+	}
+
+
+	@Override
+	public void deleteBudget(int budgNo) {
+		mapper.deleteBudget(budgNo);
+	}
+	
+
+	@Override
+	public int MycountTotalTODO(int memNo) {
+		return mapper.MycountTotalTODO(memNo);
+	}
+
+
+	@Override
+	public int MycountTODOdone(int memNo) {
+		return mapper.MycountTODOdone(memNo);
+	}
+
+
+	@Override
+	public int MycountTotalAuction(int memNo) {
+		return mapper.MycountTotalAuction(memNo);
+	}
+
+
+	@Override
+	public int MycountAuctiondone(int memNo) {
+		return mapper.MycountAuctiondone(memNo);
+	}
+
+
+	@Override
+	public int MycountCompanyLike(int memNo) {
+		return mapper.MycountCompanyLike(memNo);
+	}
+
+
+	@Override
+	public  int MytotalBudget(int memNo) {
+		return mapper.MytotalBudget(memNo);
+	}
+
+	@Override
+	public String getWedDate(int memNo) {
+		return mapper.getWedDate(memNo);
+	}
+
+
+	@Override
+	public int selectByTenderCnt(Auction auction) {
+		return mapper.selectByTenderCnt(auction);
+	}
+
+
+	@Override
+	public Todo selectTodoThree(int memNo) {
+		return mapper.selectTodoThree(memNo);
+	}
+
+
+	@Override
+	public Tender selectTenderCal(int memNo) {
+		return mapper.selectTenderCal(memNo);
+	}
+
+
+	@Override
+	public int selectCompanyLikeByComMem(int memNo) {
+		return mapper.selectCompanyLikeByComMem(memNo);
+	}
+
+
+	@Override
+	public int selectTenderchoose(int memNo) {
+		return mapper.selectTenderchoose(memNo);
+	}
+
+
+	@Override
+	public int selectTenderDoing(int memNo) {
+		return mapper.selectTenderDoing(memNo);
+	}
+
+
+	@Override
+	public int selectTenderDone(int memNo) {
+		return mapper.selectTenderDone(memNo);
+	}
+
+
+	@Override
+	public int MyspendBudget(int memNo) {
+		return mapper.MyspendBudget(memNo);
+	}
+
+
+	@Override
+	public List<Reservation> selectReservation(int memNo) {
+		return mapper.selectReservation(memNo);
+	}
+
+
+	@Override
+	public int insertReservation(Reservation res) {
+		return mapper.insertReservation(res);
+	}
 
 
 

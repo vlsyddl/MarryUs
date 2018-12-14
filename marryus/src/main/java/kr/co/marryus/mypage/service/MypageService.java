@@ -12,6 +12,7 @@ import kr.co.marryus.repository.domain.Jewelry;
 import kr.co.marryus.repository.domain.Makeup;
 import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.Page;
+import kr.co.marryus.repository.domain.Reservation;
 import kr.co.marryus.repository.domain.ServiceAdd;
 import kr.co.marryus.repository.domain.Studio;
 import kr.co.marryus.repository.domain.Tender;
@@ -19,6 +20,7 @@ import kr.co.marryus.repository.domain.Todo;
 import kr.co.marryus.repository.domain.Todolist;
 import kr.co.marryus.repository.domain.Venue;
 import kr.co.marryus.repository.domain.Auction;
+import kr.co.marryus.repository.domain.Budget;
 
 public interface MypageService {
 
@@ -40,6 +42,9 @@ public interface MypageService {
 	//입찰 현황보기(업체)
     public List<Tender> selectAuction(Page page);
     public int selectAuctionCnt(int comNo);
+    
+    //개인 예약 보기
+    List<Reservation> selectReservation(int memNo);
 
 	//회원정보 수정(일반, 업체)
 	public GeneralMember selectGeneralMember(int memNo);
@@ -47,6 +52,10 @@ public interface MypageService {
 	public int updateMember(Member member);
 	public int updateGeneralMember(GeneralMember genMem);
 	public int updateCompanyMember(CompanyMember comMem);
+	
+	
+	//업체 예약하기
+	public int insertReservation(Reservation res);
 	
 	//관심업체
 	public List<CompanyInfo>  selectCompanyLike (int momNo);
@@ -65,12 +74,6 @@ public interface MypageService {
 	public Jewelry selectHoneymoon(Auction auction);
 	public ServiceAdd selectJewelry(Auction auction);
 	
-	public int updateVenue(Venue venue);
-	public int updateStudio(Studio studio);
-	public int updateDress(Dress dress);
-	public int updateMakeup(Makeup makeup);
-	public int updateJewelry(Jewelry jewelry);
-	public int updateServiceAdd(ServiceAdd serviceAdd);
 	
 	//투두
 	public List<Todolist> selectTodoSortByDate(int memNo);
@@ -78,6 +81,35 @@ public interface MypageService {
 	public int insertTodo(Todo todo);
 	public int updateTodo(Todo todo);	
 	public int deleteTodo(int todoNo);
+	
+	//내 예산
+	List<Budget> selectBudget(int memNo);
+	void insertBudget(Budget budget);
+	void updateBudget(Budget budget);
+	void deleteBudget(int budgNo);
+	
+
+	
+	   
+	  //메인(개인)
+	   String getWedDate(int memNo);
+	   int MycountTotalTODO(int memNo);
+	   int MycountTODOdone(int memNo);
+	   int MycountTotalAuction(int memNo);
+	   int MycountAuctiondone(int memNo);
+	   int MycountCompanyLike(int memNo);
+	   //Budget MytotalBudget(int memNo);
+	   int MytotalBudget(int memNo);
+	   int MyspendBudget(int memNo);
+	   int selectByTenderCnt(Auction auction);
+	   Todo selectTodoThree(int memNo);
+	   
+	   //메인(업체)
+	   Tender selectTenderCal(int memNo);
+	   int selectCompanyLikeByComMem(int memNo);
+	   int selectTenderchoose(int memNo);
+	   int selectTenderDoing(int memNo);
+	   int selectTenderDone(int memNo);
 
 	
 }

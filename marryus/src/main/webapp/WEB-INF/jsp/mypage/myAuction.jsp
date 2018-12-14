@@ -13,6 +13,18 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
    <c:import url="/common/importCss.jsp"/>
 	 <c:import url="/common/importJs.jsp"/>
+	 <head>
+  <script type="text/javascript" src="/scripts/jquery.min.js"></script>
+  <script type="text/javascript" src="/scripts/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/scripts/bootstrap-datetimepicker.*js"></script>
+  <!-- include your less or built css files  -->
+  <!-- 
+  bootstrap-datetimepicker-build.less will pull in "../bootstrap/variables.less" and "bootstrap-datetimepicker.less";
+  or
+  <link rel="stylesheet" href="/Content/bootstrap-datetimepicker.css" />
+  -->
+</head>
+
  <style>
   @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css');
 
@@ -44,7 +56,7 @@
   }
 
   a {
-    color: #ccc;
+    color: black;
     text-decoration: none;
     outline: none;
   }
@@ -62,7 +74,7 @@
   	width: 90%;
   }
 
-  input, section {
+  input[type=radio], section {
     clear: both;
     padding-top: 10px;
     display: none;
@@ -246,20 +258,28 @@ h4{
 	margin-bottom: 10px;
 }
 .auction_box{  	padding-top: 70px;}
- .more_btn{
- 	width: 80%;
+ .more_btn, .inner_box{
+ 	width: 1100px;
  	margin: 18px 40px;
  	padding : 10px 30px;
  	clear:  both;
  }
+
  
  .hidden{
  	dispaly : hidden;
  }
- 
- ul{
- 	clear :both;
+ #title_area{
+ 	font-size: 17px;
+ 	font-weight: 800;
+ 	line-height: 3em;
  }
+ 
+ .paging{
+ 	text-align: right;
+ }
+ 
+
  
  
 
@@ -274,7 +294,7 @@ h4{
 <body>
 	<c:import url="/common/importHeader.jsp" />
     <div id="wrap" class="mypage">
-        <nav class="myPageNav">
+ <nav class="myPageNav">
             <div class="container">
                     <ul>
                         <li class="on">
@@ -290,7 +310,7 @@ h4{
                             </a>
                         </li>
                         <li>
-                            <a href="<c:url value='/mypage/myAuction.do?memNo=${user.no}&auctionType=v'/>">
+                            <a href="<c:url value='/mypage/myAuction.do?choo=tab1&memNo=${user.no}&auctionType=v'/>">
                                 <img src="img/auction_ico.png" alt="" class="img-responsive center-block">
                                 Auction List
                             </a>
@@ -307,7 +327,6 @@ h4{
                                 Bookmark
                             </a>
                         </li>
-
                     </ul>
             </div>
         </nav>
@@ -318,7 +337,7 @@ h4{
 <div class="auction_box">
 		<div class="tab_container">
 		
-			<input id="tab1" type="radio" name="tabs" onClick="window.location.href='myAuction.do?choo=tab1&auctionType=v&memNo=${user.no}'" ${choose == 'tab1' ? 'checked="checked"' : '' } />
+			<input id="tab1" type="radio" name="tabs" onClick="window.location.href='myAuction.do?choo=tab1&auctionType=v&memNo=${user.no}'" ${choose == 'tab1' ? 'checked="checked"' : '' } checked="checked"/>
 			<label for="tab1"><span>예식장</span></label>
 
 			<input id="tab2" type="radio" name="tabs"  onClick="window.location.href='myAuction.do?choo=tab2&auctionType=s&memNo=${user.no}'" ${choose == 'tab2' ? 'checked="checked"' : '' }>
@@ -334,7 +353,7 @@ h4{
 			
 			
 			<input id="tab5" type="radio" name="tabs"  onClick="window.location.href='myAuction.do?choo=tab5&auctionType=h&memNo=${user.no}'" ${choose == 'tab5' ? 'checked="checked"' : '' } >
-			<label for="tab5"><span>허니문</span></label>
+			<label for="tab5"><span>허니</span></label>
 			
 			
 			<input id="tab6" type="radio" name="tabs"  onClick="window.location.href='myAuction.do?choo=tab6&auctionType=j&memNo=${user.no}'" ${choose == 'tab6' ? 'checked="checked"' : '' }>
@@ -351,7 +370,7 @@ h4{
             <div class="info_box left">
                <div><fmt:formatDate value='${myAuction[0].auctionSdate}' pattern='yyyy-MM-dd' />~<fmt:formatDate value='${myAuction[0].auctionEdate}' pattern='yyyy-MM-dd' /></div>
              <div>${myAuction[0].tenderCnt}개의 입찰서</div>
-              <div><a href="#" class="btn1" data-toggle="modal" data-target="#signUpModal">> 내 경매 조건 보기</a></div>
+              <div><a href="#" class="btn1" data-toggle="modal" data-target="#auctionDetailModal">> 내 경매 조건 보기</a></div>
               <div></div>
             </div>
             </c:when>
@@ -369,7 +388,7 @@ h4{
                 <div>${auction.comInfoAddr} </div>
                 <div>${auction.comInfoPhone}</div>
                 <div><fmt:formatNumber type='currency' value='${auction.tenderBudget}' pattern='###,###'/>원</div>
-                <div><button class="btn1">상세보기</button><button class="btn1">예약하기</button></div>
+                <div><button class="btn1 more_detail" type="button" data-href="${auction.comInfoNo}" >상세보기</button><button class="btn1 more_reservation">예약하기</button></div>
               </div>
               <button class="btn2"></button>
               </div>
@@ -389,22 +408,17 @@ h4{
 <div class="collapse" id="collapseExample${status.count}">
   <div class="card card-body">
                   <div class="inner_box" >
-              <div id="title">${auction.tenderTitle}</div>
-              <div id="content">${auction.tenderInfo}
-                <a class="more_btn" data-toggle="collapse" href="#collapseExample${status.count}" role="button" aria-expanded="false" aria-controls="collapseExample${status.count}">접기</a>
+              <div id="title_area">${auction.tenderTitle}</div>
+              <div id="content_area">${auction.tenderInfo}
+                <p><a class="more_btn" data-toggle="collapse" href="#collapseExample${status.count}" role="button" aria-expanded="false" aria-controls="collapseExample${status.count}">접기</a></p>
               </div>
               </div>
   </div>
 </div>
 
           	</c:forEach> 
-
-
-              </div>
-
-          	
           	 <c:if test="${count != 0}">
-			<nav>
+			<nav class="paging">
 			  <ul class="pagination">
 			    <li <c:if test="${pageNo==1||pageNo==null}">class="disabled"</c:if> >
 			    <c:choose>
@@ -431,6 +445,11 @@ h4{
 			  </ul>
 			</nav>
 		</c:if>
+
+
+              </div>
+
+
 			
 			
 			</section>
@@ -438,7 +457,7 @@ h4{
 
 	</div>
 
-<div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="auctionDetailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog ">
     <div class="modal-content">
     	modal입니다.
@@ -478,8 +497,169 @@ h4{
     </div>
     </div>
     </div>
+    
+    
+ <div class="modal fade" id="ModalReservation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog  modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">예약하기</h4>
+      </div>
+      <div class="modal-body">
+      		<form id="resSubmitForm" method="POST">
+        	<p>방문을 해보시겠습니까?</p>
+			<select name="res_visit">
+				<option value="N">아니오</option>
+				<option value="Y">네</option>
+			</select>
+			<p>방문을 예정일과 요청시간</p>
+			<input type="Date" name="res_date" />
+				<select name="res_time">
+				<c:forEach var="i" begin="8" end="20">
+					<option value='${i}'>${i}:00시</option>
+				</c:forEach>
+				</select>
+			<hr>
+			<p>연락받으실 수단을 선택해주세요</p>
+			<p>이메일 : <input type="text" class="" name="res_email" /></p>
+			<p>연락처 : <input type="text" class="" name="res_phone" /></p>
+			<hr>
+			<p>요청사항 또는 추가로 궁금하신 사항이 있으면 알려주세요.</p>
+			<textarea cols="3000" rows="7" name="res_message" style="width: 850px"></textarea>
+			</form>
+			<button onclick="resSubmit()" type="button">보내기</button>
+		
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
 
-  
+
+
+
+<script>
+$(function(){
+	$(".more_detail").click(function(e){
+		  e.preventDefault();
+		  detail($(this).data("href"))
+	      $('#detailModal').modal('show')
+	      var bx;
+		  $('#detailModal').on('shown.bs.modal', function () {
+		    if(bx === undefined){
+		      bx= slider = $('.slideBox ul').bxSlider({
+		  	    mode: 'fade',
+			    captions: true
+			});
+		    } else {
+		      bx.reloadSlider(); 
+		    }
+		  })
+	});
+
+	$(".more_reservation").click(function(e){
+		  e.preventDefault();
+		  detail($(this).data("href"))
+	      $('#ModalReservation').modal('show')
+	      var bx;
+		  $('#ModalReservation').on('shown.bs.modal', function () {
+		    if(bx === undefined){
+		      bx= slider = $('.slideBox ul').bxSlider({
+		  	    mode: 'fade',
+			    captions: true
+			});
+		    } else {
+		      bx.reloadSlider(); 
+		    }
+		  })
+	    
+	  });
+
+function resSubmit(){
+	$.ajax({
+		url : "<c:url value='/mypage/reservation.do'/>",
+		type : "POST",
+		data : $("#resSubmitForm").serialize()
+	}).done(function(no){
+		if(no>0){
+   			$('#ModalReservation').modal('hide');
+		});
+	}
+
+function detail(comInfoNo){
+	var modal = $("#detailModal")
+	var slideBox = $(".slideBox")
+	slideBox.find("ul").html("")
+	$.ajax({
+		url : "<c:url value='/service/wedding/comDetail.do'/>",
+		data : "comInfoNo="+comInfoNo
+	}).done(function(data){
+		console.log(data)
+		modal.find(".modal-title").html(data.info.comInfoName)
+        modal.find(".infoBox").find(".adress").children("dd").html(data.info.comInfoAddr+" "+data.info.comInfoAddrDetail)
+        modal.find(".infoBox").find(".phone").children("dd").html(data.info.comInfoPhone)
+        modal.find(".infoBox").find(".profile").children("dd").html(data.info.comInfoProfile)
+        modal.find(".contentsBox").html(data.info.comInfoContent)
+        $(".detailLikeBtn").attr("data-comno", data.info.comInfoNo);
+        var fileList="";
+        for(var f of data.files){
+			fileList +='<li>'        	
+			fileList +='<img src="/marryus/img/comProfile/'+f.comFileName+'" alt="" class="img-responsive center-block">'        	
+			fileList +='</li>'        	
+        }
+        slideBox.find("ul").html(fileList);
+	})
+}
+
+</script>
+
+  <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog  modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"></h4>
+      </div>
+      <div class="modal-body">
+        <div class="slideBox">
+        	<ul>
+        		<li>1</li>
+        		<li>2</li>
+        		<li>3</li>
+        	</ul>
+        </div>
+        <div class="infoBox">
+            <dl class="adress">
+                <dt>주소 : </dt>
+                <dd></dd>
+            </dl>
+            <dl class="phone">
+                <dt>연락처 : </dt>
+                <dd></dd>
+            </dl>
+            <dl class="Profile">
+                <dt>정보 : </dt>
+                <dd></dd>
+            </dl>
+        </div>
+        <div class="contentsBox">
+        </div>
+        <div id="detailBtn">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
   
 
 

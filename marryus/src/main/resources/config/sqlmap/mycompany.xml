@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.marryus.repository.mapper.MycompanyMapper">
+<resultMap id="comInfoMap" type="CompanyInfo">
+		<result  property="comInfoNo"   column="com_info_no"/>
+		<result  property="memNo"   column="mem_no"/>
+        <result  property="comInfoContent"   column="com_info_content"/>
+		<result  property="comInfoProfile"   column="com_info_profile"/>
+		<result  property="comInfoName"   column="com_info_name"/>
+		<result  property="comInfoPhone"   column="com_info_phone"/>
+		<result  property="comInfoAddr"   column="com_info_addr"/>
+		<result  property="comInfoAddrDetail"   column="com_info_addr_detail"/>
+		<result  property="comInfoType"   column="com_info_type"/>
+		<result  property="comInfoOkay"   column="com_info_okay"/>
+		<result  property="comFileName"   column="com_file_name"/>
+		<result  property="comFilePath"   column="com_file_path"/>	
+		<result  property="aucionType"   column="aucion_type"/>
+		<result  property="auctionSdate"   column="auction_sdate"/>
+		<result  property="auctionEdate"   column="auction_edate"/>
+		<result  property="tenderBudget"   column="tender_budget"/>
+		<result  property="tenderRegdate"   column="tender_regdate"/>
+		<result  property="tenderTitle"   column="tender_title"/>
+		<result  property="tenderInfo"   column="tender_info"/>
+		<result  property="codeValue"   column="code_value"/>
+	</resultMap>
+	
+	
+	
+
+	
+	
+	<resultMap id="comFileMap" type="CompanyFile">
+		<result  property="comFileNo"   column="com_file_no"/>
+		<result  property="comInfoNo"   column="com_info_no"/>
+		<result  property="comFileName"   column="com_file_name"/>
+		<result  property="comFileOriname"   column="com_file_oriname"/>
+		<result  property="comFilePath"   column="com_file_path"/>
+		<result  property="comFileRepr"   column="com_file_repr"/>
+	</resultMap>
+	
+	
+	<resultMap id="tenderMap" type="Tender">
+		<result property="tenderNo" column="tender_no" />
+		<result property="auctionNo" column="action_no" />
+		<result property="tenderStatus" column="tender_status" />
+		<result property="tenderBudget" column="tender_budget" />
+		<result property="tenderRegdate" column="tender_regdate" />
+        <result property="memName" column="mem_name" />
+        <result property="memNo" column="mem_no" />
+	</resultMap>
+	
+	<resultMap id="auctionMap" type="Auction">
+		<result property="auctionNo" column="auction_no" />
+		<result property="memNo" column="mem_no" />
+		<result property="comNo" column="com_no" />
+		<result property="auctionType" column="auction_type" />
+		<result property="auctionStatus" column="auction_status" />
+		<result property="auctionSdate" column="auction_sdate" />
+		<result property="auctionEdate" column="auction_edate" />
+		<result property="memName" column="mem_name" />
+		<collection property="tenderList" column="auction_no" select="selectTenderByauctionNo"/>
+		<collection property="tenderCnt" column="auction_no" select="selectTenderCnt"/>
+	</resultMap>
+	
+	
+ 	<select id="selectTenderByauctionNo" parameterType="int" resultMap="comInfoMap">
+		select *
+		from mu_tender t
+ 		inner join mu_company_info ci
+		on t.com_info_no = ci.com_info_no
+        inner join mu_company_file cf
+        on ci.com_info_no = cf.com_info_no
+        where t.auction_no=#{auctionNo}
+         and cf.com_file_repr = 'Y'  
+	</select>
+	
+	
+	 <select id="selectTenderCnt" parameterType="int"  resultType="int">
+		select count(*)
+		from mu_tender t
+ 		inner join mu_company_info ci
+		on t.com_info_no = ci.com_info_no
+        where t.auction_no=#{auctionNo}
+	</select>
+	
+	
+	
+	
+	<resultMap id="generalMemberMap" type="GeneralMember">
+		<result property="memNo" column="mem_no" />
+		<result property="memEmail" column="mem_email" />
+		<result property="memPass" column="mem_pass" />
+		<result property="memType" column="mem_type" />
+		<result property="memStatus" column="mem_status" />
+		<result property="memName" column="mem_name" />
+		<result property="memPhone" column="mem_phone" />
+		<result property="genBirth" column="gen_birth" />
+		<result property="genGender" column="gen_gender" />
+		<result property="genNo" column="gen_no" />
+		<result property="genProfilepath" column="gen_profilepath" />
+		<result property="genProfilename" column="gen_profilename" />
+	</resultMap>
+	
+	
+	
+	<resultMap id="companyMemberMap" type="CompanyMember">
+		<result property="memNo" column="mem_no" />
+		<result property="memEmail" column="mem_email" />
+		<result property="memPass" column="mem_pass" />
+		<result property="memType" column="mem_type" />
+		<result property="memName" column="mem_name" />
+		<result property="comAddr" column="com_addr" />
+		<result property="comAddrDetail" column="com_addr_detail" />
+		<result property="memPhone" column="mem_phone" />
+		<result property="comType" column="com_type" />
+		<result property="comOkay" column="com_okay" />
+		<result property="comNo" column="com_no" />
+	</resultMap>
+	
+	
+	<resultMap id="companyLikeMap" type="CompanyLike">
+		<result property="memNo" column="mem_no" />
+		<result property="comInfoNo" column="com_info_no" />
+	</resultMap>
+	
+	
+	
+	<resultMap id="venueMap" type="Venue">
+		<result property="auctionNo" column="auction_no" />
+		<result property="weddingVenue" column="wedding_venue" />
+		<result property="weddingDate" column="wedding_date" />
+		<result property="weddingTime" column="wedding_time" />
+		<result property="weddingType" column="wedding_type" />
+		<result property="weddingVistor" column="wedding_vistor" />
+		<result property="weddingWish" column="wedding_wish" />
+		<result property="weddingBudget" column="wedding_budget" />
+	</resultMap>
+	
+	<resultMap id="studioMap" type="Studio">
+		<result property="auctionNo" column="auction_no" />
+		<result property="studioPlace" column="studio_place" />
+		<result property="studioOutdoor" column="studio_outdoor" />
+		<result property="studioSnapshot" column="studio_snapshot" />
+		<result property="studioVideo" column="studio_video" />
+		<result property="studioPickup" column="studio_pickup" />
+	</resultMap>
+	
+	<resultMap id="dressMap" type="Dress">
+		<result property="auctionNo" column="auction_no" />
+		<result property="dressPrice" column="dress_price" />
+		<result property="dressNeckline" column="dress_neckline" />
+		<result property="dressType" column="dress_type" />
+	</resultMap>
+	
+	<resultMap id="makeupMap" type="Makeup">
+		<result property="auctionNo" column="auction_no" />
+		<result property="mkuMakeup" column="mku_makeup" />
+		<result property="mkuMom" column="mku_mom" />
+		<result property="mkuBudget" column="mku_budget" />
+		<result property="mkuWorkout" column="mku_workout" />
+		<result property="mkuMore" column="mku_more" />
+	</resultMap>
+	
+	<resultMap id="honeymoonMap" type="Honeymoon">
+		<result property="auctionNo" column="auction_no" />
+		<result property="honeyPlace" column="honey_place" />
+		<result property="honeyDate" column="honey_date" />
+		<result property="honeyHope" column="honey_hope" />
+	</resultMap>
+	
+	<resultMap id="jewelryMap" type="Jewelry">
+		<result property="auctionNo" column="auction_no" />
+		<result property="gift" column="gift" />
+		<result property="giftPrice" column="gift_price" />
+		<result property="giftHope" column="gift_hope" />
+	</resultMap>
+	
+	<resultMap id="serviceAddMap" type="ServiceAdd">
+		<result property="auctionNo" column="auction_no" />
+		<result property="serviceType" column="service_type" />
+		<result property="serviceDetail" column="service_detail" />
+	</resultMap>
+	
+	<resultMap id="codeMap" type="Code">
+		<result property="codeNo" column="code_no" />
+		<result property="codeTable" column="code_table" />
+		<result property="codeColumn" column="code_column" />
+		<result property="codeName" column="code_name" />
+		<result property="codeValue" column="code_value" />
+	</resultMap>
+	
+
+
+	
+
+	
+
+
+
+
+	
+	
+	
+	<select id="selectTenderList" parameterType="int" resultMap="tenderMap"  >
+	select *
+	from mu_tender 
+	where auction_no=#{auctionNo}
+
+	</select>
+	
+	
+
+
+	
+	
+
+	
+	<!-- 업체 정보 등록, 수정, 삭제시 사용 -->
+	<select id="selectComInfoList"  parameterType="int" resultMap="comInfoMap">
+		select *
+		from mu_company_info ci right join mu_company_file cf
+        on ci.com_info_no = cf.com_info_no
+        where ci.mem_no=#{memNo}
+        and cf.com_file_repr = 'Y'
+        and com_info_type in('v','s','d','m','h','j','e')
+        order by field(com_info_type,'v','s','d','m','h','j','e')
+	</select>
+	
+	
+	<select id="selectComInfoType"  parameterType="int" resultType="String">
+		select DISTINCT com_info_type
+        from mu_company_info
+        where mem_no=#{memNo}
+	</select>
+	
+										
+	
+	
+	<select id="selectComInfoDetail" parameterType="CompanyInfo" resultMap="comInfoMap">
+		select *
+		from mu_company_info
+        where com_info_no=#{comInfoNo}
+        and mem_no=#{memNo}
+	</select>
+	
+	
+	<insert id="insertComInfo" parameterType="CompanyInfo"  >
+	    <selectKey resultType="int" keyProperty="comInfoNo" order="BEFORE">
+            SELECT MAX(com_info_no)+1 FROM     mu_company_info 
+        </selectKey>    
+	
+		insert into mu_company_info(mem_no, com_info_content, com_info_profile, com_info_name, com_info_phone,com_info_addr, com_info_addr_detail, com_info_type) 
+        values(#{memNo}, #{comInfoContent}, #{comInfoProfile}, #{comInfoName}, #{comInfoPhone},#{comInfoAddr}, #{comInfoAddrDetail}, #{comInfoType})
+
+	</insert>
+	
+	<update id="updateComInfo" parameterType="CompanyInfo">
+		update mu_company_info 
+        set com_info_content = #{comInfoContent},
+		com_info_profile = #{comInfoProfile},
+		com_info_name=#{comInfoName},
+		com_info_phone=#{comInfoPhone},
+		com_info_addr=#{comInfoAddr},
+		com_info_addr_detail=#{comInfoAddrDetail},
+		com_info_okay=#{comInfoOkay}
+		where com_info_no=#{comInfoNo} 
+	</update>
+	
+	<delete id="deleteComInfo" parameterType="int">
+		delete from mu_company_info 
+		where com_info_no=#{comInfoNo}
+	</delete>
+	
+	<!-- 업체 정보  파일 등록, 수정, 삭제시 사용 -->
+	
+	
+	<select id="selectComFiles" parameterType="CompanyInfo" resultMap="comFileMap">
+		select *
+		from mu_company_file cf, mu_company_info ci
+		where ci.com_info_no=cf.com_info_no
+        and com_file_repr='N'
+        and ci.mem_no=#{memNo}
+        and ci.com_info_no=#{comInfoNo}
+	</select>
+	
+	
+	<select id="selectComFile" parameterType="CompanyInfo" resultMap="comFileMap">
+		select *
+		from mu_company_file cf, mu_company_info ci
+		where ci.com_info_no=cf.com_info_no
+        and com_file_repr='Y'
+        and ci.mem_no=#{memNo}
+        and ci.com_info_no=#{comInfoNo}
+	</select>
+	
+	
+	<insert id="insertComFile" parameterType="CompanyFile">
+		insert into mu_company_file(com_info_no, com_file_name, com_file_oriname, com_file_path, com_file_repr)
+		values(#{comInfoNo}, #{comFileName}, #{comFileOriname}, #{comFilePath}, #{comFileRepr})
+	</insert>
+	
+	
+	<delete id="deleteComFile" parameterType="int">
+		delete from mu_company_file 
+		where com_file_no=#{comFileNo}
+	</delete>
+	
+	
+	<!-- 관리자 경매리스트 -->
+
+    <select id="selectAuction"  parameterType="Page" resultMap="tenderMap">
+               select *
+        from mu_member m
+        inner join mu_auction a
+        on a.mem_no = m.mem_no
+        inner join mu_tender t
+        ON a.auction_no = t.auction_no
+        where t.mem_no=#{memNo}
+        limit #{begin}, 10
+	</select>
+
+
+
+
+	
+	
+    <select id="selectAuctionCnt" parameterType="int" resultType="int">
+		select count(*) as count
+        from(select t.tender_no 
+        from mu_auction a, mu_tender t
+        where a.auction_no = t.auction_no
+        and t.mem_no=#{memNo}) a
+	</select>
+	
+	
+	
+	
+	<!-- 정보 수정 -->
+
+	
+	<select id="selectCompanyMember" parameterType="int" resultMap="companyMemberMap">
+		select *
+		from mu_member m, mu_company c
+		where m.mem_no = c.com_no
+		and m.mem_no=#{memNo}
+	</select>
+	
+	
+	<update id="updateMember" parameterType="Member" >
+		update mu_member
+		set mem_pass=#{pass},
+		mem_name=#{name},
+		mem_phone=#{phone}
+		where mem_no = #{no}
+	</update>
+	
+	
+	<update id="updateCompanyMember" parameterType="CompanyMember">
+		update mu_company
+		set com_addr=#{comAddr},
+		com_addr_detail=#{comAddrDetail},
+		com_type=#{comType}
+		where com_no = #{comNo}
+	</update>
+	
+	
+
+
+
+	
+
+
+	
+
+	
+	
+	<!-- 입찰 내역 보기 -->
+	<select id="selectTenders" parameterType="Auction" resultMap="tenderMap">
+		select *
+		from mu_auction a
+		inner join mu_tender t
+		on t.auction_no = a.auction_no 
+		inner join mu_company_info ci
+		on t.com_info_no = ci.com_info_no
+		where a.mem_no=#{memNo}
+		and a.auction_status=#{auctionStatus}
+	</select>
+	
+	
+	<select id="selectAuctions" parameterType="Auction" resultMap="venueMap">
+		select v.*
+		from mu_venue v
+		inner join mu_auction a
+		on v.auction_no=a.auction_no 
+		where  a.auction_status=#{auctionStatus}
+		and a.mem_no=#{memNo}
+	</select>
+	
+	
+	<!-- 메인  -->
+	
+	
+	
+	
+
+
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

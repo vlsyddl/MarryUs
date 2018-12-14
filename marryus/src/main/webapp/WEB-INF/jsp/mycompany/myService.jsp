@@ -159,27 +159,28 @@
 	<span class="gnbBar"></span> 
 </header>
     <div id="wrap" class="mypage">
-        <nav class="myPageNav">
+        <nav class="myCompanyNav">
             <div class="container">
                     <ul>
-                        <li>
-                            <a href="<c:url value='/mypage/myweddingService.do'/>">
-                                    <img src="img/chk_ico.png" alt="" class="img-responsive center-block">
-                                my service 
+                        <li class="on">
+                            <a href="<c:url value='/mycompany/myCompany.do'/>">
+                                <img src="<c:url value="/resources/"/>img/company_ico.png" alt="" class="img-responsive center-block">
+                                My Company
                             </a>
                         </li>
                         <li>
-                            <a href="<c:url value='/mypage/service.do'/>">
-                                    <img src="img/chk_ico.png" alt="" class="img-responsive center-block">
-                                service add
+                            <a href="<c:url value='/mycompany/service.do'/>">
+                                    <img src="<c:url value="/resources/"/>img/card_ico.png" alt="" class="img-responsive center-block">
+                                My Service
                             </a>
                         </li>
                         <li>
-                            <a href="<c:url value='/mypage/auctionList.do'/>">
-                                <img src="img/auction_ico.png" alt="" class="img-responsive center-block">
-                                my tender
+                            <a href="<c:url value='/mycompany/auctionList.do'/>">
+                                <img src="<c:url value="/resources/"/>img/graph_ico.png" alt="" class="img-responsive center-block">
+                                Auction List
                             </a>
                         </li>
+                        
                     </ul>
             </div>
         </nav>

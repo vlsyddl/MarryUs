@@ -10,7 +10,7 @@
 	 <c:import url="/common/importJs.jsp"/>
 
     <!--Default installation-->
-    <link rel="stylesheet" href="<c:url value='/resources/todo/jquery/jquery-ui.min.css?349'/>" />
+    <link rel="stylesheet" href="<c:url value='/resources/todo/jquery/jquery-ui.min.css?344549'/>" />
     <link rel="stylesheet" href="<c:url value='/resources/todo/bootstrap/css/bootstrap.min.css'/>" />
     <link rel="stylesheet" href="<c:url value='/resources/todo/dist/lobilist.min.css'/>" />
 
@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="<c:url value='/resources/todo/highlight/github.css'/>" />
     <link rel="stylesheet" href="<c:url value='/resources/todo/demo/demo.css'/>" />
    
+   
+
     
    
 </head>
@@ -44,7 +46,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="<c:url value='/mypage/myAuction.do?memNo=${user.no}&auctionType=v'/>">
+                            <a href="<c:url value='/mypage/myAuction.do?choo=tab1&memNo=${user.no}&auctionType=v'/>">
                                 <img src="img/auction_ico.png" alt="" class="img-responsive center-block">
                                 Auction List
                             </a>
@@ -61,8 +63,6 @@
                                 Bookmark
                             </a>
                         </li>
-
-
                     </ul>
             </div>
         </nav>
@@ -93,11 +93,11 @@
 
 <!--Default installation-->
 
-		<script type="text/javascript" src="<c:url value="/resources/todo/jquery/jquery.min.js"/>" charset="utf-8"></script>
+		<script type="text/javascript" src="<c:url value="/resources/todo/jquery/jquery.min.js?343"/>" charset="utf-8"></script>
 		<script type="text/javascript" src="<c:url value="/resources/todo/jquery/jquery-ui.min.js"/>" charset="utf-8"></script>
 		<script type="text/javascript" src="<c:url value="/resources/todo/jquery/jquery.ui.touch-punch-improved.js"/>" charset="utf-8"></script>
 		<script type="text/javascript" src="<c:url value="/resources/todo/bootstrap/js/bootstrap.min.js"/>" charset="utf-8"></script>
-		<script type="text/javascript" src="<c:url value="/resources/todo/dist/lobilist.js?553"/>" charset="utf-8"></script>
+		<script type="text/javascript" src="<c:url value="/resources/todo/dist/lobilist.js?44"/>" charset="utf-8"></script>
 
 
 	 
@@ -120,33 +120,46 @@
 		<script type="text/javascript" src="<c:url value="/resources/todo/highlight/highlight.pack.js"/>" charset="utf-8"></script>
 	<%-- 	<script type="text/javascript" src="<c:url value="/resources/todo/demo/demo.js"/>" charset="utf-8"></script> --%>
 	
-	<script>
+
+	
+	   	<script>
 	/**
  * Created by Zura on 4/5/2016.
  */
  
- 
+/*  $(document).ready(function(){
+	    myTodo();
+	});  */
+	
+	
+/* 	$(window).on("load", function(){
+		 myTodo();
+		}); */
+	
+
  
  
  
 $(function () {
     Lobibox.notify.DEFAULTS = $.extend({}, Lobibox.notify.DEFAULTS, {
-        size: 'mini',
+        size: 'large',
         // delay: false,
-        position: 'right top'
+        position: 'left top'
     });
-    
-
-	    $('#todo-lists-basic-demo').lobiList({
-	        "lists": ${todo}
-	    });  
+   	
+	$('#todo-lists-basic-demo').lobiList({
+	    ${todo}
+	});
 
 });
-
+		
+		
+	
 
 
 	
 </script>
+	
 	
 	
 </body>

@@ -43,27 +43,28 @@
 <body>
 	<c:import url="/common/importHeader.jsp" />
     <div id="wrap" class="mypage">
-        <nav class="myPageNav">
+         <nav class="myCompanyNav">
             <div class="container">
                     <ul>
-                        <li>
-                            <a href="<c:url value='/mypage/myweddingService.do'/>">
-                                    <img src="img/chk_ico.png" alt="" class="img-responsive center-block">
-                                my service 
+                        <li class="on">
+                            <a href="<c:url value='/mycompany/myCompany.do'/>">
+                                <img src="<c:url value="/resources/"/>img/company_ico.png" alt="" class="img-responsive center-block">
+                                My Company
                             </a>
                         </li>
                         <li>
-                            <a href="<c:url value='/mypage/service.do'/>">
-                                    <img src="img/chk_ico.png" alt="" class="img-responsive center-block">
-                                service add
+                            <a href="<c:url value='/mycompany/service.do'/>">
+                                    <img src="<c:url value="/resources/"/>img/card_ico.png" alt="" class="img-responsive center-block">
+                                My Service
                             </a>
                         </li>
                         <li>
-                            <a href="<c:url value='/mypage/auctionList.do'/>">
-                                <img src="img/auction_ico.png" alt="" class="img-responsive center-block">
-                                my tender
+                            <a href="<c:url value='/mycompany/auctionList.do'/>">
+                                <img src="<c:url value="/resources/"/>img/graph_ico.png" alt="" class="img-responsive center-block">
+                                Auction List
                             </a>
                         </li>
+                        
                     </ul>
             </div>
         </nav>
@@ -75,7 +76,7 @@
         
 	<c:forEach var="auction" items="${autionList}">
 	<a >
-	<table onClick="location.href=`http://localhost:8000/marryus/mypage/myServiceUpdate.do?memNo=10&comInfoNo=${auction.comInfoNo}`" style="cursor:pointer;" calss="table_outer">
+	<table onClick="location.href='<c:url value="/mypage/myServiceUpdate.do?memNo=10&comInfoNo=${auction.comInfoNo}"/>'" style="cursor:pointer;" calss="table_outer">
 		<tr>
 			<td><img src="<c:url value="/${auction.comFilePath}/${auction.comFileName}"/>" width="150px" height="100px"/></td>
 			<td><table><tr><td class="title">${auction.comInfoName}</td></tr>
@@ -97,7 +98,7 @@
 	</a>
 	</c:forEach>
 	<a>
-	<table onClick="location.href=`http://localhost:8000/marryus/mypage/myService.do`" style="cursor:pointer;" class="InsertProfile">
+	<table onClick="location.href=`<c:url value="/mypage/myService.do"/>`" style="cursor:pointer;" class="InsertProfile">
 		<tr>
 			<td style="font-size: 50px; font-weight: 800;">+</td>
 		<tr>

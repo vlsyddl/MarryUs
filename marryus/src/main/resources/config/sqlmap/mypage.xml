@@ -48,6 +48,9 @@
 		<result property="tenderRegdate" column="tender_regdate" />
         <result property="memName" column="mem_name" />
         <result property="memNo" column="mem_no" />
+        <result property="dday" column="dday" />
+        <result property="sumTenderBudget" column="sum_tender_budget" />
+        <result property="avgTenderBudget" column="avg_tender_budget" />
 	</resultMap>
 	
 	<resultMap id="auctionMap" type="Auction">
@@ -83,6 +86,11 @@
 		on t.com_info_no = ci.com_info_no
         where t.auction_no=#{auctionNo}
 	</select>
+	
+	
+
+	
+
 	
 	
 	
@@ -193,6 +201,8 @@
 		<result property="budgExpenses" column="budg_expenses" />
 		<result property="budgRegDate" column="budg_reg_date" />
 		<result property="budgCategory" column="budg_category" />
+		<result  property="codeValue"   column="code_value"/>
+		<result  property="percentBudgExpenses"   column="percent_budg_expenses"/>
 	</resultMap>
 	
 	
@@ -256,26 +266,29 @@
 		<result property="todoNo" column="todo_no" />
 	</resultMap>
 	
-	<select id="selectItemByPeriod"  parameterType="String"  resultMap="itemMap">
-		select  t.todo_title, t.todo_category category, t.todo_detail, t.todo_day, t.todo_check, t.todo_delete, c.code_value todo_category
-		from mu_todo t
-		inner join mu_code c
-		on c.code_name = t.todo_category
-		where t.todo_period = #{common}
-		and c.code_table='mu_todo' and c.code_column = 'todo_category'
-		and t.todo_delete='N'
-	</select>
 	
-	<select id="selectItemByCategory"  parameterType="java.util.Map" resultMap="itemMap">
-		select  t.todo_title, t.todo_period category, t.todo_detail, t.todo_day, t.todo_check, t.todo_delete, t.todo_dday, c.code_value todo_category, t.todo_no
+ 	<resultMap id="reservationMap" type="Reservation">
+		<result property="resNo" column="res_no" />
+		<result property="tenderNo" column="tender_no" />
+		<result property="resVisit" column="res_visit" />
+		<result property="resDate" column="res_date" />
+		<result property="resTime" column="res_date" />
+		<result property="resEmail" column="res_email" />
+		<result property="resPhone" column="res_phone" />
+		<result property="resMessage" column="res_message" />
+	</resultMap>
+	
+	
+
+
+	
+	<select id="selectItemByCategory"  parameterType="java.util.Map" resultMap="itemMap">		
+		select  t.todo_title, t.todo_period category, t.todo_detail, t.todo_day, t.todo_check, t.todo_delete, t.todo_dday, t.todo_no
 		from mu_todo t
-		inner join mu_code c
-		on c.code_name = t.todo_period
 		where t.todo_category=#{common}
-        and t.mem_no = #{memNo}
-		and c.code_table='mu_todo' and c.code_column = 'todo_period'
-		and t.todo_delete='N'
-		order by t.todo_check, t.todo_day desc, t.todo_dday desc
+        and t.mem_no =#{memNo}
+		and (todo_delete='N' or todo_delete='n') 
+		order by t.todo_check, t.todo_day desc, t.todo_dday desc;
 	</select>
 
 
@@ -295,7 +308,44 @@
 
 	
 	
-
+		<!-- 관심 업체 등록 수 -->
+	<select id="selectCompanyLikeByComMem" parameterType="int" resultType="int">
+	select count(*) like_count
+	from mu_company_like cl
+	inner join(select mem_no, com_info_no from mu_company_info) ci
+	where cl.com_info_no=ci.com_info_no
+	and ci.mem_no=#{memNo}
+	</select>
+	
+	<!-- 낙찰된 것 -->
+	<select id="selectTenderchoose" parameterType="int" resultType="int">
+	select count(*)
+	from mu_auction a
+	left join mu_tender t
+	on a.auction_no = t.auction_no
+	where t.tender_status='choo'
+	and t.mem_no={memNo}
+	</select>
+	<select id="selectTenderDoing" parameterType="int" resultType="int">
+	<![CDATA[ 
+	select count(*)
+	from mu_auction a
+	left join mu_tender t
+	on a.auction_no = t.auction_no
+	where auction_edate-now()>=0 and  t.tender_status='ing'
+	and t.mem_no={memNo}
+	]]> 
+	</select>
+	<select id="selectTenderDone" parameterType="int" resultType="int">
+	<![CDATA[ 
+	select count(*)
+	from mu_auction a
+	left join mu_tender t
+	on a.auction_no = t.auction_no
+	where auction_edate-now()<0 and  t.tender_status='ing'
+	and t.mem_no={memNo}
+	]]> 
+	</select>
 	
 	<!-- 업체 정보 등록, 수정, 삭제시 사용 -->
 	<select id="selectComInfoList"  parameterType="int" resultMap="comInfoMap">
@@ -391,13 +441,13 @@
 	<!-- 관리자 경매리스트 -->
 
     <select id="selectAuction"  parameterType="Page" resultMap="tenderMap">
-               select *
+    	select *, auction_edate-now() as dday
         from mu_member m
         inner join mu_auction a
         on a.mem_no = m.mem_no
         inner join mu_tender t
-        ON a.auction_no = t.auction_no
-        where t.mem_no=#{memNo}
+		on a.auction_no = t.auction_no
+		and t.mem_no=#{memNo}
         limit #{begin}, 10
 	</select>
 
@@ -414,6 +464,18 @@
         and t.mem_no=#{memNo}) a
 	</select>
 	
+	
+	
+	<!-- 예약 보기 -->
+	<select id="selectReservation" parameterType="int" resultMap="reservationMap">
+		select *
+		from mu_reservation r
+		right outer join mu_tender t
+        on r.tender_no = t.tender_no
+		where t.mem_no=#{memNo}
+        and res_no is not null
+	</select>
+
 	
 	
 	
@@ -471,33 +533,8 @@
 	
 
 	
-	<!-- 이거야 -->
+
 	<!-- 나의 역경매 현황보기(개인) -->
-	<!-- <select id="selectGeneralAuction" parameterType="Auction" resultMap="comInfoMap">
-		select *
-		from mu_auction a 
-		left join mu_tender t
-		on a.auction_no = t.auction_no
-		inner join mu_company_info ci
-		on t.com_info_no = ci.com_info_no
-        inner join mu_company_file cf
-        on ci.com_info_no = cf.com_info_no
-		where a.mem_no=#{memNo}
-		and a.auction_type=#{auctionType}
-		and a.auction_status='진행중'
-	</select>
-	
-	
-	<select id="selectGeneralAuctionCnt" parameterType="Auction" resultType="int">
-		select count(*)
-		from mu_auction a 
-		left join mu_tender t
-		on a.auction_no = t.auction_no
-        group by a.auction_type
-        having a.mem_no=#{memNo}
-		and a.auction_type=#{auctionType}
-		and a.auction_status='ing' 
-	</select> -->
 	<select id="selectGeneralAuction" parameterType="Auction" resultMap="auctionMap">
 		select *
 		from mu_auction
@@ -514,14 +551,14 @@
 		and a.auction_type=#{auctionType}
 		group by a.auction_type
 	</select> 
+
 	
-	
-	
-	
-	
-	
-	
-	
+	<!-- 예약 하기 -->
+
+	<insert id="insertReservation" parameterType="Reservation" >
+		insert into mu_reservation(tender_no, res_visit, res_date,res_time, res_email, res_phone, res_message)
+		values(#{tenderNo}, #{resVisit}, #{resDate}, #{resTime}, #{resEmail}, #{resPhone}, #{resMessage})
+	</insert>
 	
 	
 	
@@ -732,7 +769,7 @@
 	</select>
 
 	
-	<insert id="insertTodo" parameterType="Todo" >
+	<insert id="insertTodo" parameterType="Todo" useGeneratedKeys="true" keyProperty="todoNo">
 		insert into mu_todo(todo_title, todo_day, todo_category,todo_detail,mem_no, todo_check,todo_delete) 
 		values(#{todoTitle},#{todoDay}, #{todoCategory},#{todoDetail},#{memNo},'N','N')
 	</insert>
@@ -757,18 +794,29 @@
 	
 	
 	
+	<!-- 메인(업체) -->
+	<!--  총 낙찰가, 낙찰 평균가 -->
+	<select id="selectTenderCal" parameterType="int" resultMap="tenderMap">
+	select sum(tender_budget) sum_tender_budget, avg(tender_budget) avg_tender_budget
+	from mu_tender 
+	where tender_status='choo'
+	and mem_no=#{memNo}
+	</select>
 	
-	
+
 
 	
 	
 
 	
-	<!-- 결혼 예산 -->
+	<!-- 결혼 예산 정인용-->
 	<select id="selectBudget" parameterType="int" resultMap="budgetMap">
-		select *
-		from mu_budget
-		where mem_no=#{memNo}
+	                select *
+                    from mu_budget b
+                    right join mu_code c
+                    on c.code_name=b.budg_category
+                    where code_table='mu_budget'
+                    and mem_no=#{memNo}
 	</select>
 	
 	<insert id="insertBudget" parameterType="Budget">
@@ -781,23 +829,159 @@
 		update mu_budget 
 		set budg_content=#{budgContent},
 		budg_budget=#{budgBudget},
-		budg_expenses=#{budgExpenses},
-		budg_category=#{budgCategory}
-		where budg_no=#{budgNo};
+		budg_expenses=#{budgExpenses}
+		where budg_no=#{budgNo}
 	</update>
 	
 	
 	<delete id="deleteBudget" parameterType="int">
-		delete from mu_budget 
-		where budg_no=#{budgNo};
+		delete from mu_budget
+		where budg_no=#{budgNo}
 	</delete>
 	
 	
-
+	
+	<!-- 개인 메인 -->
+	<!-- Mypage profile Detail 오수진 -->
+	<!-- todo list -->
+<!-- 	<select id="MycountTotalTODO" parameterType="int" resultType="int">
+		select *,ifnull(count(t.todo_no),0) count
+		  from mu_todo t
+          RIGHT OUTER JOIN mu_member m 
+          on t.mem_no=m.mem_no
+		 where m.mem_no = #{memNo}
+		 and (todo_delete='N' or todo_delete='n')
+         group by t.mem_no
+	</select>
+	<select id="MycountTODOdone" parameterType="int" resultType="int">
+		 select *,ifnull(count(t.todo_no),0) count
+		  from mu_todo t
+          RIGHT OUTER JOIN mu_member m 
+          on t.mem_no=m.mem_no
+		 where m.mem_no = #{memNo}
+		 and (todo_delete='N' or todo_delete='n') and (todo_check='Y' or todo_check='y')
+         group by t.mem_no
+	</select>
+	<select id="MycountTotalAuction" parameterType="int" resultType="int">
+		select count(*)
+		  from mu_auction
+		 where  mem_no = #{memNo}
+	</select>
+		
+	<select id="MycountAuctiondone" parameterType="int" resultType="int">
+		select count(*)
+		  from mu_auction 
+	     where mem_no = #{memNo}
+		   and auction_status = 'done'
+	</select>
+	
+		wedding date 
+	<select id="getWedDate" parameterType="int" resultType="String">
+		select plan_wed_date
+		  from mu_wedding_plan 
+		 where mem_no= #{memNo}
+	</select>
+	
+		관심업체
+	<select id="MycountCompanyLike" parameterType="int" resultType="int">
+		select max(*)
+		 from mu_company_like
+		 where mem_no=#{memNo}
+	</select>
+	
+		wedding budget
+	<select id="MytotalBudget" parameterType="Budget" resultMap="Budget">
+		select sum(budg_budget) budg_budget, sum(budg_expenses) budg_expenses, ceiling(sum(budg_expenses)/sum(budg_budget)*100) as percent_budg_expenses
+		  from mu_budget 
+		 where mem_no = #{memNo}
+	</select>
+	
+	입찰 개수
+	<select id="selectByTenderCnt" parameterType="Auction"  resultType="int">
+		select max(*)
+		from mu_tender t
+ 		inner join mu_auction a
+		on a.auction_no = t.auction_no
+        where a.mem_no=#{memNo} 
+        <if test="auctionType!=sdm">
+        and a.auction_type=#{auctionType}
+        </if>
+        <if test="auctionType==sdm">
+        and a.auction_type IN('s','d','m')
+        </if>
+	</select>
+	
+	<select id="selectTodoThree" parameterType="int"  resultMap="todoMap">
+		select *
+        from mu_todo
+        where mem_no=${memNo}
+        and (todo_delete='N' or todo_delete='n')
+		order by todo_no desc
+        limit 3
+	</select> -->
 	
 	
+		<!-- Mypage profile Detail 오수진 -->
+		<!-- todo list -->
+	<select id="MycountTotalTODO" parameterType="int" resultType="int">
+		select count(*)
+		  from mu_todo
+		 where mem_no = #{memNo}
+	</select>
+	<select id="MycountTODOdone" parameterType="int" resultType="int">
+		select count(*)
+		  from mu_todo 
+		 where mem_no = #{memNo}
+		   and todo_check = 'y'
+	</select>
+		<!-- 입찰  -->
+	<select id="MycountTotalAuction" parameterType="int" resultType="int">
+		select count(*)
+		  from mu_auction
+		 where mem_no = #{memNo}
+	</select>
+		
+	<select id="MycountAuctiondone" parameterType="int" resultType="int">
+		select count(*)
+		  from mu_auction 
+	     where mem_no = #{memNo}
+		   and auction_status = 'done'
+	</select>
 	
-
+		<!-- wedding date  -->
+	<select id="getWedDate" parameterType="int" resultType="String">
+		select plan_wed_date
+		  from mu_wedding_plan 
+		 where mem_no= #{memNo}
+	</select>
+	
+		<!-- 관심업체 -->
+	<select id="MycountCompanyLike" parameterType="int" resultType="int">
+		select count(*)
+		  from mu_company_like l
+		 inner join mu_company_info ci
+		    on l.com_info_no = ci.com_info_no
+		 where l.mem_no=#{memNo}
+	</select>
+	
+		<!-- wedding budget -->
+	<select id="MytotalBudget" parameterType="int" resultType="int">
+		select ifnull(sum(budg_budget),0) budg_budget_sum
+		  from mu_budget b
+		  RIGHT OUTER JOIN mu_member m
+		  on m.mem_no = b.mem_no
+		 where m.mem_no = #{memNo}
+         group by b.mem_no
+	</select>
+	<select id="MyspendBudget" parameterType="int" resultType="int">
+		 select ifnull(sum(budg_expenses),0) budg_expenses
+		  from mu_budget b
+		  RIGHT OUTER JOIN mu_member m
+		  on m.mem_no = b.mem_no
+		 where m.mem_no =#{memNo}
+         group by b.mem_no;
+	</select>
+	
 	
 </mapper>
 

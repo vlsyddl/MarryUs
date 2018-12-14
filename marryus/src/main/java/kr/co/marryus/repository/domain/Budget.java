@@ -11,6 +11,10 @@ public class Budget {
 	private String budgContent;
 	private int budgBudget;
 	private int budgExpenses;
-	private Date budgRegDate;
 	private String budgCategory;
+	private String codeValue;
+	
+	private int percentBudgExpenses;
+	private int sumTenderBudget;
+	private int avgTenderBudget;
 }

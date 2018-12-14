@@ -12,7 +12,7 @@ public class Todo {
 	private String todoCategory;
 	private int todoNo;
 	private int memNo;
-	private Date todoDay;
+	private String todoDay;
 	private String todoCheck;
 	private String todoDelete;
 	private String todoDetail;
@@ -22,6 +22,9 @@ public class Todo {
 	private WeddingPlan weddingPlan;
 	
 	private String[] todoCategoryList;
+	
+	
+	
 	
 
 

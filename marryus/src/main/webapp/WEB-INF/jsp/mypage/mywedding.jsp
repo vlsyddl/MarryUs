@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Marry Us</title>
    <c:import url="/common/importCss.jsp"/>
-	 <c:import url="/common/importJs.jsp"/>
+    <c:import url="/common/importJs.jsp"/>
 </head>
 <body>
 
@@ -22,8 +22,10 @@
 
 
 
-	<c:import url="/common/importHeader.jsp" />
+   <c:import url="/common/importHeader.jsp" />
     <div id="wrap" class="mypage">
+    <input type="hidden" id="memNo" value="${user.no}">
+    <input type="hidden" id="no" value="${user.no}">
         <nav class="myPageNav">
             <div class="container">
                     <ul>
@@ -97,19 +99,19 @@
                         <div class="time cf">
                             <dl class="day">
                                 <dt>Days</dt>
-                                <dd>203</dd>
+                                <dd>0</dd>
                             </dl>
                             <dl class="hours">
                                 <dt>Hours</dt>
-                                <dd>22</dd>
+                                <dd>0</dd>
                             </dl>
                             <dl class="min">
                                 <dt>Min</dt>
-                                <dd>30</dd>
+                                <dd>0</dd>
                             </dl>
                             <dl class="sec">
                                 <dt>Sec</dt>
-                                <dd>99</dd>
+                                <dd>0</dd>
                             </dl>
                         </div>
                     </div>
@@ -119,12 +121,12 @@
                                 <img src="img/seungjae.jpg" alt="" class="img-responsive center-block">
                             </div>
                             <div class="photoBox partnerPhoto">
-                                    <img src="img/photo_default.png" alt="" class="img-responsive center-block" style="max-width: 50px; padding-top: 10px;">
+                                    <img src="<c:url value='/${user.general.genProfilepath}/${user.general.genProfilename}' />" alt="" class="img-responsive center-block">
                             </div>
                             <a href="<c:url value='/mypage/generalUpdateForm.do'/>">
                             <div class="name">
-                                <h2>Seungjae Lee</h2>
-                                <p>1990.04.30</p>
+                                <h2>${user.name}</h2>
+                                <p id="genBirth">${user.general.genBirth}</p>
                             </div>
                             </a>
                         </div>
@@ -138,19 +140,19 @@
                                     <a href="#">
                                         <dl>
                                             <dt><i class="far fa-list-alt"></i></dt>
-                                            <dd>
+                                            <dd id="profileAuction">
                                                 <b>0</b> <br>
                                                 <span>out of 20</span>
                                             </dd>
                                         </dl>
-                                        <p>Vendors hired</p>
+                                        <p>Auction List</p>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a href="<c:url value='/mypage/myTodo.do'/>">
                                         <dl>
                                             <dt><i class="fas fa-list-ol"></i></dt>
-                                            <dd>
+                                            <dd id="profileTodo">
                                                 <b>7</b> <br>
                                                 <span>out of 70</span>
                                             </dd>
@@ -159,22 +161,22 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a href="<c:url value='/mypage/likeCompany.do?memNo=${user.no}'/>">
                                         <dl>
                                             <dt><i class="fas fa-male"></i><i class="fas fa-female"></i></dt>
-                                            <dd>
+                                            <dd id="profileLikeCompany">
                                                 <b>0</b> <br> 
-                                                <span>out of 20</span>
+                                                <span>I like that!</span>
                                             </dd>
                                         </dl>
-                                        <p>Guests confirmed</p>
+                                        <p>Like Companies</p>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a href="<c:url value='/mypage/myBudget.do'/>">
                                         <dl>
                                             <dt><i class="fas fa-calculator"></i></dt>
-                                            <dd>
+                                            <dd id="profileBudget">
                                                 <b>0</b> <br>
                                                 <span>out of 20</span>
                                             </dd>
@@ -275,38 +277,80 @@
     
     
     
-    <footer>
-        <div class="container">
-            <h3>©2018 MarryUs. All rights reserved.</h3>
-        </div>
-    </footer>
+
     
     
-    
-    <aside id="sideBar">
-            <ul>
-                <li><a href="<c:url value="/mypage/mywedding.do"/>"><i class="fas fa-user-edit"></i>마이페이지</a></li>
-                <li><a href="<c:url value="/community/notice.do"/>"><i class="fas fa-headset"></i></i>공지 게시판</a></li>
-                <li><a href="#"><i class="fas fa-chalkboard-teacher"></i>후기 게시판</a></li>
-                <li><a href="#"><i class="far fa-kiss-wink-heart"></i>신부대기실</a></li>
-                <li><a href="#"><i class="far fa-comments"></i>1 : 1 질문</a></li>
-                <li><a href="#"><i class="far fa-question-circle"></i>FAQ</a></li>
-            </ul>
-        </aside>
+    <c:import url="/common/importSideBar.jsp" />
+    <c:import url="/common/importFooter.jsp" />
         <script>
             $(function(){
                 new WOW().init();
     
                 var options = {
-                    'speed' : 500,				 		//스피드
-                    'initTop' : 300, 					//기본top위치
-                    'alwaysTop' : false,				// true
-                    'default_x' : false 				//레이어가 붙는 아이디 
+                    'speed' : 500,                   //스피드
+                    'initTop' : 300,                //기본top위치
+                    'alwaysTop' : false,            // true
+                    'default_x' : false             //레이어가 붙는 아이디 
                 }
                 $('#sideBar').Floater(options);
                 
                 //날짜 카운트
-                $.fn.CountDownTimer('11/22/2019 00:00 AM');  
+              /*   $.fn.CountDownTimer('11/22/2019 00:00 AM');   */
+                
+             // 생년월일 'yyyy.MM.dd로 바꿔주기'
+               var birth = $("#genBirth").text();
+               var year=birth.substring(0,4);
+               var month=birth.substring(4,6);
+               var day=birth.substring(6,8);
+               var memBrithday = year+"."+month+"."+day;
+               $("#genBirth").text(memBrithday);
+               
+                var no =  $("#memNo").val();
+                
+                $.ajax({
+                 url:"/marryus/mypage/MyproFileDetail.json",
+                 data:{memNo:no} ,
+                 type:"post"
+                 
+              }) 
+                .done(function(result){
+                  console.log(result)
+                  var html =""
+                  html += '<b>'+result.auctionDone+'</b> <br>'
+                   html += '<span>out of'+result.auctionTotal+'</span>';
+                  $("#profileAuction").html(html)
+                  
+                  var html2="";
+                  html2 += '<b>'+result.todoDone+'</b> <br>'
+                  html2 += '<span>out of'+result.todoTotal+'</span>';
+                  $("#profileTodo").html(html2)
+                  
+                  var html3="";
+                  html3 += '<b>'+result.likeCompany+'</b> <br>'
+                  html3 += '<span>I like that!</span>';
+                  $("#profileLikeCompany").html(html3)
+                  
+                  var html4="";
+                  html4 += '<b>spend : '+result.spendBudget+'</b> <br>'
+                  html4 += '<span>Total : '+result.totalBudget+'</span>';
+                  $("#profileBudget").html(html4)
+                  
+               });
+               
+                 
+            });
+            $(document).ready(function(){
+            	var memNo  = $("#no").val() 
+            	  $.ajax({
+                      url:"/marryus/mypage/MyproFileWeddingDate.json",
+                      data:{memNo:memNo },
+                      type:"post"
+                   })
+                   .done(function(result){
+                      var wd = moment(result.wedDate).format('YYYY-MM-DD');
+                      $.fn.CountDownTimer(wd); 
+                   });
+                  
             });
         </script>
 </body>

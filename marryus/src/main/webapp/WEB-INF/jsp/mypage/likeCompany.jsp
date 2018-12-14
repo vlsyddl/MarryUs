@@ -21,6 +21,7 @@
 	src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
     <c:import url="/common/importCss.jsp"/>
 	 <c:import url="/common/importJs.jsp"/>
+	     <link rel="stylesheet" href="<c:url value="/resources/css/wedding.css"/>">
 <style>
 	
 
@@ -33,7 +34,7 @@
 <body>
   	<c:import url="/common/importHeader.jsp" />
     <div id="wrap" class="mypage">
-        <nav class="myPageNav">
+ <nav class="myPageNav">
             <div class="container">
                     <ul>
                         <li class="on">
@@ -49,7 +50,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="<c:url value='/mypage/myAuction.do?memNo=${user.no}&auctionType=v'/>">
+                            <a href="<c:url value='/mypage/myAuction.do?choo=tab1&memNo=${user.no}&auctionType=v'/>">
                                 <img src="img/auction_ico.png" alt="" class="img-responsive center-block">
                                 Auction List
                             </a>
@@ -66,8 +67,6 @@
                                 Bookmark
                             </a>
                         </li>
-
-
                     </ul>
             </div>
         </nav>
@@ -91,22 +90,11 @@
                      <c:forEach var="l" items="${like}">
 	                    <li class="card">
 	                        <a href="#" class="card-image"><img src=<c:url value="/${l.comFilePath}/${l.comFileName}"/> /></a>
-	                        <a>${l.comInfoName}</a>
+	                        <a>${l.comInfoName}<span type="button">${l.codeValue}</span></a>
 	                        <a class="card-description" >
 	                            <h2>${l.comInfoAddr}</h2>
 	                            <p>${l.comInfoAddrDetail}</p>
-	                            <p>${l.codeValue}</p>
 	                        </a>
-	                        <ul>
-	                            <li>
-	                                <span >별점</span>
-	                                <span class="glyphicon glyphicon-star"></span>
-	                                <span class="glyphicon glyphicon-star"></span>
-	                                <span class="glyphicon glyphicon-star"></span>
-	                                <span class="glyphicon glyphicon-star"></span>
-	                            </li>
-	                      
-	                        </ul>
 	                        <div class="btn-group" role="group">
 	                            <button type="button" class="btn btn-default"  onclick="location.href='likeCompanyDelete.do?comInfoNo=${l.comInfoNo}&memNo=${user.no}'">관심업체 제거</button>
 	                        </div>

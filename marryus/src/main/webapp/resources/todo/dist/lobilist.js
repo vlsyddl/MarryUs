@@ -13,6 +13,7 @@ $(function () {
 
     var StorageLocal = function () {
         var STORAGE_KEY = 'lobilist';
+        console.log(STORAGE_KEY);
 
 
         this.addList = function(lobilistId, listTitle){
@@ -141,11 +142,14 @@ $(function () {
          * @private
          */
         _init: function () {
+
             var me = this;
+            
+           
+            
+            
             me.suppressEvents();
             if (!me.$options.id) {
-//                me.$options.id = me.$lobiList.getNextListId();
-//                me.$options.id ="lobilist-list-"+(++optionsId);
                 me.$options.id ="lobilist-list-"+me.$options.common;
                 me.$hasGeneratedId = true;
             }
@@ -215,9 +219,10 @@ $(function () {
                 return me;
             }
             
-
+            
 
             item = me._processItemData(item);
+            
 
             if (me.$globalOptions.actions.insert) {
                 $.ajax(me.$globalOptions.actions.insert, {
@@ -238,19 +243,25 @@ $(function () {
                     });
             } else {
                 item.id = me.$lobiList.getNextId();
-                me._addItemToList(item);
+            	if(!item.todoNo);
+                console.log(item,"아이템 정보");
+                $.ajax({
+                	url : "/marryus/mypage/myTodoWrite.do",
+                	type : "POST",
+                	data : item
+                }).done(function (data) {
+                	console.log("투두 삽입");
+                	item.todoNo = data;
+                	console.log(item.todoNo);
+                	me._addItemToList(item);
+                });
+                
             }
             if(!item.todoNo||item.todoNo!=""||item.todoNo==null){
             	item.listId = me.$options.id;
-                console.log("후보지2");
-                console.log(item,"아이템 정보");
-            $.ajax({
-            	url : "/marryus/mypage/myTodoWrite.do",
-            	type : "POST",
-            	data : item
-            }).done(function () {
-            	console.log("투두 삽입");
-            });
+            	
+
+            
             }
             return me;
         },
@@ -345,27 +356,8 @@ $(function () {
             var me = this;
             if (item.id) {
                 me.updateItem(item, errorCallback);
-                item.listId = me.$options.id;
-                console.log(item);
-                $.ajax({
-                	url : "/marryus/mypage/myTodoUpdate.do",
-                	type : "POST",
-                	data : item
-                }).done(function () {
-                	console.log("투두 업데이트");
-                });
             } else {
                 me.addItem(item, errorCallback);
-                item.listId = me.$options.id;
-                    console.log("후보지3");
-                    console.log(item,"아이템 정보");
-                    $.ajax({
-                    	url : "/marryus/mypage/myTodoWrite.do",
-                    	type : "POST",
-                    	data : item
-                    }).done(function () {
-                    	console.log("투두 삽입");
-                    });
             }
             return me;
         },
@@ -734,6 +726,19 @@ $(function () {
                 console.log(item.id);
             }*/
             if (me._triggerEvent('beforeItemAdd', [me, item]) !== false) {
+            	if(!item.todoNo){
+                console.log(item,"아이템 정보");
+                $.ajax({
+                	url : "/marryus/mypage/myTodoWrite.do",
+                	type : "POST",
+                	data : item
+                }).done(function (data) {
+                	console.log("투두 삽입");
+                	item.todoNo = data;
+                	console.log(item.todoNo);
+                	console.log(me);
+                });
+            	}
                 item = me._processItemData(item);
                 me._addItemToList(item);
             }
@@ -774,6 +779,7 @@ $(function () {
             	data : item
             }).done(function () {
             	console.log("투두 체크상태 변경");
+            	me._triggerEvent('initTodolist', [me, item]);
             });
             
         },
@@ -981,13 +987,6 @@ $(function () {
                 'class': 'lobilist-item-title',
                 'html': item.title
             }));
-            console.log(item.todoNo);
-            if(item.todoNo){
-                $li.append($('<div>', {
-                    'class': 'lobilist-item-todoNo',
-                    html: item.todoNo
-                }));
-            }
             if (item.description) {
                 $li.append($('<div>', {
                     'class': 'lobilist-item-description',
@@ -1001,9 +1000,11 @@ $(function () {
                 }));
             }
             $li = me._addItemControls($li);
-            if (item.todoCheck=="Y") {
-                $li.find('input[type=checkbox]').prop('checked', false);
+            if (item.todoCheck=="Y"||item.todoCheck=="y") {
+                $li.find('input[type=checkbox]').prop('checked', true);
                 $li.addClass('item-done');
+            }else{
+                $li.find('input[type=checkbox]').prop('checked', false);
             }
             $li.data('lobiListItem', item);
             me.$ul.append($li);
@@ -1012,7 +1013,6 @@ $(function () {
             if (me.isStateful()) {
                 me.$lobiList.storageObject.addTodo(me.$lobiList.getId(), me.getId());
             }
-            console.log(item.todoNo,"")
 
 
 
@@ -1060,7 +1060,7 @@ $(function () {
             this.deleteItem(item);
             console.log(item,"아이템 정보");
             $.ajax({
-            	url : "/marryus/mypage/myTodoDelete.do",
+            	url:"/marryus/mypage/myTodoDelete.do",
             	type : "POST",
             	data : item
             }).done(function () {
@@ -1136,10 +1136,19 @@ $(function () {
         $el: null,
         $lists: [],
         $options: {},
+        
+        
 
         eventsSuppressed: false,
 
         init: function (options) {
+        	$.ajax({
+        		url: "/marryus/mypage/myTodolist.do",
+        		method: "POST"
+        	}).done(function(todo){
+        	    	$lists= todo;
+        	});
+        	
             var me = this;
             me.suppressEvents();
 
@@ -1211,7 +1220,7 @@ $(function () {
          */
         _handleSortable: function () {
             var me = this;
-            console.log("핸들러 같지는 않은데22");
+            console.log(me);
             if (me.$options.sortable) {
                 me.$el.sortable({
                     items: '.lobilist-wrapper',
@@ -1459,7 +1468,13 @@ $(function () {
          * Fires when <code>LobiList</code> is initialized
          * @param {LobiList} The <code>LobiList</code> instance
          */
-        init: null,
+        init: function() {$.ajax({
+    		url: "/marryus/mypage/myTodolist.do",
+    		method: "POST"
+    	}).done(function(todo){
+    	    	$lists=todo;
+    	});
+        },
 
         /**
          * @event beforeDestroy
@@ -1481,7 +1496,13 @@ $(function () {
          * @param {LobiList} The <code>LobiList</code> instance
          * @param {List} The <code>List</code> instance to be added
          */
-        beforeListAdd: null,
+        beforeListAdd: function() {$.ajax({
+    		url: "/marryus/mypage/myTodolist.do",
+    		method: "POST"
+    	}).done(function(todo){
+    	    	$lists=todo;
+    	});
+        },
 
         /**
          * @event afterListAdd
@@ -1569,7 +1590,6 @@ $(function () {
          */
         afterItemReorder: function(me, oldList, currentIndex, oldIndex, item){
         	item.listId = me.$options.id;
-        	console.log(item);
         	$.ajax({
             	url : "/marryus/mypage/myTodoUpdate.do",
             	type : "POST",
@@ -1619,6 +1639,16 @@ $(function () {
          * @param {String} Old title name
          * @param {String} New title name
          */
-        titleChange: null
+        titleChange: null,
+        
+        initTodolist : function(){
+        	$.ajax({
+        		url: "/marryus/mypage/myTodolist.do",
+        		method: "POST"
+        	}).done(function(todo){
+    	    	$lists=todo;
+        	});
+        	
+        }
     };
 });

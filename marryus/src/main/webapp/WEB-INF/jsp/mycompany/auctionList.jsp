@@ -172,39 +172,28 @@
 	<span class="gnbBar"></span> 
 </header>
     <div id="wrap" class="mypage">
-        <nav class="myPageNav">
+        <nav class="myCompanyNav">
             <div class="container">
                     <ul>
                         <li class="on">
-                            <a href="<c:url value='/mypage/likeCompany.do?memNo=${user.no}'/>">
-                                    <img src="img/hall_ico.png" alt="" class="img-responsive center-block">
-                                My Wedding
+                            <a href="<c:url value='/mycompany/myCompany.do'/>">
+                                <img src="<c:url value="/resources/"/>img/company_ico.png" alt="" class="img-responsive center-block">
+                                My Company
                             </a>
                         </li>
                         <li>
-                            <a href="<c:url value='/mypage/auctionList.do'/>">
-                                    <img src="img/chk_ico.png" alt="" class="img-responsive center-block">
-                                Check List
+                            <a href="<c:url value='/mycompany/service.do'/>">
+                                    <img src="<c:url value="/resources/"/>img/card_ico.png" alt="" class="img-responsive center-block">
+                                My Service
                             </a>
                         </li>
                         <li>
-                            <a href="<c:url value='/mypage/todoExample.do'/>">
-                                <img src="img/auction_ico.png" alt="" class="img-responsive center-block">
+                            <a href="<c:url value='/mycompany/auctionList.do'/>">
+                                <img src="<c:url value="/resources/"/>img/graph_ico.png" alt="" class="img-responsive center-block">
                                 Auction List
                             </a>
                         </li>
-                        <li>
-                            <a href="<c:url value='/mypage/generalUpdate.do'/>">
-                                <img src="img/budget_ico.png" alt="" class="img-responsive center-block">
-                                Budget Spent
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<c:url value='/mypage/companyUpdate.do'/>">
-                                <img src="img/bookmark_ico.png" alt="" class="img-responsive center-block">
-                                Bookmark
-                            </a>
-                        </li>
+                        
                     </ul>
             </div>
         </nav>

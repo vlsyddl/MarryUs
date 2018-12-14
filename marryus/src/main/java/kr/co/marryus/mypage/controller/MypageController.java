@@ -1,29 +1,31 @@
 package kr.co.marryus.mypage.controller;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 import com.google.gson.Gson;
 
 import kr.co.marryus.member.service.MemberService;
 import kr.co.marryus.mypage.service.MypageService;
-import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import kr.co.marryus.repository.domain.Auction;
+import kr.co.marryus.repository.domain.Budget;
 import kr.co.marryus.repository.domain.CompanyFile;
 import kr.co.marryus.repository.domain.CompanyInfo;
 import kr.co.marryus.repository.domain.CompanyLike;
@@ -32,10 +34,9 @@ import kr.co.marryus.repository.domain.GeneralMember;
 import kr.co.marryus.repository.domain.Item;
 import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.Page;
+import kr.co.marryus.repository.domain.Reservation;
 import kr.co.marryus.repository.domain.Todo;
-import kr.co.marryus.repository.domain.Todolist;
-
-import org.springframework.security.crypto.password.PasswordEncoder;
+import kr.co.marryus.repository.domain.myMain;
 
 
 
@@ -91,6 +92,12 @@ public class MypageController {
         model.addAttribute("lastPage", (int) Math.ceil(service.selectAuctionCnt(((Member)session.getAttribute("user")).getNo()) / 10d));
         model.addAttribute("pageNo", pageNo);
         
+	}
+	
+	/** 예약 보기 */
+	@RequestMapping("/viewReservation.do")
+    public void viewReservation(HttpSession session, Model model) {
+		model.addAttribute("res",service.selectReservation(((Member)session.getAttribute("user")).getNo()));
 	}
 	
 	
@@ -258,10 +265,12 @@ public class MypageController {
 		Auction auction1 = auction;
 		auction1.setPageNo(pageNo-1);
 	    model.addAttribute("pageNo", pageNo);
-		model.addAttribute("count", service.selectGeneralAuctionCnt(auction));
 		System.out.println(choo);
 		model.addAttribute("choose", choo);
-		model.addAttribute("myAuction", service.selectGeneralAuction(auction1));
+		model.addAttribute("count", service.selectGeneralAuctionCnt(auction));
+		if(service.selectGeneralAuctionCnt(auction)!=0) {
+			model.addAttribute("myAuction", service.selectGeneralAuction(auction1));
+		}
 
 		}catch(Exception e) {e.getStackTrace();}
 		
@@ -299,12 +308,20 @@ public class MypageController {
 	
 	@RequestMapping("/myTodo.do")
 	public void myTodo(Model model, HttpSession session) {
-		model.addAttribute("todo", new Gson().toJson(service.selectTodoSortByCategory(((Member)session.getAttribute("user")).getNo())));
+		model.addAttribute("todo", "lists:"+new Gson().toJson(service.selectTodoSortByCategory(((Member)session.getAttribute("user")).getNo())));
+	}
+	
+	@RequestMapping("/myTodolist.do")
+	@ResponseBody 
+	public String myTodolist(HttpSession session) {
+		//model.addAttribute("todo", new Gson().toJson(service.selectTodoSortByCategory(((Member)session.getAttribute("user")).getNo())));
+		return new Gson().toJson(service.selectTodoSortByCategory(((Member)session.getAttribute("user")).getNo()));
 	}
 
 	@RequestMapping("/myTodoInsert.do")
 	@ResponseBody 
 	public void myTodoInsert(Item item, HttpSession session) {
+		
 		Todo todo =item.getTodo();
 		todo.setMemNo((((Member)session.getAttribute("user")).getNo()));
 		service.insertTodo(todo);
@@ -313,10 +330,11 @@ public class MypageController {
 	
 	@RequestMapping("/myTodoWrite.do")
 	@ResponseBody 
-	public void myTodoWrite(Item item, HttpSession session) throws Exception{
+	public String myTodoWrite(Item item, HttpSession session) throws Exception{
 		Todo todo =item.getTodo();
 		todo.setMemNo((((Member)session.getAttribute("user")).getNo()));
 		service.insertTodo(todo);
+		return todo.getTodoNo()+"";
 	}
 	
 
@@ -336,9 +354,142 @@ public class MypageController {
 		System.out.println(no);
 	}
 	
+	
+	@RequestMapping("/reservation.do")	
+	@ResponseBody 
+	public int reservation(Reservation res) throws Exception{
+		return service.insertReservation(res);
+	}
+	
+	
+	/**
+	 * Mypage budget 정인용
+	 * @param model
+	 * @param memNo
+	 */
 	@RequestMapping("/myBudget.do")
-	public void myBudget(Model model) {
+	public void myBudget(Model model, HttpSession session) {
+		model.addAttribute("budgetList", service.selectBudget(((Member)session.getAttribute("user")).getNo()));
+	}
+	
+	@RequestMapping("/writeMyBudget.do")
+	@ResponseBody
+	public void writeMyBudget(Budget budget) {
+		service.insertBudget(budget);
+	}
+	
+	@RequestMapping("/updateMyBudget.do")
+	@ResponseBody
+	public void updateMyBudget(Budget budget) {
+		service.updateBudget(budget);
+	}
+	
+	@RequestMapping("/deleteMyBudget.do")
+	@ResponseBody
+	public void deleteMyBudget(int budgNo) {
+		service.deleteBudget(budgNo);
+	}
+	/**
+	 *  Mypage profile Detail 오수진 
+	 * mypage profile Detail
+	 * @param memNo
+	 * @return
+	 * @throws Exception
+	 */
+	/*@RequestMapping(value="/MyproFileDetail.json",method= RequestMethod.POST)
+	@ResponseBody
+	public myMain TodoList(int memNo)throws Exception {
+		myMain main = new myMain();
+		main.setTodoTotal(service.MycountTotalTODO(memNo));
+		main.setTodoDone(service.MycountTODOdone(memNo));
+		main.setAuctionTotal(service.MycountTotalAuction(memNo));
+		main.setAuctionDone(service.MycountAuctiondone(memNo));
+		main.setLikeCompany(service.MycountCompanyLike(memNo));
+		System.out.println(service.MytotalBudget(memNo).getAvgTenderBudget());
+		if(service.MytotalBudget(memNo).getAvgTenderBudget()!=0) {
+			main.setTotalBudget(service.MytotalBudget(memNo));
+		}
+	    String[] auctionList= {"v","sdm","h","j","e"};
+	    Map<String, Integer> list=new HashMap<>();
+	    for(String li:auctionList) {
+	    	Auction auction = new Auction();
+	    	auction.setMemNo(memNo);
+	    	auction.setAuctionType(li);
+	    	list.put(li, service.selectByTenderCnt(auction));
+	    }
+	    main.setTenderCnt(list);
+	    main.setTodoThree(service.selectTodoThree(memNo));
+	    
+	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+		String weddingDate=service.getWedDate(memNo);  
+		Date date=sdf.parse(weddingDate);
+		main.setWedDate(date);
 		
+		return main;
+	}*/
+	/**
+	 *  Mypage profile Detail 오수진 
+	 *  mypage profile - 카운트 다운
+	 * @param memNo
+	 * @return
+	 * @throws Exception
+	 */
+/*	@RequestMapping(value="/MyproFileWeddingDate.json",method= RequestMethod.POST)
+	@ResponseBody
+	public HashMap<String, Object> MygetWeddingDate(int memNo) throws Exception{
+		HashMap<String, Object> wdMap= new HashMap<>();
+		
+		//String 값 Date로 parse
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+			String weddingDate=service.getWedDate(memNo);  
+			Date date=sdf.parse(weddingDate);
+		wdMap.put("wedDate", date);
+		return wdMap;
+	}*/
+	
+	
+	/**
+	 *  Mypage profile Detail 오수진 
+	 * mypage profile Detail
+	 * @param memNo
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/MyproFileDetail.json",method= RequestMethod.POST)
+	@ResponseBody
+	public HashMap<String, Integer> TodoList(int memNo)throws Exception {
+		HashMap<String, Integer> proFileMap = new HashMap<>();
+		proFileMap.put("todoTotal", service.MycountTotalTODO(memNo));
+		proFileMap.put("todoDone", service.MycountTODOdone(memNo));
+		proFileMap.put("auctionTotal", service.MycountTotalAuction(memNo));
+		proFileMap.put("auctionDone", service.MycountAuctiondone(memNo));
+		proFileMap.put("likeCompany", service.MycountCompanyLike(memNo));
+		proFileMap.put("totalBudget", service.MytotalBudget(memNo));
+		proFileMap.put("spendBudget", service.MyspendBudget(memNo));
+		
+		
+		return proFileMap;
+	}
+	/**
+	 *  Mypage profile Detail 오수진 
+	 *  mypage profile - 카운트 다운
+	 * @param memNo
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/MyproFileWeddingDate.json",method= RequestMethod.POST)
+	@ResponseBody
+	public HashMap<String, Object> MygetWeddingDate(int memNo) throws Exception{
+		HashMap<String, Object> wdMap= new HashMap<>();
+		
+		//String 값 Date로 parse
+		String weddingDate=service.getWedDate(memNo);  
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+		Date date=sdf.parse(weddingDate);
+		
+		wdMap.put("wedDate", date);
+		return wdMap;
 	}
 	
 	

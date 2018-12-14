@@ -17,6 +17,8 @@ public class Tender {
 	private int comInfoNo;
 	private String tenderTitle;
 	
+	private double dday;
+	
 
 	
 }
