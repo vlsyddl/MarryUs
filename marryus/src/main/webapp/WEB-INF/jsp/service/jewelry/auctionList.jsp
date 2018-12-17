@@ -67,9 +67,6 @@
 								        </div>
 							        	<h2 class="jewelryType">예물 종류</h2>
 								        <div class="form-group">
-								        	<div class="col-md-2">
-								        		<label for="date_pretty">예물종류 : </label>
-								        	</div>
 								        	<div class="col-md-10">
 								        		<input type="radio" name="jewelryType" class="form-control" value="dm"/>다이아몬드
 								        		<input type="radio" name="jewelryType" class="form-control" value="gd"/>금

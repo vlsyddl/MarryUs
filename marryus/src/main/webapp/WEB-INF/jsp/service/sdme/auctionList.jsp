@@ -71,9 +71,6 @@
 								        </div>
 							        	<h2 class="studioOutdoor">야외촬영여부</h2>
 								        <div class="form-group">
-								        	<div class="col-md-2">
-								        		<label for="date_pretty">야외촬영여부 : </label>
-								        	</div>
 								        	<div class="col-md-10">
 								        		<input type="radio" name="studioOutdoor" class="form-control" value="Y"/>예
 								        		<input type="radio" name="studioOutdoor" class="form-control" value="N"/>아니오
@@ -81,9 +78,6 @@
 								            </div>
 							        	<h2 class="studioSnapshot">스냅샷촬영여부</h2>
 								        <div class="form-group">
-								        	<div class="col-md-2">
-								        		<label for="date_pretty">스냅샷촬영여부 : </label>
-								        	</div>
 								        	<div class="col-md-10">
 								        		<input type="radio" name="studioSnapshot" class="form-control" value="Y"/>예
 								        		<input type="radio" name="studioSnapshot" class="form-control" value="N"/>아니오
@@ -91,9 +85,6 @@
 								        </div>
 							        	<h2 class="studioVideo">비디오촬영여부</h2>
 								        <div class="form-group">
-								        	<div class="col-md-2">
-								        		<label for="date_pretty">비디오촬영여부 : </label>
-								        	</div>
 								        	<div class="col-md-10">
 								        		<input type="radio" name="studioVideo" class="form-control" value="Y"/>예
 								        		<input type="radio" name="studioVideo" class="form-control" value="N"/>아니오
@@ -101,9 +92,6 @@
 								        </div>
 							        	<h2 class="studioPickup">픽업여부</h2>
 								        <div class="form-group">
-								        	<div class="col-md-2">
-								        		<label for="date_pretty">픽업여부 : </label>
-								        	</div>
 								        	<div class="col-md-10">
 								        		<input type="radio" name="studioPickup" class="form-control" value="Y"/>예
 								        		<input type="radio" name="studioPickup" class="form-control" value="N"/>아니오
@@ -145,9 +133,6 @@
 								        </div>
 							        	<h2 class="dressNeckline">넥라인</h2>
 								        <div class="form-group">
-								        	<div class="col-md-2">
-								        		<label for="date_pretty">넥라인 : </label>
-								        	</div>
 								        	<div class="col-md-10">
 								        		<input type="radio" name="dressNeckline" class="form-control" value="All"/>상관없음.
 								        		<input type="radio" name="dressNeckline" class="form-control" value="Sweetheart"/>스윗하트 넥
@@ -161,9 +146,6 @@
 								        </div>
 							        	<h2 class="dressType">드레스타입</h2>
 								        <div class="form-group">
-								        	<div class="col-md-2">
-								        		<label for="date_pretty">드레스타입 : </label>
-								        	</div>
 								        	<div class="col-md-10">
 								        		<input type="radio" name="dressType" class="form-control" value="All"/>상관없음
 								        		<input type="radio" name="dressType" class="form-control" value="Mermaid"/>머메이드라인
@@ -176,9 +158,6 @@
 								        </div>
 							        	<h2 class="dressPrice">예상견적</h2>
 								        <div class="form-group">
-								        	<div class="col-md-2">
-								        		<label for="date_pretty">예상견적 : </label>
-								        	</div>
 								        	<div class="col-md-10">
 									  			<input type="text" name="dressPrice" class="form-control"/>
 								        	</div>
@@ -212,9 +191,6 @@
 								        </div>
 							        	<h2 class=mkuMakeup>신부화장</h2>
 								        <div class="form-group">
-								        	<div class="col-md-2">
-								        		<label for="date_pretty">신부화장 : </label>
-								        	</div>
 								        	<div class="col-md-10">
 								        		<input type="radio" name="mkuMakeup" class="form-control" value="Y"/>예
 								        		<input type="radio" name="mkuMakeup" class="form-control" value="N"/>아니오
@@ -222,9 +198,6 @@
 								        </div>
 							        	<h2 class="mkuMom">혼주화장</h2>
 								        <div class="form-group">
-								        	<div class="col-md-2">
-								        		<label for="date_pretty">혼주화장 : </label>
-								        	</div>
 								        	<div class="col-md-10">
 								        		<input type="radio" name="mkuMom" class="form-control" value="Y"/>예
 								        		<input type="radio" name="mkuMom" class="form-control" value="N"/>아니오
@@ -232,9 +205,6 @@
 								        </div>
 							        	<h2 class="mkuWorkout">출장희망</h2>
 								        <div class="form-group">
-								        	<div class="col-md-2">
-								        		<label for="date_pretty">출장희망 : </label>
-								        	</div>
 								        	<div class="col-md-10">
 								        		<input type="radio" name="mkuWorkout" class="form-control" value="Y"/>예
 								        		<input type="radio" name="mkuWorkout" class="form-control" value="N"/>아니오

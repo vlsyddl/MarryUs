@@ -18,9 +18,9 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/wedding.css"/>">
     
 <style>
-	
-
-
+	.btn-recom {
+		background-color: rgb(232, 210, 34);
+	}
 </style>
 </head>
 <body>
@@ -323,8 +323,9 @@ $(function(){
 
 function detailBtn() {
 	var html = "";
-	html += '<button type="button" class="detailLikeBtn" >업체 추천</button>';
-	$("#detailBtn").html(html);
+	html += '<button type="button" class="btn btn-default detailLikeBtn"><i class="far fa-star"></i> 관심업체 등록</button>';
+	html += '<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>';
+	$(".modal-footer").html(html);
 
 	 $(".detailLikeBtn").click(function(){
 		  likeBtn($(this).data("comno")); 
@@ -348,9 +349,11 @@ function comLikeCheck(comNo) {
 		console.log("result +++ " + result);
 		console.log("userNo" + userNo);
 		if (result == 0) {
-			$('.detailLikeBtn').text("추천할거면 눌러봐 ^^");
+            $(".detailLikeBtn").html('<i class="far fa-star"></i> 관심업체 등록');
+            $(".detailLikeBtn").attr("class", "btn btn-default detailLikeBtn");
 		} else {
-			$('.detailLikeBtn').text("이미 추천했어. 취소할거면 눌러 ^^");
+            $(".detailLikeBtn").html('<i class="far fa-star"></i> 관심업체 해제');
+            $(".detailLikeBtn").attr("class", "btn btn-recom detailLikeBtn");
 		}
 		comLikeCnt = result;
 	});
@@ -378,11 +381,13 @@ function likeBtn(comNo) {
 		if (comLikeCnt == 0) {
 			alert("관심업체로 등록하셨습니다..");
 			comLikeCnt = 1;
-			$('.detailLikeBtn').text("이미 추천했어. 취소할거면 눌러 ^^");
+            $(".detailLikeBtn").html('<i class="far fa-star"></i> 관심업체 해제');
+            $(".detailLikeBtn").attr("class", "btn btn-recom detailLikeBtn");
 		} else {
 			alert("관심업체 등록을 취소하셨습니다.");
 			comLikeCnt = 0;
-			$('.detailLikeBtn').text("추천할거면 눌러봐 ^^");
+            $(".detailLikeBtn").html('<i class="far fa-star"></i> 관심업체 등록');
+            $(".detailLikeBtn").attr("class", "btn btn-default detailLikeBtn");
 		}
 	});
 };
@@ -413,18 +418,15 @@ function likeBtn(comNo) {
                 <dt>연락처 : </dt>
                 <dd></dd>
             </dl>
-            <dl class="Profile">
+            <dl class="profile">
                 <dt>정보 : </dt>
                 <dd></dd>
             </dl>
         </div>
         <div class="contentsBox">
         </div>
-        <div id="detailBtn">
-        </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
