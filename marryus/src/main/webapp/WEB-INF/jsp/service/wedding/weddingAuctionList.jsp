@@ -146,8 +146,17 @@
                             <tr>
                                 <td>${a.auctionNo}</td>
                                 <td><a href="#" data-href="${a.auctionNo}" data-type="${a.auctionType}" data-no="${a.member.no}" class="col-md-4 weddingBox">${a.member.name}</a></td>
+                                 <c:if test="${a.auctionType eq 'v'}">
                                 <td>웨딩홀</td>
-                                <td>${a.auctionStatus}</td>
+                                </c:if>
+<!--                                 <td>웨딩홀</td> -->
+                                <c:if test="${a.auctionStatus eq 'ing'}">
+                                <td>진행중</td>
+                                </c:if>
+                                <c:if test="${a.auctionStatus eq 'done'}">
+                                <td>마감</td>
+                                </c:if>
+<%--                                 <td>${a.auctionStatus}</td> --%>
                                 <td><fmt:formatDate value="${a.auctionSdate}" pattern="yyyy-MM-dd" /></td>
                                 <td><fmt:formatDate value="${a.auctionEdate}" pattern="yyyy-MM-dd" /></td>
                             </tr>
@@ -542,7 +551,7 @@ $(function(){
 	        <h4 class="modal-title" id="myModalLabel"></h4>
 	      	</div>
 				<form action="tenderwrite.do"  method="post" id="frm" name="auctionForm" onsubmit="return doAction()" enctype="multipart/form-data">
-				      <div class="modal-body">
+				      <div class="modal-body" id="weddingAu">
 				      <div class="form-group">
 				      <input type="hidden" name="memNo" value="${user.no}" />
 <%-- 				      <input type="hidden" name="auctionNo" value="1" /> --%>
@@ -558,15 +567,15 @@ $(function(){
 					  	</div><br>
 					  	<h2>서비스 소개</h2>
 					  	<div class="form-group">
-					  		<div class="col-md-4">
-					  			<textarea name="tenderInfo" id="smarteditor" rows="10" cols="100" style="width:100%; height:350px;"></textarea>
+					  		<div class="col-md-6">	
+					  			<textarea  name="tenderInfo" id="tenderInfo" class="wish form-control" rows="3" cols="30"></textarea>
 					  		</div>
 					  	</div><br>
 					  	
-					  	<h2>입찰 예산</h2>
+					  	<h2>입찰 예산(만원)</h2>
 					  	<div class="form-group">
 					  		<div class="col-md-4">
-					  			<input type="text" id="tenderBudget" name="tenderBudget" class="form-control"/>
+					  			<input class="form-control" type="text" id="tenderBudget" name="tenderBudget" class="form-control"/>
 					  		</div>
 					  	</div>
 				      </div>

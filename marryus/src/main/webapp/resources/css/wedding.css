@@ -528,3 +528,37 @@
 }
 
 
+
+#honeyM{
+	margin: 0px -453.337px 0px 0px;
+    height: 78px;
+    width: 519px;
+}
+#honeyBudget{
+	margin: 0px -453.337px 0px 0px;
+    height: 35px;
+    width: 250px;
+}
+#honeyAu{
+	display: inline-grid;
+}
+
+#tenderTitle{
+	margin: 0px;
+    width: 811px;
+    height: 96px;
+}
+
+#tenderInfo{
+	margin: 0px;
+    width: 811px;
+    height: 96px;
+}
+#weddingAu{
+	display: inline-grid;
+}
+#addservice{
+	display: inline-grid;
+}
+
+

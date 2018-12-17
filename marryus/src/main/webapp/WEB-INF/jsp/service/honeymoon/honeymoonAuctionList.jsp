@@ -53,23 +53,28 @@
 						        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						        <h4 class="modal-title" id="myModalLabel">웨딩홀 역경매 신청서</h4>
 						      </div>
-						      	      <form action="honeywrite.do"  method="post" name="honeyAuctionForm" onsubmit="return formCheck()" enctype="multipart/form-data">
+				      	      <form action="honeywrite.do"  method="post" name="honeyAuctionForm" onsubmit="return formCheck()" enctype="multipart/form-data">
 							      <div class="modal-body">
 								        <input type="hidden" name="memNo" value="${user.no}" />
 								        <input type="hidden" name="auctionType" value="h" />
-								       
+						        <div class="form-group">
+						        	<div class="col-md-6">
 								        <br>
-											희망여행지: <input type="text" name="honeyPlace">
+											희망여행지: <input class="form-control" type="text" name="honeyPlace">
 											<br>
-	
-										  <div class="input" >
-		                                  	희망여행날짜 :  <input type="text" name="honeyDate" id="date_pretty"/> ~ 
-		                                  	            <input type="text" name="honeyDate" id="datepicker1">
-		                                  </div>
-				                                                              기타의견사항: <textarea name="honeyHope" id="" class="wish" rows="3" cols="30"></textarea><br>
-				                            <div>
-				                                                             희망예산:<input type="text" name="honeyBudget">만원
-				                            </div>                                 
+									</div>
+								</div>
+								 <div class="form-group">
+						        	<div class="col-md-4">
+		                                  	희망여행날짜 :  <input class="form-control" type="text" name="honeyDate" id="date_pretty"/> ~  <input type="text" class="form-control" name="honeyDate" id="datepicker1">
+                                  	</div>
+                                  </div>
+                                   <div class="form-group">
+							        	<div class="col-md-2">
+				                                                              기타의견사항: <textarea name="honeyHope" class="form-control" id="honeyM"  rows="3" cols="30"></textarea><br>
+				                                                             희망예산:<input type="text" class="form-control" id="honeyBudget" name="honeyBudget">만원
+							      		</div>
+							      </div>
 							      </div>
 							      <div class="modal-footer">
 							        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
@@ -93,8 +98,17 @@
                             <tr>
                                 <td>${a.auctionNo}</td>
                                 <td><a href="#" data-href="${a.auctionNo}" data-type="${a.auctionType}" data-no="${a.member.no}" class="col-md-4 TravelBox">${a.member.name}</a></td>
+                                <c:if test="${a.auctionType eq 'h'}">
                                 <td>허니문</td>
-                                <td>${a.auctionStatus}</td>
+                                </c:if>
+<!--                                 <td>허니문</td> -->
+                                <c:if test="${a.auctionStatus eq 'ing'}">
+                                <td>진행중</td>
+                                </c:if>
+                                <c:if test="${a.auctionStatus eq 'done'}">
+                                <td>마감</td>
+                                </c:if>
+<%--                                 <td>${a.auctionStatus}</td> --%>
                                 <td><fmt:formatDate value="${a.auctionSdate}" pattern="yyyy-MM-dd" /></td>
                                 <td><fmt:formatDate value="${a.auctionEdate}" pattern="yyyy-MM-dd" /></td>
                             </tr>
@@ -399,7 +413,7 @@ function doAction(){
   	  type: 'success',
   	  title: '입찰이 완료되었습니다. 감사합니다.',
   	  showConfirmButton: false,
-  	  timer: 11000
+  	  timer: 13000
   	})
 }
 
@@ -431,7 +445,7 @@ function formCheck(){
   	  type: 'success',
   	  title: '역경매 신청이 완료되었습니다. 감사합니다.',
   	  showConfirmButton: false,
-  	  timer: 11000
+  	  timer: 13000
   	})
 }
 
@@ -502,7 +516,7 @@ function formCheck(){
 	        <h4 class="modal-title" id="myModalLabel"></h4>
 	      	</div>
 				<form action="tenderwrite.do"  method="post" name="auctionForm" onsubmit="return doAction()" enctype="multipart/form-data">
-				      <div class="modal-body">
+				      <div class="modal-body" id="honeyAu">
 				      <div class="form-group">
 				      <input type="hidden" name="memNo" value="${user.no}" />
 <%-- 				      <input type="hidden" name="auctionNo" value="1" /> --%>
@@ -512,22 +526,22 @@ function formCheck(){
 					  	<div class="comInfo-no">
 					  	</div>
 						<div class="form-group">
-					  		<div class="col-md-4">
+					  		<div class="col-md-12">
 					  			제목:<textarea class="form-control" id="tenderTitle" type="text" name="tenderTitle" placeholder="제목을 입력 해 주세요" /></textarea>	
 					  		</div>
 					  	</div><br>
 						
 					  	<h2>서비스 소개</h2>
 					  	<div class="form-group">
-					  		<div class="col-md-4">	
-					  			<textarea name="tenderInfo" id="tenderInfo" class="wish form-control" rows="3" cols="30"></textarea>
+					  		<div class="col-md-6">	
+					  			<textarea  name="tenderInfo" id="tenderInfo" class="wish form-control" rows="3" cols="30"></textarea>
 					  		</div>
 					  	</div><br>
 					  	
-					  	<h2>입찰 예산</h2>
+					  	<h2>입찰 예산(만원)</h2>
 					  	<div class="form-group">
 					  		<div class="col-md-4">
-					  			<input type="text" id="tenderBudget" name="tenderBudget" class="form-control"/>
+					  			<input class="form-control" type="text" id="tenderBudget" name="tenderBudget" />
 					  		</div>
 					  	</div>
 				      </div>
