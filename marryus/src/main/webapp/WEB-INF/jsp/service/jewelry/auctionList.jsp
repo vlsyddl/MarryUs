@@ -10,6 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Marry Us</title>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dc6291b36d6e91a7fc6b30e92a9171d3&libraries=services"></script>
+    <script src="https://unpkg.com/sweetalert2@latest/dist/sweetalert2.all.js"></script>
     <c:import url="/common/importCss.jsp"/>
 	 <c:import url="/common/importJs.jsp"/>
     <link rel="stylesheet" href="<c:url value="/resources/css/wedding.css"/>">
@@ -52,7 +53,7 @@
 						        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						        <h4 class="modal-title" id="myModalLabel">예물 역경매 신청서</h4>
 						      </div>
-						      <form action="writeJewelry.do"  method="post" enctype="multipart/form-data">
+						      <form action="writeJewelry.do" onsubmit="return formCheck()" name="stform"  method="post" enctype="multipart/form-data">
 							      <div class="modal-body">
 								        	<input type="hidden" id="memCheckNo" name="memNo" value="${user.no}" />
 								        <input type="hidden" id="aucTypeCheck" name="auctionType" value="j" />
@@ -109,8 +110,17 @@
                             <tr class="itemBox" data-href="${j.auctionNo}" data-type="${j.auctionType}", data-no="${j.member.no}">
                                 <td>${j.auctionNo}</td>
                                 <td>${j.member.name}</td>
-                                <td>${j.auctionType}</td>
-                                <td>${j.auctionStatus}</td>
+                                <c:if test="${j.auctionType eq 'j'}">
+                                <td>쥬얼리</td>
+                                </c:if>
+<%--                                 <td>${j.auctionType}</td> --%>
+                                <c:if test="${j.auctionStatus eq 'ing'}">
+                                <td>진행중</td>
+                                </c:if>
+                                <c:if test="${j.auctionStatus eq 'done'}">
+                                <td>마감</td>
+                                </c:if>
+<%--                                 <td>${j.auctionStatus}</td> --%>
                                 <td><fmt:formatDate value="${j.auctionSdate}" pattern="yyyy-MM-dd" /></td>
                                 <td><fmt:formatDate value="${j.auctionEdate}" pattern="yyyy-MM-dd" /></td>
                             </tr>
@@ -352,6 +362,67 @@ $(function(){
 	  });
 
 });
+
+
+
+
+
+
+
+
+function doAction(){   
+    var f = document.auctionForm
+    
+    if(f.tenderTitle.value == "" ){
+        alert("제목을 입력해주세요")
+        f.tenderTitle.focus()
+        return false
+    }
+    
+    if(f.tenderInfo.value == ""){
+        alert("소개를 입력해주세요")
+        f.tenderInfo.focus()
+        return false
+    }
+    if(f.tenderBudget.value == ""){
+        alert("희마예산을 입력하세요")
+        f.tenderBudget.focus()    
+        return false
+    }
+    
+    Swal({
+    	  position: 'center',
+    	  type: 'success',
+    	  title: '입찰이 완료되었습니다. 감사합니다.',
+    	  showConfirmButton: false,
+    	  timer: 11000
+    	})
+}
+
+
+function formCheck(){   
+	
+    var d = document.stform
+    
+    if(d.jewelryBudget.value == "" ){
+        alert("의견사항을 적어주세요")
+        d.jewelryBudget.focus()
+        return false
+    }
+    if(d.jewelryMore.value == "" ){
+        alert("희망 예산을 적어주세요")
+        d.jewelryMore.focus()
+        return false
+    }
+    Swal({
+    	  position: 'center',
+    	  type: 'success',
+    	  title: '역경매 신청이 완료되었습니다. 감사합니다.',
+    	  showConfirmButton: false,
+    	  timer: 11000
+    	})
+}
+
   
   </script>
 <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -388,7 +459,7 @@ $(function(){
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 	        <h4 class="modal-title" id="myModalLabel"></h4>
 	      	</div>
-				<form action="writeTender.do"  method="post" enctype="multipart/form-data">
+				<form action="writeTender.do" name="auctionForm" onsubmit="return doAction()" method="post" enctype="multipart/form-data">
 				      <div class="modal-body">
 				      <div class="form-group">
 				      <input type="hidden" name="memNo" value="${user.no}" />

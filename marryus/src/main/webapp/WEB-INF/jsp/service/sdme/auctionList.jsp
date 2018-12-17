@@ -12,6 +12,7 @@
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dc6291b36d6e91a7fc6b30e92a9171d3&libraries=services"></script>
     <c:import url="/common/importCss.jsp"/>
 	 <c:import url="/common/importJs.jsp"/>
+	 <script src="https://unpkg.com/sweetalert2@latest/dist/sweetalert2.all.js"></script>
     <link rel="stylesheet" href="<c:url value="/resources/css/wedding.css"/>">
 </head>
 <body>
@@ -55,7 +56,7 @@
 						        </select>
 							  </div>
 							  <div id="studioForm">
-						      <form action="writeStudio.do"  method="post" enctype="multipart/form-data">
+						      <form action="writeStudio.do" onsubmit="return sformCheck()" name="sform"  method="post" enctype="multipart/form-data">
 							      <div class="modal-body">
 								        
 								        <input type="hidden" name="memNo" value="${user.no}" />
@@ -117,7 +118,7 @@
 	                         </form>
 	                         </div>
 							  <div id="dressForm">
-						      <form action="writeDress.do"  method="post" enctype="multipart/form-data">
+						      <form action="writeDress.do" onsubmit="return dformCheck()" name="dform" method="post" enctype="multipart/form-data">
 							      <div class="modal-body">
 								        
 								        <input type="hidden" name="memNo" value="${user.no}" />
@@ -176,7 +177,7 @@
 	                         </form>
 	                         </div>
 	                         <div id="makeupForm">
-						      <form action="writeMakeup.do"  method="post" enctype="multipart/form-data">
+						      <form action="writeMakeup.do" onsubmit="return mformCheck()" name="mform"  method="post" enctype="multipart/form-data">
 							      <div class="modal-body">
 								        <input type="hidden" name="memNo" value="${user.no}" />
 								        <input type="hidden" name="auctionType" value="m" />
@@ -246,8 +247,23 @@
                             <tr class="itemBox" data-href="${s.auctionNo}" data-type="${s.auctionType}", data-no="${s.member.no}">
                                 <td>${s.auctionNo}</td>
                                 <td>${s.member.name}</td>
-                                <td>${s.auctionType}</td>
-                                <td>${s.auctionStatus}</td>
+                                <c:if test="${s.auctionType eq 's'}">
+                                <td>스튜디오</td>
+                                </c:if>
+                                <c:if test="${s.auctionType eq 'd'}">
+                                <td>드레스</td>
+                                </c:if>
+                                <c:if test="${s.auctionType eq 'm'}">
+                                <td>메이크업</td>
+                                </c:if>
+<%--                                 <td>${s.auctionType}</td> --%>
+                                <c:if test="${s.auctionStatus eq 'ing'}">
+                                <td>진행중</td>
+                                </c:if>
+                                <c:if test="${s.auctionStatus eq 'done'}">
+                                <td>마감</td>
+                                </c:if>
+<%--                                 <td>${s.auctionStatus}</td> --%>
                                 <td><fmt:formatDate value="${s.auctionSdate}" pattern="yyyy-MM-dd" /></td>
                                 <td><fmt:formatDate value="${s.auctionEdate}" pattern="yyyy-MM-dd" /></td>
                             </tr>
@@ -610,6 +626,113 @@ function writeFormShow(index) {
             }
 			index = 1;
         };
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        function doAction(){   
+    	    var f = document.auctionForm
+    	    
+    	    if(f.tenderTitle.value == "" ){
+    	        alert("제목을 입력해주세요")
+    	        f.tenderTitle.focus()
+    	        return false
+    	    }
+    	    
+    	    if(f.tenderInfo.value == ""){
+    	        alert("소개를 입력해주세요")
+    	        f.tenderInfo.focus()
+    	        return false
+    	    }
+    	    if(f.tenderBudget.value == ""){
+    	        alert("희마예산을 입력하세요")
+    	        f.tenderBudget.focus()    
+    	        return false
+    	    }
+    	    
+    	    Swal({
+    	    	  position: 'center',
+    	    	  type: 'success',
+    	    	  title: '입찰이 완료되었습니다. 감사합니다.',
+    	    	  showConfirmButton: false,
+    	    	  timer: 11000
+    	    	})
+    	}
+    	
+    	
+    	function sformCheck(){   
+    		
+    	    var d = document.sform
+    	    
+    	    if(d.studioBudget.value == "" ){
+    	        alert("의견사항을 적어주세요")
+    	        d.studioBudget.focus()
+    	        return false
+    	    }
+    	    if(d.studioMore.value == "" ){
+    	        alert("희망 예산을 적어주세요")
+    	        d.studioMore.focus()
+    	        return false
+    	    }
+    	    Swal({
+    	    	  position: 'center',
+    	    	  type: 'success',
+    	    	  title: '역경매 신청이 완료되었습니다. 감사합니다.',
+    	    	  showConfirmButton: false,
+    	    	  timer: 11000
+    	    	})
+    	}
+    	function dformCheck(){   
+    		
+    	    var d = document.dform
+    	    
+    	    if(d.dressPrice.value == "" ){
+    	        alert("의견사항을 적어주세요")
+    	        d.dressPrice.focus()
+    	        return false
+    	    }
+    	    if(d.dressMore.value == "" ){
+    	        alert("희망 예산을 적어주세요")
+    	        d.dressMore.focus()
+    	        return false
+    	    }
+    	    Swal({
+    	    	  position: 'center',
+    	    	  type: 'success',
+    	    	  title: '역경매 신청이 완료되었습니다. 감사합니다.',
+    	    	  showConfirmButton: false,
+    	    	  timer: 11000
+    	    	})
+    	}
+    	function mformCheck(){   
+    		
+    	    var d = document.mform
+    	    
+    	    if(d.mkuBudget.value == "" ){
+    	        alert("의견사항을 적어주세요")
+    	        d.mkuBudget.focus()
+    	        return false
+    	    }
+    	    if(d.mkuMore.value == "" ){
+    	        alert("희망 예산을 적어주세요")
+    	        d.mkuMore.focus()
+    	        return false
+    	    }
+    	    Swal({
+    	    	  position: 'center',
+    	    	  type: 'success',
+    	    	  title: '역경매 신청이 완료되었습니다. 감사합니다.',
+    	    	  showConfirmButton: false,
+    	    	  timer: 11000
+    	    	})
+    	}
+
+
   
   
   </script>
@@ -647,7 +770,7 @@ function writeFormShow(index) {
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 	        <h4 class="modal-title" id="myModalLabel"></h4>
 	      	</div>
-				<form action="writeTender.do"  method="post" enctype="multipart/form-data">
+				<form action="writeTender.do"  method="post" name="auctionForm" onsubmit="return doAction()" enctype="multipart/form-data">
 				      <div class="modal-body">
 				      <div class="form-group">
 				      <input type="hidden" name="memNo" value="${user.no}" />
