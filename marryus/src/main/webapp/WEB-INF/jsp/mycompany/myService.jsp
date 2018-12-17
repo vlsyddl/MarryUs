@@ -16,6 +16,19 @@
 <link rel="stylesheet"
 		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 		<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+		
+		
+		
+		
+		
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/additional-methods.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/localization/messages_ko.js"></script>	
+
+
+
+
     <c:import url="/common/importCss.jsp"/>
 	 <c:import url="/common/importJs.jsp"/>
     <style>
@@ -24,16 +37,17 @@
     	}
     	#outer_box{
     		display: inline-block;
-    		width: 60% auto;
+    		width: 1000px ;
+    		margin: auto;
     	}
         #profile_box #profile_img,  #profile_box #profile_text{
             width: 30%; 
             height: 250px;
             border-radius: 10px;
             float: left;
-            margin: 10px;
             background-color: rgb(245, 243, 243);
             text-align: center;
+            margin: auto;
         }
         #company_info{
             width: 60%;
@@ -126,34 +140,36 @@
 					src="<c:url value="/resources/img/logo.png"/>" alt=""
 					class="img-responsive center-block"></a>
 			</div>
-			<nav class="gnb col-md-9">
-			<div class="gnb_top cf">
-				<ul class="cf">
-					<li><a href="<c:url value='/signup/signupPro.do' />">회원가입</a></li>
-					<!-- 로그인, 로그아웃 -->
-					<c:if test="${user.email eq null}">
-						<li><a href="#" data-toggle="modal" data-target="#loginModal">로그인</a></li>
-					</c:if>
-					<c:if test="${user.email ne null}">
-					
-							<li>${user.name}님이로그인 하셨습니다.</li>
-					
-						<li><a href="<c:url value='/main/logout.do' />"> 로그아웃</a></li>
-					</c:if>
-					<li><a href="<c:url value="/mypage/mywedding.do"/>">마이페이지</a></li>
-					<li><a href="#"><i class="far fa-bell"></i></a></li>
-				</ul>
-			</div>
-			<div class="gnb_bot cf">
-				<ul class="cf">
-					<li><a href="<c:url value="/service/weddingHall.do"/>">웨딩홀</a></li>
-					<li><a href="#">스&middot;드&middot;메</a></li>
-					<li><a href="#">허니문</a></li>
-					<li><a href="#">예물</a></li>
-					<li><a href="#">추가서비스</a></li>
-				</ul>
-			</div>
-			</nav>
+        <nav class="myCompanyNav">
+            <div class="container">
+                    <ul>
+                        <li class="on">
+                            <a href="<c:url value='/mycompany/myCompany.do'/>">
+                                <img src="<c:url value="/resources/"/>img/company_ico.png" alt="" class="img-responsive center-block">
+                                My Company
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<c:url value='/mycompany/service.do'/>">
+                                    <img src="<c:url value="/resources/"/>img/card_ico.png" alt="" class="img-responsive center-block">
+                                My Service
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<c:url value='/mycompany/auctionList.do'/>">
+                                <img src="<c:url value="/resources/"/>img/graph_ico.png" alt="" class="img-responsive center-block">
+                                Auction List
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<c:url value='/mycompany/reservationView.do'/>">
+                                <img src="<c:url value="/resources/"/>img/reservation_icon2.png" alt="" class="img-responsive center-block" style="padding: 5px;">
+                                My Reservation
+                            </a>
+                        </li> 
+                    </ul>
+            </div>
+        </nav>
 		</div>
 	</div>
 	<span class="gnbBar"></span> 
@@ -192,31 +208,33 @@
         
 	<div id="outer_box">
 		 <div id="profile_box">
-
-	        <form a ction="/mypage/insertComInfoProfile.do" method="post" id="frm"  enctype="multipart/form-data" acceptcharset="UTF-8">
+			
+	        <form id="myServiceInsertFrom" action="<c:url value='/myCompany/insertComInfoProfile.do'/>" method="post" id="frm"  enctype="multipart/form-data" acceptcharset="UTF-8">
 	        <table>
 	       	<tr>
 	        	<td class="highlight">업체 이름</td>
-	        	<td><input type="text" name="comInfoName"/>
+	        	<td><input type="text" name="comInfoName" required/>
 	        	<input type="hidden" name="type" value="insert"/></td>
 	        </tr>
 	       	<tr>
 	        	<td class="highlight">서비스 카테소리</td>
 	        	<td>
 	        	<select name="comInfoType" id="comInfoType" class="select-field__menu">
-					<option value="v"${comInfoType == 'v' ? 'disabled="disabled"' : '' } >웨딩홀</option>
-					<option value="s" ${comInfoType == 's' ? 'disabled="disabled"' : '' }>스튜디오</option>
-					<option value="d" ${comInfoType == 'd' ? 'disabled="disabled"' : '' }>드레스</option>
-					<option value="m" ${comInfoType == 'm' ? 'disabled="disabled"' : '' }>메이크업</option>
-					<option value="h" ${comInfoType == 'h' ? 'disabled="disabled"' : '' }>허니문</option>
-					<option value="j" ${comInfoType == 'j' ? 'disabled="disabled"' : '' }>예물</option>
-					<option value="e" ${comInfoType == 'e' ? 'disabled="disabled"' : '' }>기타</option>
+	        		<c:forEach var="type" items="${comInfoType}">
+	        			<c:if test="${type == 'v'}"><option value="v">웨딩홀</option></c:if>
+	        			<c:if test="${type == 's'}"><option value="s">스트디오</option></c:if>
+	        			<c:if test="${type == 'd'}"><option value="d">드레스</option></c:if>
+	        			<c:if test="${type == 'm'}"><option value="m">메이크업</option></c:if>
+	        			<c:if test="${type == 'h'}"><option value="h">허니문</option></c:if>
+	        			<c:if test="${type == 'j'}"><option value="j">예물</option></c:if>
+	        			<c:if test="${type == 'e'}"><option value="e">기타</option></c:if>
+					</c:forEach>
 				</select>
 				</td>
 	        </tr>
 	        <tr>
 	        	<td class="highlight">연락처</td>
-	        	<td><input type="text" name="comInfoPhone"/></td>
+	        	<td><input type="text" name="comInfoPhone" required/></td>
 	        </tr>
 	        
 	        
@@ -224,8 +242,8 @@
 	        	<td class="highlight">회사 주소</td>
 	        	<td>
 	        	<input type="text" id="sample4_postcode" placeholder="우편번호" class="hidden"> 
-	        	<input type="text" name="comInfoAddr" id="sample4_roadAddress" placeholder="도로명주소"> 
-	        	<input type="text" id="sample4_jibunAddress" placeholder="지번주소" class="hidden">
+	        	<input type="text" name="comInfoAddr" id="sample4_roadAddress" placeholder="도로명주소" required> 
+	        	<input type="text" id="sample4_jibunAddress" placeholder="지번주소" class="hidden" required>
 	        	<input type="button" onclick="address()" value="우편번호 찾기" size="50"><br> <span id="guide" style="color: #999"></span></td>
 	        </tr>
 	        <tr>
@@ -244,12 +262,12 @@
 	        
 	        <tr>
 	        	<td class="highlight"> 업체 소개</td>
-	        	<td><textarea name="comInfoProfile" cols="200" rows="8" style=" width:90%; resize: none; font-size: 18px; " ></textarea></td>
+	        	<td><textarea name="comInfoProfile" cols="200" rows="8" style=" width:90%; resize: none; font-size: 18px; " required></textarea></td>
 	        </tr>
 			<tr>
 				
 					<td class="highlight"><input name="memNo" id=memNo value="${user.no}" type="hidden">	서비스 소개</td>  				
-					<td><textarea name="comInfoContent" id="smarteditor" rows="10" cols="100" style="width:100%; height:350px;"></textarea></td>
+					<td><textarea name="comInfoContent" id="smarteditor" rows="10" cols="100" style="width:100%; height:350px;" required></textarea></td>
 			</tr>
 			<tr>
 				<td class="highlight"><a href="javascript:" onclick="fileUploadAction();" class="my_button highlight" >업체 대표  이미지</a></td>
@@ -486,8 +504,102 @@
 				}).open();
 			};
  
+			/**********************************************************************************
+			validation 플러그인 사용 
+		**********************************************************************************/
 
 
-    </script>
+		$.validator.addMethod("phone", function(phone_number, element) {
+			phone_number = phone_number.replace(/\s+/g, ""); 
+			return this.optional(element) || phone_number.length > 9 &&
+				phone_number.match(/^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/);
+		}, "Please specify a valid phone number");
+
+
+		$(document).ready(function(){
+			
+
+		$( "#myServiceInsertFrom" ).validate({
+			/* focusCleanup: false, //true이면 잘못된 필드에 포커스가 가면 에러를 지움
+			focusInvalid:false, //유효성 검사후 포커스를 무효필드에 둠 꺼놓음
+			onclick: false, //클릭시 발생됨 꺼놓음
+			onfocusout:false, //포커스가 아웃되면 발생됨 꺼놓음 */
+			onkeyup:true, //키보드 키가 올라가면 발생됨 꺼놓음
+			rules: {
+				comInfoName: {
+			      required: true,
+			      minlength: 5,
+			    },
+			    comInfoType:{
+			      required : true,
+			      minlength: 2 ,
+			    },
+				comInfoPhone:{
+					required : true,
+					phone:true
+				},
+				comInfoAddr:{
+				    required : true,
+				    minlength: 2 ,
+				},
+				comInfoAddrDetail:{
+				    required : true,
+				    minlength: 2 ,
+				},
+				comInfoProfile:{
+				    required : true,
+				    minlength: 2 ,
+				},
+				comInfoContent:{
+				    required : true,
+				    minlength: 2 ,
+				 }
+			  },
+			  messages:{
+				  comInfoName:{
+		              required : "필수로입력하세요",
+		              minlength : "최소 {0}글자이상이어야 합니다",
+		                       
+		        },
+		        comInfoType:{
+		        	required : "필수로입력하세요",
+		            minlength : "최소 {0}글자이상이어야 합니다"
+		  	      
+		  	    },
+				comInfoPhone:{
+					required: "연락처를 입력하세요.",
+					phone: "잘못된 문자가 입력되었습니다."
+				},
+				comInfoAddr:{
+		        	required : "필수로입력하세요",
+		            minlength : "최소 {0}글자이상이어야 합니다"
+				},
+				comInfoAddrDetail:{
+		        	required : "필수로입력하세요",
+		            minlength : "최소 {0}글자이상이어야 합니다"
+				},
+				comInfoProfile:{
+		        	required : "필수로입력하세요",
+		            minlength : "최소 {0}글자이상이어야 합니다"
+				},
+				comInfoContent:{
+		        	required : "필수로입력하세요",
+		            minlength : "최소 {0}글자이상이어야 합니다"
+				 }
+				
+			  },
+			  onsubmit: true,
+
+			  errorClass : "validation-error",
+
+			 validClass : "validation-valid", 
+			  success: function(label) {
+				   label.addClass("validation-valid").text("Ok!")
+			  } 
+			});
+		});
+
+		
+		</script>
 </body>
 </html>

@@ -97,7 +97,7 @@
 		<script type="text/javascript" src="<c:url value="/resources/todo/jquery/jquery-ui.min.js"/>" charset="utf-8"></script>
 		<script type="text/javascript" src="<c:url value="/resources/todo/jquery/jquery.ui.touch-punch-improved.js"/>" charset="utf-8"></script>
 		<script type="text/javascript" src="<c:url value="/resources/todo/bootstrap/js/bootstrap.min.js"/>" charset="utf-8"></script>
-		<script type="text/javascript" src="<c:url value="/resources/todo/dist/lobilist.js?44"/>" charset="utf-8"></script>
+		<script type="text/javascript" src="<c:url value="/resources/todo/dist/lobilist.js?4343"/>" charset="utf-8"></script>
 
 
 	 
@@ -142,9 +142,9 @@
  
 $(function () {
     Lobibox.notify.DEFAULTS = $.extend({}, Lobibox.notify.DEFAULTS, {
-        size: 'large',
+        size: 'mini',
         // delay: false,
-        position: 'left top'
+        position: 'right top'
     });
    	
 	$('#todo-lists-basic-demo').lobiList({
@@ -152,8 +152,7 @@ $(function () {
 	});
 
 });
-		
-		
+		var pathname = window.location.origin;
 	
 
 

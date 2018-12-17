@@ -58,7 +58,19 @@ public class MypageController {
 	
 
 	@RequestMapping("/mywedding.do")
-	public void mywedding() {
+	public void mywedding(Model model,HttpSession session) {
+		int memNo= (((Member)session.getAttribute("user")).getNo());
+		model.addAttribute("todo",service.selectTodoThree(memNo));
+		   String[] auctionList= {"v","sdm","h","j","e"};
+		    Map<String, Integer> list=new HashMap<>();
+		    for(String li:auctionList) {
+		    	Auction auction = new Auction();
+		    	auction.setMemNo(memNo);
+		    	auction.setAuctionType(li);
+		    	list.put(li, service.selectByTenderCnt(auction));
+		    }
+		   model.addAttribute("tenderCnt", list);
+		   model.addAttribute("budget",service.MytotalBudget(memNo));
 	}
 	
 	@RequestMapping("/myService.do")
@@ -94,11 +106,9 @@ public class MypageController {
         
 	}
 	
-	/** 예약 보기 */
-	@RequestMapping("/viewReservation.do")
-    public void viewReservation(HttpSession session, Model model) {
-		model.addAttribute("res",service.selectReservation(((Member)session.getAttribute("user")).getNo()));
-	}
+
+	
+	
 	
 	
 	
@@ -301,10 +311,7 @@ public class MypageController {
 		return "redirect:likeCompany.do?memNo="+comLike.getMemNo();
 	}
 	
-	@RequestMapping("/myweddingService.do")
-	public void myweddingService() {
-		
-	}
+
 	
 	@RequestMapping("/myTodo.do")
 	public void myTodo(Model model, HttpSession session) {
@@ -358,8 +365,35 @@ public class MypageController {
 	@RequestMapping("/reservation.do")	
 	@ResponseBody 
 	public int reservation(Reservation res) throws Exception{
+		System.out.println(service.insertReservation(res));
 		return service.insertReservation(res);
 	}
+	
+	
+	@RequestMapping("/auctionView.do")	
+	@ResponseBody 
+	public Object auctionView(int auctionNo, String auctionType) throws Exception{
+		System.out.println(auctionNo+auctionType);
+		if(auctionType.equals("v")) {
+			return service.selectVenue(auctionNo);
+		}else if(auctionType.equals("s")) {
+			return service.selectStudio(auctionNo);
+		}else if(auctionType.equals("d")) {
+			return service.selectDress(auctionNo);
+		}else if(auctionType.equals("m")) {
+			return service.selectMakeup(auctionNo);
+		}else if(auctionType.equals("j")) {
+			return service.selectJewelry(auctionNo);
+		}else if(auctionType.equals("h")) {
+			return service.selectHoneymoon(auctionNo);
+		}else if(auctionType.equals("e")) {
+			return service.selectServiceAdd(auctionNo);
+		}
+		return "fail";
+	}
+	
+	
+
 	
 	
 	/**
@@ -465,8 +499,6 @@ public class MypageController {
 		proFileMap.put("auctionTotal", service.MycountTotalAuction(memNo));
 		proFileMap.put("auctionDone", service.MycountAuctiondone(memNo));
 		proFileMap.put("likeCompany", service.MycountCompanyLike(memNo));
-		proFileMap.put("totalBudget", service.MytotalBudget(memNo));
-		proFileMap.put("spendBudget", service.MyspendBudget(memNo));
 		
 		
 		return proFileMap;

@@ -33,6 +33,7 @@ public class CompanyInfo {
 	private Date tenderRegdate;
 	private String tenderTitle;
 	private String tenderInfo;
+	private int tenderNo;
 	private String codeValue;
 
 	

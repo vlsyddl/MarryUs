@@ -345,7 +345,7 @@ tbody tr:hover {
 <body>
 	<c:import url="/common/importHeader.jsp" />
     <div id="wrap" class="mypage">
-       <nav class="myPageNav">
+ <nav class="myPageNav">
             <div class="container">
                     <ul>
                         <li class="on">
@@ -361,15 +361,15 @@ tbody tr:hover {
                             </a>
                         </li>
                         <li>
-                            <a href="<c:url value='/mypage/myAuction.do?choo=tab1&memNo=${user.no}&auctionType=v'/>">
-                                <img src="img/auction_ico.png" alt="" class="img-responsive center-block">
-                                Auction List
-                            </a>
-                        </li>
-                        <li>
                             <a href="<c:url value='/mypage/myBudget.do'/>">
                                 <img src="img/budget_ico.png" alt="" class="img-responsive center-block">
                                 Budget Spent
+                            </a>
+                        </li>
+                                                <li>
+                            <a href="<c:url value='/mypage/myAuction.do?choo=tab1&memNo=${user.no}&auctionType=v'/>">
+                                <img src="img/auction_ico.png" alt="" class="img-responsive center-block">
+                                Auction List
                             </a>
                         </li>
                         <li>

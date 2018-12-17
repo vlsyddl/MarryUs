@@ -18,6 +18,7 @@ import kr.co.marryus.repository.domain.Jewelry;
 import kr.co.marryus.repository.domain.Makeup;
 import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.Page;
+import kr.co.marryus.repository.domain.Reservation;
 import kr.co.marryus.repository.domain.ServiceAdd;
 import kr.co.marryus.repository.domain.Studio;
 import kr.co.marryus.repository.domain.Tender;
@@ -104,6 +105,36 @@ public class MycompanyServiceImpl implements MycompanyService{
 	@Override
 	public int updateCompanyMember(CompanyMember comMem) {
 		return mapper.updateCompanyMember(comMem);
+	}
+
+	@Override
+	public List<Reservation> selectReservation(int memNo) {
+		return mapper.selectReservation(memNo);
+	}
+
+	@Override
+	public Tender selectTenderCal(int memNo) {
+		return mapper.selectTenderCal(memNo);
+	}
+
+	@Override
+	public int selectCompanyLikeByComMem(int memNo) {
+		return mapper.selectCompanyLikeByComMem(memNo);
+	}
+
+	@Override
+	public int selectTenderchoose(int memNo) {
+		return mapper.selectTenderchoose(memNo);
+	}
+
+	@Override
+	public int selectTenderDoing(int memNo) {
+		return mapper.selectTenderDoing(memNo);
+	}
+
+	@Override
+	public int selectTenderDone(int memNo) {
+		return mapper.selectTenderDone(memNo);
 	}
 
 

@@ -26,7 +26,7 @@
     <div id="wrap" class="mypage">
     <input type="hidden" id="memNo" value="${user.no}">
     <input type="hidden" id="no" value="${user.no}">
-        <nav class="myPageNav">
+ <nav class="myPageNav">
             <div class="container">
                     <ul>
                         <li class="on">
@@ -42,15 +42,15 @@
                             </a>
                         </li>
                         <li>
-                            <a href="<c:url value='/mypage/myAuction.do?choo=tab1&memNo=${user.no}&auctionType=v'/>">
-                                <img src="img/auction_ico.png" alt="" class="img-responsive center-block">
-                                Auction List
-                            </a>
-                        </li>
-                        <li>
                             <a href="<c:url value='/mypage/myBudget.do'/>">
                                 <img src="img/budget_ico.png" alt="" class="img-responsive center-block">
                                 Budget Spent
+                            </a>
+                        </li>
+                                                <li>
+                            <a href="<c:url value='/mypage/myAuction.do?choo=tab1&memNo=${user.no}&auctionType=v'/>">
+                                <img src="img/auction_ico.png" alt="" class="img-responsive center-block">
+                                Auction List
                             </a>
                         </li>
                         <li>
@@ -59,25 +59,6 @@
                                 Bookmark
                             </a>
                         </li>
-                        <li>
-                            <a href="<c:url value='/mypage/myweddingService.do'/>">
-                                    <img src="img/chk_ico.png" alt="" class="img-responsive center-block">
-                                my service 
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<c:url value='/mypage/service.do'/>">
-                                    <img src="img/chk_ico.png" alt="" class="img-responsive center-block">
-                                service add
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<c:url value='/mypage/auctionList.do'/>">
-                                <img src="img/auction_ico.png" alt="" class="img-responsive center-block">
-                                my tender
-                            </a>
-                        </li>
-
                     </ul>
             </div>
         </nav>
@@ -195,32 +176,32 @@
                 <ul>
                     <li>
                         <a href="#">
-                            <h2>예식장 </h2>
-                            <p><span class="sucsess">2</span>건</p>
+                            <h2>예식장</h2>
+                            <p><span class="sucsess">${tenderCnt.v}</span>건</p>
                         </a>
                     </li>
                     <li>
                         <a href="#">
                             <h2>스&middot;드&middot;메 </h2>
-                            <p><span class="sucsess">2</span>건</p>
+                            <p><span class="sucsess">${tenderCnt.sdm}</span>건</p>
                         </a>
                     </li>
                     <li>
                         <a href="#">
                             <h2>예물 </h2>
-                            <p><span class="sucsess">2</span>건</p>
+                            <p><span class="sucsess">${tenderCnt.j}</span>건</p>
                         </a>
                     </li>
                     <li>
                         <a href="#">
                             <h2>허니문 </h2>
-                            <p><span class="sucsess">2</span>건</p>
+                            <p><span class="sucsess">${tenderCnt.h}</span>건</p>
                         </a>
                     </li>
                     <li>
                         <a href="#">
                             <h2>기타 </h2>
-                            <p><span class="sucsess">2</span>건</p>
+                            <p><span class="sucsess">${tenderCnt.e}</span>건</p>
                         </a>
                     </li>
                 </ul>
@@ -231,41 +212,25 @@
                 <div class="row">
                     <div class="col-md-8">
                         <ul class="CheckList">
+                        <c:forEach var="i" items="${todo}">
                             <li>
                                 <a href="#">
                                     <span class="confirm"><i class="fas fa-check"></i></span>
                                     <div>
-                                        <h5>체크리스트 제목</h5>
-                                        <p>체크리스트 부제목? 대분류?</p>
+                                        <h5>${i.todoTitle}</h5>
+                                        <p>${i.todoDetail}</p>
                                     </div>
                                 </a>
                             </li>
-                            <li>
-                                <a href="#">
-                                        <span class="confirm"><i class="fas fa-check"></i></span>
-                                        <div>
-                                                <h5>체크리스트 제목</h5>
-                                                <p>체크리스트 부제목? 대분류?</p>
-                                            </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span class="confirm"><i class="fas fa-check"></i></span>
-                                    <div>
-                                            <h5>체크리스트 제목</h5>
-                                            <p>체크리스트 부제목? 대분류?</p>
-                                        </div>
-                                </a>
-                            </li>
+                            </c:forEach>
                         </ul>
                     </div>
                     <div class="col-md-4">
                         <div class="budget">
                             <ul>
-                                <li class="maxBudget">총예산 : <span>30000000</span></li>
-                                <li class="spendBudget">쓴예산 : <span>20000000</span></li>
-                                <li class="remainBudget">남은예산 : <span>20000000</span></li>
+                                <li class="maxBudget">총예산 : <span>${totalBudget}</span></li>
+                                <li class="spendBudget">쓴예산 : <span>${spendBudget}</span></li>
+                                <li class="remainBudget">남은예산 : <span>${totalBudget}-${spendBudget}</span></li>
                             </ul>
                         </div>
                     </div>
@@ -309,7 +274,7 @@
                 
                 $.ajax({
                  url:"/marryus/mypage/MyproFileDetail.json",
-                 data:{memNo:no} ,
+                 data:memNo=no,
                  type:"post"
                  
               }) 

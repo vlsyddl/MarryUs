@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="us">
 <head>
@@ -39,7 +40,12 @@
                                 Auction List
                             </a>
                         </li>
-                        
+                        <li>
+                            <a href="<c:url value='/mycompany/reservationView.do'/>">
+                                <img src="<c:url value="/resources/"/>img/reservation_icon2.png" alt="" class="img-responsive center-block" style="padding: 5px;">
+                                My Reservation
+                            </a>
+                        </li> 
                     </ul>
             </div>
         </nav>
@@ -47,13 +53,13 @@
             <div class="container">
                 <div class="infoBox cf">
                     <div class="col-md-4 no-padding info_left">
-                       
+
                     </div>
                     <div class="col-md-8 no-padding info_right">
                     <a href="<c:url value='/mycompany/companyUpdateForm.do'/>">
                         <div class="profile">
                             <div class="name">
-                                <h2>Seungjae Lee</h2>
+                                <h2>${user.name}</h2>
                             </div>
                         </div>
                         </a>
@@ -62,19 +68,19 @@
                                 <li class="price">
                                     <dl>
                                         <dt>총 낙찰 액수</dt>
-                                        <dd><span>172830000</span></dd>
+                                        <dd><span><fmt:formatNumber type='currency' value='${tenderCal.sumTenderBudget}' pattern='###,###'/>원</span></dd>
                                     </dl>
                                 </li>
                                 <li class="auction">
                                     <dl>
                                         <dt>평균 견적가</dt>
-                                        <dd><span>3000000</span></dd>
+                                        <dd><span><fmt:formatNumber type='currency' value='${tenderCal.avgTenderBudget}' pattern='###,###'/>원</span></dd>
                                     </dl>
                                 </li>
                                 <li class="auction">
                                     <dl>
                                         <dt>관심 수</dt>
-                                        <dd><span>132</span></dd>
+                                        <dd><span>${comLike}</span></dd>
                                     </dl>
                                 </li>
                             </ul>
@@ -89,20 +95,20 @@
                    <div class="col-md-4">
                         <dl>
                             <dt>입찰중인 경매</dt>
-                            <dd><span>1</span>건</dd>
+                            <dd><span>${tenderDoing}</span>건</dd>
                         </dl>
                    </div>
                    <div class="col-md-4">
                         <dl>
                             <dt>낙찰된 경매</dt>
-                            <dd><span>1</span>건</dd>
+                            <dd><span>${tenderChoo}</span>건</dd>
                         </dl>
                    </div>
                    <div class="col-md-4">
                         <dl>
                             <dt>유찰된 경매</dt>
-                            <dd><span>1</span>건</dd>
-                        </dl>
+                            <dd><span>${tenderDone}</span>건</dd>
+                        </dl>		
                    </div>
                </div>
            </div>

@@ -14,6 +14,7 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import com.google.gson.Gson;
 
 import kr.co.marryus.member.service.MemberService;
+import kr.co.marryus.mypage.service.MycompanyService;
 import kr.co.marryus.mypage.service.MypageService;
 import java.io.File;
 import java.util.HashMap;
@@ -32,6 +33,7 @@ import kr.co.marryus.repository.domain.GeneralMember;
 import kr.co.marryus.repository.domain.Item;
 import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.Page;
+import kr.co.marryus.repository.domain.Tender;
 import kr.co.marryus.repository.domain.Todo;
 import kr.co.marryus.repository.domain.Todolist;
 
@@ -47,7 +49,7 @@ public class MycompanyController {
 	ServletContext context;
 	
 	@Autowired
-	MypageService service;
+	MycompanyService service;
 	
 	@Autowired
 	MemberService memService;
@@ -57,7 +59,14 @@ public class MycompanyController {
 	
 
 	@RequestMapping("/myCompany.do")
-	public void mycompany() {
+	public void mycompany(Model model,HttpSession session) {
+		int memNo= (((Member)session.getAttribute("user")).getNo());
+		model.addAttribute("tenderCal",service.selectTenderCal(memNo));
+		model.addAttribute("comLike",service.selectCompanyLikeByComMem(memNo));
+		model.addAttribute("tenderChoo",service.selectTenderchoose(memNo));
+		model.addAttribute("tenderDoing",service.selectTenderDoing(memNo));
+		model.addAttribute("tenderDone",service.selectTenderDone(memNo));
+		
 	}
 	
 	@RequestMapping("/myService.do")
@@ -153,7 +162,8 @@ public class MycompanyController {
 	
 	/** 업체 서비스 정보 수정하기(작성글 보기)*/
 	@RequestMapping("/myServiceUpdate.do")
-	public void myServiceUpdate(Model model, CompanyInfo comInfo) {
+	public void myServiceUpdate(Model model, CompanyInfo comInfo, HttpSession session) {
+		model.addAttribute("comInfoType", service.selectComInfoType(((Member)session.getAttribute("user")).getNo()));
 		model.addAttribute("auctionList", service.selectComInfoDetail(comInfo));
 		model.addAttribute("file", service.selectComFile(comInfo));
 		model.addAttribute("files", service.selectComFiles(comInfo));
@@ -206,6 +216,16 @@ public class MycompanyController {
 			return "success";
 		}
 			return "fail";
+	}
+
+	/** 예약 보기 */
+	@RequestMapping("/reservationView.do")
+    public void reservationView(HttpSession session, Model model) {
+		if(!service.selectReservation(((Member)session.getAttribute("user")).getNo()).isEmpty()) {
+			model.addAttribute("res",service.selectReservation(((Member)session.getAttribute("user")).getNo()));
+		}else {
+			model.addAttribute("res",0);
+		}
 	}
 	
 	

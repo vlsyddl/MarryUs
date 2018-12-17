@@ -18,6 +18,8 @@ public class Tender {
 	private String tenderTitle;
 	
 	private double dday;
+	private int sumTenderBudget;
+	private int avgTenderBudget;
 	
 
 	

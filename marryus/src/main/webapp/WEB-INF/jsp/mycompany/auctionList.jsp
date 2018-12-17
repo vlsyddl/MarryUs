@@ -17,89 +17,127 @@
 	 <c:import url="/common/importJs.jsp"/>
     
     <style>
-       * { margin: 0px; padding: 0px; box-sizing: border-box; }
-        body {
-            color: #333;
-            line-height: 3;
-        }
-
-        .c-fluid {
-            padding-left: 15px;
-            padding-right: 15px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .container {
-            width: 1170px;
-            padding-left: 15px;
-            padding-right: 15px;
-            margin-left: auto;
-            margin-right: auto;    
-        }
+@font-face {
+  font-family: OpenSans-Regular;
+  src: url('../fonts/OpenSans/OpenSans-Regular.ttf'); 
+}
 
 
-        table{
-            border-spacing:50px;
-            border-collapse: collapse;
-            width: 800px;
-            margin: 50px 0px;
-            text-align: center;
-        }
-        td, th { padding: 0px; text-align: center;}
 
-        .table {
-            width: 100%; 
-            margin-bottom: 20px;
+/*//////////////////////////////////////////////////////////////////
+[ RESTYLE TAG ]*/
+* {
+	margin: 0px; 
+	padding: 0px; 
+	box-sizing: border-box;
+}
+
+body, html {
+	height: 100%;
+	font-family: sans-serif;
+}
+
+/* ------------------------------------ */
+a {
+	margin: 0px;
+	transition: all 0.4s;
+	-webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+}
+
+a:focus {
+	outline: none !important;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+/* ------------------------------------ */
+h1,h2,h3,h4,h5,h6 {margin: 0px;}
+
+p {margin: 0px;}
+
+ul, li {
+	margin: 0px;
+	list-style-type: none;
+}
+
+
+/* ------------------------------------ */
+        input, select{
+            border-right:0px; border-top:0px; border-left:0px; border-bottom:1px solid #ccc9c9;
+            line-height: 30px;
+            font-size:15px;
+            background: none;
         }
 
-         .table > tbody > tr {
-            border-radius: 10px;
-         }
-        .table > tbody > tr > td, .table > tbody > tr > th {
-            padding: 8px;
-            vertical-align: top;
-            border-top: 1px solid #ddd;
-        } 
+textarea {
+  display: block;
+  outline: none;
+}
 
-        .tb-striped > tbody > tr:nth-of-type(odd) {
-            background-color: #f9f9f9; 
-        }
-        
-        .tb-bordered > tbody > tr > td {
-            border-bottom: 1px solid #ddd;
-            font-size: 18px;
-            line-height: 2.3;
-        }
+textarea:focus, input:focus {
+  border-color: transparent !important;
+}
 
-        .tb-bordered > tbody > tr > th{
-            background: #e9d5d5;
-            color: #5c4c4c;
-            font-size: 20px;
-            line-height: 2.5;
-        }
+/* ------------------------------------ */
+button {
+	outline: none !important;
+	border: none;
+	background: transparent;
+}
 
-        .table-hover > tbody > tr:hover {
-            background-color: #d6d6d6;
-        }
+button:hover {
+	cursor: pointer;
+}
 
-        tr:hover{
-            background: #fbf8f8;
-            color: #5c4c4c;
-        }
+iframe {
+	border: none !important;
+}
 
-        .btn {
-            padding: 6px 12px;
-            border: 1px solid transparent;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .btn:active {
-            box-shadow: 0 3px 5px rgba(0, 0, 0, .125) inset;
-        }
-        .btn:focus, .btn:hover {
-            color: #333;
-        }
-        /** https://xetown.com/questions/570699 값에 따라  색상 바꾸는 법*/
+
+		input::placeholder {
+		  color: #334455;
+		  font-style: italic;
+		} 
+
+
+
+
+/*//////////////////////////////////////////////////////////////////
+[ Utiliti ]*/
+
+
+
+
+
+
+/*//////////////////////////////////////////////////////////////////
+[ Table ]*/
+
+.limiter {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.container-table100 {
+  width: 100%;
+  min-height: 60vh;
+
+
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: 60px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 30px 30px;
+}
+
         .redBack{
             background: rgb(168, 37, 37);
         }
@@ -109,17 +147,141 @@
         .grayBack{
             background: rgb(188, 188, 190)
         }
-        .textstyle{
+        
+                .textstyle{
             color: #f9f9f9;
             font-weight: 700;
             border-radius: 3px;
-            padding: 3px;
+            padding: 6px;
         }
-        
-        
-        nav{
-           text-align: center;   
-        }
+
+.wrap-table100 {
+  width: 1170px;
+}
+
+table {
+  border-spacing: 1;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+table * {
+  position: relative;
+}
+table td, table th {
+  padding-left: 8px;
+}
+table thead tr {
+  height: 60px;
+  background: #36304a;
+}
+table tbody tr {
+  height: 50px;
+}
+table tbody tr:last-child {
+  border: 0;
+}
+table td, table th {
+  text-align: center;
+   line-height: 30px;
+   vertical-align: middle;
+}
+table td.l, table th.l {
+  text-align: right;
+}
+table td.c, table th.c {
+  text-align: center;
+}
+table td.r, table th.r {
+  text-align: center;
+}
+
+
+.table100-head th{
+  font-family: OpenSans-Regular;
+  font-size: 18px;
+  color: #fff;
+  line-height: 1.2;
+  font-weight: unset;
+}
+
+tbody tr:nth-child(even) {
+   background-color: #f9f9f9;
+}
+
+tbody tr {
+  font-family: OpenSans-Regular;
+  font-size: 15px;
+  color: #808080;
+  line-height: 1.2;
+  font-weight: unset;
+  border-bottom: 1px solid #eeeeee;
+    font-weight: 700;
+}
+
+tbody tr:hover {
+  color: #555555;
+   background-color: #f2f2f2
+  cursor: pointer;
+}
+
+
+
+@media screen and (max-width: 992px) {
+  table {
+    display: block;
+  }
+  table > *, table tr, table td, table th {
+    display: block;
+    line-height: 30px;
+    vertical-align: middle;
+  }
+  table thead {
+    display: none;
+  }
+  table tbody tr {
+    height: auto;
+    padding: 37px 0;
+  }
+  table tbody tr td {
+    padding-left: 40% !important;
+    margin-bottom: 24px;
+
+  }
+  table tbody tr td:last-child {
+    margin-bottom: 0;
+  }
+  table tbody tr td:before {
+    font-family: OpenSans-Regular;
+    font-size: 14px;
+    color: #999999;
+    line-height: 1.2;
+    font-weight: unset;
+    position: absolute;
+    width: 40%;
+    left: 30px;
+    top: 0;
+  }
+
+
+
+  tbody tr {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 576px) {
+  .container-table100 {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+nav{ text-align: center;}
         
         
         
@@ -131,46 +293,7 @@
     <script src="main.js"></script>
 </head>
 <body>
-<header>
-	<div class="container">
-		<div class="row">
-			<div class="logo col-md-3">
-				<a href="<c:url value="/main/main.do"/>"><img
-					src="<c:url value="/resources/img/logo.png"/>" alt=""
-					class="img-responsive center-block"></a>
-			</div>
-			<nav class="gnb col-md-9">
-			<div class="gnb_top cf">
-				<ul class="cf">
-					<li><a href="<c:url value='/signup/signupPro.do' />">회원가입</a></li>
-					<!-- 로그인, 로그아웃 -->
-					<c:if test="${user.email eq null}">
-						<li><a href="#" data-toggle="modal" data-target="#loginModal">로그인</a></li>
-					</c:if>
-					<c:if test="${user.email ne null}">
-					
-							<li>${user.name}님이로그인 하셨습니다.</li>
-					
-						<li><a href="<c:url value='/main/logout.do' />"> 로그아웃</a></li>
-					</c:if>
-					<li><a href="<c:url value="/mypage/mywedding.do"/>">마이페이지</a></li>
-					<li><a href="#"><i class="far fa-bell"></i></a></li>
-				</ul>
-			</div>
-			<div class="gnb_bot cf">
-				<ul class="cf">
-					<li><a href="<c:url value="/service/weddingHall.do"/>">웨딩홀</a></li>
-					<li><a href="#">스&middot;드&middot;메</a></li>
-					<li><a href="#">허니문</a></li>
-					<li><a href="#">예물</a></li>
-					<li><a href="#">추가서비스</a></li>
-				</ul>
-			</div>
-			</nav>
-		</div>
-	</div>
-	<span class="gnbBar"></span> 
-</header>
+	<c:import url="/common/importHeader.jsp" />
     <div id="wrap" class="mypage">
         <nav class="myCompanyNav">
             <div class="container">
@@ -193,7 +316,12 @@
                                 Auction List
                             </a>
                         </li>
-                        
+                        <li>
+                            <a href="<c:url value='/mycompany/reservationView.do'/>">
+                                <img src="<c:url value="/resources/"/>img/reservation_icon2.png" alt="" class="img-responsive center-block" style="padding: 5px;">
+                                My Reservation
+                            </a>
+                        </li> 
                     </ul>
             </div>
         </nav>
@@ -201,16 +329,20 @@
         
         
         
-        
-
-    
-        <table class="tb-bordered c-fluid">
-        <tr>
+	<div class="limiter">
+		<div class="container-table100">
+			<div class="wrap-table100">
+				<div class="table100">
+					<table>
+						<thead>
+							<tr class="table100-head">
             <th>입찰 신청일</th>
             <th>경매 신청인</th>
             <th>경매 결과</th>
             <th>낙찰액</th>
-        </tr>
+							</tr>
+						</thead>
+						<tbody>
         <c:forEach items="${autionList}" var="auction">
         
         <tr>
@@ -218,15 +350,21 @@
             <td>${auction.memName}</td>
             <td>
             	<c:choose>
-            		<c:when test="${auction.tenderStatus=='done'}"> <span class="redBack textstyle">유찰</span> </c:when>
+            		<c:when test="${auction.tenderStatus=='ing' && auction.dday<0}"> <span class="redBack textstyle">유찰</span> </c:when>
             		<c:when test="${auction.tenderStatus=='choo'}"> <span class="blueBack textstyle">낙찰</span> </c:when>
-            		<c:when test="${auction.tenderStatus=='ing'}"> <span class="grayBack textstyle">미정</span> </c:when>
+            		<c:when test="${auction.tenderStatus=='ing' && auction.dday>=0}"> <span class="grayBack textstyle">미정</span> </c:when>
             	</c:choose>
             </td>
             <td><fmt:formatNumber type='currency' value='${auction.tenderBudget}' pattern='###,###'/>원</td>
         </tr>
         </c:forEach>
-    </table>
+   	</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
     
     
     
@@ -283,8 +421,6 @@
     </div>
     
     
-    <script>
-    
-    </script>
+
 </body>
 </html>

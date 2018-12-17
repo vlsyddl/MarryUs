@@ -142,7 +142,7 @@
 	<span class="gnbBar"></span> 
 </header>
     <div id="wrap" class="mypage">
-        <nav class="myCompanyNav">
+         <nav class="myCompanyNav">
             <div class="container">
                     <ul>
                         <li class="on">
@@ -163,7 +163,12 @@
                                 Auction List
                             </a>
                         </li>
-                        
+                        <li>
+                            <a href="<c:url value='/mycompany/reservationView.do'/>">
+                                <img src="<c:url value="/resources/"/>img/reservation_icon2.png" alt="" class="img-responsive center-block" style="padding: 5px;">
+                                My Reservation
+                            </a>
+                        </li> 
                     </ul>
             </div>
         </nav>
@@ -355,7 +360,7 @@
 					   	   data: $("#UpdateProfileForm").serialize()
 			    	  }).done(function(){
 			    		  alert("정보가 수정되었습니다.");
-					   	  location.href ="mywedding.do"
+					   	  location.href ="<c:url value='/mycompany/myCompany.do'/>";
 			    	  });
 		
 		      	}else{

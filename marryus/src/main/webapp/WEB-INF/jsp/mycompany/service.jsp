@@ -12,7 +12,9 @@
 	 <c:import url="/common/importJs.jsp"/>
 <style>
 	table{
-		width: 600px;
+		width: 800px;
+		margin: auto;
+		
 	}
 	table tr, table td{
 		border-collapse: collapse;
@@ -103,7 +105,12 @@
                                 Auction List
                             </a>
                         </li>
-                        
+                        <li>
+                            <a href="<c:url value='/mycompany/reservationView.do'/>">
+                                <img src="<c:url value="/resources/"/>img/reservation_icon2.png" alt="" class="img-responsive center-block" style="padding: 5px;">
+                                My Reservation
+                            </a>
+                        </li> 
                     </ul>
             </div>
         </nav>
@@ -115,7 +122,7 @@
         
 	<c:forEach var="auction" items="${autionList}">
 	<a >
-	<table onClick="location.href=`http://localhost:8000/marryus/mypage/myServiceUpdate.do?memNo=10&comInfoNo=${auction.comInfoNo}`" style="cursor:pointer;" calss="table_outer">
+	<table onClick="location.href='<c:url value="/mycompany/myServiceUpdate.do?memNo=10&comInfoNo=${auction.comInfoNo}"/>'" style="cursor:pointer;" calss="table_outer">
 		<tr>
 			<td><img src="<c:url value="/${auction.comFilePath}/${auction.comFileName}"/>" width="150px" height="100px"/></td>
 			<td><table><tr><td class="title">${auction.comInfoName}</td></tr>
@@ -137,9 +144,10 @@
 	</a>
 	</c:forEach>
 	<a>
-	<table onClick="location.href=`http://localhost:8000/marryus/mypage/myService.do`" style="cursor:pointer;" class="InsertProfile">
+	<table onClick="location.href=`<c:url value="/mycompany/myService.do"/>`" style="cursor:pointer;" class="InsertProfile">
 		<tr>
 			<td style="font-size: 50px; font-weight: 800;">+</td>
+			<td style="font-size: 24px; font-weight: 800;">서비스 등록하기</td>
 		<tr>
 	</table>
 	</a>

@@ -14,6 +14,7 @@ import kr.co.marryus.repository.domain.CompanyLike;
 import kr.co.marryus.repository.domain.CompanyMember;
 import kr.co.marryus.repository.domain.Dress;
 import kr.co.marryus.repository.domain.GeneralMember;
+import kr.co.marryus.repository.domain.Honeymoon;
 import kr.co.marryus.repository.domain.Jewelry;
 import kr.co.marryus.repository.domain.Makeup;
 import kr.co.marryus.repository.domain.Member;
@@ -170,39 +171,30 @@ public class MyPageServiceImpl implements MypageService{
 
 
 	@Override
-	public Venue selectVenue(Auction auction) {
-		return mapper.selectVenue(auction);
+	public Venue selectVenue(int auctionNo) {
+		return mapper.selectVenue(auctionNo);
 	}
 
 
 	@Override
-	public Studio selectStudio(Auction auction) {
-		return mapper.selectStudio(auction);
+	public Studio selectStudio(int auctionNo) {
+		return mapper.selectStudio(auctionNo);
 	}
 
 
 	@Override
-	public Dress selectDress(Auction auction) {
-		return mapper.selectDress(auction);
+	public Dress selectDress(int auctionNo) {
+		return mapper.selectDress(auctionNo);
 	}
 
 
 	@Override
-	public Makeup selectMakeup(Auction auction) {
-		return mapper.selectMakeup(auction);
+	public Makeup selectMakeup(int auctionNo) {
+		return mapper.selectMakeup(auctionNo);
 	}
 
 
-	@Override
-	public Jewelry selectHoneymoon(Auction auction) {
-		return mapper.selectHoneymoon(auction);
-	}
 
-
-	@Override
-	public ServiceAdd selectJewelry(Auction auction) {
-		return mapper.selectJewelry(auction);
-	}
 	
 	
 
@@ -316,40 +308,12 @@ public class MyPageServiceImpl implements MypageService{
 
 
 	@Override
-	public Todo selectTodoThree(int memNo) {
+	public List<Todo> selectTodoThree(int memNo) {
 		return mapper.selectTodoThree(memNo);
 	}
 
 
-	@Override
-	public Tender selectTenderCal(int memNo) {
-		return mapper.selectTenderCal(memNo);
-	}
-
-
-	@Override
-	public int selectCompanyLikeByComMem(int memNo) {
-		return mapper.selectCompanyLikeByComMem(memNo);
-	}
-
-
-	@Override
-	public int selectTenderchoose(int memNo) {
-		return mapper.selectTenderchoose(memNo);
-	}
-
-
-	@Override
-	public int selectTenderDoing(int memNo) {
-		return mapper.selectTenderDoing(memNo);
-	}
-
-
-	@Override
-	public int selectTenderDone(int memNo) {
-		return mapper.selectTenderDone(memNo);
-	}
-
+	
 
 	@Override
 	public int MyspendBudget(int memNo) {
@@ -367,6 +331,27 @@ public class MyPageServiceImpl implements MypageService{
 	public int insertReservation(Reservation res) {
 		return mapper.insertReservation(res);
 	}
+
+
+	@Override
+	public Honeymoon selectHoneymoon(int auctionNo) {
+		return mapper.selectHoneymoon(auctionNo);
+	}
+
+
+	@Override
+	public Jewelry selectJewelry(int auctionNo) {
+		return mapper.selectJewelry(auctionNo);
+	}
+
+
+	@Override
+	public ServiceAdd selectServiceAdd(int auctionNo) {
+		return mapper.selectServiceAdd(auctionNo);
+	}
+
+
+
 
 
 

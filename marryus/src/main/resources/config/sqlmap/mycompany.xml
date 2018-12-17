@@ -15,7 +15,7 @@
 		<result  property="comInfoOkay"   column="com_info_okay"/>
 		<result  property="comFileName"   column="com_file_name"/>
 		<result  property="comFilePath"   column="com_file_path"/>	
-		<result  property="aucionType"   column="aucion_type"/>
+		<result  property="auctionType"   column="auction_type"/>
 		<result  property="auctionSdate"   column="auction_sdate"/>
 		<result  property="auctionEdate"   column="auction_edate"/>
 		<result  property="tenderBudget"   column="tender_budget"/>
@@ -48,6 +48,9 @@
 		<result property="tenderRegdate" column="tender_regdate" />
         <result property="memName" column="mem_name" />
         <result property="memNo" column="mem_no" />
+        <result property="dday" column="dday" />
+        <result property="sumTenderBudget" column="sum_tender_budget" />
+        <result property="avgTenderBudget" column="avg_tender_budget" />
 	</resultMap>
 	
 	<resultMap id="auctionMap" type="Auction">
@@ -191,7 +194,16 @@
 	</resultMap>
 	
 
-
+ 	<resultMap id="reservationMap" type="Reservation">
+		<result property="resNo" column="res_no" />
+		<result property="tenderNo" column="tender_no" />
+		<result property="resVisit" column="res_visit" />
+		<result property="resDate" column="res_date" />
+		<result property="resTime" column="res_time" />
+		<result property="resEmail" column="res_email" />
+		<result property="resPhone" column="res_phone" />
+		<result property="resMessage" column="res_message" />
+	</resultMap>
 	
 
 	
@@ -309,14 +321,16 @@
 	
 	<!-- 관리자 경매리스트 -->
 
+	<!-- 관리자 경매리스트 -->
+
     <select id="selectAuction"  parameterType="Page" resultMap="tenderMap">
-               select *
+    	select *, auction_edate-now() as dday
         from mu_member m
         inner join mu_auction a
         on a.mem_no = m.mem_no
         inner join mu_tender t
-        ON a.auction_no = t.auction_no
-        where t.mem_no=#{memNo}
+		on a.auction_no = t.auction_no
+		and t.mem_no=#{memNo}
         limit #{begin}, 10
 	</select>
 
@@ -398,7 +412,67 @@
 	</select>
 	
 	
-	<!-- 메인  -->
+	<!-- 예약 보기 -->
+	<select id="selectReservation" parameterType="int" resultMap="reservationMap">
+		select *
+		from mu_reservation r
+		right outer join mu_tender t
+        on r.tender_no = t.tender_no
+		where t.mem_no=#{memNo}
+        and res_no is not null
+	</select>
+	
+	
+	
+	
+		<!-- 메인(업체) -->
+	<!--  총 낙찰가, 낙찰 평균가 -->
+	<select id="selectTenderCal" parameterType="int" resultMap="tenderMap">
+	select ifnull(sum(tender_budget),0) sum_tender_budget, ifnull(ceiling(avg(tender_budget)), 0) avg_tender_budget
+	from mu_tender 
+	where tender_status='choo'
+	and mem_no=#{memNo}
+	</select>
+	
+	
+		<!-- 관심 업체 등록 수 -->
+	<select id="selectCompanyLikeByComMem" parameterType="int" resultType="int">
+	select count(*) like_count
+	from mu_company_like cl
+	inner join(select mem_no, com_info_no from mu_company_info) ci
+	where cl.com_info_no=ci.com_info_no
+	and ci.mem_no=#{memNo}
+	</select>
+	
+	<!-- 낙찰된 것 -->
+	<select id="selectTenderchoose" parameterType="int" resultType="int">
+	select count(*)
+	from mu_auction a
+	left join mu_tender t
+	on a.auction_no = t.auction_no
+	where t.tender_status='choo'
+	and t.mem_no=#{memNo}
+	</select>
+	<select id="selectTenderDoing" parameterType="int" resultType="int">
+	<![CDATA[ 
+	select count(*)
+	from mu_auction a
+	left join mu_tender t
+	on a.auction_no = t.auction_no
+	where auction_edate-now()>=0 and  t.tender_status='ing'
+	and t.mem_no=#{memNo}
+	]]> 
+	</select>
+	<select id="selectTenderDone" parameterType="int" resultType="int">
+	<![CDATA[ 
+	select count(*)
+	from mu_auction a
+	left join mu_tender t
+	on a.auction_no = t.auction_no
+	where auction_edate-now()<0 and  t.tender_status='ing'
+	and t.mem_no=#{memNo}
+	]]> 
+	</select>
 	
 	
 	

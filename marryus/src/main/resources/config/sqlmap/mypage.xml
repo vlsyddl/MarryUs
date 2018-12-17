@@ -20,6 +20,7 @@
 		<result  property="auctionEdate"   column="auction_edate"/>
 		<result  property="tenderBudget"   column="tender_budget"/>
 		<result  property="tenderRegdate"   column="tender_regdate"/>
+		<result  property="tenderNo"   column="tender_no"/>
 		<result  property="tenderTitle"   column="tender_title"/>
 		<result  property="tenderInfo"   column="tender_info"/>
 		<result  property="codeValue"   column="code_value"/>
@@ -145,29 +146,34 @@
 		<result property="weddingBudget" column="wedding_budget" />
 	</resultMap>
 	
-	<resultMap id="studioMap" type="Studio">
-		<result property="auctionNo" column="auction_no" />
-		<result property="studioPlace" column="studio_place" />
-		<result property="studioOutdoor" column="studio_outdoor" />
-		<result property="studioSnapshot" column="studio_snapshot" />
-		<result property="studioVideo" column="studio_video" />
-		<result property="studioPickup" column="studio_pickup" />
+	<resultMap type="Studio" id="studioMap">
+		<result column="auction_no" property="auctionNo" />
+		<result column="studio_place" property="studioPlace" />
+		<result column="studio_outdoor" property="studioOutdoor" />
+		<result column="studio_snapshot" property="studioSnapshot" />
+		<result column="studio_video" property="studioVideo" />
+		<result column="studio_pickup" property="studioPickup" />
+		<result column="studio_more" property="studioMore" />
+		<result column="studio_budget" property="studioBudget" />
 	</resultMap>
 	
-	<resultMap id="dressMap" type="Dress">
-		<result property="auctionNo" column="auction_no" />
-		<result property="dressPrice" column="dress_price" />
-		<result property="dressNeckline" column="dress_neckline" />
-		<result property="dressType" column="dress_type" />
+	<resultMap type="Dress" id="dressMap">
+		<result column="auction_no" property="auctionNo" />
+		<result column="dress_place" property="dressPlace" />
+		<result column="dress_price" property="dressPrice" />
+		<result column="dress_neckline" property="dressNeckline" />
+		<result column="dress_type" property="dressType" />
+		<result column="dress_more" property="dressMore" />
 	</resultMap>
 	
-	<resultMap id="makeupMap" type="Makeup">
-		<result property="auctionNo" column="auction_no" />
-		<result property="mkuMakeup" column="mku_makeup" />
-		<result property="mkuMom" column="mku_mom" />
-		<result property="mkuBudget" column="mku_budget" />
-		<result property="mkuWorkout" column="mku_workout" />
-		<result property="mkuMore" column="mku_more" />
+	<resultMap type="Makeup" id="makeupMap">
+		<result column="auction_no" property="auctionNo" />
+		<result column="mku_place" property="mkuPlace" />
+		<result column="mku_makeup" property="mkuMakeup" />
+		<result column="mku_mom" property="mkuMom" />
+		<result column="mku_budget" property="mkuBudget" />
+		<result column="mku_workout" property="mkuWorkout" />
+		<result column="mku_more" property="mkuMore" />
 	</resultMap>
 	
 	<resultMap id="honeymoonMap" type="Honeymoon">
@@ -175,19 +181,21 @@
 		<result property="honeyPlace" column="honey_place" />
 		<result property="honeyDate" column="honey_date" />
 		<result property="honeyHope" column="honey_hope" />
+		<result property="honeyBudget" column="honey_budget" />
 	</resultMap>
 	
-	<resultMap id="jewelryMap" type="Jewelry">
-		<result property="auctionNo" column="auction_no" />
-		<result property="gift" column="gift" />
-		<result property="giftPrice" column="gift_price" />
-		<result property="giftHope" column="gift_hope" />
+	<resultMap type="Jewelry" id="jewelryMap">
+		<result column="auction_no" property="auctionNo" />
+		<result column="jewelry_type" property="jewelryType" />
+		<result column="jewelry_budget" property="jewelryBudget" />
+		<result column="jewelry_more" property="jewelryMore" />
+		<result column="jewelry_place" property="jewelryPlace" />
 	</resultMap>
 	
-	<resultMap id="serviceAddMap" type="ServiceAdd">
-		<result property="auctionNo" column="auction_no" />
-		<result property="serviceType" column="service_type" />
-		<result property="serviceDetail" column="service_detail" />
+	<resultMap type="ServiceAdd" id="serviceAddMap">
+		<result column="auction_no" property="auctionNo" />
+		<result column="service_title" property="serviceTitle" />
+		<result column="service_detail" property="serviceDetail" />
 	</resultMap>
 	
 	
@@ -272,7 +280,7 @@
 		<result property="tenderNo" column="tender_no" />
 		<result property="resVisit" column="res_visit" />
 		<result property="resDate" column="res_date" />
-		<result property="resTime" column="res_date" />
+		<result property="resTime" column="res_time" />
 		<result property="resEmail" column="res_email" />
 		<result property="resPhone" column="res_phone" />
 		<result property="resMessage" column="res_message" />
@@ -308,44 +316,7 @@
 
 	
 	
-		<!-- 관심 업체 등록 수 -->
-	<select id="selectCompanyLikeByComMem" parameterType="int" resultType="int">
-	select count(*) like_count
-	from mu_company_like cl
-	inner join(select mem_no, com_info_no from mu_company_info) ci
-	where cl.com_info_no=ci.com_info_no
-	and ci.mem_no=#{memNo}
-	</select>
 	
-	<!-- 낙찰된 것 -->
-	<select id="selectTenderchoose" parameterType="int" resultType="int">
-	select count(*)
-	from mu_auction a
-	left join mu_tender t
-	on a.auction_no = t.auction_no
-	where t.tender_status='choo'
-	and t.mem_no={memNo}
-	</select>
-	<select id="selectTenderDoing" parameterType="int" resultType="int">
-	<![CDATA[ 
-	select count(*)
-	from mu_auction a
-	left join mu_tender t
-	on a.auction_no = t.auction_no
-	where auction_edate-now()>=0 and  t.tender_status='ing'
-	and t.mem_no={memNo}
-	]]> 
-	</select>
-	<select id="selectTenderDone" parameterType="int" resultType="int">
-	<![CDATA[ 
-	select count(*)
-	from mu_auction a
-	left join mu_tender t
-	on a.auction_no = t.auction_no
-	where auction_edate-now()<0 and  t.tender_status='ing'
-	and t.mem_no={memNo}
-	]]> 
-	</select>
 	
 	<!-- 업체 정보 등록, 수정, 삭제시 사용 -->
 	<select id="selectComInfoList"  parameterType="int" resultMap="comInfoMap">
@@ -466,15 +437,7 @@
 	
 	
 	
-	<!-- 예약 보기 -->
-	<select id="selectReservation" parameterType="int" resultMap="reservationMap">
-		select *
-		from mu_reservation r
-		right outer join mu_tender t
-        on r.tender_no = t.tender_no
-		where t.mem_no=#{memNo}
-        and res_no is not null
-	</select>
+
 
 	
 	
@@ -553,12 +516,7 @@
 	</select> 
 
 	
-	<!-- 예약 하기 -->
 
-	<insert id="insertReservation" parameterType="Reservation" >
-		insert into mu_reservation(tender_no, res_visit, res_date,res_time, res_email, res_phone, res_message)
-		values(#{tenderNo}, #{resVisit}, #{resDate}, #{resTime}, #{resEmail}, #{resPhone}, #{resMessage})
-	</insert>
 	
 	
 	
@@ -589,7 +547,6 @@
 		on l.com_info_no = ci.com_info_no
 		where l.mem_no=#{memNo};
 	</select>
-	
 
 	
 	
@@ -619,72 +576,65 @@
 	
 	
 	<!-- 역경매 신청서 수정 -->
-	<select id="selectVenue" parameterType="Auction" resultMap="venueMap">
+	<select id="selectVenue" parameterType="int" resultMap="venueMap">
 		select v.*
 		from mu_venue v
 		inner join mu_auction a
 		on v.auction_no=a.auction_no 
-		where  a.auction_status=#{auctionStatus}
-		and a.mem_no=#{memNo}
+		where a.auction_no=#{auctionNo}
 	</select>
 	
 	
-	<select id="selectStudio" parameterType="Auction" resultMap="studioMap">
+	<select id="selectStudio" parameterType="int" resultMap="studioMap">
 		select s.*
 		from mu_studio s
 		inner join mu_auction a
 		on s.auction_no=a.auction_no 
-		where  a.auction_status=#{auctionStatus}
-		and a.mem_no=#{memNo}
+		where a.auction_no=#{auctionNo}
 	</select>
 	
 	
 	
 
-	<select id="selectDress" parameterType="Auction" resultMap="dressMap">
+	<select id="selectDress" parameterType="int" resultMap="dressMap">
 		select d.*
 		from mu_dress d
 		inner join mu_auction a
 		on d.auction_no=a.auction_no 
-		where  a.auction_status=#{auctionStatus}
-		and a.mem_no=#{memNo}
+		where a.auction_no=#{auctionNo}
 	</select>
 	
-	<select id="selectMakeup" parameterType="Auction" resultMap="makeupMap">
+	<select id="selectMakeup" parameterType="int" resultMap="makeupMap">
 		select m.*
 		from mu_makeup m
 		inner join mu_auction a
 		on m.auction_no=a.auction_no 
-		where  a.auction_status=#{auctionStatus}
-		and a.mem_no=#{memNo}
+		where a.auction_no=#{auctionNo}
 	</select>
 	
-	<select id="selectHoneymoon" parameterType="Auction" resultMap="honeymoonMap">
+	<select id="selectHoneymoon" parameterType="int" resultMap="honeymoonMap">
 		select m.*
 		from mu_honeymoon m
 		inner join mu_auction a
 		on m.auction_no=a.auction_no 
-		where  a.auction_status=#{auctionStatus}
-		and a.mem_no=#{memNo}
+		where a.auction_no=#{auctionNo}
 	</select>
 	
 	
-	<select id="selectJewelry" parameterType="Auction" resultMap="jewelryMap">
+	<select id="selectJewelry" parameterType="int" resultMap="jewelryMap">
 		select j.*
 		from mu_jewelry j
 		inner join mu_auction a
 		on j.auction_no=a.auction_no 
-		where  a.auction_status=#{auctionStatus}
-		and a.mem_no=#{memNo}
+		where a.auction_no=#{auctionNo}
 	</select>
 	
- 	<select id="selectServiceAdd" parameterType="Auction" resultMap="serviceAddMap">
+ 	<select id="selectServiceAdd" parameterType="int" resultMap="serviceAddMap">
 		select sd.*
-		from mu_serviceadd sd
+		from mu_service_add sd
 		inner join mu_auction a
 		on sd.auction_no=a.auction_no 
-		where  a.auction_status=#{auctionStatus}
-		and a.mem_no=#{memNo}
+		where a.auction_no=#{auctionNo}
 	</select> 
 	
 	
@@ -746,6 +696,26 @@
 		where auction_no=#{auctionNo}
 	</update>
 	
+		<!-- 예약 하기 -->
+
+	<insert id="insertReservation" parameterType="Reservation" >
+		insert into mu_reservation(tender_no, res_visit, res_date, res_time, res_email, res_phone, res_message)
+		values(#{tenderNo}, #{resVisit}, #{resDate}, #{resTime}, #{resEmail}, #{resPhone}, #{resMessage})
+	</insert>
+	
+	
+	<update id="updateAcuctionStatus" parameterType="int" >
+		update mu_auction
+		set auction_status='done'
+		where auction_no=#{auctionNo}
+	</update>
+	
+	<update id="updateTenderStatus" parameterType="int" >
+		update mu_tender
+		set tender_status='done'
+		where tender_no=#{tenderNo}
+	</update>
+	
 	
 	<!-- 웨딩 체크리스트 -->
  	<select id="selectTodoSortByDate" parameterType="int" resultMap="todolistMap">
@@ -794,14 +764,7 @@
 	
 	
 	
-	<!-- 메인(업체) -->
-	<!--  총 낙찰가, 낙찰 평균가 -->
-	<select id="selectTenderCal" parameterType="int" resultMap="tenderMap">
-	select sum(tender_budget) sum_tender_budget, avg(tender_budget) avg_tender_budget
-	from mu_tender 
-	where tender_status='choo'
-	and mem_no=#{memNo}
-	</select>
+
 	
 
 
@@ -949,19 +912,27 @@
 	</select>
 	
 		<!-- wedding date  -->
-	<select id="getWedDate" parameterType="int" resultType="String">
+<!-- 	<select id="getWedDate" parameterType="int" resultType="String">
 		select plan_wed_date
 		  from mu_wedding_plan 
 		 where mem_no= #{memNo}
+	</select> -->
+ 	<select id="getWedDate" parameterType="int" resultType="String">
+		select ifnull(plan_wed_date,TO_DATE(TO_CHAR('2018-11-22', 'YYYY-MM-DD') )
+		  from mu_wedding_plan wp
+			RIGHT OUTER JOIN mu_member m
+		  on m.mem_no = wp.mem_no
+		 where m.mem_no= #{memNo}
 	</select>
 	
 		<!-- 관심업체 -->
 	<select id="MycountCompanyLike" parameterType="int" resultType="int">
-		select count(*)
-		  from mu_company_like l
-		 inner join mu_company_info ci
-		    on l.com_info_no = ci.com_info_no
-		 where l.mem_no=#{memNo}
+			select ifnull(count(l.mem_no),0) count
+			from  mu_company_like l
+            right outer join mu_member m
+            on m.mem_no = l.mem_no
+			where m.mem_no=#{memNo}
+            group by l.mem_no
 	</select>
 	
 		<!-- wedding budget -->
@@ -979,10 +950,33 @@
 		  RIGHT OUTER JOIN mu_member m
 		  on m.mem_no = b.mem_no
 		 where m.mem_no =#{memNo}
-         group by b.mem_no;
+         group by b.mem_no
 	</select>
 	
-	
+	<!--  입찰된 경매 건수 --> 
+	<select id="selectByTenderCnt" parameterType="Auction"  resultType="int">
+		select count(tender_no)
+		from mu_tender t
+ 		inner join mu_auction a
+		on a.auction_no = t.auction_no
+        where a.mem_no=#{memNo} 
+        <if test="auctionType!='sdm'">
+        and a.auction_type=#{auctionType}
+        </if>
+        <if test="auctionType=='sdm'">
+        and a.auction_type IN('s','d','m')
+        </if>
+	</select>
+	<!--  최근 3개 투두 --> 
+	<select id="selectTodoThree" parameterType="int"  resultMap="todoMap">
+		select *
+        from mu_todo
+        where mem_no=#{memNo}
+        and (todo_delete='N' or todo_delete='n')
+		order by todo_no desc
+        limit 3
+	</select> 
+
 </mapper>
 
 

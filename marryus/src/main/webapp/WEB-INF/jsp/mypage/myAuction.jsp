@@ -370,7 +370,7 @@ h4{
             <div class="info_box left">
                <div><fmt:formatDate value='${myAuction[0].auctionSdate}' pattern='yyyy-MM-dd' />~<fmt:formatDate value='${myAuction[0].auctionEdate}' pattern='yyyy-MM-dd' /></div>
              <div>${myAuction[0].tenderCnt}개의 입찰서</div>
-              <div><a href="#" class="btn1" data-toggle="modal" data-target="#auctionDetailModal">> 내 경매 조건 보기</a></div>
+              <div><button class="btn1 auctionDetail" type="button"  data-href1="${myAuction[0].auctionNo}" data-href2="${myAuction[0].auctionType}">> 내 경매 조건 보기</button></div>
               <div></div>
             </div>
             </c:when>
@@ -388,7 +388,7 @@ h4{
                 <div>${auction.comInfoAddr} </div>
                 <div>${auction.comInfoPhone}</div>
                 <div><fmt:formatNumber type='currency' value='${auction.tenderBudget}' pattern='###,###'/>원</div>
-                <div><button class="btn1 more_detail" type="button" data-href="${auction.comInfoNo}" >상세보기</button><button class="btn1 more_reservation">예약하기</button></div>
+                <div><button class="btn1 more_detail" type="button" data-href="${auction.comInfoNo}" >상세보기</button><button class="more_reservation btn1" type="button" data-href="${auction.tenderNo}" >예약하기</button></div>
               </div>
               <button class="btn2"></button>
               </div>
@@ -457,88 +457,9 @@ h4{
 
 	</div>
 
-<div class="modal fade" id="auctionDetailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog ">
-    <div class="modal-content">
-    	modal입니다.
-    	<c:if test="${myAuction[0].auctionType=='v'}">
-    		<p><span class="title">희망예식장소</span></p>
-	    	<p><span class="title">희망예식날짜</span></p>
-	    	<p><span class="title">시간</span></p>
-	    	<p><span class="title">예식 타입</span></p>
-	    	<p><span class="title">하객 수</span></p>
-	    	<p><span class="title">기타의견 사항</span></p>
-	    	<p><span class="title">희망예산</span></p>
-    	</c:if>
-    	<c:if test="${myAuction[0].auctionType=='s'}">
-	    	<p><span class="title">희망 위치</span></p>
-	    	<p><span class="title">야외촬영여부</span></p>
-	    	<p><span class="title">스냅샷촬영여부</span></p>
-	    	<p><span class="title">비디오촬영여부</span></p>
-	    	<p><span class="title">픽업여부</span></p>
-	    	<p><span class="title">희망 예산</span></p>
-	    	<p><span class="title">희망 사항</span></p>
-    	</c:if>
-    	<c:if test="${myAuction[0].auctionType=='d'}">
-	    	<p><span class="title">희망 위치</span></p>
-	    	<p><span class="title">넥라인</span></p>
-	    	<p><span class="title">드레스타입</span></p>
-	    	<p><span class="title">예상견적</span></p>
-	    	<p><span class="title">희망 사항</span></p>
-    	</c:if>
-    	<c:if test="${myAuction[0].auctionType=='m'}">
-	    	<p><span class="title">희망 위치</span></p>
-	    	<p><span class="title">신부화장</span></p>
-	    	<p><span class="title">혼주화장</span></p>
-	    	<p><span class="title">출장희망</span></p>
-	    	<p><span class="title">희망 예산</span></p>
-	    	<p><span class="title">희망 사항</span></p>
-    	</c:if>
-    </div>
-    </div>
-    </div>
+
     
-    
- <div class="modal fade" id="ModalReservation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog  modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">예약하기</h4>
-      </div>
-      <div class="modal-body">
-      		<form id="resSubmitForm" method="POST">
-        	<p>방문을 해보시겠습니까?</p>
-			<select name="res_visit">
-				<option value="N">아니오</option>
-				<option value="Y">네</option>
-			</select>
-			<p>방문을 예정일과 요청시간</p>
-			<input type="Date" name="res_date" />
-				<select name="res_time">
-				<c:forEach var="i" begin="8" end="20">
-					<option value='${i}'>${i}:00시</option>
-				</c:forEach>
-				</select>
-			<hr>
-			<p>연락받으실 수단을 선택해주세요</p>
-			<p>이메일 : <input type="text" class="" name="res_email" /></p>
-			<p>연락처 : <input type="text" class="" name="res_phone" /></p>
-			<hr>
-			<p>요청사항 또는 추가로 궁금하신 사항이 있으면 알려주세요.</p>
-			<textarea cols="3000" rows="7" name="res_message" style="width: 850px"></textarea>
-			</form>
-			<button onclick="resSubmit()" type="button">보내기</button>
-		
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-    
-    
+      
 
 
 
@@ -559,28 +480,40 @@ $(function(){
 		    } else {
 		      bx.reloadSlider(); 
 		    }
-		  })
+		  });
 	});
 
-	$(".more_reservation").click(function(e){
+ 	$(".more_reservation").click(function(e){
 		  e.preventDefault();
-		  detail($(this).data("href"))
+		  //detail($(this).data("href"))
+		  var dataHref=$(".more_reservation").data("href");
+		  $("input[name='tenderNo']").val(dataHref); 
 	      $('#ModalReservation').modal('show')
 	      var bx;
 		  $('#ModalReservation').on('shown.bs.modal', function () {
-		    if(bx === undefined){
-		      bx= slider = $('.slideBox ul').bxSlider({
-		  	    mode: 'fade',
-			    captions: true
-			});
-		    } else {
-		      bx.reloadSlider(); 
-		    }
-		  })
+		    
+		  });
 	    
-	  });
+	  }); 
+ 	
+ 	$(".auctionDetail").click(function(e){
+		  e.preventDefault();
+		 /*  alert($(".auctionDetail").data("href1"),"href1");
+		  alert($(".auctionDetail").data("href2"),"href2"); */
+		  auctionDetailModal($(".auctionDetail").data("href1"),$(".auctionDetail").data("href2"))
+	      $('#auctionDetailModal').modal('show')
+		  $('#auctionDetailModal').on('shown.bs.modal', function () {
+
+		  });
+	});
+	
+});//즉시 실행 함수
+
+
+
 
 function resSubmit(){
+	console.log($(".more_reservation").data("href"));
 	$.ajax({
 		url : "<c:url value='/mypage/reservation.do'/>",
 		type : "POST",
@@ -588,8 +521,9 @@ function resSubmit(){
 	}).done(function(no){
 		if(no>0){
    			$('#ModalReservation').modal('hide');
-		});
-	}
+		}
+	});
+} 
 
 function detail(comInfoNo){
 	var modal = $("#detailModal")
@@ -613,8 +547,71 @@ function detail(comInfoNo){
 			fileList +='</li>'        	
         }
         slideBox.find("ul").html(fileList);
-	})
+	});
 }
+	
+function auctionDetailModal(auctionNo, auctionType){
+	$.ajax({
+		url : "<c:url value='/mypage/auctionView.do'/>",
+		data : {"auctionNo":auctionNo, "auctionType" : auctionType}
+	}).done(function(data){
+		alert(auctionType);
+		var div ="";
+		if(auctionType=='v'){
+			div+="<p><span class='hopeVenue'>희망예식장소</span>"+data.hopeVenue+"</p>";
+			div+="<p><span class='weddingDate'>희망예식날짜</span>"+data.weddingDate+"</p>";
+			div+="<p><span class='weddingTime'>시간</span>"+data.weddingTime+"</p>";
+			div+="<p><span class='weddingType'>예식 타입</span>"+data.weddingType+"</p>";
+			div+="<p><span class='weddingVistor'>하객 수</span>"+data.weddingVistor+"</p>";
+			div+="<p><span class='weddingWish'>기타의견 사항</span>"+data.weddingWish+"</p>";
+			div+="<p><span class='weddingBudget'>희망예산</span>"+data.weddingBudget+"</p>";
+		}
+		if(auctionType=='s'){
+			div+="<p><span class='studioPlace'>희망 위치</span>"+data.studioPlace+"</p>";
+		    div+="<p><span class='studioOutdoor'>야외촬영여부</span>"+data.studioOutdoor+"</p>";
+		    div+="<p><span class='studioSnapshot'>스냅샷촬영여부</span>"+data.studioSnapshot+"</p>";
+		    div+="<p><span class='studioVideo'>비디오촬영여부</span>"+data.studioVideo+"</p>";
+		    div+="<p><span class='studioPickup'>픽업여부</span>"+data.studioPickup+"</p>";
+		    div+="<p><span class='studioBudget'>희망 예산</span>"+data.studioBudget+"</p>";
+		    div+="<p><span class='studioMore'>희망 사항</span>"+data.studioMore+"</p>";
+		}
+		if(auctionType=='d'){
+			div+="<p><span class='dressPlace'>희망 위치</span>"+data.dressPlace+"</p>";
+		    div+="<p><span class='dressNeckline'>넥라인</span>"+data.dressNeckline+"</p>";
+		    div+="<p><span class='dressType'>드레스타입</span>"+data.dressType+"</p>";
+		    div+="<p><span class='dressPrice'>예상견적</span>"+data.dressPrice+"</p>";
+		    div+="<p><span class='dressMore'>희망 사항</span>"+data.dressMore+"</p>";
+		}
+		if(auctionType=='m'){
+			div+="<p><span class='mkuPlace'>희망 위치</span>"+data.mkuPlace+"</p>";
+			div+="<p><span class='mkuMakeup'>신부화장</span>"+data.mkuMakeup+"</p>";
+			div+="<p><span class='mkuMom'>혼주화장</span>"+data.mkuMom+"</p>";
+			div+="<p><span class='mkuWorkout'>출장희망</span>"+data.mkuWorkout+"</p>";
+			div+="<p><span class='mkuBudget'>희망 예산</span>"+data.mkuBudget+"</p>";
+			div+="<p><span class='mkuMore'>희망 사항</span>"+data.mkuMore+"</p>";
+		}
+		if(auctionType=='h'){
+			div+="<p><span class='honeyPlace'>희망 여행지</span>"+data.honeyPlace+"</p>";
+			div+="<p><span class='honeyDate'>희망 여행 날짜</span>"+data.honeyDate+"</p>";
+			div+="<p><span class='honeyHope'>기타 의견사항</span>"+data.honeyHope+"</p>";
+			div+="<p><span class='honeyBudget'>희망 예산</span>"+data.honeyBudget+"</p>";
+		}
+		if(auctionType=='j'){
+			div+="<p><span class='jewelryPlace'>희망 위치</span>"+data.jewelryPlace+"</p>";
+			div+="<p><span class='jewelryType'>예물 종류</span>"+data.jewelryType+"</p>";
+			div+="<p><span class='jewelryBudget'>희망 예산</span>"+data.jewelryBudget+"</p>";
+			div+="<p><span class='jeweMore'>희망 사항</span>"+data.jeweMore+"</p>";
+		}
+		if(auctionType=='e'){
+			div+="<p><span class='serviceTitle'>기타서비스 사항</span>"+data.serviceTitle+"</p>";
+			div+="<p><span class='serviceDetail'>기타서비스 상세</span>"+data.serviceDetail+"</p>";
+		}
+		
+		$("#auction_detail").html(div);
+		
+	});
+}
+
 
 </script>
 
@@ -660,6 +657,57 @@ function detail(comInfoNo){
 </div>
 
 
+  
+ <div class="modal fade" id="ModalReservation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog  modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">예약하기</h4>
+      </div>
+      <div class="modal-body">
+      		<form id="resSubmitForm" method="POST">
+      		<input type="hidden" name="tenderNo" value="" >
+        	<p>방문을 해보시겠습니까?</p>
+			<select name="resVisit">
+				<option value="N">아니오</option>
+				<option value="Y">네</option>
+			</select>
+			<p>방문을 예정일과 요청시간</p>
+			<input type="Date" name="resDate" />
+				<select name="resTime">
+				<c:forEach var="i" begin="8" end="20">
+					<option value='${i}'>${i}:00시</option>
+				</c:forEach>
+				</select>
+			<hr>
+			<p>연락받으실 수단을 선택해주세요</p>
+			<p>이메일 : <input type="text" class="" name="resEmail" /></p>
+			<p>연락처 : <input type="text" class="" name="resPhone" /></p>
+			<hr>
+			<p>요청사항 또는 추가로 궁금하신 사항이 있으면 알려주세요.</p>
+			<textarea cols="3000" rows="7" name="resMessage" style="width: 850px"></textarea>
+			</form>
+			<button onclick="resSubmit()" type="button">보내기</button>
+		
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+
+<div class="modal fade" id="auctionDetailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog ">
+    <div class="modal-content">
+    <div id="auction_detail">
+  
+    </div>
+    </div>
+    </div>
   
 
 

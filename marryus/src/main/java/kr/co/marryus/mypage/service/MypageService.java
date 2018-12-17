@@ -8,6 +8,7 @@ import kr.co.marryus.repository.domain.CompanyLike;
 import kr.co.marryus.repository.domain.CompanyMember;
 import kr.co.marryus.repository.domain.Dress;
 import kr.co.marryus.repository.domain.GeneralMember;
+import kr.co.marryus.repository.domain.Honeymoon;
 import kr.co.marryus.repository.domain.Jewelry;
 import kr.co.marryus.repository.domain.Makeup;
 import kr.co.marryus.repository.domain.Member;
@@ -67,12 +68,13 @@ public interface MypageService {
 	public int selectGeneralAuctionCnt(Auction auction);
 	
 	//역경매 신청서 수정
-	public Venue selectVenue(Auction auction);
-	public Studio selectStudio(Auction auction);
-	public Dress selectDress(Auction auction);
-	public Makeup selectMakeup(Auction auction);
-	public Jewelry selectHoneymoon(Auction auction);
-	public ServiceAdd selectJewelry(Auction auction);
+	public Venue selectVenue(int auctionNo);
+	public Studio selectStudio(int auctionNo);
+	public Dress selectDress(int auctionNo);
+	public Makeup selectMakeup(int auctionNo);
+	public Honeymoon selectHoneymoon(int auctionNo);
+	public Jewelry selectJewelry(int auctionNo);
+	public ServiceAdd selectServiceAdd(int auctionNo);
 	
 	
 	//투두
@@ -91,6 +93,8 @@ public interface MypageService {
 
 	
 	   
+
+	   
 	  //메인(개인)
 	   String getWedDate(int memNo);
 	   int MycountTotalTODO(int memNo);
@@ -98,18 +102,13 @@ public interface MypageService {
 	   int MycountTotalAuction(int memNo);
 	   int MycountAuctiondone(int memNo);
 	   int MycountCompanyLike(int memNo);
-	   //Budget MytotalBudget(int memNo);
 	   int MytotalBudget(int memNo);
+	   //int MytotalBudget(int memNo);
 	   int MyspendBudget(int memNo);
+	   List<Todo> selectTodoThree(int memNo);
 	   int selectByTenderCnt(Auction auction);
-	   Todo selectTodoThree(int memNo);
 	   
-	   //메인(업체)
-	   Tender selectTenderCal(int memNo);
-	   int selectCompanyLikeByComMem(int memNo);
-	   int selectTenderchoose(int memNo);
-	   int selectTenderDoing(int memNo);
-	   int selectTenderDone(int memNo);
+
 
 	
 }

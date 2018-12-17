@@ -246,7 +246,7 @@ $(function () {
             	if(!item.todoNo);
                 console.log(item,"아이템 정보");
                 $.ajax({
-                	url : "/marryus/mypage/myTodoWrite.do",
+                	url : pathname+"/marryus/mypage/myTodoWrite.do",
                 	type : "POST",
                 	data : item
                 }).done(function (data) {
@@ -255,6 +255,9 @@ $(function () {
                 	console.log(item.todoNo);
                 	me._addItemToList(item);
                 });
+                
+                
+                
                 
             }
             if(!item.todoNo||item.todoNo!=""||item.todoNo==null){
@@ -300,6 +303,7 @@ $(function () {
                     });
             } else {
                 me._updateItemInList(item);
+
             }
             return me;
         },
@@ -356,6 +360,21 @@ $(function () {
             var me = this;
             if (item.id) {
                 me.updateItem(item, errorCallback);
+                //////////////////////
+                item.listId = me.$options.id;
+                if(item.done==true){
+                	item.todoCheck="Y";
+                }
+                console.log(item,"아이템 정보");
+                $.ajax({
+                	url : pathname+"/marryus/mypage/myTodoUpdate.do",
+                	type : "POST",
+                	data : item
+                }).done(function () {
+                	console.log("투두 업데이트");
+                	me._triggerEvent('initTodolist', [me, item]);
+                });
+                /////////////////////
             } else {
                 me.addItem(item, errorCallback);
             }
@@ -632,6 +651,13 @@ $(function () {
                     placeholder: 'Due Date'
                 })
             ).appendTo($form);
+            $('<div class="form-group">').append(
+            		$('<input>', {
+            			'type': 'hidden',
+            			name: 'done',
+            			'class': 'form-control'
+            		})
+            ).appendTo($form);
             var $ft = $('<div class="lobilist-form-footer">');
             $('<button>', {
                 'class': 'btn btn-primary btn-sm btn-add-todo',
@@ -729,7 +755,7 @@ $(function () {
             	if(!item.todoNo){
                 console.log(item,"아이템 정보");
                 $.ajax({
-                	url : "/marryus/mypage/myTodoWrite.do",
+                	url : pathname+"/marryus/mypage/myTodoWrite.do",
                 	type : "POST",
                 	data : item
                 }).done(function (data) {
@@ -772,9 +798,8 @@ $(function () {
             }
 
             $this.closest('.lobilist-item').toggleClass('item-done');
-            console.log(item,"아이템 정보");
             $.ajax({
-            	url : "/marryus/mypage/myTodoUpdate.do",
+            	url : pathname+"/marryus/mypage/myTodoUpdate.do",
             	type : "POST",
             	data : item
             }).done(function () {
@@ -999,6 +1024,12 @@ $(function () {
                     html: item.dueDate
                 }));
             }
+            if (item.done) {
+            	$li.append($('<div>', {
+            		'class': 'lobilist-item-done',
+            		html: item.done
+            	}));
+            }
             $li = me._addItemControls($li);
             if (item.todoCheck=="Y"||item.todoCheck=="y") {
                 $li.find('input[type=checkbox]').prop('checked', true);
@@ -1060,7 +1091,7 @@ $(function () {
             this.deleteItem(item);
             console.log(item,"아이템 정보");
             $.ajax({
-            	url:"/marryus/mypage/myTodoDelete.do",
+            	url:pathname+"/marryus/mypage/myTodoDelete.do",
             	type : "POST",
             	data : item
             }).done(function () {
@@ -1085,7 +1116,6 @@ $(function () {
             $li.data('lobiListItem', item);
             $.extend(me.$items[item.id], item);
             me._triggerEvent('afterItemUpdate', [me, item]);
-            
            
             
             
@@ -1142,12 +1172,6 @@ $(function () {
         eventsSuppressed: false,
 
         init: function (options) {
-        	$.ajax({
-        		url: "/marryus/mypage/myTodolist.do",
-        		method: "POST"
-        	}).done(function(todo){
-        	    	$lists= todo;
-        	});
         	
             var me = this;
             me.suppressEvents();
@@ -1468,13 +1492,7 @@ $(function () {
          * Fires when <code>LobiList</code> is initialized
          * @param {LobiList} The <code>LobiList</code> instance
          */
-        init: function() {$.ajax({
-    		url: "/marryus/mypage/myTodolist.do",
-    		method: "POST"
-    	}).done(function(todo){
-    	    	$lists=todo;
-    	});
-        },
+        init: null,
 
         /**
          * @event beforeDestroy
@@ -1496,13 +1514,7 @@ $(function () {
          * @param {LobiList} The <code>LobiList</code> instance
          * @param {List} The <code>List</code> instance to be added
          */
-        beforeListAdd: function() {$.ajax({
-    		url: "/marryus/mypage/myTodolist.do",
-    		method: "POST"
-    	}).done(function(todo){
-    	    	$lists=todo;
-    	});
-        },
+        beforeListAdd: null,
 
         /**
          * @event afterListAdd
@@ -1591,7 +1603,7 @@ $(function () {
         afterItemReorder: function(me, oldList, currentIndex, oldIndex, item){
         	item.listId = me.$options.id;
         	$.ajax({
-            	url : "/marryus/mypage/myTodoUpdate.do",
+            	url : pathname+"/marryus/mypage/myTodoUpdate.do",
             	type : "POST",
         		data : item
         	}).done(function(){console.log("드로그 앤드 드롭 - 성공!")});

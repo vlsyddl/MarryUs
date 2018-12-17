@@ -12,6 +12,7 @@ import kr.co.marryus.repository.domain.Jewelry;
 import kr.co.marryus.repository.domain.Makeup;
 import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.Page;
+import kr.co.marryus.repository.domain.Reservation;
 import kr.co.marryus.repository.domain.ServiceAdd;
 import kr.co.marryus.repository.domain.Studio;
 import kr.co.marryus.repository.domain.Tender;
@@ -44,6 +45,16 @@ public interface MycompanyService {
 	public CompanyMember selectCompanyMember(int memNo);
 	public int updateMember(Member member);
 	public int updateCompanyMember(CompanyMember comMem);
+	
+	//예약 현황
+	public List<Reservation> selectReservation(int memNo);
+	
+	//메인
+	public Tender selectTenderCal(int memNo);
+	public int selectCompanyLikeByComMem(int memNo);
+	public int selectTenderchoose(int memNo);
+	public int selectTenderDoing(int memNo);
+	public int selectTenderDone(int memNo);
 
 
 	
