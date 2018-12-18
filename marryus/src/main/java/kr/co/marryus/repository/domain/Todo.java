@@ -20,7 +20,6 @@ public class Todo {
 	//콜렉션
 	
 	private WeddingPlan weddingPlan;
-	
 	private String[] todoCategoryList;
 	
 	
