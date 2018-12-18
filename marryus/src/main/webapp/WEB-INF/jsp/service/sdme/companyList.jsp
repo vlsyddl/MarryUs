@@ -10,10 +10,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Marry Us</title>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dc6291b36d6e91a7fc6b30e92a9171d3&libraries=services"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <c:import url="/common/importCss.jsp"/>
 	 <c:import url="/common/importJs.jsp"/>
     <link rel="stylesheet" href="<c:url value="/resources/css/wedding.css"/>">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <style>
 	.btn-recom {
 		background-color: rgb(232, 210, 34);
