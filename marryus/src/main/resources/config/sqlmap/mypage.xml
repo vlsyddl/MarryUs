@@ -222,7 +222,7 @@
 		<result property="todoPeriod" column="todo_period" />
 		<result property="todoTitle" column="todo_title" />
 		<result property="memNo" column="mem_no" />
-		<result property="todoDdday" column="todo_dday" />
+		<result property="todoDday" column="todo_dday" />
 		<result property="todoDay" column="todo_day" />
 		<result property="todoCategory" column="todo_category" />
 		<result property="todoNo" column="todo_no" />
