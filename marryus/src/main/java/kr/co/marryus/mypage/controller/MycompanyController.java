@@ -128,7 +128,7 @@ public class MycompanyController {
         for(MultipartFile f:files) {
             CompanyFile comFile = new CompanyFile();
             String fileName = f.getOriginalFilename();
-            String ext = fileName.substring(fileName.indexOf("."),fileName.length());
+            String ext = fileName.substring(fileName.lastIndexOf("."));
             fileName =UUID.randomUUID().toString()+ext;
             comFile.setComFileOriname(f.getOriginalFilename());
             comFile.setComFilePath("img/comProfile");
@@ -144,7 +144,7 @@ public class MycompanyController {
         if(!file.isEmpty()) {
            CompanyFile comFile = new CompanyFile();
            String fileName = file.getOriginalFilename();
-           String ext = fileName.substring(fileName.indexOf("."),fileName.length());
+           String ext = fileName.substring(fileName.lastIndexOf("."));
            fileName =UUID.randomUUID().toString()+ext;
            comFile.setComFileOriname(file.getOriginalFilename());
            comFile.setComFilePath("img/comProfile");

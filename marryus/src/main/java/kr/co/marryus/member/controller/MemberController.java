@@ -50,14 +50,11 @@ public class MemberController {
 	@RequestMapping("/login.json")
 	@ResponseBody
 	public Member login(Member member , HttpSession session) throws Exception {
-		System.out.println("Member1" + member.getEmail());
-		System.out.println("Member2" + member.getPass());
 		// 비밀번호 암호화
 		String rawPassword = member.getPass();
 		
 		member=service.login(member);
 		
-		System.out.println("meme"+member.getName());
 		String encodedPassword = member.getPass();
 		
 		

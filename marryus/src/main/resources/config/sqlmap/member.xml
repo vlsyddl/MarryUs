@@ -90,14 +90,14 @@
 		 where mem_email = #{email}
 	</select>
 	<select id="loginCompany" parameterType="Member" resultMap="memberMap">
-		select m.mem_email, m.mem_pass, m.mem_type, m.mem_status, m.mem_name, m.mem_phone,
+		select m.mem_email, m.mem_pass, m.mem_type, m.mem_status, m.mem_name, m.mem_phone, m.mem_no,
 		c.com_no, c.com_addr, c.com_addr_detail, c.com_type, c.com_okay,i.com_info_name, i.com_info_phone, i.com_info_addr,f.com_file_name, f.com_file_path
 		  from mu_member m
-		  left join mu_company c
+		 left join mu_company c
 		    on m.mem_no = c.com_no
-		  left join mu_company_info i
+		 left join mu_company_info i
             on m.mem_no = i.mem_no
-		  left join mu_company_file f
+		 left outer join (select * from mu_company_file where com_file_repr = 'y') f
             on i.com_info_no = f.com_info_no
          where mem_email = #{email}
 	</select>

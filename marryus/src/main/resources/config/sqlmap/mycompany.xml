@@ -257,10 +257,7 @@
 	</select>
 	
 	
-	<insert id="insertComInfo" parameterType="CompanyInfo"  >
-	    <selectKey resultType="int" keyProperty="comInfoNo" order="BEFORE">
-            SELECT MAX(com_info_no)+1 FROM     mu_company_info 
-        </selectKey>    
+	<insert id="insertComInfo" parameterType="CompanyInfo" useGeneratedKeys="true" keyProperty="comInfoNo" >  
 	
 		insert into mu_company_info(mem_no, com_info_content, com_info_profile, com_info_name, com_info_phone,com_info_addr, com_info_addr_detail, com_info_type) 
         values(#{memNo}, #{comInfoContent}, #{comInfoProfile}, #{comInfoName}, #{comInfoPhone},#{comInfoAddr}, #{comInfoAddrDetail}, #{comInfoType})
