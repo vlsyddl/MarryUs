@@ -122,7 +122,7 @@
         
 	<c:forEach var="auction" items="${autionList}">
 	<a >
-	<table onClick="location.href='<c:url value="/mycompany/myServiceUpdate.do?memNo=10&comInfoNo=${auction.comInfoNo}"/>'" style="cursor:pointer;" calss="table_outer">
+	<table onClick="location.href='<c:url value="/mycompany/myServiceUpdate.do?memNo=${user.no}&comInfoNo=${auction.comInfoNo}"/>'" style="cursor:pointer;" calss="table_outer">
 		<tr>
 			<td><img src="<c:url value="/${auction.comFilePath}/${auction.comFileName}"/>" width="150px" height="100px"/></td>
 			<td><table><tr><td class="title">${auction.comInfoName}</td></tr>

@@ -222,7 +222,7 @@
 	        </tr>
 			<tr>
 				
-					<td class="highlight"><input name="memNo" id=memNo value="10" type="hidden">	서비스 소개</td>  				
+					<td class="highlight"><input name="memNo" id=memNo value="${user.no}" type="hidden">	서비스 소개</td>  				
 					<td><textarea name="comInfoContent" id="smarteditor" rows="10" cols="100" style="width:100%; height:350px;">${auctionList.comInfoContent}</textarea></td>
 			</tr>
 			<tr>
