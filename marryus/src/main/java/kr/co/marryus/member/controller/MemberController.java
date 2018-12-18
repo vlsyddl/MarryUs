@@ -57,7 +57,7 @@ public class MemberController {
 		
 		member=service.login(member);
 		
-		
+		System.out.println("meme"+member.getName());
 		String encodedPassword = member.getPass();
 		
 		
@@ -65,14 +65,15 @@ public class MemberController {
 		if(passwordEncoder.matches(rawPassword, encodedPassword)) {
 			String type = member.getType();
 			String mg = "mg";
-			
+				
 			if(type.equals(mg)) {
 			
 				member = service.loginGeneral(member); // 일반 회원 
 				
 			}else {
 				
-				member = service.loginCompany(member); //기업 회원
+				System.out.println(member.getPass());//기업 회원
+				member = service.loginCompany(member); 
 			}
 			
 			session.setAttribute("user", member); // 세션에 담기
