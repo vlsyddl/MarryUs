@@ -35,6 +35,7 @@ import kr.co.marryus.repository.domain.Item;
 import kr.co.marryus.repository.domain.Member;
 import kr.co.marryus.repository.domain.Page;
 import kr.co.marryus.repository.domain.Reservation;
+import kr.co.marryus.repository.domain.Tender;
 import kr.co.marryus.repository.domain.Todo;
 import kr.co.marryus.repository.domain.myMain;
 
@@ -288,7 +289,6 @@ public class MypageController {
 		Auction auction1 = auction;
 		auction1.setPageNo(pageNo-1);
 	    model.addAttribute("pageNo", pageNo);
-		System.out.println(choo);
 		model.addAttribute("choose", choo);
 		model.addAttribute("count", service.selectGeneralAuctionCnt(auction));
 		if(service.selectGeneralAuctionCnt(auction)!=0) {
@@ -361,7 +361,7 @@ public class MypageController {
 	@RequestMapping("/myTodoUpdate.do")
 	@ResponseBody 
 	public void myTodoUpdate(Item item) throws Exception{
-		System.out.println("dfjslf");
+		System.out.println(item.getDone());
 		service.updateTodo(item.getTodo());
 	}
 
@@ -377,9 +377,17 @@ public class MypageController {
 	
 	@RequestMapping("/reservation.do")	
 	@ResponseBody 
-	public int reservation(Reservation res) throws Exception{
-		System.out.println(service.insertReservation(res));
+	public int reservation(Reservation res, Tender tender) throws Exception{
+		service.updateTenderStatus(tender);
 		return service.insertReservation(res);
+		
+	}
+	
+	@RequestMapping("/purchase.do")	
+	@ResponseBody 
+	public int purchase(int auctionNo, Tender tender) throws Exception{
+		service.updateTenderStatus(tender);
+		return service.updateAuctionStatus(auctionNo);
 	}
 	
 	

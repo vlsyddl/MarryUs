@@ -97,7 +97,7 @@
 		<script type="text/javascript" src="<c:url value="/resources/todo/jquery/jquery-ui.min.js"/>" charset="utf-8"></script>
 		<script type="text/javascript" src="<c:url value="/resources/todo/jquery/jquery.ui.touch-punch-improved.js"/>" charset="utf-8"></script>
 		<script type="text/javascript" src="<c:url value="/resources/todo/bootstrap/js/bootstrap.min.js"/>" charset="utf-8"></script>
-		<script type="text/javascript" src="<c:url value="/resources/todo/dist/lobilist.js?4343"/>" charset="utf-8"></script>
+		<script type="text/javascript" src="<c:url value="/resources/todo/dist/lobilist.js?454"/>" charset="utf-8"></script>
 
 
 	 

@@ -21,12 +21,13 @@
 	src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
     <c:import url="/common/importCss.jsp"/>
 	 <c:import url="/common/importJs.jsp"/>
-	     <link rel="stylesheet" href="<c:url value="/resources/css/wedding.css"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/css/wedding.css"/>">
 <style>
 	
 
         nav{
-           text-align: center;   
+           margin: auto;
+           
         }
 
 </style>
@@ -71,43 +72,41 @@
             </div>
         </nav>
     
-    
-    
-    
-    
-    
+
     <div id="wrap" class="wedding">
         <section class="contents contents01">
             <div class="container">
                 <div class="contentsTab">
-
                     <div class="tabContents">
                         <div class="tab1 on">
-                       
-                    
-                            <div>
-                      <ul class="card-list">
-                     <c:forEach var="l" items="${like}">
-	                    <li class="card">
-	                        <a href="#" class="card-image"><img src=<c:url value="/${l.comFilePath}/${l.comFileName}"/> /></a>
-	                        <a>${l.comInfoName}<span type="button">${l.codeValue}</span></a>
-	                        <a class="card-description" >
-	                            <h2>${l.comInfoAddr}</h2>
-	                            <p>${l.comInfoAddrDetail}</p>
-	                        </a>
-	                        <div class="btn-group" role="group">
-	                            <button type="button" class="btn btn-default"  onclick="location.href='likeCompanyDelete.do?comInfoNo=${l.comInfoNo}&memNo=${user.no}'">관심업체 제거</button>
-	                        </div>
-	                    </li>
-                  </c:forEach>
+                    	<div>
+                    	<div class="row itemWrap">
+                        <c:forEach var="l" items="${like}">
+                                <div class="col-md-4 itemBox" data-href="${l.comInfoNo}">
+                                    <div class="item">
+                                        <div class="imgBox">
+                                            <a href="#"><img src="<c:url value="/${l.comFilePath}/${l.comFileName}"/>" alt="" class="img-responsive center-block" onError="javascript:this.src='<c:url value="/resources/img/sorry.png"/>'"></a>
+                                        </div>
+                                        <div class="textBox">
+                                            <h5><a href="#">${l.comInfoName}</a></h5>
+                                            <p>
+                                                ${l.comInfoAddr} <br/>
+                                                ${l.comInfoAddrDetail}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    </div>
+                            </c:forEach>
+    
+    
+    
+
                   
-                    </ul>
                   
                   
                   
                   
-                  
-                  
+          <div >      
  	<c:if test="${count != 0}">
 			<nav>
 			  <ul class="pagination">
@@ -147,7 +146,7 @@
 			  </ul>
 			</nav>
 		</c:if>
-                    
+             </div>         
                  
 
                             </div>
@@ -156,7 +155,9 @@
                     </div>
                 </div>
             </div>
-        </section>
+   </div>
+   </section>
+   </div>
     </div>
      <aside id="sideBar">
             <ul>

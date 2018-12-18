@@ -32,6 +32,9 @@ public class Item {
 			this.done =false;
 		}	
 	}
+	public boolean getDone() {
+		return done;
+	}
 
 	
 	public Todo getTodo() {

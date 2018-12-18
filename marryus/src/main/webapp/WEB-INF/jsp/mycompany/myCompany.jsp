@@ -101,13 +101,13 @@
                    <div class="col-md-4">
                         <dl>
                             <dt>낙찰된 경매</dt>
-                            <dd><span>${tenderChoo}</span>건</dd>
+                            <dd><span>${tenderDone}</span>건</dd>
                         </dl>
                    </div>
                    <div class="col-md-4">
                         <dl>
                             <dt>유찰된 경매</dt>
-                            <dd><span>${tenderDone}</span>건</dd>
+                            <dd><span>${tenderChoo}</span>건</dd>
                         </dl>		
                    </div>
                </div>

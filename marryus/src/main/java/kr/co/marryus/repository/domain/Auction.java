@@ -33,7 +33,7 @@ public class Auction {
 	
 	private int pageNo;
 	
-	private int dday;
+	private double dday;
 	
 	
 }

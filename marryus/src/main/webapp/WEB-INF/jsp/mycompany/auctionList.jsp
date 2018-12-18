@@ -351,7 +351,7 @@ nav{ text-align: center;}
             <td>
             	<c:choose>
             		<c:when test="${auction.tenderStatus=='ing' && auction.dday<0}"> <span class="redBack textstyle">유찰</span> </c:when>
-            		<c:when test="${auction.tenderStatus=='choo'}"> <span class="blueBack textstyle">낙찰</span> </c:when>
+            		<c:when test="${auction.tenderStatus=='done'}"> <span class="blueBack textstyle">낙찰</span> </c:when>
             		<c:when test="${auction.tenderStatus=='ing' && auction.dday>=0}"> <span class="grayBack textstyle">미정</span> </c:when>
             	</c:choose>
             </td>

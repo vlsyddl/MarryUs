@@ -23,6 +23,7 @@
 		<result  property="tenderNo"   column="tender_no"/>
 		<result  property="tenderTitle"   column="tender_title"/>
 		<result  property="tenderInfo"   column="tender_info"/>
+		<result  property="tenderStatus"   column="tender_status"/>
 		<result  property="codeValue"   column="code_value"/>
 	</resultMap>
 	
@@ -63,6 +64,7 @@
 		<result property="auctionSdate" column="auction_sdate" />
 		<result property="auctionEdate" column="auction_edate" />
 		<result property="memName" column="mem_name" />
+		<result property="dday" column="dday" />
 		<collection property="tenderList" column="auction_no" select="selectTenderByauctionNo"/>
 		<collection property="tenderCnt" column="auction_no" select="selectTenderCnt"/>
 	</resultMap>
@@ -499,11 +501,13 @@
 
 	<!-- 나의 역경매 현황보기(개인) -->
 	<select id="selectGeneralAuction" parameterType="Auction" resultMap="auctionMap">
-		select *
+		select *, auction_edate-now() as dday
 		from mu_auction
 		where mem_no=#{memNo} 
 		and auction_type=#{auctionType}
+		order by auction_no desc
 		limit #{pageNo}, 1
+
 	</select>
 	
 	
@@ -698,21 +702,29 @@
 	
 		<!-- 예약 하기 -->
 
+	<select id="selectReservation" parameterType="Auction" >
+		select *
+        from mu_tender
+		where tender_no=#{tenderNo}
+	</select>
+
+	
 	<insert id="insertReservation" parameterType="Reservation" >
 		insert into mu_reservation(tender_no, res_visit, res_date, res_time, res_email, res_phone, res_message)
 		values(#{tenderNo}, #{resVisit}, #{resDate}, #{resTime}, #{resEmail}, #{resPhone}, #{resMessage})
 	</insert>
 	
 	
-	<update id="updateAcuctionStatus" parameterType="int" >
+	<update id="updateAuctionStatus" parameterType="int" >
 		update mu_auction
 		set auction_status='done'
 		where auction_no=#{auctionNo}
 	</update>
+
 	
-	<update id="updateTenderStatus" parameterType="int" >
+	<update id="updateTenderStatus" parameterType="Tender" >
 		update mu_tender
-		set tender_status='done'
+		set tender_status=#{tenderStatus}
 		where tender_no=#{tenderNo}
 	</update>
 	
@@ -750,9 +762,16 @@
 		todo_day=#{todoDay},
     	todo_detail=#{todoDetail},
     	todo_category=#{todoCategory}
-    	<if test="todoCheck!=null and !todoCheck.equals('')">
-    	,todo_check=#{todoCheck}
-    	</if>
+		where todo_no=#{todoNo}
+	</update> 
+	
+	<update id="updateCheckTodo" parameterType="Todo">
+		update mu_todo 
+		set todo_title=#{todoTitle},
+		todo_day=#{todoDay},
+    	todo_detail=#{todoDetail},
+    	todo_category=#{todoCategory},
+    	todo_check=#{todoCheck}
 		where todo_no=#{todoNo}
 	</update> 
 	
@@ -804,84 +823,6 @@
 	
 	
 	
-	<!-- 개인 메인 -->
-	<!-- Mypage profile Detail 오수진 -->
-	<!-- todo list -->
-<!-- 	<select id="MycountTotalTODO" parameterType="int" resultType="int">
-		select *,ifnull(count(t.todo_no),0) count
-		  from mu_todo t
-          RIGHT OUTER JOIN mu_member m 
-          on t.mem_no=m.mem_no
-		 where m.mem_no = #{memNo}
-		 and (todo_delete='N' or todo_delete='n')
-         group by t.mem_no
-	</select>
-	<select id="MycountTODOdone" parameterType="int" resultType="int">
-		 select *,ifnull(count(t.todo_no),0) count
-		  from mu_todo t
-          RIGHT OUTER JOIN mu_member m 
-          on t.mem_no=m.mem_no
-		 where m.mem_no = #{memNo}
-		 and (todo_delete='N' or todo_delete='n') and (todo_check='Y' or todo_check='y')
-         group by t.mem_no
-	</select>
-	<select id="MycountTotalAuction" parameterType="int" resultType="int">
-		select count(*)
-		  from mu_auction
-		 where  mem_no = #{memNo}
-	</select>
-		
-	<select id="MycountAuctiondone" parameterType="int" resultType="int">
-		select count(*)
-		  from mu_auction 
-	     where mem_no = #{memNo}
-		   and auction_status = 'done'
-	</select>
-	
-		wedding date 
-	<select id="getWedDate" parameterType="int" resultType="String">
-		select plan_wed_date
-		  from mu_wedding_plan 
-		 where mem_no= #{memNo}
-	</select>
-	
-		관심업체
-	<select id="MycountCompanyLike" parameterType="int" resultType="int">
-		select max(*)
-		 from mu_company_like
-		 where mem_no=#{memNo}
-	</select>
-	
-		wedding budget
-	<select id="MytotalBudget" parameterType="Budget" resultMap="Budget">
-		select sum(budg_budget) budg_budget, sum(budg_expenses) budg_expenses, ceiling(sum(budg_expenses)/sum(budg_budget)*100) as percent_budg_expenses
-		  from mu_budget 
-		 where mem_no = #{memNo}
-	</select>
-	
-	입찰 개수
-	<select id="selectByTenderCnt" parameterType="Auction"  resultType="int">
-		select max(*)
-		from mu_tender t
- 		inner join mu_auction a
-		on a.auction_no = t.auction_no
-        where a.mem_no=#{memNo} 
-        <if test="auctionType!=sdm">
-        and a.auction_type=#{auctionType}
-        </if>
-        <if test="auctionType==sdm">
-        and a.auction_type IN('s','d','m')
-        </if>
-	</select>
-	
-	<select id="selectTodoThree" parameterType="int"  resultMap="todoMap">
-		select *
-        from mu_todo
-        where mem_no=${memNo}
-        and (todo_delete='N' or todo_delete='n')
-		order by todo_no desc
-        limit 3
-	</select> -->
 	
 	
 		<!-- Mypage profile Detail 오수진 -->

@@ -34,6 +34,7 @@ public class CompanyInfo {
 	private String tenderTitle;
 	private String tenderInfo;
 	private int tenderNo;
+	private String tenderStatus;
 	private String codeValue;
 
 	

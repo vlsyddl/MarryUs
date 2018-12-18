@@ -44,8 +44,7 @@ public interface MypageService {
     public List<Tender> selectAuction(Page page);
     public int selectAuctionCnt(int comNo);
     
-    //개인 예약 보기
-    List<Reservation> selectReservation(int memNo);
+
 
 	//회원정보 수정(일반, 업체)
 	public GeneralMember selectGeneralMember(int memNo);
@@ -57,6 +56,9 @@ public interface MypageService {
 	
 	//업체 예약하기
 	public int insertReservation(Reservation res);
+    public Reservation selectReservation(Auction auction);
+    public int updateAuctionStatus(int auctionNo);
+    public int updateTenderStatus(Tender tender);
 	
 	//관심업체
 	public List<CompanyInfo>  selectCompanyLike (int momNo);

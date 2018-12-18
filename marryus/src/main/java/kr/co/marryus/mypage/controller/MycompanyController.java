@@ -224,7 +224,7 @@ public class MycompanyController {
 		if(!service.selectReservation(((Member)session.getAttribute("user")).getNo()).isEmpty()) {
 			model.addAttribute("res",service.selectReservation(((Member)session.getAttribute("user")).getNo()));
 		}else {
-			model.addAttribute("res",0);
+			model.addAttribute("res","non");
 		}
 	}
 	

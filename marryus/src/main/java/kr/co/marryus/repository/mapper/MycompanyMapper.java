@@ -25,6 +25,7 @@ import kr.co.marryus.repository.domain.Studio;
 
 public interface MycompanyMapper {
 	
+
 	//업체 서비스 등록
 	public List<CompanyInfo> selectComInfoList(int memNo);
 	public String[] selectComInfoType(int memNo);

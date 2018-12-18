@@ -427,12 +427,12 @@
 	<select id="selectTenderCal" parameterType="int" resultMap="tenderMap">
 	select ifnull(sum(tender_budget),0) sum_tender_budget, ifnull(ceiling(avg(tender_budget)), 0) avg_tender_budget
 	from mu_tender 
-	where tender_status='choo'
+	where tender_status='done'
 	and mem_no=#{memNo}
 	</select>
 	
 	
-		<!-- 관심 업체 등록 수 -->
+	<!-- 관심 업체 등록 수 -->
 	<select id="selectCompanyLikeByComMem" parameterType="int" resultType="int">
 	select count(*) like_count
 	from mu_company_like cl
@@ -456,7 +456,7 @@
 	from mu_auction a
 	left join mu_tender t
 	on a.auction_no = t.auction_no
-	where auction_edate-now()>=0 and  t.tender_status='ing'
+	where auction_edate-now()<0 and  t.tender_status='ing'
 	and t.mem_no=#{memNo}
 	]]> 
 	</select>
@@ -466,7 +466,7 @@
 	from mu_auction a
 	left join mu_tender t
 	on a.auction_no = t.auction_no
-	where auction_edate-now()<0 and  t.tender_status='ing'
+	where t.tender_status='done'
 	and t.mem_no=#{memNo}
 	]]> 
 	</select>

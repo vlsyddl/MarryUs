@@ -172,8 +172,8 @@
                     </ul>
             </div>
         </nav>
-        <c:if test="${res!=0}">
-        <c:forEach var="r" items="${res}">
+        <c:if test="${res!='non'}">
+        <c:forEach var="reservation" items="${res}">
         <div class="container_box">
   <div class="box">
     <div class="box__header">
@@ -193,19 +193,19 @@
 			<div id="card">
 
 					<div class="signup__field">
-						<label for="name" class="label">방문여부</label>${r.resVisit}
+						<label for="name" class="label">방문여부</label>${reservation.resVisit}
 					</div>
 					<div class="signup__field">
-						<label for="name" class="label">방문 날짜</label>${r.resDate} ${r.resTime}시
+						<label for="name" class="label">방문 날짜</label>${reservation.resDate} ${reservation.resTime}시
 					</div>
 					<div class="signup__field">
-						<label for="name" class="label">휴대폰</label>${r.resPhone}
+						<label for="name" class="label">휴대폰</label>${reservation.resPhone}
 					</div>
 					<div class="signup__field">
-						<label for="name" class="label">이메일</label>${r.resEmail}
+						<label for="name" class="label">이메일</label>${reservation.resEmail}
 					</div>
 					<div class="signup__field">
-						<label for="name" class="label">추가사항</label>${r.resEmail}
+						<label for="name" class="label">추가사항</label>${reservation.resEmail}
 					</div>
 					
 

@@ -321,11 +321,6 @@ public class MyPageServiceImpl implements MypageService{
 	}
 
 
-	@Override
-	public List<Reservation> selectReservation(int memNo) {
-		return mapper.selectReservation(memNo);
-	}
-
 
 	@Override
 	public int insertReservation(Reservation res) {
@@ -348,6 +343,24 @@ public class MyPageServiceImpl implements MypageService{
 	@Override
 	public ServiceAdd selectServiceAdd(int auctionNo) {
 		return mapper.selectServiceAdd(auctionNo);
+	}
+
+
+	@Override
+	public Reservation selectReservation(Auction auction) {
+		return mapper.selectReservation(auction);
+	}
+
+
+	@Override
+	public int updateAuctionStatus(int auctionNo) {
+		return mapper.updateAuctionStatus(auctionNo);
+	}
+
+
+	@Override
+	public int updateTenderStatus(Tender tender) {
+		return mapper.updateTenderStatus(tender);
 	}
 
 

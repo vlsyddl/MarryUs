@@ -411,7 +411,23 @@ h4{
                 <div>${auction.comInfoAddr} </div>
                 <div>${auction.comInfoPhone}</div>
                 <div><fmt:formatNumber type='currency' value='${auction.tenderBudget}' pattern='###,###'/>원</div>
-                <div><button class="btn1 more_detail" type="button" data-href="${auction.comInfoNo}" >상세보기</button><button class="more_reservation btn1" type="button" data-href="${auction.tenderNo}" >예약하기</button></div>
+                <div><button class="btn1 more_detail" type="button" data-href="${auction.comInfoNo}" >상세보기</button>
+				
+				
+				
+				
+				
+				
+				<button class="more_reservation btn1" type="button" data-href="${auction.tenderNo}" >예약하기</button>
+                <c:if test="${myAuction[0].dday>0}">
+                <c:if test="${auction.tenderStatus=='ing'  && myAuction[0].auctionStatus=='ing'}">
+                <button class="more_reservation btn1" type="button" data-href="${auction.tenderNo}" >예약하기</button>
+                </c:if>
+                <c:if test="${auction.tenderStatus=='choo'&& myAuction[0].auctionStatus=='ing'}">
+                <button class=" btn1" type="button" onclick="purchase(${myAuction[0].auctionNo}, ${auction.tenderNo})"  >결정하기</button>
+                </c:if>
+                </c:if>
+                </div>
               </div>
               <button class="btn2"></button>
               </div>
@@ -531,6 +547,36 @@ $(function(){
 	});
 	
 });//즉시 실행 함수
+function purchase(auctionNo, tenderNo){
+    msg = "이 업체를 최종 선택하시겠습니까??";
+    if (confirm(msg)!=0) {
+    	$.ajax({
+    		url : "<c:url value='/mypage/purchase.do'/>",
+    		type : "POST",
+    		data : "auctionNo="+auctionNo+"&tenderNo="+tenderNo+"&tenderStatus=done"
+    	}).done(function(no){
+    		if(no>0){
+    			alert("감사합니다.");
+    			location.reload();
+    		}
+    	});
+    } else {
+    	  location.reload();
+}
+} // myconfirm
+
+
+function openForm (NY){
+	if(NY=='N'){
+		$("#res_date_time").addClass("hidden");	
+		$("input[name=resDate]").val().empty();
+		$("input[name=resTime]").val().empty();
+	}
+	if(NY=="Y"){
+		$("#res_date_time").removeClass("hidden");	
+	}
+}
+
 
 
 
@@ -692,11 +738,14 @@ function auctionDetailModal(auctionNo, auctionType){
       <div class="modal-body">
       		<form id="resSubmitForm" method="POST">
       		<input type="hidden" name="tenderNo" value="" >
+      		<input type="hidden" name="tenderStatus" value="choo" >
         	<p>방문을 해보시겠습니까?</p>
-			<select name="resVisit">
-				<option value="N">아니오</option>
-				<option value="Y">네</option>
+			<select name="resVisit" onchange="openForm(this.value)">
+				<option value="N" >아니오</option>
+				<option value="Y" >네</option>
 			</select>
+			
+			<div id="res_date_time" class="hidden">
 			<p>방문을 예정일과 요청시간</p>
 			<input type="Date" name="resDate" />
 				<select name="resTime">
@@ -705,6 +754,7 @@ function auctionDetailModal(auctionNo, auctionType){
 					<option value='${i}'>${i}:00시</option>
 				</c:forEach>
 				</select>
+				</div>
 			<hr>
 			<p>연락받으실 수단을 선택해주세요</p>
 			<p>이메일 : <input type="text" class="" name="resEmail" /></p>
@@ -743,88 +793,4 @@ function auctionDetailModal(auctionNo, auctionType){
 
 </html>
 
- 
- 
- <!-- 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="https://www.jqueryscript.net/demo/Bootstrap-style-Datetime-Picker-Plugin/dist/jquery.datetimepicker.min.css"/>
-    <link rel="stylesheet" type="font" href="../fonts/iconfont.woff"/>
- 
-    <style type="text/css">
-        #wrapper{
-            width: 780px;
-            margin: auto;
-        }
-        body {
-            font-family: "Helvetica Neue", Helvetica, Tahoma, Arial, "Microsoft YaHei UI","Microsoft YaHei", STXihei, SimSun, sans-serif;
-        }
-        .log-wrapper {
-            float: right;
-        }
-        .log {
-            max-height: 300px;
-            overflow: auto;
-        }
-        .log .log__entry {
-            margin: .1em 0;
-            padding: .1em .2em;
-            border: 1px solid black;
-            white-space: nowrap;
-        }
-
-    </style>
-    <title></title>
-
-</head>
-<body>
-    <div id="wrapper">
-        <h2>Demo 6</h2>
-        <h4>First day of week: Monday</h4>
-        <div>
-            <span>getText(): </span>
-            <span id="date-text6"></span>
-        </div>
-        <div>
-            <span>getText('yyyy-MM-dd'): </span>
-            <span id="date-text-ymd6"></span>
-        </div>
-        <div>
-            <span>getValue(): </span>
-            <span id="date-value6"></span>
-        </div>
-        <div id="demo6"></div>
-    </div>
-
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <script type="text/javascript" src="https://www.jqueryscript.net/demo/Bootstrap-style-Datetime-Picker-Plugin/dist/jquery.datetimepicker.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            function logEvent(type, date) {
-                $("<div class='log__entry'/>").hide().html("<strong>"+type + "</strong>: "+date).prependTo($('#eventlog')).show(200);
-            }
-            $('#clearlog').click(function() {
-                $('#eventlog').html('');
-            });
-
-   
-            $('#demo6').datetimepicker({
-                date: new Date(),
-                firstDayOfWeek: 1,
-                viewMode: 'YMDHMS',
-                onDateChange: function(){
-                    $('#date-text6').text(this.getText());
-                    $('#date-text-ymd6').text(this.getText('yyyy-MM-dd'));
-                    $('#date-value6').text(this.getValue());
-                }
-            });
-        });
-    </script>
-</body>
-</html>
- -->
-
-
- 
+  
