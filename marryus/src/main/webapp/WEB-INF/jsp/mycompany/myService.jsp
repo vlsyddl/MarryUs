@@ -171,23 +171,7 @@
         
         
         
-       <script type="text/javascript">
-       $(function(){
-   	
-   	
-   /* 	var list2 = new Array();
-   	<c:forEach items="${map_list.email}" var="item2">
-   	list2.push("${item2}");
-   	</c:forEach>
 
-   	for ( var i = 0; i < list2.length; i++) {
-   	    alert(list2[i]);
-   	} */
-       });
-  		<c:foreach items="${comInfoType}" var="item">
-   		$("select[value=${item}]"). .attr('disabled', true);
-   		</c:foreach>
-       </script>
         
         
 	<div id="outer_box">
