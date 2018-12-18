@@ -15,5 +15,5 @@ public class Member {
 	private General general;
 	private Company company;
 	private CompanyInfo comInfo;
-
+	private CompanyFile comFile;
 }

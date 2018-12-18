@@ -40,25 +40,30 @@ public class MemberController {
 	@RequestMapping("/findpassword.do")
 	public void findpassword() {};
 	
-	
-	/**로그인 
-	 * 
+	/**
+	 * 로그인 
+	 * @param member
+	 * @param session
+	 * @return
+	 * @throws Exception
 	 */
-	
 	@RequestMapping("/login.json")
 	@ResponseBody
 	public Member login(Member member , HttpSession session) throws Exception {
+		System.out.println("Member1" + member.getEmail());
+		System.out.println("Member2" + member.getPass());
 		// 비밀번호 암호화
 		String rawPassword = member.getPass();
 		
 		member=service.login(member);
+		
 		
 		String encodedPassword = member.getPass();
 		
 		
 		// 비밀번호 암호화
 		if(passwordEncoder.matches(rawPassword, encodedPassword)) {
-			String type=member.getType();
+			String type = member.getType();
 			String mg = "mg";
 			
 			if(type.equals(mg)) {
@@ -81,8 +86,9 @@ public class MemberController {
 	}
 	
 	/**
-	 * 로그아웃
-	 * 
+	 * 로그 아웃 
+	 * @param session
+	 * @return
 	 */
 	@RequestMapping("/logout.do")
 	public String logout(HttpSession session) {
@@ -91,15 +97,6 @@ public class MemberController {
 		return "redirect:main.do";
 	}
 	
-	/*@RequestMapping(value = "/matchEmailnName.json", method =RequestMethod.POST)
-	@ResponseBody
-	public int checkEmail(Member member){
-		System.out.println("member::"+member.getEmail());
-		service.findId(member);
-		System.out.println("호잇!");
-		return 0;
-		
-	}*/
 	
 	/**
 	 * 이메일로 인증번호 보내기 
@@ -206,5 +203,5 @@ public class MemberController {
 	  };
 	 
 	
-	 }
-}
+	 } 
+}//end class

@@ -5,7 +5,7 @@ import java.util.List;
 import kr.co.marryus.repository.domain.Auction;
 import kr.co.marryus.repository.domain.Board;
 import kr.co.marryus.repository.domain.CompanyInfo;
-import kr.co.marryus.repository.domain.SearchForm;
+import kr.co.marryus.repository.domain.Tender;
 import kr.co.marryus.repository.domain.Todo;
 import kr.co.marryus.repository.domain.WeddingPlan;
 /**
@@ -76,4 +76,8 @@ public interface MainMapper {
 	List<CompanyInfo> recHoney();
 	List<CompanyInfo> recJewelry();
 	List<CompanyInfo> recEvent();
+	// 업데이트 
+	void updateWedPlan(WeddingPlan weddingPlan);
+	// wedding plan 확인용 
+	int myWedingPlan(int memNo);
 }

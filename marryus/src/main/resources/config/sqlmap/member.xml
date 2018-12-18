@@ -12,6 +12,8 @@
 		<result column="mem_phone" property="phone" />
 		<collection property="general" resultMap="generalMap" />
 		<collection property="company" resultMap="companyMap"/>
+		<collection property="comInfo" resultMap="comInfoMap"/>
+		<collection property="comFile" resultMap="comFileMap"/>
 	</resultMap>
 	<resultMap id="generalMap" type="General">
 		<result column="gen_no" property="genNo" />
@@ -39,6 +41,38 @@
 		<result property="todoDetail" column="todo_detail" />
 		<collection property="weddingPlan" resultMap="weddingPlanMap" />
 	</resultMap>
+	<resultMap id="comInfoMap" type="CompanyInfo">
+		<result  property="comInfoNo"   column="com_info_no"/>
+		<result  property="memNo"   column="mem_no"/>
+        <result  property="comInfoContent"   column="com_info_content"/>
+		<result  property="comInfoProfile"   column="com_info_profile"/>
+		<result  property="comInfoName"   column="com_info_name"/>
+		<result  property="comInfoPhone"   column="com_info_phone"/>
+		<result  property="comInfoAddr"   column="com_info_addr"/>
+		<result  property="comInfoAddrDetail"   column="com_info_addr_detail"/>
+		<result  property="comInfoType"   column="com_info_type"/>
+		<result  property="comInfoOkay"   column="com_info_okay"/>
+		<result  property="comFileName"   column="com_file_name"/>
+		<result  property="comFilePath"   column="com_file_path"/>	
+		<result  property="aucionType"   column="aucion_type"/>
+		<result  property="auctionSdate"   column="auction_sdate"/>
+		<result  property="auctionEdate"   column="auction_edate"/>
+		<result  property="tenderBudget"   column="tender_budget"/>
+		<result  property="tenderRegdate"   column="tender_regdate"/>
+		<result  property="tenderTitle"   column="tender_title"/>
+		<result  property="tenderInfo"   column="tender_info"/>
+		<result  property="codeValue"   column="code_value"/>
+	</resultMap>
+	
+	
+	<resultMap id="comFileMap" type="CompanyFile">
+		<result  property="comFileNo"   column="com_file_no"/>
+		<result  property="comInfoNo"   column="com_info_no"/>
+		<result  property="comFileName"   column="com_file_name"/>
+		<result  property="comFileOriname"   column="com_file_oriname"/>
+		<result  property="comFilePath"   column="com_file_path"/>
+		<result  property="comFileRepr"   column="com_file_repr"/>
+	</resultMap>
 	
 	<!-- 로그인-->
 	
@@ -56,11 +90,17 @@
 		 where mem_email = #{email}
 	</select>
 	<select id="loginCompany" parameterType="Member" resultMap="memberMap">
-		select * 
-		  from mu_member 
-		 inner join mu_company
-		    on mem_no = com_no 
-		 where mem_email = #{email}
+		select m.mem_email, m.mem_pass, m.mem_type, m.mem_status, m.mem_name, m.mem_phone,
+		c.com_no, c.com_addr, c.com_addr_detail, c.com_type, c.com_okay,i.com_info_name, i.com_info_phone, i.com_info_addr,f.com_file_name, f.com_file_path
+		  from mu_member m
+		  join mu_company c
+		    on m.mem_no = c.com_no
+		  join mu_company_info i
+            on m.mem_no = i.mem_no
+		  join mu_company_file f
+            on i.com_info_no = f.com_info_no
+         where mem_email = #{email}
+           and com_file_repr = 'y'
 	</select>
 	
 	<!-- 회원가입 -->

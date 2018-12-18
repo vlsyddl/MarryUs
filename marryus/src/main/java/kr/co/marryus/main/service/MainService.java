@@ -6,6 +6,7 @@ import kr.co.marryus.repository.domain.Auction;
 import kr.co.marryus.repository.domain.Board;
 import kr.co.marryus.repository.domain.CompanyInfo;
 import kr.co.marryus.repository.domain.SearchForm;
+import kr.co.marryus.repository.domain.Tender;
 import kr.co.marryus.repository.domain.Todo;
 import kr.co.marryus.repository.domain.WeddingPlan;
 
@@ -145,7 +146,6 @@ public interface MainService {
 	List<Auction> totalAuctionList();
 	
 	
-	List<CompanyInfo> recVenue();
 	
 	
 	/**
@@ -153,10 +153,48 @@ public interface MainService {
 	 * @return
 	 */
 	List<Integer> countDday();
+
+	/**
+	 * 추천업체 -웨딩홀
+	 * @return
+	 */
+	List<CompanyInfo> recVenue();
 	
-	
+	/**
+	 * 추천업체- 스튜디오, 드레스, 메이크업
+	 * @return
+	 */
 	List<CompanyInfo> recSDM();
+	
+	/**
+	 * 추천업체- 허니문
+	 * @return
+	 */
 	List<CompanyInfo> recHoney();
+	
+	/**
+	 * 추천업체 - 예물
+	 * @return
+	 */
 	List<CompanyInfo> recJewelry();
+	
+	/**
+	 * 추천업체 - 추가 이벤트 
+	 * @return
+	 */
 	List<CompanyInfo> recEvent();
+	
+	/**
+	 * wedding plan- 업데이트 
+	 * @param weddingPlan
+	 */
+	void updateWedPlan(WeddingPlan weddingPlan);
+	
+	/**
+	 * wedding plan - 했는지 않했는지 여부 
+	 * @param memNo
+	 * @return
+	 */
+	int myWedingPlan(int memNo);
+	
 }

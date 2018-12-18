@@ -72,22 +72,32 @@ public class MainController {
 		return "redirect:weddingPlanSort.do";
 	}
 	
-	
-/*	*//**
-	 * 역경매 현황 리스트 !!
-	 * @param auction
+	/**
+	 * 나만의 웨딩 플랜 데이터 입력 메소드 
+	 * @param weddingPlan
 	 * @return
 	 * @throws Exception
-	 *//*
-	@RequestMapping(value="/auctionList.json",  method= RequestMethod.POST)
+	 */
+	@RequestMapping("/updatetWeddingPlan.do")
+	public String updateWeddingPlan(WeddingPlan weddingPlan) throws Exception{
+		service.updateWedPlan(weddingPlan);
+		return "redirect:weddingPlanSort.do";
+	}
+	
+	/**
+	 * Mywedding Plan 확인 여부 
+	 * @param memNo
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/checkMyWeddingPlan.json" ,method= RequestMethod.POST)
 	@ResponseBody
-	public HashMap<String, List<Auction>> auctionList(Auction auction) throws Exception{
-		HashMap<String, List<Auction>> auctionLists = new HashMap<>();
-		auctionLists.put("auctionList", service.auctionList(auction));
-		auctionLists.put("auctionListSDM", service.auctionListSDM(auction));
-		return auctionLists;
-		
-	}*/
+	public int checkWeddingPlan (Integer memNo) throws Exception {
+		System.out.println("check"+memNo);
+		return service.myWedingPlan(memNo);
+	}
+	
+	
 	/**
 	 * 나만의 웨딩 플랜 솔팅
 	 * @param todoCategory
@@ -215,13 +225,5 @@ public class MainController {
 		return rvList;
 	}
 	
-	/*@RequestMapping(value="/recommendCompany.json", method= RequestMethod.POST)
-	@ResponseBody
-	public HashMap<String, List<CompanyInfo>> recommendCompany(String comInfoType)throws Exception{
-		HashMap<String, List<CompanyInfo>> recomList= new HashMap<>();
-		recomList.put("recommendList", service.selectCompanyRecommned(comInfoType));
-		return recomList;
-		
-	}*/
 	
 }

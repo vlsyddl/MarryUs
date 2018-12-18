@@ -12,9 +12,13 @@
 <c:import url="/common/importJs.jsp"/>
 <c:import url="/common/importCss.jsp"/>
 <c:import url="/common/webSocket.jsp"/>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/locale/ko.js" charset="utf-8"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
 <style>
 .bx-viewport{ height: 200px; }
 </style>
@@ -53,20 +57,14 @@
 			<div class="deadLine">
 				<ul>
 					<input type="hidden" value="ing" id="auctionStatusValue">
-					<li><a href="#">오O진님의 입찰건이 3일 남았습니다</a></li>
-					<li><a href="#">오O진님의 입찰건이 3일 남았습니다</a></li>
-					<li><a href="#">오O진님의 입찰건이 3일 남았습니다</a></li>
-					<li><a href="#">오O진님의 입찰건이 3일 남았습니다</a></li>
-					<li><a href="#">오O진님의 입찰건이 3일 남았습니다</a></li>
-					<li><a href="#">오O진님의 입찰건이 3일 남았습니다</a></li>
-					<li><a href="#">오O진님의 입찰건이 3일 남았습니다</a></li>
-					<li><a href="#">오O진님의 입찰건이 3일 남았습니다</a></li>
+					
 				</ul>
 			</div>
 		</div>
 		<!--메인비쥬얼-->
-		<c:if test="${user.email ne null }">
-		<input type="hidden" id="no" name="no" value="${user.no}">
+	<c:if test="${user.email ne null }">
+	 <input type="hidden" id="no" name="no" value="${user.no}">
+	  <c:if test="${ user.type eq 'mg'}">
 		<div class="marriageInfo">
 			<div class="container">
 				<div class="col-md-3 infoLeft">
@@ -154,6 +152,81 @@
 			</div>
 		</div>
 		</c:if>
+	<c:if test="${user.type eq 'mc'}">
+		<div class="marriageInfo">
+			<div class="container">
+				<div class="col-md-3 infoLeft">
+					<div class="prifile cf">
+						<div class="imgWrap">
+							<img src="<c:url value='/${user.comFile.comFilePath}/${user.comFile.comFileName}' />" alt=""
+								class="img-responsive center-block">
+						</div>
+						<dl>
+							<dt>${user.comInfo.comInfoName}</dt>
+							<dd id="comNumber">${user.comInfo.comInfoPhone}</dd>
+						</dl>
+					</div>
+					<div class="time cf">
+						${user.comInfo.comInfoAddr}
+					</div>
+				</div>
+				<div class="col-md-9 infoRight">
+					<div class="titleBox">
+						<h3>My Business Progress</h3>
+						<a href="<c:url value='/mycompany/myCompany.do' />" >My Company > </a>
+					</div>
+					<ul>
+						<li><a href="#">
+								<dl>
+									<dt>
+										<i class="far fa-address-card"></i>
+									</dt>
+									<dd  id="profileAuction">
+										<b>0</b> <br> <span>out of 0</span>
+									</dd>
+								</dl>
+								<p>My service</p>
+						</a></li>
+						<li><a href="#">
+								<dl>
+									<dt>
+										<i class="fas fa-list-ol"></i>
+									</dt>
+									<dd id="profileTodo">
+										<b>0</b> <br> <span>out of0</span>
+									</dd>
+								</dl>
+								<p>Auction List</p>
+						</a></li>
+						<li><a href="#">
+								<dl>
+									<dt>
+										<i class="far fa-grin-hearts"></i>
+									</dt>
+									<dd id="profileLikeCompany">
+										<b>0</b> <br> <span>out of 0</span>
+									</dd>
+								</dl>
+								<p>Like Companies</p>
+						</a></li>
+				 		<li><a href="#">
+								<dl>
+									<dt>
+										<i class="fas fa-calculator"></i>
+									</dt>
+									<dd id="profileBudget">
+										<b>0</b> <br> <span>out of 0</span>
+									</dd>
+								</dl>
+								<p>Budget spent</p>
+						 </a>
+						</li> 
+					</ul>
+				</div>
+			</div>
+		</div>
+		</c:if>
+	</c:if>
 		
 		<!-- 역경매 현황 -->
 		<section class="contents contents01">
@@ -202,7 +275,7 @@
 											<span class="w28">비밀이야 </span>
 										</c:if>
 										<span class="w28">${auction.venue.weddingVenue}</span> 
-										<span class="w36">총 1,1501,5400원</span></li>
+										<span class="w36">${tender.auction}</span></li>
 									</c:if>
 								</c:if>
 							</c:forEach>
@@ -602,6 +675,7 @@
 								<li>
 									<span><label for="planPartner">안녕하세요? 예비 신랑님의 이름을 알 수 있을까요?</label></span> 
 									<input class="active" id="planPartner" name="planPartner" type="text" placeholder="Enter your partner name" autofocus />
+									
 								</li>
 							</c:if>
 							<c:if test="${user.general.genGender == 'gro'}">
@@ -615,8 +689,8 @@
 									<input id="planPlace" name="planPlace" type="text" placeholder="Enter palce" autofocus />
 								</li>
 								<li>
-									<span><label for="planWedDate">결혼식 예정일을 알수 있을까요~?</label></span>
-									<input id="planWedDate" name="planWedDate" type="date" placeholder="Weeding date?" autofocus />
+									  <span><label for="planWedDate">결혼식 예정일을 알수 있을까요~?</label></span>
+										<input  id="planWedDate" name="planWedDate" type="date" placeholder="Weeding date?" autofocus />
 								</li>
 								<li>
 									<span><label for="planVisitor">하객수</label></span>
@@ -641,10 +715,7 @@
 							style="opacity: 0; width: 600px; margin-top: 1.1em; display: none; margin-bottom: 1em">Thank
 							you</h1>
 					</div>
-					<!-- <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
-                </div> -->
+				
 				</div>
 			</div>
 		</div>
@@ -655,7 +726,7 @@
 	
     <script>
 		var user = "${user}";
-		console.log(user)
+	/* 	console.log(user) */
 		$(function(){
             new WOW().init();
 
@@ -769,6 +840,12 @@
  		var memBrithday = year+"."+month+"."+day;
  		$("#genBirth").text(memBrithday);
  		
+ 		var phone = $("#comNumber").text();
+ 		var first=phone.substring(0,3);
+ 		var middle=phone.substring(3,7);
+ 		var end=phone.substring(7,11);
+ 		var phoneNumber = first+"-"+middle+"-"+end;
+ 		$("#comNumber").text(phoneNumber);
  		
  		//Planning progress  부분 
  		$.ajax({
@@ -820,7 +897,9 @@
  		}
  	});
       
- 	
+/**********************************************************************************
+	리뷰
+**********************************************************************************/	
  	
  	$(document).ready(function(){
  		var category = $("#categroy").val();
@@ -861,6 +940,26 @@
  	});
  	
 
+	$("#weddingPlanBtn").on('click',function(e){
+		 var memNo="${user.no}";
+		 console.log(memNo);
+		 $.ajax({
+			 url:"/marryus/main/checkMyWeddingPlan.json" ,
+			 data:"memNo="+memNo,
+			 type:'post'
+			 
+		 })
+		 .done(function(result){
+			if(result==1){
+				alert("이미 정보가 있습니다. 새롭게 업데이트 하려면 진행해주세요.")
+				$("#sign-form").attr("action", "updatetWeddingPlan.do");
+			}
+		 });
+	});
+/*  	$.dialog({
+ 	    title: '아이고야!!',
+ 	    content: '처음의 시작이 중요하죠',
+ 	}); */
 	</script>
 </body>
 </html>

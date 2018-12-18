@@ -9,6 +9,7 @@ import kr.co.marryus.repository.domain.Auction;
 import kr.co.marryus.repository.domain.Board;
 import kr.co.marryus.repository.domain.CompanyInfo;
 import kr.co.marryus.repository.domain.SearchForm;
+import kr.co.marryus.repository.domain.Tender;
 import kr.co.marryus.repository.domain.Todo;
 import kr.co.marryus.repository.domain.WeddingPlan;
 import kr.co.marryus.repository.mapper.MainMapper;
@@ -222,6 +223,19 @@ public class MainServiceImpl implements MainService{
 		// TODO Auto-generated method stub
 		return mapper.recEvent();
 	}
+
+	@Override
+	public void updateWedPlan(WeddingPlan weddingPlan) {
+		// TODO Auto-generated method stub
+		mapper.updateWedPlan(weddingPlan);
+	}
+
+	@Override
+	public int myWedingPlan(int memNo) {
+		
+		return mapper.myWedingPlan(memNo);
+	}
+
 
 	
 }
