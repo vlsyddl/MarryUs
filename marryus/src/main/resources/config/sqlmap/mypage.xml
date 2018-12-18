@@ -887,27 +887,37 @@
 		<!-- Mypage profile Detail 오수진 -->
 		<!-- todo list -->
 	<select id="MycountTotalTODO" parameterType="int" resultType="int">
-		select count(*)
-		  from mu_todo
-		 where mem_no = #{memNo}
+		   select ifnull(count(*),0)
+		  from mu_todo t
+           right outer join mu_member m
+          on m.mem_no = t.mem_no
+		 where m.mem_no = #{memNo}
+		   and (todo_delete='N' or todo_delete='n')
 	</select>
 	<select id="MycountTODOdone" parameterType="int" resultType="int">
-		select count(*)
-		  from mu_todo 
-		 where mem_no = #{memNo}
-		   and todo_check = 'y'
+		              		 select ifnull(count(*),0)
+		  from mu_todo t
+           right outer join mu_member m
+          on m.mem_no = t.mem_no
+		 where m.mem_no = #{memNo}
+		 and (todo_check='Y' or todo_check='y')
+		   and (todo_delete='N' or todo_delete='n')
 	</select>
 		<!-- 입찰  -->
 	<select id="MycountTotalAuction" parameterType="int" resultType="int">
-		select count(*)
-		  from mu_auction
-		 where mem_no = #{memNo}
+				select ifnull(count(*),0)
+		  from mu_auction a
+          right outer join mu_member m
+          on m.mem_no = a.mem_no
+	     where m.mem_no = #{memNo}
 	</select>
 		
 	<select id="MycountAuctiondone" parameterType="int" resultType="int">
-		select count(*)
-		  from mu_auction 
-	     where mem_no = #{memNo}
+			select ifnull(count(*),0)
+		  from mu_auction a
+          right outer join mu_member m
+          on m.mem_no = a.mem_no
+	     where m.mem_no = #{memNo}
 		   and auction_status = 'done'
 	</select>
 	
@@ -918,7 +928,7 @@
 		 where mem_no= #{memNo}
 	</select> -->
  	<select id="getWedDate" parameterType="int" resultType="String">
-		select ifnull(plan_wed_date,TO_DATE(TO_CHAR('2018-11-22', 'YYYY-MM-DD') )
+		select ifnull(plan_wed_date,DATE_ADD(now(), INTERVAL 365 DAY) )
 		  from mu_wedding_plan wp
 			RIGHT OUTER JOIN mu_member m
 		  on m.mem_no = wp.mem_no
@@ -932,7 +942,6 @@
             right outer join mu_member m
             on m.mem_no = l.mem_no
 			where m.mem_no=#{memNo}
-            group by l.mem_no
 	</select>
 	
 		<!-- wedding budget -->
@@ -978,27 +987,6 @@
 	</select> 
 
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

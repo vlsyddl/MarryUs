@@ -133,13 +133,8 @@
 </head>
 <body>
 <header>
-	<div class="container">
-		<div class="row">
-			<div class="logo col-md-3">
-				<a href="<c:url value="/main/main.do"/>"><img
-					src="<c:url value="/resources/img/logo.png"/>" alt=""
-					class="img-responsive center-block"></a>
-			</div>
+ <c:import url="/common/importHeader.jsp"/>
+    <div id="wrap" class="myCompany">
         <nav class="myCompanyNav">
             <div class="container">
                     <ul>
@@ -170,46 +165,35 @@
                     </ul>
             </div>
         </nav>
-		</div>
-	</div>
-	<span class="gnbBar"></span> 
-</header>
-    <div id="wrap" class="mypage">
-        <nav class="myCompanyNav">
-            <div class="container">
-                    <ul>
-                        <li class="on">
-                            <a href="<c:url value='/mycompany/myCompany.do'/>">
-                                <img src="<c:url value="/resources/"/>img/company_ico.png" alt="" class="img-responsive center-block">
-                                My Company
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<c:url value='/mycompany/service.do'/>">
-                                    <img src="<c:url value="/resources/"/>img/card_ico.png" alt="" class="img-responsive center-block">
-                                My Service
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<c:url value='/mycompany/auctionList.do'/>">
-                                <img src="<c:url value="/resources/"/>img/graph_ico.png" alt="" class="img-responsive center-block">
-                                Auction List
-                            </a>
-                        </li>
-                        
-                    </ul>
-            </div>
-        </nav>
+        
+        
+
         
         
         
-        
+       <script type="text/javascript">
+       $(function(){
+   	
+   	
+   /* 	var list2 = new Array();
+   	<c:forEach items="${map_list.email}" var="item2">
+   	list2.push("${item2}");
+   	</c:forEach>
+
+   	for ( var i = 0; i < list2.length; i++) {
+   	    alert(list2[i]);
+   	} */
+       });
+  		<c:foreach items="${comInfoType}" var="item">
+   		$("select[value=${item}]"). .attr('disabled', true);
+   		</c:foreach>
+       </script>
         
         
 	<div id="outer_box">
 		 <div id="profile_box">
 			
-	        <form id="myServiceInsertFrom" action="<c:url value='/myCompany/insertComInfoProfile.do'/>" method="post" id="frm"  enctype="multipart/form-data" acceptcharset="UTF-8">
+	        <form id="myServiceInsertFrom" action="<c:url value='/myCompany/insertComInfoProfile.do'/>" method="post"  enctype="multipart/form-data" acceptcharset="UTF-8">
 	        <table>
 	       	<tr>
 	        	<td class="highlight">업체 이름</td>
@@ -220,15 +204,13 @@
 	        	<td class="highlight">서비스 카테소리</td>
 	        	<td>
 	        	<select name="comInfoType" id="comInfoType" class="select-field__menu">
-	        		<c:forEach var="type" items="${comInfoType}">
-	        			<c:if test="${type == 'v'}"><option value="v">웨딩홀</option></c:if>
-	        			<c:if test="${type == 's'}"><option value="s">스트디오</option></c:if>
-	        			<c:if test="${type == 'd'}"><option value="d">드레스</option></c:if>
-	        			<c:if test="${type == 'm'}"><option value="m">메이크업</option></c:if>
-	        			<c:if test="${type == 'h'}"><option value="h">허니문</option></c:if>
-	        			<c:if test="${type == 'j'}"><option value="j">예물</option></c:if>
-	        			<c:if test="${type == 'e'}"><option value="e">기타</option></c:if>
-					</c:forEach>
+	        			<option value="v">웨딩홀</option>
+	        			<option value="s">스트디오</option>
+	        			<option value="d">드레스</option>
+	        			<option value="m">메이크업</option>
+	        			<option value="h">허니문</option>
+	        			<option value="j">예물</option>
+	        			<option value="e">기타</option>
 				</select>
 				</td>
 	        </tr>
@@ -306,6 +288,10 @@
     </div>
     <script>
     $(function(){
+
+
+    	
+    	
 	    //전역변수선언
 	    var editor_object = [];
 	     
@@ -332,7 +318,7 @@
 	         
  	        //폼 submit
  	        //$("#editorform").submit();
- 	       	var formData = new FormData(document.getElementById('frm'));
+ 	       	var formData = new FormData(document.getElementById('myServiceInsertFrom'));
  			for(let file of sel_files) {
  	           formData.append("files", file);
  	        } 
@@ -359,6 +345,8 @@
  	 	           }) 
  	       	
 	    })
+	    
+
 	});
    
     
@@ -503,13 +491,19 @@
 					}
 				}).open();
 			};
+			
+			
+
+
+			
+
  
 			/**********************************************************************************
 			validation 플러그인 사용 
 		**********************************************************************************/
 
 
-		$.validator.addMethod("phone", function(phone_number, element) {
+ 	/* 	$.validator.addMethod("phone", function(phone_number, element) {
 			phone_number = phone_number.replace(/\s+/g, ""); 
 			return this.optional(element) || phone_number.length > 9 &&
 				phone_number.match(/^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/);
@@ -517,14 +511,11 @@
 
 
 		$(document).ready(function(){
-			
+			console.log(${comInfoType});
+		}
 
 		$( "#myServiceInsertFrom" ).validate({
-			/* focusCleanup: false, //true이면 잘못된 필드에 포커스가 가면 에러를 지움
-			focusInvalid:false, //유효성 검사후 포커스를 무효필드에 둠 꺼놓음
-			onclick: false, //클릭시 발생됨 꺼놓음
-			onfocusout:false, //포커스가 아웃되면 발생됨 꺼놓음 */
-			onkeyup:true, //키보드 키가 올라가면 발생됨 꺼놓음
+			onkeyup:true, 
 			rules: {
 				comInfoName: {
 			      required: true,
@@ -597,8 +588,8 @@
 				   label.addClass("validation-valid").text("Ok!")
 			  } 
 			});
-		});
-
+		}); */
+ 
 		
 		</script>
 </body>

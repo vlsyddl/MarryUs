@@ -37,7 +37,7 @@ public class CompanyInfo {
 	private String codeValue;
 
 	
-	private String Type;
+	private String type;
 	
 	CompanyFile companyFile;
 }

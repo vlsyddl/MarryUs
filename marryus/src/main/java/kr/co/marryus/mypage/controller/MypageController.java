@@ -70,7 +70,20 @@ public class MypageController {
 		    	list.put(li, service.selectByTenderCnt(auction));
 		    }
 		   model.addAttribute("tenderCnt", list);
-		   model.addAttribute("budget",service.MytotalBudget(memNo));
+		   model.addAttribute("totalBudget",service.MytotalBudget(memNo));
+		   model.addAttribute("spendBudget",service.MyspendBudget(memNo));
+		   model.addAttribute("likeCompany",service.MycountCompanyLike(memNo));
+		   model.addAttribute("todoTotal",service.MycountTotalTODO(memNo));
+		   model.addAttribute("todoDone",service.MycountTODOdone(memNo));
+		   model.addAttribute("auctionTotal",service.MycountTotalAuction(memNo));
+		   model.addAttribute("auctionDone",service.MycountAuctiondone(memNo));
+		   
+		   
+		   
+		   
+			/*
+			proFileMap.put("auctionTotal", service.MycountTotalAuction(memNo));
+			proFileMap.put("auctionDone", service.MycountAuctiondone(memNo));*/
 	}
 	
 	@RequestMapping("/myService.do")

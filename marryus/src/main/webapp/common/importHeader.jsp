@@ -20,9 +20,17 @@
 						<li><a href="#" data-toggle="modal" data-target="#loginModal">로그인</a></li>
 					</c:if>
 					<c:if test="${user.email ne null}">
+					
+					<c:if test="${user.type eq 'mg'}">
 						<li>${user.name}님이로그인 하셨습니다.</li>
 						<li><a href="<c:url value='/main/logout.do' />"> 로그아웃</a></li>
 						<li><a href="<c:url value="/mypage/mywedding.do"/>">마이페이지</a></li>
+					</c:if>
+					<c:if test="${ user.type eq 'mc'}">
+						<li>${user.name}님이로그인 하셨습니다.</li>
+						<li><a href="<c:url value='/main/logout.do' />"> 로그아웃</a></li>
+						<li><a href="<c:url value="/mycompany/myCompany.do"/>">마이페이지</a></li>
+					</c:if>
 					</c:if>
 					<li><a href="#"><i class="far fa-bell"></i></a></li>
 				</ul>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
@@ -112,8 +113,8 @@
                             </a>
                         </div>
                         <div class="progressBar">
-                            STATUS
-                            <progress value="22" max="100"></progress>
+                            TODO 진행도 <fmt:parseNumber var="t" value="${todoDone/todoTotal*100}" integerOnly="true" />${t}%
+                            <progress value="${todoDone/todoTotal*100}" max="100"></progress>
                         </div>
                         <div class="infoCount">
                             <ul>
@@ -122,8 +123,8 @@
                                         <dl>
                                             <dt><i class="far fa-list-alt"></i></dt>
                                             <dd id="profileAuction">
-                                                <b>0</b> <br>
-                                                <span>out of 20</span>
+                                                <b>${auctionDone}</b> <br>
+                                                <span>out of ${auctionTotal}</span>
                                             </dd>
                                         </dl>
                                         <p>Auction List</p>
@@ -134,8 +135,8 @@
                                         <dl>
                                             <dt><i class="fas fa-list-ol"></i></dt>
                                             <dd id="profileTodo">
-                                                <b>7</b> <br>
-                                                <span>out of 70</span>
+                                                <b>${todoDone}</b> <br>
+                                                <span>out of ${todoTotal}</span>
                                             </dd>
                                         </dl>
                                         <p>Tasks Completed</p>
@@ -146,7 +147,7 @@
                                         <dl>
                                             <dt><i class="fas fa-male"></i><i class="fas fa-female"></i></dt>
                                             <dd id="profileLikeCompany">
-                                                <b>0</b> <br> 
+                                                <b>${likeCompany}</b> <br> 
                                                 <span>I like that!</span>
                                             </dd>
                                         </dl>
@@ -158,8 +159,8 @@
                                         <dl>
                                             <dt><i class="fas fa-calculator"></i></dt>
                                             <dd id="profileBudget">
-                                                <b>0</b> <br>
-                                                <span>out of 20</span>
+                                                <b>${spendBudget}</b> <br>
+                                                <span> out of ${totalBudget}</span>
                                             </dd>
                                         </dl>
                                         <p>Budget spent</p>
@@ -230,7 +231,7 @@
                             <ul>
                                 <li class="maxBudget">총예산 : <span>${totalBudget}</span></li>
                                 <li class="spendBudget">쓴예산 : <span>${spendBudget}</span></li>
-                                <li class="remainBudget">남은예산 : <span>${totalBudget}-${spendBudget}</span></li>
+                                <li class="remainBudget">남은예산 : <span>${totalBudget-spendBudget}</span></li>
                             </ul>
                         </div>
                     </div>
@@ -251,13 +252,6 @@
             $(function(){
                 new WOW().init();
     
-                var options = {
-                    'speed' : 500,                   //스피드
-                    'initTop' : 300,                //기본top위치
-                    'alwaysTop' : false,            // true
-                    'default_x' : false             //레이어가 붙는 아이디 
-                }
-                $('#sideBar').Floater(options);
                 
                 //날짜 카운트
               /*   $.fn.CountDownTimer('11/22/2019 00:00 AM');   */
@@ -272,49 +266,12 @@
                
                 var no =  $("#memNo").val();
                 
-                $.ajax({
-                 url:"/marryus/mypage/MyproFileDetail.json",
-                 data:memNo=no,
-                 type:"post"
-                 
-              }) 
-                .done(function(result){
-                  console.log(result)
-                  var html =""
-                  html += '<b>'+result.auctionDone+'</b> <br>'
-                   html += '<span>out of'+result.auctionTotal+'</span>';
-                  $("#profileAuction").html(html)
-                  
-                  var html2="";
-                  html2 += '<b>'+result.todoDone+'</b> <br>'
-                  html2 += '<span>out of'+result.todoTotal+'</span>';
-                  $("#profileTodo").html(html2)
-                  
-                  var html3="";
-                  html3 += '<b>'+result.likeCompany+'</b> <br>'
-                  html3 += '<span>I like that!</span>';
-                  $("#profileLikeCompany").html(html3)
-                  
-                  var html4="";
-                  html4 += '<b>spend : '+result.spendBudget+'</b> <br>'
-                  html4 += '<span>Total : '+result.totalBudget+'</span>';
-                  $("#profileBudget").html(html4)
-                  
-               });
+            
                
                  
-            });
-            $(document).ready(function(){
-            	var memNo  = $("#no").val() 
-            	  $.ajax({
-                      url:"/marryus/mypage/MyproFileWeddingDate.json",
-                      data:{memNo:memNo },
-                      type:"post"
-                   })
-                   .done(function(result){
                       var wd = moment(result.wedDate).format('YYYY-MM-DD');
                       $.fn.CountDownTimer(wd); 
-                   });
+
                   
             });
         </script>

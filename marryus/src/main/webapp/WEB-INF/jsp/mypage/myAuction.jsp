@@ -17,6 +17,7 @@
   <script type="text/javascript" src="/scripts/jquery.min.js"></script>
   <script type="text/javascript" src="/scripts/bootstrap.min.js"></script>
   <script type="text/javascript" src="/scripts/bootstrap-datetimepicker.*js"></script>
+        <link rel="stylesheet" href="css/style.css">
   <!-- include your less or built css files  -->
   <!-- 
   bootstrap-datetimepicker-build.less will pull in "../bootstrap/variables.less" and "bootstrap-datetimepicker.less";
@@ -278,15 +279,37 @@ h4{
  .paging{
  	text-align: right;
  }
+ .paging li{
+ 	background-color: #334455;
+ 	margin: 10px;
+ }
  
+ .title{
+ 	font-size: 17px;
+ 	font-weight: 700;
+ 	line-height: 2em;
+ }
+#resSubmitForm p{
+	font-size: 18px;
+	font-weight: 700;
+	line-height: 2em;
+	margin-bottom: 10px;
+	font-family: 맑은 고딕;
+}
+#resSubmitForm select,  #resSubmitForm input{
+	line-height: 1.5em;
+}
 
- 
+
+ #auction_detail{
+ 	margin: 30px;
+ }
  
 
   </style>
   
   
-      <link rel="stylesheet" href="css/style.css">
+
 
   
 </head>
@@ -428,7 +451,7 @@ h4{
 			    	<c:otherwise><a href="#" aria-label="Previous"></c:otherwise>
 			    </c:choose>
 			      
-			        <span aria-hidden="true">&laquo;</span>
+			        <span aria-hidden="true">이전</span>
 			      </a>
 			    </li>
 			    
@@ -439,7 +462,7 @@ h4{
 				    	</c:when>
 				    	<c:otherwise><a href="#" aria-label="Next"></c:otherwise>
 			    	</c:choose>
-			    	<span aria-hidden="true">&raquo;</span>
+			    	<span aria-hidden="true">다음</span>
 			      </a>
 			    </li>
 			  </ul>
@@ -520,6 +543,7 @@ function resSubmit(){
 		data : $("#resSubmitForm").serialize()
 	}).done(function(no){
 		if(no>0){
+			alert("예약이 완료되었습니다.")
    			$('#ModalReservation').modal('hide');
 		}
 	});
@@ -558,53 +582,53 @@ function auctionDetailModal(auctionNo, auctionType){
 		alert(auctionType);
 		var div ="";
 		if(auctionType=='v'){
-			div+="<p><span class='hopeVenue'>희망예식장소</span>"+data.hopeVenue+"</p>";
-			div+="<p><span class='weddingDate'>희망예식날짜</span>"+data.weddingDate+"</p>";
-			div+="<p><span class='weddingTime'>시간</span>"+data.weddingTime+"</p>";
-			div+="<p><span class='weddingType'>예식 타입</span>"+data.weddingType+"</p>";
-			div+="<p><span class='weddingVistor'>하객 수</span>"+data.weddingVistor+"</p>";
-			div+="<p><span class='weddingWish'>기타의견 사항</span>"+data.weddingWish+"</p>";
-			div+="<p><span class='weddingBudget'>희망예산</span>"+data.weddingBudget+"</p>";
+			div+="<p><span class='title'>희망예식장소</span> "+data.hopeVenue!=undefined ? data.hopeVenue : ""+"</p>";
+			div+="<p><span class='title'>희망예식날짜</span>"+data.weddingDate+"</p>";
+			div+="<p><span class='title'>시간</span>"+data.weddingTime+"</p>";
+			div+="<p><span class='title'>예식 타입</span>"+data.weddingType+"</p>";
+			div+="<p><span class='title'>하객 수</span>"+data.weddingVistor+"</p>";
+			div+="<p><span class='title'>기타의견 사항</span>"+data.weddingWish+"</p>";
+			div+="<p><span class='title'>희망예산</span>"+data.weddingBudget+"</p>";
 		}
 		if(auctionType=='s'){
-			div+="<p><span class='studioPlace'>희망 위치</span>"+data.studioPlace+"</p>";
-		    div+="<p><span class='studioOutdoor'>야외촬영여부</span>"+data.studioOutdoor+"</p>";
-		    div+="<p><span class='studioSnapshot'>스냅샷촬영여부</span>"+data.studioSnapshot+"</p>";
-		    div+="<p><span class='studioVideo'>비디오촬영여부</span>"+data.studioVideo+"</p>";
-		    div+="<p><span class='studioPickup'>픽업여부</span>"+data.studioPickup+"</p>";
-		    div+="<p><span class='studioBudget'>희망 예산</span>"+data.studioBudget+"</p>";
-		    div+="<p><span class='studioMore'>희망 사항</span>"+data.studioMore+"</p>";
+			div+="<p><span class='title'>희망 위치</span>"+data.studioPlace+"</p>";
+		    div+="<p><span class='title'>야외촬영여부</span>"+data.studioOutdoor+"</p>";
+		    div+="<p><span class='title'>스냅샷촬영여부</span>"+data.studioSnapshot+"</p>";
+		    div+="<p><span class='title'>비디오촬영여부</span>"+data.studioVideo+"</p>";
+		    div+="<p><span class='title'>픽업여부</span>"+data.studioPickup+"</p>";
+		    div+="<p><span class='title'>희망 예산</span>"+data.studioBudget+"</p>";
+		    div+="<p><span class='title'>희망 사항</span>"+data.studioMore+"</p>";
 		}
 		if(auctionType=='d'){
-			div+="<p><span class='dressPlace'>희망 위치</span>"+data.dressPlace+"</p>";
-		    div+="<p><span class='dressNeckline'>넥라인</span>"+data.dressNeckline+"</p>";
-		    div+="<p><span class='dressType'>드레스타입</span>"+data.dressType+"</p>";
-		    div+="<p><span class='dressPrice'>예상견적</span>"+data.dressPrice+"</p>";
-		    div+="<p><span class='dressMore'>희망 사항</span>"+data.dressMore+"</p>";
+			div+="<p><span class='title'>희망 위치</span>"+data.dressPlace+"</p>";
+		    div+="<p><span class='title'>넥라인</span>"+data.dressNeckline+"</p>";
+		    div+="<p><span class='title'>드레스타입</span>"+data.dressType+"</p>";
+		    div+="<p><span class='title'>예상견적</span>"+data.dressPrice+"</p>";
+		    div+="<p><span class='title'>희망 사항</span>"+data.dressMore+"</p>";
 		}
 		if(auctionType=='m'){
-			div+="<p><span class='mkuPlace'>희망 위치</span>"+data.mkuPlace+"</p>";
-			div+="<p><span class='mkuMakeup'>신부화장</span>"+data.mkuMakeup+"</p>";
-			div+="<p><span class='mkuMom'>혼주화장</span>"+data.mkuMom+"</p>";
-			div+="<p><span class='mkuWorkout'>출장희망</span>"+data.mkuWorkout+"</p>";
-			div+="<p><span class='mkuBudget'>희망 예산</span>"+data.mkuBudget+"</p>";
-			div+="<p><span class='mkuMore'>희망 사항</span>"+data.mkuMore+"</p>";
+			div+="<p><span class='title'>희망 위치</span>"+data.mkuPlace+"</p>";
+			div+="<p><span class='title'>신부화장</span>"+data.mkuMakeup+"</p>";
+			div+="<p><span class='title'>혼주화장</span>"+data.mkuMom+"</p>";
+			div+="<p><span class='title'>출장희망</span>"+data.mkuWorkout+"</p>";
+			div+="<p><span class='title'>희망 예산</span>"+data.mkuBudget+"</p>";
+			div+="<p><span class='title'>희망 사항</span>"+data.mkuMore+"</p>";
 		}
 		if(auctionType=='h'){
-			div+="<p><span class='honeyPlace'>희망 여행지</span>"+data.honeyPlace+"</p>";
-			div+="<p><span class='honeyDate'>희망 여행 날짜</span>"+data.honeyDate+"</p>";
-			div+="<p><span class='honeyHope'>기타 의견사항</span>"+data.honeyHope+"</p>";
-			div+="<p><span class='honeyBudget'>희망 예산</span>"+data.honeyBudget+"</p>";
+			div+="<p><span class='title'>희망 여행지</span>"+data.honeyPlace+"</p>";
+			div+="<p><span class='title'>희망 여행 날짜</span>"+data.honeyDate+"</p>";
+			div+="<p><span class='title'>기타 의견사항</span>"+data.honeyHope+"</p>";
+			div+="<p><span class='title'>희망 예산</span>"+data.honeyBudget+"</p>";
 		}
 		if(auctionType=='j'){
-			div+="<p><span class='jewelryPlace'>희망 위치</span>"+data.jewelryPlace+"</p>";
-			div+="<p><span class='jewelryType'>예물 종류</span>"+data.jewelryType+"</p>";
-			div+="<p><span class='jewelryBudget'>희망 예산</span>"+data.jewelryBudget+"</p>";
-			div+="<p><span class='jeweMore'>희망 사항</span>"+data.jeweMore+"</p>";
+			div+="<p><span class='title'>희망 위치</span>"+data.jewelryPlace+"</p>";
+			div+="<p><span class='title'>예물 종류</span>"+data.jewelryType+"</p>";
+			div+="<p><span class='title'>희망 예산</span>"+data.jewelryBudget+"</p>";
+			div+="<p><span class='title'>희망 사항</span>"+data.jeweMore+"</p>";
 		}
 		if(auctionType=='e'){
-			div+="<p><span class='serviceTitle'>기타서비스 사항</span>"+data.serviceTitle+"</p>";
-			div+="<p><span class='serviceDetail'>기타서비스 상세</span>"+data.serviceDetail+"</p>";
+			div+="<p><span class='title'>기타서비스 사항</span>"+data.serviceTitle+"</p>";
+			div+="<p><span class='title'>기타서비스 상세</span>"+data.serviceDetail+"</p>";
 		}
 		
 		$("#auction_detail").html(div);
@@ -676,6 +700,7 @@ function auctionDetailModal(auctionNo, auctionType){
 			<p>방문을 예정일과 요청시간</p>
 			<input type="Date" name="resDate" />
 				<select name="resTime">
+				<option value=''>--선택안함--</option>
 				<c:forEach var="i" begin="8" end="20">
 					<option value='${i}'>${i}:00시</option>
 				</c:forEach>
@@ -688,11 +713,10 @@ function auctionDetailModal(auctionNo, auctionType){
 			<p>요청사항 또는 추가로 궁금하신 사항이 있으면 알려주세요.</p>
 			<textarea cols="3000" rows="7" name="resMessage" style="width: 850px"></textarea>
 			</form>
-			<button onclick="resSubmit()" type="button">보내기</button>
 		
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+        <button type="button" onclick="resSubmit()" class="btn btn-default"  >보내기</button>
       </div>
     </div>
   </div>
@@ -718,3 +742,89 @@ function auctionDetailModal(auctionNo, auctionType){
 </body>
 
 </html>
+
+ 
+ 
+ <!-- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="https://www.jqueryscript.net/demo/Bootstrap-style-Datetime-Picker-Plugin/dist/jquery.datetimepicker.min.css"/>
+    <link rel="stylesheet" type="font" href="../fonts/iconfont.woff"/>
+ 
+    <style type="text/css">
+        #wrapper{
+            width: 780px;
+            margin: auto;
+        }
+        body {
+            font-family: "Helvetica Neue", Helvetica, Tahoma, Arial, "Microsoft YaHei UI","Microsoft YaHei", STXihei, SimSun, sans-serif;
+        }
+        .log-wrapper {
+            float: right;
+        }
+        .log {
+            max-height: 300px;
+            overflow: auto;
+        }
+        .log .log__entry {
+            margin: .1em 0;
+            padding: .1em .2em;
+            border: 1px solid black;
+            white-space: nowrap;
+        }
+
+    </style>
+    <title></title>
+
+</head>
+<body>
+    <div id="wrapper">
+        <h2>Demo 6</h2>
+        <h4>First day of week: Monday</h4>
+        <div>
+            <span>getText(): </span>
+            <span id="date-text6"></span>
+        </div>
+        <div>
+            <span>getText('yyyy-MM-dd'): </span>
+            <span id="date-text-ymd6"></span>
+        </div>
+        <div>
+            <span>getValue(): </span>
+            <span id="date-value6"></span>
+        </div>
+        <div id="demo6"></div>
+    </div>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="https://www.jqueryscript.net/demo/Bootstrap-style-Datetime-Picker-Plugin/dist/jquery.datetimepicker.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            function logEvent(type, date) {
+                $("<div class='log__entry'/>").hide().html("<strong>"+type + "</strong>: "+date).prependTo($('#eventlog')).show(200);
+            }
+            $('#clearlog').click(function() {
+                $('#eventlog').html('');
+            });
+
+   
+            $('#demo6').datetimepicker({
+                date: new Date(),
+                firstDayOfWeek: 1,
+                viewMode: 'YMDHMS',
+                onDateChange: function(){
+                    $('#date-text6').text(this.getText());
+                    $('#date-text-ymd6').text(this.getText('yyyy-MM-dd'));
+                    $('#date-value6').text(this.getValue());
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+ -->
+
+
+ 
