@@ -20,7 +20,33 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
 <style>
-.bx-viewport{ height: 200px; }
+#widget_name{
+    display: block;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    margin-inline-start: 50px;
+    margin-inline-end: 26px;
+}
+#com_info_addr{
+    margin-block-start: 2em;
+    font-size: 15px;
+    font-weight: bold;
+
+}
+#comNumber{
+ margin-block-start: 1em;
+}
+#com_info_name{
+margin-block-start: 2em;
+}
+#com_img{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    float: left;
+    margin-block-start: 3em;
+}
 </style>
 
 </head>
@@ -157,69 +183,42 @@
 			<div class="container">
 				<div class="col-md-3 infoLeft">
 					<div class="prifile cf">
-						<div class="imgWrap">
+						<div class="imgWrap" id="com_img" >
 							<img src="<c:url value='/${user.comFile.comFilePath}/${user.comFile.comFileName}' />" alt=""
 								class="img-responsive center-block">
 						</div>
 						<dl>
-							<dt>${user.comInfo.comInfoName}</dt>
+							<dt id="com_info_name">${user.comInfo.comInfoName}</dt>
 							<dd id="comNumber">${user.comInfo.comInfoPhone}</dd>
 						</dl>
 					</div>
-					<div class="time cf">
+					<div class="time cf" id="com_info_addr">
 						${user.comInfo.comInfoAddr}
 					</div>
 				</div>
 				<div class="col-md-9 infoRight">
 					<div class="titleBox">
-						<h3>My Business Progress</h3>
+						<h3>My Business Widget</h3>
 						<a href="<c:url value='/mycompany/myCompany.do' />" >My Company > </a>
 					</div>
 					<ul>
-						<li><a href="#">
-								<dl>
-									<dt>
-										<i class="far fa-address-card"></i>
-									</dt>
-									<dd  id="profileAuction">
-										<b>0</b> <br> <span>out of 0</span>
-									</dd>
-								</dl>
-								<p>My service</p>
+						<li><a href="<c:url value='/mycompany/myCompany.do'/>">
+                                <img src="<c:url value="/resources/"/>img/company_ico.png" alt="" class="img-responsive center-block">
+                                <p id="widget_name">My Company</p>
+                         
 						</a></li>
-						<li><a href="#">
-								<dl>
-									<dt>
-										<i class="fas fa-list-ol"></i>
-									</dt>
-									<dd id="profileTodo">
-										<b>0</b> <br> <span>out of0</span>
-									</dd>
-								</dl>
-								<p>Auction List</p>
-						</a></li>
-						<li><a href="#">
-								<dl>
-									<dt>
-										<i class="far fa-grin-hearts"></i>
-									</dt>
-									<dd id="profileLikeCompany">
-										<b>0</b> <br> <span>out of 0</span>
-									</dd>
-								</dl>
-								<p>Like Companies</p>
-						</a></li>
-				 		<li><a href="#">
-								<dl>
-									<dt>
-										<i class="fas fa-calculator"></i>
-									</dt>
-									<dd id="profileBudget">
-										<b>0</b> <br> <span>out of 0</span>
-									</dd>
-								</dl>
-								<p>Budget spent</p>
-						 </a>
+						<li> <a href="<c:url value='/mycompany/service.do'/>">
+                                    <img src="<c:url value="/resources/"/>img/card_ico.png" alt="" class="img-responsive center-block">
+                               <p id="widget_name"> My Service</p>
+                            </a></li>
+						<li><a href="<c:url value='/mycompany/auctionList.do'/>">
+                                <img src="<c:url value="/resources/"/>img/graph_ico.png" alt="" class="img-responsive center-block">
+                                <p id="widget_name">Auction List</p>
+                            </a></li>
+				 		<li><a href="<c:url value='/mycompany/reservationView.do'/>">
+                                <img src="<c:url value="/resources/"/>img/reservation_icon2.png" alt="" class="img-responsive center-block" style="padding: 5px;">
+                               <p id="widget_name"> My Reservation</p>
+                            </a>
 						</li> 
 					</ul>
 				</div>
