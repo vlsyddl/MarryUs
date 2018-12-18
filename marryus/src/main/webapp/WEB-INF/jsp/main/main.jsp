@@ -268,14 +268,14 @@
 							
 							<c:forEach var="auction" items="${totalauctionList}">
 								<c:if test="${auction.auctionType eq 'v'}">
-									<c:if test="${auction.auctionStatus eq 'done'}">
+									<c:if test="${auction.tender.tenderStatus eq 'done'}">
 									<li><span class="w18"><span>낙찰</span></span>
 									 <span class="w18">${auction.member.name }</span>
 										<c:if test="${auction.venue.weddingVenue eq null}">
 											<span class="w28">비밀이야 </span>
 										</c:if>
 										<span class="w28">${auction.venue.weddingVenue}</span> 
-										<span class="w36">${tender.auction}</span></li>
+										<span class="w36">총 ${auction.tender.tenderBudget} 원</span></li>
 									</c:if>
 								</c:if>
 							</c:forEach>
@@ -344,7 +344,7 @@
 							<ul class="v-roll">
 							<c:forEach var="auction" items="${totalauctionList}">
 								<c:if test="${auction.auctionType eq 's'|| auction.auctionType eq 'd' || auction.auctionType eq 'm'}">
-									<c:if test="${auction.auctionStatus eq 'done'}">
+									<c:if test="${auction.tender.tenderStatus eq 'done'}">
 								    <li><span class="w18"><span>낙찰</span></span> 
 								    <span class="w18">${auction.member.name}</span>
 								    <c:if test="${auction.auctionType eq 's'}">
@@ -357,7 +357,7 @@
 										<span class="w28">메이크업 </span>
 									</c:if>
 										
-										<span class="w36">총 1,1501,5400원</span></li>
+										<span class="w36">총 ${auction.tender.tenderBudget} 원</span></li>
 									</c:if>
 								</c:if>
 							</c:forEach>
@@ -416,14 +416,14 @@
 							<ul class="v-roll">
 							<c:forEach var="auction" items="${totalauctionList}">
 								<c:if test="${auction.auctionType eq 'h'}">
-								 <c:if test="${auction.auctionStatus eq 'done'}">
+								 <c:if test="${auction.tender.tenderStatus eq 'done'}">
 									<li><span class="w18"><span>낙찰</span></span> 
 									<span class="w18">${auction.member.name}</span> 
 									<c:if test="${auction.honeyMoon.honeyPlace eq null}">
 										<span class="w28">비밀이야 </span>
 										</c:if>
 										<span class="w28">${auction.honeyMoon.honeyPlace}</span> 
-										<span class="w36">총 1,1501,5400원</span></li>
+										<span class="w36">총 ${auction.tender.tenderBudget} 원</span></li>
 									</c:if>
 								</c:if>
 							</c:forEach>
@@ -483,14 +483,14 @@
 							<ul class="v-roll">
 							<c:forEach var="auction" items="${totalauctionList}">
 								<c:if test="${auction.auctionType eq 'j'}">
-								 <c:if test="${auction.auctionStatus eq 'done'}">
+								 <c:if test="${auction.tender.tenderStatus eq 'done'}">
 									<li><span class="w18"><span>낙찰</span></span> 
 									<span class="w18">${auction.member.name}</span> 
 									<c:if test="${auction.jewelry.jewelryPlace eq null}">
 										<span class="w28">비밀이야 </span>
 										</c:if>
 										<span class="w28">${auction.jewelry.jewelryPlace}</span> 
-										<span class="w36">총 1,1501,5400원</span></li>
+										<span class="w36">총 ${auction.tender.tenderBudget} 원</span></li>
 									</c:if>
 								</c:if>
 							</c:forEach>
@@ -549,14 +549,14 @@
 							<ul class="v-roll">
 							<c:forEach var="auction" items="${totalauctionList}">
 								<c:if test="${auction.auctionType eq 'e'}">
-								 <c:if test="${auction.auctionStatus eq 'done'}">
+								 <c:if test="${auction.tender.tenderStatus eq 'done'}">
 									<li><span class="w18"><span>낙찰</span></span>
 									 <span class="w18">${auction.member.name}</span> 
 									 <c:if test="${auction.weddingPlan.planPlace eq null}">
 										<span class="w28">비밀이야 </span>
 										</c:if>
 										<span class="w28">${auction.weddingPlan.planPlace}</span> 
-									 <span class="w36">총 1,1501,5400원</span></li>
+									 <span class="w36">총 ${auction.tender.tenderBudget} 원</span></li>
 									</c:if>
 								</c:if>
 							</c:forEach>
