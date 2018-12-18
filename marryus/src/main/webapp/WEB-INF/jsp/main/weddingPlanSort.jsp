@@ -13,9 +13,11 @@
 <c:import url="/common/importCss.jsp"/>
 <c:import url="/common/importJs.jsp"/>
 <c:import url="/common/webSocket.jsp"/>
+<script src="//min.gitcdn.xyz/repo/wintercounter/Protip/master/protip.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
-
+<link rel="stylesheet" href="//min.gitcdn.xyz/repo/wintercounter/Protip/master/protip.min.css">
+<link rel="stylesheet" href="https://unpkg.com/microtip/microtip.css">
 <style>
 @font-face {
   font-family: 'Lato';
@@ -215,7 +217,8 @@ max-width:700px;
                 
                 <ul>
                 
-                  <li class="question" id="question1" style="display: none">
+                  <li class="question" id="question1" style="display: none" 
+                  aria-label="카테고리 웨딩홀: 웨딩홀에 관련된 TodoList를 작성해 들여요~" data-microtip-position="left" data-microtip-size="medium" role="tooltip">
                     <p class="questionHead">웨딩홀</p>
                     	<div class="btnConainer">
 	                        <label class="choice">
@@ -229,7 +232,8 @@ max-width:700px;
                         </div>
                   </li>
                 
-                    <li class="question" id="question2" style="display: none">
+                    <li class="question" id="question2" style="display: none" 
+                    aria-label="스튜디오, 드레스, 메이크업.. 생각해만도 머리가 아프죠?! 저희가 Todo List 말끔하게 정리해 드려요~" data-microtip-size="medium" data-microtip-position="right" role="tooltip">
                         <p class="questionHead">스튜디오, 드레스, 메이크업</p>
                         <div class="btnConainer">
                         <label class="choice">
@@ -242,7 +246,8 @@ max-width:700px;
                         </label>
                         </div>
                   </li>
-                    <li class="question" id="question3" style="display: none">
+                    <li class="question" id="question3" style="display: none"
+                    aria-label="어디서부터 해야 될지~ 하나도 모르겠다면 완전 필요해요!! 를 선택해주세요~ 특히 예단 예물은 너무나 어렵어렵~" data-microtip-size="medium" data-microtip-position="left" role="tooltip">
                    		<p class="questionHead">예물, 예단</p>
                    		<div class="btnConainer">
                     	<label class="choice" >
@@ -255,7 +260,8 @@ max-width:700px;
                           </label>
                           </div>
                   </li>
-                    <li class="question" id="question4" style="display: none">
+                    <li class="question" id="question4" style="display: none"
+                     aria-label="보통 집 계약은 언제 부터하지...? 도배는!?!? 저희가 가이드라인을 알려드려요~" data-microtip-size="medium" data-microtip-position="right" role="tooltip">
                   		<p class="questionHead">신혼집</p>
                   		<div class="btnConainer">
                     	<label class="choice">
@@ -268,7 +274,8 @@ max-width:700px;
                           </label>
                           </div>
                   </li>
-                    <li class="question" id="question5" style="display: none">
+                    <li class="question" id="question5" style="display: none"
+                     aria-label="주요한 것들 외에 또 어떤것들을 해야될지~ 도와드려요!" data-microtip-size="medium" data-microtip-position="left" role="tooltip">
                    		<p class="questionHead">기타</p>
                    		<div class="btnConainer">
                         <label class="choice">
@@ -281,7 +288,8 @@ max-width:700px;
                           </label>
                           </div>
                   </li>
-                  <li class="question" id="question6" style="display: none">
+                  <li class="question" id="question6" style="display: none"
+                   aria-label="요즘은 발리랑 다낭이 뜬다던데..!? 호텔은 어떻게!? A~Z 까지  todo List 작성을 도와드려요~" data-microtip-size="medium" data-microtip-position="right" role="tooltip">
                    		<p class="questionHead">허니문</p>
                    		<div class="btnConainer">
                         <label class="choice">
@@ -294,7 +302,8 @@ max-width:700px;
                           </label>
                           </div>
                   </li>
-                  <li class="question" id="question7" style="display: none">
+                  <li class="question" id="question7" style="display: none" 
+                  aria-label="Tv, 냉장고 , 세탁기 예약은 언제 해야되지!? 아리송~? " data-microtip-size="medium" data-microtip-position="left" role="tooltip">
                    		<p class="questionHead">혼수</p>
                    		<div class="btnConainer">
                         <label class="choice">
@@ -399,6 +408,7 @@ $(document).ready(function() {
 	});
 	
 });
+
 
 $("#motaltest").modal({
 	  fadeDuration: 100,
