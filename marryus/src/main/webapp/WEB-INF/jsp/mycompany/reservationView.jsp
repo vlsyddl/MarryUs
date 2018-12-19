@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -96,7 +97,10 @@
 		  	color: white;
 		  }
 		  .hidden{dispaly: hidden;}
-		  
+		  .tender_content {
+		  	line-height: 3em;
+		  	width: 700px;
+		  }
 
 	</style>
 </head>
@@ -193,20 +197,38 @@
 			<div id="card">
 
 					<div class="signup__field">
-						<label for="name" class="label">방문여부</label>${reservation.resVisit}
+						<label  class="label">방문여부</label>${reservation.resVisit=='Y' ? '가능' : '불가능'}
 					</div>
 					<div class="signup__field">
-						<label for="name" class="label">방문 날짜</label>${reservation.resDate} ${reservation.resTime}시
+						<label  class="label">방문 날짜</label>${reservation.resDate} ${reservation.resTime}시
 					</div>
 					<div class="signup__field">
-						<label for="name" class="label">휴대폰</label>${reservation.resPhone}
+						<label  class="label">휴대폰</label>${reservation.resPhone}
 					</div>
 					<div class="signup__field">
-						<label for="name" class="label">이메일</label>${reservation.resEmail}
+						<label  class="label">이메일</label>${reservation.resEmail}
 					</div>
 					<div class="signup__field">
-						<label for="name" class="label">추가사항</label>${reservation.resEmail}
+						<label  class="label">추가사항</label>${reservation.resEmail}
 					</div>
+					<hr>
+					
+					<div class="signup__field">
+						<label  class="label">입찰일</label><fmt:formatDate value="${reservation.tenderRegdate}" pattern='yyyy-MM-dd' />
+					</div>
+					<div class="signup__field">
+						<label  class="label">입찰일</label>${reservation.tenderBudget}만원
+					</div>
+					<div class="signup__field">
+						<label  class="label">입찰 내용</label>
+						<div class="tender_content">
+						<p>${reservation.tenderTitle}</p>
+						${reservation.tenderInfo}
+						</div>
+					</div>
+					
+					<hr>
+
 					
 
 			</div>

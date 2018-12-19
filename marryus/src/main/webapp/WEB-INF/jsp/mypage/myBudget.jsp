@@ -464,16 +464,19 @@ tbody tr:hover {
 			var budgNo = $(this).data("budgno");
 			var parent = document.getElementById(budgNo);
 			console.log(parent);
+			
+			
+			
 			var category = parent.childNodes[1].textContent;
 			var content = parent.childNodes[3].textContent;
-			var budget = parent.childNodes[5].textContent;
-			var expenses = parent.childNodes[7].textContent;
+			var budget = parent.childNodes[5].textContent.substring(0, parent.childNodes[5].textContent.length-1);
+			var expenses = parent.childNodes[7].textContent.substring(0, parent.childNodes[5].textContent.length-1);
 			var html = '';
 			html += '<input type="hidden" name="budgNo" value="'+budgNo+'"/>';
 			html += '<td>'+category+'</td>';
 			html += '<td><input type="text" id="content" value="'+content+'"/></td>';
-			html += '<td><input type="text" id="budget" value="'+budget+'원"/></td>';
-			html += '<td><input type="text" id="expenses" value="'+expenses+'원"/></td>';
+			html += '<td><input type="text" id="budget" value="'+budget+'"/></td>';
+			html += '<td><input type="text" id="expenses" value="'+expenses+'"/></td>';
 			html += '<td>';
 			html += '<a href="#" class="updateAEle"><i class="fas fa-pen"></i></a>';
 			html += '</td>';

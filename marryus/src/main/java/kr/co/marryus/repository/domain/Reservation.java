@@ -14,4 +14,15 @@ public class Reservation {
 	private String resEmail;
 	private int resPhone;
 	private String resMessage;
+	
+	
+	private int auctionNo;
+	private String tenderStatus;
+	private int tenderBudget;
+	private Date tenderRegdate;
+	private int memNo;
+	private String memName;
+	private String tenderInfo;
+	private int comInfoNo;
+	private String tenderTitle;
 }

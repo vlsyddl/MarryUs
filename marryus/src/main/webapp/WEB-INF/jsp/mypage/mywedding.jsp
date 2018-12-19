@@ -269,8 +269,22 @@
             
                
                  
-                      var wd = moment(result.wedDate).format('YYYY-MM-DD');
-                      $.fn.CountDownTimer(wd); 
+                      
+                      
+                      
+                      $(document).ready(function(){
+                        	var memNo  = $("#no").val() 
+                        	  $.ajax({
+                                  url:"/marryus/mypage/MyproFileWeddingDate.json",
+                                  data:{memNo:memNo },
+                                  type:"post"
+                               })
+                               .done(function(result){
+                                  var wd = moment(result.wedDate).format('YYYY-MM-DD');
+                                  $.fn.CountDownTimer(wd); 
+                               });
+                              
+                        });
 
                   
             });

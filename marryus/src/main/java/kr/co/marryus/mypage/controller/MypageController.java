@@ -59,7 +59,7 @@ public class MypageController {
 	
 
 	@RequestMapping("/mywedding.do")
-	public void mywedding(Model model,HttpSession session) {
+	public void mywedding(Model model,HttpSession session) throws Exception   {
 		int memNo= (((Member)session.getAttribute("user")).getNo());
 		model.addAttribute("todo",service.selectTodoThree(memNo));
 		   String[] auctionList= {"v","sdm","h","j","e"};
@@ -78,6 +78,13 @@ public class MypageController {
 		   model.addAttribute("todoDone",service.MycountTODOdone(memNo));
 		   model.addAttribute("auctionTotal",service.MycountTotalAuction(memNo));
 		   model.addAttribute("auctionDone",service.MycountAuctiondone(memNo));
+		   model.addAttribute("auctionDone",service.MycountAuctiondone(memNo));
+		   
+			String weddingDate=service.getWedDate(memNo);  
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+			Date date=sdf.parse(weddingDate);
+			
+			model.addAttribute("wedDate", date);
 		   
 		   
 		   

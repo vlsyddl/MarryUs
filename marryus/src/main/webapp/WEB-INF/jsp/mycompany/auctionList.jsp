@@ -148,7 +148,7 @@ iframe {
             background: #b6b6b6
         }
         .pinkBack{
-            background:#1a31c
+            background:#9fb0d6
         }
         
                 .textstyle{

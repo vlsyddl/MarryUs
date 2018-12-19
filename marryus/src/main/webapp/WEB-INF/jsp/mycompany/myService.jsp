@@ -417,10 +417,11 @@
     }
     
     
-    
     function selectDisable (comInfoType){
-		//alert(comInfoType);
-		//alert($("select[name='comInfoType'] option[vlaue='"+comInfoType+"']").val());
+		alert(comInfoType,"예식타입");
+		alert($("select[name='comInfoType'] option").val());
+		alert($("select[name='comInfoType'] option[value='"+comInfoType+"']").val());
+		//$("select[name='comInfoType'] option[vlaue='"+comInfoType+"']").prop("disabled",true);
 	}
 
         

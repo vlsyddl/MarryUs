@@ -203,6 +203,15 @@
 		<result property="resEmail" column="res_email" />
 		<result property="resPhone" column="res_phone" />
 		<result property="resMessage" column="res_message" />
+		<result property="tenderNo" column="tender_no" />
+		<result property="auctionNo" column="action_no" />
+		<result property="tenderStatus" column="tender_status" />
+		<result property="tenderBudget" column="tender_budget" />
+		<result property="tenderRegdate" column="tender_regdate" />
+        <result property="memName" column="mem_name" />
+        <result property="memNo" column="mem_no" />
+        <result  property="tenderTitle"   column="tender_title"/>
+		<result  property="tenderInfo"   column="tender_info"/>
 	</resultMap>
 	
 
@@ -413,8 +422,12 @@
 	<select id="selectReservation" parameterType="int" resultMap="reservationMap">
 		select *
 		from mu_reservation r
-		right outer join mu_tender t
+		inner join mu_tender t
         on r.tender_no = t.tender_no
+        inner join mu_auction a
+        on t.auction_no = a.auction_no
+        inner join mu_member m
+        on a.mem_no = m.mem_no
 		where t.mem_no=#{memNo}
         and res_no is not null
 	</select>
