@@ -84,6 +84,7 @@ public interface MypageService {
 	public List<Todolist> selectTodoSortByCategory(int memNo);
 	public int insertTodo(Todo todo);
 	public int updateTodo(Todo todo);	
+	public int updateCheckTodo(Todo todo);	
 	public int deleteTodo(int todoNo);
 	
 	//내 예산

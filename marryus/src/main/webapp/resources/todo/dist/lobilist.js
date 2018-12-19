@@ -787,7 +787,7 @@ $(function () {
             $this.closest('.lobilist-item').toggleClass('item-done');
             console.log(item,"아이템 정보");
             $.ajax({
-            	url : pathname+"/marryus/mypage/myTodoUpdate.do",
+            	url : pathname+"/marryus/mypage//updateCheckTodo.do",
             	type : "POST",
             	data : item
             }).done(function () {

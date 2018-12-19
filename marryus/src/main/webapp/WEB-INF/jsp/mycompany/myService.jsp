@@ -187,6 +187,9 @@
 	       	<tr>
 	        	<td class="highlight">서비스 카테소리</td>
 	        	<td>
+	        	<c:forEach var="CT" items="${comInfoType}">
+	        		<button type="button" class="comInfoTypeDisable" onclick="selectDisable('${CT}')">${CT}</button>
+	        	</c:forEach>
 	        	<select name="comInfoType" id="comInfoType" class="select-field__menu">
 	        			<option value="v">웨딩홀</option>
 	        			<option value="s">스트디오</option>
@@ -273,7 +276,7 @@
     <script>
     $(function(){
 
-
+    	 $(".comInfoTypeDisable").trigger("click");
     	
     	
 	    //전역변수선언
@@ -329,6 +332,9 @@
  	 	           }) 
  	       	
 	    })
+	    
+	    
+	   
 	    
 
 	});
@@ -412,7 +418,10 @@
     
     
     
-
+    function selectDisable (comInfoType){
+		//alert(comInfoType);
+		//alert($("select[name='comInfoType'] option[vlaue='"+comInfoType+"']").val());
+	}
 
         
         
@@ -475,6 +484,8 @@
 					}
 				}).open();
 			};
+			
+			
 			
 			
 

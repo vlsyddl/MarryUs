@@ -364,6 +364,12 @@ public class MyPageServiceImpl implements MypageService{
 	}
 
 
+	@Override
+	public int updateCheckTodo(Todo todo) {
+		return mapper.updateCheckTodo(todo);
+	}
+
+
 
 
 

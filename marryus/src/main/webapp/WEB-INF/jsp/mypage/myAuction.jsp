@@ -417,8 +417,7 @@ h4{
 				
 				
 				
-				
-				<button class="more_reservation btn1" type="button" data-href="${auction.tenderNo}" >예약하기</button>
+
                 <c:if test="${myAuction[0].dday>0}">
                 <c:if test="${auction.tenderStatus=='ing'  && myAuction[0].auctionStatus=='ing'}">
                 <button class="more_reservation btn1" type="button" data-href="${auction.tenderNo}" >예약하기</button>
@@ -569,8 +568,8 @@ function purchase(auctionNo, tenderNo){
 function openForm (NY){
 	if(NY=='N'){
 		$("#res_date_time").addClass("hidden");	
-		$("input[name=resDate]").val().empty();
-		$("input[name=resTime]").val().empty();
+		$("input[name=resDate]").val("");
+		$("select[name=resTime] option").prop("selected", false);
 	}
 	if(NY=="Y"){
 		$("#res_date_time").removeClass("hidden");	

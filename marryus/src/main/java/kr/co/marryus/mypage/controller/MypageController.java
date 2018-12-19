@@ -338,15 +338,7 @@ public class MypageController {
 		return new Gson().toJson(service.selectTodoSortByCategory(((Member)session.getAttribute("user")).getNo()));
 	}
 
-	@RequestMapping("/myTodoInsert.do")
-	@ResponseBody 
-	public void myTodoInsert(Item item, HttpSession session) {
-		
-		Todo todo =item.getTodo();
-		todo.setMemNo((((Member)session.getAttribute("user")).getNo()));
-		service.insertTodo(todo);
-		
-	}
+
 	
 	@RequestMapping("/myTodoWrite.do")
 	@ResponseBody 
@@ -361,17 +353,20 @@ public class MypageController {
 	@RequestMapping("/myTodoUpdate.do")
 	@ResponseBody 
 	public void myTodoUpdate(Item item) throws Exception{
-		System.out.println(item.getDone());
 		service.updateTodo(item.getTodo());
+	}
+	
+	@RequestMapping("/updateCheckTodo.do")
+	@ResponseBody 
+	public void updateCheckTodo(Item item) throws Exception{;
+		service.updateCheckTodo(item.getTodo());
 	}
 
 	@RequestMapping("/myTodoDelete.do")	
 	@ResponseBody 
 	public void myTodoDelete(Item item) throws Exception{
 		System.out.println(item.getTodo().getTodoNo());
-		System.out.println("삭제입니다.");
 		int no = service.deleteTodo(item.getTodo().getTodoNo());
-		System.out.println(no);
 	}
 	
 	

@@ -139,13 +139,16 @@ iframe {
 }
 
         .redBack{
-            background: rgb(168, 37, 37);
+            background: #b91e1e
         }
         .blueBack{
-            background: rgb(29, 29, 173)
+            background: #1a5591
         }
         .grayBack{
-            background: rgb(188, 188, 190)
+            background: #b6b6b6
+        }
+        .pinkBack{
+            background:#1a31c
         }
         
                 .textstyle{
@@ -353,6 +356,7 @@ nav{ text-align: center;}
             		<c:when test="${auction.tenderStatus=='ing' && auction.dday<0}"> <span class="redBack textstyle">유찰</span> </c:when>
             		<c:when test="${auction.tenderStatus=='done'}"> <span class="blueBack textstyle">낙찰</span> </c:when>
             		<c:when test="${auction.tenderStatus=='ing' && auction.dday>=0}"> <span class="grayBack textstyle">미정</span> </c:when>
+            		<c:when test="${auction.tenderStatus=='choo'}"> <span class="pinkBack textstyle">예약</span> </c:when>
             	</c:choose>
             </td>
             <td><fmt:formatNumber type='currency' value='${auction.tenderBudget}' pattern='###,###'/>원</td>
