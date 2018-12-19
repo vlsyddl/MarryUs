@@ -21,11 +21,12 @@
     <link rel="stylesheet" href="<c:url value='/resources/todo/lobibox/css/lobibox.min.css'/>" />
     <link rel="stylesheet" href="<c:url value='/resources/todo/highlight/github.css'/>" />
     <link rel="stylesheet" href="<c:url value='/resources/todo/demo/demo.css'/>" />
-   
-   
-
-    
-   
+    <style>
+    	a {
+		    text-decoration: none;
+		    color: #333;
+		}
+    </style>
 </head>
 <body>
 	<c:import url="/common/importHeader.jsp" />
@@ -33,33 +34,33 @@
         <nav class="myPageNav">
             <div class="container">
                     <ul>
-                        <li class="on">
+                        <li>
                             <a href="<c:url value='/mypage/mywedding.do'/>">
-                                    <img src="img/hall_ico.png" alt="" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/hall_ico.png" alt="" class="img-responsive center-block">
                                 My Wedding
                             </a>
                         </li>
-                        <li>
+                        <li class="on">
                             <a href="<c:url value='/mypage/myTodo.do'/>">
-                                    <img src="img/chk_ico.png" alt="" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/chk_ico.png" alt="" class="img-responsive center-block">
                                 Check List
                             </a>
                         </li>
                         <li>
                             <a href="<c:url value='/mypage/myAuction.do?choo=tab1&memNo=${user.no}&auctionType=v'/>">
-                                <img src="img/auction_ico.png" alt="" class="img-responsive center-block">
+                                <img src="<c:url value="/resources/"/>img/auction_ico.png" alt="" class="img-responsive center-block">
                                 Auction List
                             </a>
                         </li>
                         <li>
                             <a href="<c:url value='/mypage/myBudget.do'/>">
-                                <img src="img/budget_ico.png" alt="" class="img-responsive center-block">
+                                <img src="<c:url value="/resources/"/>img/budget_ico.png" alt="" class="img-responsive center-block">
                                 Budget Spent
                             </a>
                         </li>
                         <li>
                             <a href="<c:url value='/mypage/likeCompany.do?memNo=${user.no}'/>">
-                                <img src="img/bookmark_ico.png" alt="" class="img-responsive center-block">
+                                <img src="<c:url value="/resources/"/>img/bookmark_ico.png" alt="" class="img-responsive center-block">
                                 Bookmark
                             </a>
                         </li>
@@ -87,38 +88,21 @@
         </div>
     </div>
 </div>
-
+</div>
 	
 
 
 <!--Default installation-->
 
-		<script type="text/javascript" src="<c:url value="/resources/todo/jquery/jquery.min.js?343"/>" charset="utf-8"></script>
-		<script type="text/javascript" src="<c:url value="/resources/todo/jquery/jquery-ui.min.js"/>" charset="utf-8"></script>
 		<script type="text/javascript" src="<c:url value="/resources/todo/jquery/jquery.ui.touch-punch-improved.js"/>" charset="utf-8"></script>
-		<script type="text/javascript" src="<c:url value="/resources/todo/bootstrap/js/bootstrap.min.js"/>" charset="utf-8"></script>
 		<script type="text/javascript" src="<c:url value="/resources/todo/dist/lobilist.js?454"/>" charset="utf-8"></script>
 
 
 	 
 	 
-	 
-<%-- <script src="<c:url value='/resources/todo/jquery/jquery.min.js'/>"></script>
-<script src="/resources/todo/jquery/jquery-ui.min.js"></script>
-<script src="/resources/todo/jquery/jquery.ui.touch-punch-improved.js"></script>
-<script src="/resources/todo/bootstrap/js/bootstrap.min.js"></script>
-<script src="/resources/todo/dist/lobilist.js"></script> --%>
- 
-<!--Installation using bower. Preferred!!! -->
-<!--<script src="bower_components/jquery/dist/jquery.min.js"></script>-->
-<!--<script src="bower_components/jquery-ui/jquery-ui.min.js"></script>-->
-<!--<script src="bower_components/jquery-ui-touch-punch-improved/jquery.ui.touch-punch-improved.js"></script>-->
-<!--<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>-->
-<!--<script src="bower_components/lobilist/dist/lobilist.min.js"></script>-->
 
 	<script type="text/javascript" src="<c:url value="/resources/todo/lobibox/js/lobibox.min.js"/>" charset="utf-8"></script>
 		<script type="text/javascript" src="<c:url value="/resources/todo/highlight/highlight.pack.js"/>" charset="utf-8"></script>
-	<%-- 	<script type="text/javascript" src="<c:url value="/resources/todo/demo/demo.js"/>" charset="utf-8"></script> --%>
 	
 
 	

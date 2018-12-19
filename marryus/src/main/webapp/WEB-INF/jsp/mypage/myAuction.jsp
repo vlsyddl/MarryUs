@@ -7,17 +7,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.3.1.js"
-        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-        crossorigin="anonymous"></script> 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
    <c:import url="/common/importCss.jsp"/>
 	 <c:import url="/common/importJs.jsp"/>
 	 <head>
-  <script type="text/javascript" src="/scripts/jquery.min.js"></script>
-  <script type="text/javascript" src="/scripts/bootstrap.min.js"></script>
   <script type="text/javascript" src="/scripts/bootstrap-datetimepicker.*js"></script>
-        <link rel="stylesheet" href="css/style.css">
   <!-- include your less or built css files  -->
   <!-- 
   bootstrap-datetimepicker-build.less will pull in "../bootstrap/variables.less" and "bootstrap-datetimepicker.less";
@@ -47,11 +41,6 @@
   	clear: both;
   }
 
-  body {
-  	font-family:맑은 고딕;
-  	background: #f6f9fa;
-  }
-
   h1 {
   	text-align: center;
   }
@@ -64,17 +53,12 @@
 
   /*Fun begins*/
   .tab_container {
-  	width: 70%;
   	margin: 0 auto;
     position: relative;
     font-size: 12px;
-    background: #f4e2ec;
+    background: rgba(255,191,222,0.3);
   }
   
-  img{
-  	width: 90%;
-  }
-
   input[type=radio], section {
     clear: both;
     padding-top: 10px;
@@ -95,7 +79,6 @@
 /*     background: #f0f0f0; */
   }
   label span{
-  font-family: 맑은 고딕;
   font-weight: 700;}
 
   #tab1:checked ~ #content,
@@ -123,12 +106,17 @@
   }
 
   .tab_container [id^="tab"]:checked + label {
-    background: rgb(255, 255, 255,0.3);
+    background: rgba(255,191,222,1);
     /* box-shadow: inset 0 5px rgb(176, 203, 207); */
     border-bottom: 5px solid #8c8880 ;
     
   }
-
+  .tab_container [id^="tab"] + label{
+  	transition: all 0.5s;
+  }
+	.tab_container [id^="tab"] + label:hover{
+		background: rgba(255,191,222,0.5);
+	}
   .tab_container [id^="tab"]:checked + label .fa {
     color: rgb(176, 203, 207);
   }
@@ -144,9 +132,7 @@
       display: none;
     }
     
-    .tab_container {
-      width: 98%;
-    }
+  
   }
 
   /*Content Animation*/
@@ -288,13 +274,14 @@ h4{
  	font-size: 17px;
  	font-weight: 700;
  	line-height: 2em;
+ 	display: inline-block;
+ 	margin-right: 10px;
  }
 #resSubmitForm p{
 	font-size: 18px;
 	font-weight: 700;
 	line-height: 2em;
 	margin-bottom: 10px;
-	font-family: 맑은 고딕;
 }
 #resSubmitForm select,  #resSubmitForm input{
 	line-height: 1.5em;
@@ -320,33 +307,33 @@ h4{
  <nav class="myPageNav">
             <div class="container">
                     <ul>
-                        <li class="on">
+                        <li>
                             <a href="<c:url value='/mypage/mywedding.do'/>">
-                                    <img src="img/hall_ico.png" alt="" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/hall_ico.png" alt="" class="img-responsive center-block">
                                 My Wedding
                             </a>
                         </li>
                         <li>
                             <a href="<c:url value='/mypage/myTodo.do'/>">
-                                    <img src="img/chk_ico.png" alt="" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/chk_ico.png" alt="" class="img-responsive center-block">
                                 Check List
                             </a>
                         </li>
-                        <li>
+                        <li class="on">
                             <a href="<c:url value='/mypage/myAuction.do?choo=tab1&memNo=${user.no}&auctionType=v'/>">
-                                <img src="img/auction_ico.png" alt="" class="img-responsive center-block">
+                                <img src="<c:url value="/resources/"/>img/auction_ico.png" alt="" class="img-responsive center-block">
                                 Auction List
                             </a>
                         </li>
                         <li>
                             <a href="<c:url value='/mypage/myBudget.do'/>">
-                                <img src="img/budget_ico.png" alt="" class="img-responsive center-block">
+                                <img src="<c:url value="/resources/"/>img/budget_ico.png" alt="" class="img-responsive center-block">
                                 Budget Spent
                             </a>
                         </li>
                         <li>
                             <a href="<c:url value='/mypage/likeCompany.do?memNo=${user.no}'/>">
-                                <img src="img/bookmark_ico.png" alt="" class="img-responsive center-block">
+                                <img src="<c:url value="/resources/"/>img/bookmark_ico.png" alt="" class="img-responsive center-block">
                                 Bookmark
                             </a>
                         </li>
@@ -358,6 +345,7 @@ h4{
 
 
 <div class="auction_box">
+	<div class="container">
 		<div class="tab_container">
 		
 			<input id="tab1" type="radio" name="tabs" onClick="window.location.href='myAuction.do?choo=tab1&auctionType=v&memNo=${user.no}'" ${choose == 'tab1' ? 'checked="checked"' : '' } checked="checked"/>
@@ -489,8 +477,8 @@ h4{
 
 
 			
-			
 			</section>
+			</div>
 			</div>
 
 	</div>

@@ -94,11 +94,6 @@
 [ FONT ]*/
 
 
-@font-face {
-  font-family: OpenSans-Regular;
-  src: url('../fonts/OpenSans/OpenSans-Regular.ttf'); 
-}
-
 
 
 /*//////////////////////////////////////////////////////////////////
@@ -177,7 +172,6 @@ iframe {
 
 		input::placeholder {
 		  color: #334455;
-		  font-style: italic;
 		} 
 
 
@@ -237,7 +231,7 @@ table td, table th {
 }
 table thead tr {
   height: 60px;
-  background: #36304a;
+  background:  rgba(255,191,222,1);
 }
 table tbody tr {
   height: 50px;
@@ -262,7 +256,6 @@ table td.r, table th.r {
 
 
 .table100-head th{
-  font-family: OpenSans-Regular;
   font-size: 18px;
   color: #fff;
   line-height: 1.2;
@@ -348,33 +341,33 @@ tbody tr:hover {
  <nav class="myPageNav">
             <div class="container">
                     <ul>
-                        <li class="on">
+                         <li>
                             <a href="<c:url value='/mypage/mywedding.do'/>">
-                                    <img src="img/hall_ico.png" alt="" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/hall_ico.png" alt="" class="img-responsive center-block">
                                 My Wedding
                             </a>
                         </li>
                         <li>
                             <a href="<c:url value='/mypage/myTodo.do'/>">
-                                    <img src="img/chk_ico.png" alt="" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/chk_ico.png" alt="" class="img-responsive center-block">
                                 Check List
                             </a>
                         </li>
-                        <li>
-                            <a href="<c:url value='/mypage/myBudget.do'/>">
-                                <img src="img/budget_ico.png" alt="" class="img-responsive center-block">
-                                Budget Spent
+                        <li >
+                            <a href="<c:url value='/mypage/myAuction.do?choo=tab1&memNo=${user.no}&auctionType=v'/>">
+                                <img src="<c:url value="/resources/"/>img/auction_ico.png" alt="" class="img-responsive center-block">
+                                Auction List
                             </a>
                         </li>
-                                                <li>
-                            <a href="<c:url value='/mypage/myAuction.do?choo=tab1&memNo=${user.no}&auctionType=v'/>">
-                                <img src="img/auction_ico.png" alt="" class="img-responsive center-block">
-                                Auction List
+                        <li class="on">
+                            <a href="<c:url value='/mypage/myBudget.do'/>">
+                                <img src="<c:url value="/resources/"/>img/budget_ico.png" alt="" class="img-responsive center-block">
+                                Budget Spent
                             </a>
                         </li>
                         <li>
                             <a href="<c:url value='/mypage/likeCompany.do?memNo=${user.no}'/>">
-                                <img src="img/bookmark_ico.png" alt="" class="img-responsive center-block">
+                                <img src="<c:url value="/resources/"/>img/bookmark_ico.png" alt="" class="img-responsive center-block">
                                 Bookmark
                             </a>
                         </li>

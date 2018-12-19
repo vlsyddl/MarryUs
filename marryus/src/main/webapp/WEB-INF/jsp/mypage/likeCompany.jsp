@@ -8,12 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Marry Us</title>
-    <!-- 합쳐지고 최소화된 최신 CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-	<!-- 부가적인 테마 -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-	<link rel="stylesheet"
-		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
     <link rel="stylesheet" href="<c:url value="/resources/css/wedding.css"/>">
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dc6291b36d6e91a7fc6b30e92a9171d3"></script>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -38,33 +33,33 @@
  <nav class="myPageNav">
             <div class="container">
                     <ul>
-                        <li class="on">
+                        <li>
                             <a href="<c:url value='/mypage/mywedding.do'/>">
-                                    <img src="img/hall_ico.png" alt="" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/hall_ico.png" alt="" class="img-responsive center-block">
                                 My Wedding
                             </a>
                         </li>
                         <li>
                             <a href="<c:url value='/mypage/myTodo.do'/>">
-                                    <img src="img/chk_ico.png" alt="" class="img-responsive center-block">
+                                    <img src="<c:url value="/resources/"/>img/chk_ico.png" alt="" class="img-responsive center-block">
                                 Check List
                             </a>
                         </li>
                         <li>
-                            <a href="<c:url value='/mypage/myBudget.do'/>">
-                                <img src="img/budget_ico.png" alt="" class="img-responsive center-block">
-                                Budget Spent
-                            </a>
-                        </li>
-                                                <li>
                             <a href="<c:url value='/mypage/myAuction.do?choo=tab1&memNo=${user.no}&auctionType=v'/>">
-                                <img src="img/auction_ico.png" alt="" class="img-responsive center-block">
+                                <img src="<c:url value="/resources/"/>img/auction_ico.png" alt="" class="img-responsive center-block">
                                 Auction List
                             </a>
                         </li>
                         <li>
+                            <a href="<c:url value='/mypage/myBudget.do'/>">
+                                <img src="<c:url value="/resources/"/>img/budget_ico.png" alt="" class="img-responsive center-block">
+                                Budget Spent
+                            </a>
+                        </li>
+                        <li class="on">
                             <a href="<c:url value='/mypage/likeCompany.do?memNo=${user.no}'/>">
-                                <img src="img/bookmark_ico.png" alt="" class="img-responsive center-block">
+                                <img src="<c:url value="/resources/"/>img/bookmark_ico.png" alt="" class="img-responsive center-block">
                                 Bookmark
                             </a>
                         </li>
@@ -98,17 +93,11 @@
                                     </div>
                             </c:forEach>
     
-    
-    
 
-                  
-                  
-                  
-                  
-                  
-          <div >      
+                            </div>
+                             <div >      
  	<c:if test="${count != 0}">
-			<nav>
+			<nav style="text-align: center;">
 			  <ul class="pagination">
 			    <li <c:if test="${beginPage==1}">class="disabled"</c:if> >
 			    <c:choose>
@@ -146,10 +135,7 @@
 			  </ul>
 			</nav>
 		</c:if>
-             </div>         
-                 
-
-                            </div>
+             </div>  
                         </div>
                       
                     </div>
@@ -159,16 +145,7 @@
    </section>
    </div>
     </div>
-     <aside id="sideBar">
-            <ul>
-                <li><a href="<c:url value="/mypage/mywedding.do"/>"><i class="fas fa-user-edit"></i>마이페이지</a></li>
-                <li><a href="<c:url value="/community/notice.do"/>"><i class="fas fa-headset"></i></i>공지 게시판</a></li>
-                <li><a href="#"><i class="fas fa-chalkboard-teacher"></i>후기 게시판</a></li>
-                <li><a href="#"><i class="far fa-kiss-wink-heart"></i>신부대기실</a></li>
-                <li><a href="#"><i class="far fa-comments"></i>1 : 1 질문</a></li>
-                <li><a href="#"><i class="far fa-question-circle"></i>FAQ</a></li>
-            </ul>
-        </aside>
+
          <script>
             $(function(){
                 new WOW().init();
