@@ -14,11 +14,13 @@
 <c:import url="/common/webSocket.jsp"/>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/locale/ko.js" charset="utf-8"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
 <style>
 #widget_name{
     display: block;
@@ -138,7 +140,7 @@ margin-block-start: 2em;
 										<b>0</b> <br> <span>out of 0</span>
 									</dd>
 								</dl>
-								<p>Auction List</p>
+								<p>경매 리스트</p>
 						</a></li>
 						<li><a href="#">
 								<dl>
@@ -149,7 +151,7 @@ margin-block-start: 2em;
 										<b>0</b> <br> <span>out of0</span>
 									</dd>
 								</dl>
-								<p>Tasks Completed</p>
+								<p>체크리스트</p>
 						</a></li>
 						<li><a href="#">
 								<dl>
@@ -160,7 +162,7 @@ margin-block-start: 2em;
 										<b>0</b> <br> <span>out of 0</span>
 									</dd>
 								</dl>
-								<p>Like Companies</p>
+								<p>관심 업체</p>
 						</a></li>
 						<li><a href="#">
 								<dl>
@@ -171,7 +173,7 @@ margin-block-start: 2em;
 										<b>0</b> <br> <span>out of 0</span>
 									</dd>
 								</dl>
-								<p>Budget spent</p>
+								<p>예산 관리</p>
 						</a></li>
 					</ul>
 				</div>
@@ -249,7 +251,9 @@ margin-block-start: 2em;
 										</c:if>
 										<span class="w28">${auction.venue.weddingVenue}</span> 
 									<span class="w18">
-										D-${auction.dday}
+									<c:set var="dday" value="${auction.dday}" />
+									D-<fmt:formatNumber value="${dday-(dday%1)}" type="number" />
+									
 									</span>
 									<span class="w18">접수중</span></li>
 									</c:if>
@@ -326,8 +330,11 @@ margin-block-start: 2em;
 										<span class="w28">메이크업 </span>
 									</c:if>
 										<span class="w18">
-									D-${auction.dday}</span> 
-										<span class="w18">접수중</span></li>
+									<c:set var="dday" value="${auction.dday}" />
+									D-<fmt:formatNumber value="${dday-(dday%1)}" type="number" />
+									</span>
+										<span class="w18">접수중</span>
+										</li>
 									</c:if>
 								</c:if>
 							</c:forEach>
@@ -401,7 +408,8 @@ margin-block-start: 2em;
 										</c:if> 
 										<span class="w28">${auction.honeyMoon.honeyPlace}</span> 
 										<span class="w18">
-										D-${auction.dday}</span> <span class="w18">접수중</span></li>
+										<c:set var="dday" value="${auction.dday}" />
+									D-<fmt:formatNumber value="${dday-(dday%1)}" type="number" /></span> <span class="w18">접수중</span></li>
 									</c:if>
 								</c:if>
 							</c:forEach>
@@ -468,7 +476,8 @@ margin-block-start: 2em;
 										</c:if>
 										<span class="w28">${auction.jewelry.jewelryPlace}</span> 
 										<span class="w18">
-										D-${auction.dday}</span> <span class="w18">접수중</span></li>
+										<c:set var="dday" value="${auction.dday}" />
+									D-<fmt:formatNumber value="${dday-(dday%1)}" type="number" /></span> <span class="w18">접수중</span></li>
 									</c:if>
 								</c:if>
 							</c:forEach>
@@ -534,7 +543,8 @@ margin-block-start: 2em;
 										</c:if>
 										<span class="w28">${auction.serviceAdd.serviceTitle}</span> 
 									 <span class="w18">
-									 D-${auction.dday}</span> <span class="w18">접수중</span></li>
+									<c:set var="dday" value="${auction.dday}" />
+									D-<fmt:formatNumber value="${dday-(dday%1)}" type="number" /></span> <span class="w18">접수중</span></li>
 									</c:if>
 								</c:if>
 							</c:forEach>
@@ -661,7 +671,7 @@ margin-block-start: 2em;
 							<ol>
 								<li><a href="#" data-ref="planPartner">partner</a></li>
 								<li><a href="#" data-ref="planPlace">place</a></li>
-								<li><a href="#" data-ref="planWedDate">wedDate</a></li>
+								<li><a href="#" data-ref="datepicker">wedDate</a></li>
 								<li><a href="#" data-ref="planVisitor">visitor</a></li>
 								<li><a href="#" data-ref="planBudget">budget</a></li>
 							</ol>
@@ -684,19 +694,19 @@ margin-block-start: 2em;
 								</li>
 							</c:if>
 								<li>
-									<span><label for="planPlace">결혼식은 어느 지역에서 하실 예정이신가요~?</label></span> 
+									<span><label for="planPlace">결혼식은 어느 지역에서 하실 예정이신가요~? ex)서울시 강남구</label></span> 
 									<input id="planPlace" name="planPlace" type="text" placeholder="Enter palce" autofocus />
 								</li>
 								<li>
 									  <span><label for="planWedDate">결혼식 예정일을 알수 있을까요~?</label></span>
-										<input  id="planWedDate" name="planWedDate" type="date" placeholder="Weeding date?" autofocus />
+										<input id="datepicker"  name="planWedDate" type="text" placeholder="Weeding date?" autofocus />
 								</li>
 								<li>
-									<span><label for="planVisitor">하객수</label></span>
+									<span><label for="planVisitor">예상 하객수를 입력해주세요 ~ ex) 200명</label></span>
 									<input id="planVisitor" name="planVisitor" type="text" placeholder="how many ?" autofocus />
 								</li>
 								<li>
-									<span><label for="planBudget">예산</label></span>
+									<span><label for="planBudget">총 결혼 예산을 입력해주세요~ ex) 2000만원</label></span>
 									<input id="planBudget" name="planBudget" type="text" placeholder="how much?" autofocus />
 								</li>
 								<!-- submit 버튼 -->
@@ -955,10 +965,30 @@ margin-block-start: 2em;
 			}
 		 });
 	});
-/*  	$.dialog({
- 	    title: '아이고야!!',
- 	    content: '처음의 시작이 중요하죠',
- 	}); */
+	
+	
+	    var picker = new Pikaday({ field: document.getElementById('datepicker')/* ,
+	    	format: 'YYYY/M/D',
+	        toString(date, format) {
+	        // you should do formatting based on the passed format,
+	        // but we will just return 'D/M/YYYY' for simplicity
+	        const day = date.getDate();
+	        const month = date.getMonth() + 1;
+	        const year = date.getFullYear();
+	        return `${year}/${month}/${day}`;
+	    },
+	    parse(dateString, format) {
+	        // dateString is the result of `toString` method
+	        const parts = dateString.split('/');
+	        const day = parseInt(parts[0], 10);
+	        const month = parseInt(parts[1], 10) - 1;
+	        const year = parseInt(parts[2], 10);
+	        return new Date(year, month, day);
+	    } */
+	    	
+	    
+	    });
 	</script>
+
 </body>
 </html>

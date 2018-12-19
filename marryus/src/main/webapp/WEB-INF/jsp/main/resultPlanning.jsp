@@ -11,6 +11,8 @@
 <c:import url="/common/importCss.jsp"/>
 <c:import url="/common/importJs.jsp"/>
 <c:import url="/common/webSocket.jsp"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/printThis/1.14.0/printThis.js"></script>
 <style>
 html {
@@ -268,6 +270,13 @@ table td {
   width:100%;
   transition:800ms ease all;
 }
+#goToMypage{
+    font-size: 15px;
+    font-weight: bold;
+}
+#goToMypage:hover{
+color: #ff9b9b;
+}
 </style>
 </head>
 <body>
@@ -288,6 +297,8 @@ table td {
                       </div>
                         <input id="CheckBtn" onclick="openList()" type="button" value="todoList 확인하기" >
                    <div class="lists" >
+                    <hr>
+                    <a id="goToMypage" href="<c:url value='/mypage/myTodo.do'/>">마이페이지 체크리스트로 이동하기 ></a>
                     <hr>
                     <p class="dDay">상세 내역보기</p>
                       <hr>
@@ -780,7 +791,7 @@ $(".printBtn").on("click", function(){
        function gotoSignUp(){
      	  location.href = 'http://localhost:8000/marryus/signup/signupPro.do';
        }
-       
+      
 
 </script>            
 </body>

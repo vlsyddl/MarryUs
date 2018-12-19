@@ -182,8 +182,8 @@ public class MainController {
 		proFileMap.put("auctionTotal", service.countTotalAuction(memNo));
 		proFileMap.put("auctionDone", service.countAuctiondone(memNo));
 		proFileMap.put("likeCompany", service.countCompanyLike(memNo));
-	/*	proFileMap.put("totalBudget", service.totalBudget(memNo));
-		proFileMap.put("spendBudget", service.spendBudget(memNo));*/
+		proFileMap.put("totalBudget", service.totalBudget(memNo));
+		proFileMap.put("spendBudget", service.spendBudget(memNo));
 		
 		
 		return proFileMap;
