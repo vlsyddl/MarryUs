@@ -149,8 +149,8 @@ console.log(array)
 
 var mapContainer = document.getElementById('map');
 var mapOption = {
-    center: new daum.maps.LatLng(37.450701, 126.570667),
-    level: 14
+	center: new daum.maps.LatLng(36.64389, 127.48944),
+    level: 13
 };  
 
 
