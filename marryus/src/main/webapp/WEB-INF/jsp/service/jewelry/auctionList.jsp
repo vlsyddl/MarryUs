@@ -41,9 +41,11 @@
                     <div class="tabContents">
                         <div class="tab2 on">
                         <!-- Button trigger modal -->
-						<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#insertAuctionModal">
-						  역경매 신청하기
-						</button>
+                        <c:if test="${user.type eq 'mg'}">
+							<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#insertAuctionModal">
+							  역경매 신청하기
+							</button>
+						</c:if>
 						
 						<!-- Modal -->
 						<div class="modal fade insertModal" id="insertAuctionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -71,25 +73,25 @@
 								        	<div class="col-md-4">
 								        		<div class="radio radio-custom radio-inline">
 									        		<input type="radio" name="jewelryType" class="form-control" value="dm" id="jewelryTypeDm"/>
-								        			<label for="dressTypeAll">다이아몬드</label>
+								        			<label for="jewelryTypeDm">다이아몬드</label>
 								        		</div>
 								        	</div>
 								        	<div class="col-md-4">
 								        		<div class="radio radio-custom radio-inline">
 									        		<input type="radio" name="jewelryType" class="form-control" value="gd" id="jewelryTypeGd"/>
-								        			<label for="dressTypeGd">금</label>
+								        			<label for="jewelryTypeGd">금</label>
 								        		</div>
 								        	</div>
 								        	<div class="col-md-4">
 								        		<div class="radio radio-custom radio-inline">
 									        		<input type="radio" name="jewelryType" class="form-control" value="wg" id="jewelryTypeWg"/>
-								        			<label for="dressTypeWg">금</label>
+								        			<label for="jewelryTypeWg">백금</label>
 								        		</div>
 								        	</div>
 								        	<div class="col-md-4">
 								        		<div class="radio radio-custom radio-inline">
 									        		<input type="radio" name="jewelryType" class="form-control" value="wg" id="jewelryTypeJw"/>
-								        			<label for="dressTypeJw">보석</label>
+								        			<label for="jewelryTypeJw">보석</label>
 								        		</div>
 								        	</div>
 								        	
@@ -98,6 +100,11 @@
 									  	<div class="form-group">
 									  		<div class="col-md-4">
 									  			<input type="text" name="jewelryBudget" class="form-control"/>
+									  		</div>
+									  		<div class="col-md-8">
+									  			<p style="padding-top: 7px;">
+									  				만원
+									  			</p>
 									  		</div>
 									  	</div>
 									  	<h2 class="jewelryMore">희망 사항</h2>
@@ -293,11 +300,19 @@ function detail(auctionNo, auctionType, no){
 			html += '</dl>';
 			html += '<dl class="jewelryType">';
 			html += '<dt>쥬얼리 타입 : </dt>';
-			html += '<dd>'+data.jewelry.jewelryType+'</dd>';
+			if (data.jewelry.jewelryType == "dm") {
+				html += '<dd>다이아몬드</dd>';
+			} else if (data.jewelry.jewelryType == "gd") {
+				html += '<dd>금</dd>';
+			} else if (data.jewelry.jewelryType == "wg") {
+				html += '<dd>백금</dd>';
+			} else {
+				html += '<dd>보석</dd>';
+			}
 			html += '</dl>';
 			html += '<dl class="jewelryBudget">';
 			html += '<dt>예상견적 : </dt>';
-			html += '<dd>'+data.jewelry.jewelryBudget+'</dd>';
+			html += '<dd>'+data.jewelry.jewelryBudget+'만원</dd>';
 			html += '</dl>';
 			html += '<dl class="jewelryMore">';
 			html += '<dt>희망사항 : </dt>';
@@ -503,15 +518,7 @@ function formCheck(){
 					  	<div class="form-group">
 					  		<div class="col-md-4">
 							  	<div class="panel-heading">
-		                        	<input class="form-control" type="text" id="tenderTitle" name="tenderTitle" placeholder="제목을 입력 해 주세요" />   
-		                        </div>
-					  		</div>
-					  	</div><br> 
-					  	<h2>입찰예산</h2>
-					  	<div class="form-group">
-					  		<div class="col-md-4">
-							  	<div class="panel-heading">
-		                        	<input class="form-control" type="text" id="tenderBudget" name="tenderBudget" placeholder="제목을 입력 해 주세요" />   
+		                        	<input class="form-control" type="text" id="tenderTitle" name="tenderTitle" placeholder="제목을 입력해 주세요" />   
 		                        </div>
 					  		</div>
 					  	</div><br> 
@@ -519,10 +526,18 @@ function formCheck(){
 					  	<div class="form-group">
 					  		<div class="col-md-4">
 							  	<div class="panel-heading">
-		                        	<input class="form-control" type="text" id="tenderInfo" name="tenderInfo" placeholder="제목을 입력 해 주세요" />   
+		                        	<input class="form-control" type="text" id="tenderInfo" name="tenderInfo" placeholder="내용을 입력해 주세요" />   
 		                        </div>
 					  		</div>
-					  	</div>
+					  	</div><br>
+					  	<h2>입찰예산(만원)</h2>
+					  	<div class="form-group">
+					  		<div class="col-md-4">
+							  	<div class="panel-heading">
+		                        	<input class="form-control" type="text" id="tenderBudget" name="tenderBudget" placeholder="예산을 입력해 주세요" />   
+		                        </div>
+					  		</div>
+					  	</div> 
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

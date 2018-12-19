@@ -45,9 +45,11 @@
                     <div class="tabContents">
                         <div class="tab2 on">
                         <!-- Button trigger modal -->
-						<button type="button" name="wedBtn" class="btn btn-primary btn-lg"  data-toggle="modal" data-target="#insertModal">
-						  역경매 신청하기
-						</button>
+                        <c:if test="${user.type eq 'mg'}">
+							<button type="button" name="wedBtn" class="btn btn-primary btn-lg"  data-toggle="modal" data-target="#insertModal">
+							  역경매 신청하기
+							</button>
+						</c:if>
 						
 						<!-- Modal -->
 						<div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -579,20 +581,20 @@ $(function(){
 					  	</div>
 					  	<div class="form-group">
 					  		<div class="col-md-4">
-					  			제목:<textarea class="form-control" id="tenderTitle" type="text" name="tenderTitle" placeholder="제목을 입력 해 주세요" /></textarea>	
+					  			제목:<textarea class="form-control" id="tenderTitle" type="text" name="tenderTitle" placeholder="제목을 입력해 주세요" /></textarea>	
 					  		</div>
 					  	</div><br>
 					  	<h2>서비스 소개</h2>
 					  	<div class="form-group">
 					  		<div class="col-md-6">	
-					  			<textarea  name="tenderInfo" id="tenderInfo" class="wish form-control" rows="3" cols="30"></textarea>
+					  			<textarea  name="tenderInfo" id="tenderInfo" class="wish form-control" rows="3" cols="30" placeholder="내용을 입력해 주세요" ></textarea>
 					  		</div>
 					  	</div><br>
 					  	
 					  	<h2>입찰 예산(만원)</h2>
 					  	<div class="form-group">
 					  		<div class="col-md-4">
-					  			<input class="form-control" type="text" id="tenderBudget" name="tenderBudget" class="form-control"/>
+					  			<input class="form-control" type="text" id="tenderBudget" name="tenderBudget" class="form-control" placeholder="예산을 입력해 주세요" />
 					  		</div>
 					  	</div>
 				      </div>

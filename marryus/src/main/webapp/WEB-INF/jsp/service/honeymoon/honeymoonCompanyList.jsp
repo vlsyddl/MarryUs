@@ -16,6 +16,7 @@
 <style>
 	.btn-recom {
 		background-color: rgb(232, 210, 34);
+		color: #fff;
 	}
 </style>
 </head>

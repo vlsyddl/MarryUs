@@ -36,9 +36,11 @@
                     <div class="tabContents">
                         <div class="tab2 on">
                         <!-- Button trigger modal -->
-						<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#insertAuctionModal">
-						  역경매 신청하기
-						</button>
+                        <c:if test="${user.type eq 'mg'}">
+							<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#insertAuctionModal">
+							  역경매 신청하기
+							</button>
+                        </c:if>
 						
 						<!-- Modal -->
 						<div class="modal fade insertModal" id="insertAuctionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -137,6 +139,11 @@
 									  		<div class="col-md-4">
 									  			<input type="text" name="studioBudget" class="form-control"/>
 									  		</div>
+									  		<div class="col-md-8">
+									  			<p style="padding-top: 7px;">
+									  				만원
+									  			</p>
+									  		</div>
 									  	</div>
 									  	<h2 class="studioMore">희망 사항</h2>
 									  	<div class="form-group">
@@ -171,7 +178,7 @@
 								        	<div class="col-md-4">
 								        		<div class="radio radio-custom radio-inline">
 									        		<input type="radio" name="dressNeckline" class="form-control" value="All" id="dressNecklineAll"/>
-								        			<label for="dressNecklineAll">상관없음.</label>
+								        			<label for="dressNecklineAll">상관없음</label>
 								        		</div>
 								        	</div>
 								        	<div class="col-md-4">
@@ -229,45 +236,50 @@
 								        	<div class="col-md-4">
 								        		<div class="radio radio-custom radio-inline">
 									        		<input type="radio" name="dressType" class="form-control" value="Mermaid" id="dressTypeMermaid"/>
-								        			<label for="dressTypeMermaid">머메이드라인</label>
+								        			<label for="dressTypeMermaid">머메이드 라인</label>
 								        		</div>
 								        	</div>
 								        	<div class="col-md-4">
 								        		<div class="radio radio-custom radio-inline">
 									        		<input type="radio" name="dressType" class="form-control" value="ALine" id="dressTypeALine"/>
-								        			<label for="dressTypeALine">A라인</label>
+								        			<label for="dressTypeALine">A 라인</label>
 								        		</div>
 								        	</div>
 								        	<div class="col-md-4">
 								        		<div class="radio radio-custom radio-inline">
 									        		<input type="radio" name="dressType" class="form-control" value="Empire" id="dressTypeEmpire"/>
-								        			<label for="dressTypeEmpire">엠파이어라인</label>
+								        			<label for="dressTypeEmpire">엠파이어 라인</label>
 								        		</div>
 								        	</div>
 								        	<div class="col-md-4">
 								        		<div class="radio radio-custom radio-inline">
 									        		<input type="radio" name="dressType" class="form-control" value="Princess" id="dressTypePrincess"/>
-								        			<label for="dressTypePrincess">프린세스라인</label>
+								        			<label for="dressTypePrincess">프린세스 라인</label>
 								        		</div>
 								        	</div>
 								        	<div class="col-md-4">
 								        		<div class="radio radio-custom radio-inline">
 									        		<input type="radio" name="dressType" class="form-control" value="Sheath" id="dressTypeSheath"/>
-								        			<label for="dressTypeSheath">시스라인</label>
+								        			<label for="dressTypeSheath">시스 라인</label>
 								        		</div>
 								        	</div>
 								        	<div class="col-md-4">
 								        		<div class="radio radio-custom radio-inline">
 									        		<input type="radio" name="dressType" class="form-control" value="Bell" id="dressTypeBell"/>
-								        			<label for="dressTypeBell">벨라인</label>
+								        			<label for="dressTypeBell">벨 라인</label>
 								        		</div>
 								        	</div>
 								        </div>
-							        	<h2 class="dressPrice">예상견적</h2>
+							        	<h2 class="dressPrice">희망예산</h2>
 								        <div class="form-group">
 								        	<div class="col-md-4">
 									  			<input type="text" name="dressPrice" class="form-control"/>
 								        	</div>
+									  		<div class="col-md-8">
+									  			<p style="padding-top: 7px;">
+									  				만원
+									  			</p>
+									  		</div>
 								        </div>
 									  	<h2 class="dressMore">희망 사항</h2>
 									  	<div class="form-group">
@@ -345,6 +357,11 @@
 									  	<div class="form-group">
 									  		<div class="col-md-4">
 									  			<input type="text" name="mkuBudget" class="form-control"/>
+									  		</div>
+									  		<div class="col-md-8">
+									  			<p style="padding-top: 7px;">
+									  				만원
+									  			</p>
 									  		</div>
 									  	</div>
 									  	<h2 class="mkuMore">희망 사항</h2>
@@ -583,7 +600,7 @@ function detail(auctionNo, auctionType, no){
 			html += '<dl class="studioBudget">';
 			html += '<dt>예상견적 : </dt>';
 			console.log("studioBudget!!! ======== " + data.studio.studioBudget);
-			html += '<dd>'+data.studio.studioBudget+'</dd>';
+			html += '<dd>'+data.studio.studioBudget+'만원</dd>';
 			html += '</dl>';
 			html += '<dl class="studioMore">';
 			html += '<dt>희망사항 : </dt>';
@@ -592,8 +609,8 @@ function detail(auctionNo, auctionType, no){
 		} else if ( auctionType == "d") {
 			console.log("auctionType d ======" + auctionType);
 			console.log("auctionNo  d======" + auctionNo);
-			html += '<h4 style="color:bule">';
-			html += '넥라인과 드레스 타입은 선호하는 스타일을 보고자 하는 것입니다. ';
+			html += '<h4 style="color:blue">';
+			html += '넥라인과 드레스 타입은 선호하는 스타일을 보고자 하는 것입니다.<br>';
 			html += '심각하게 고민하지 않으셔도 신부님과 어울리는 여러 아름다운 드레스를 만나보실 수 있습니다.';
 			html += '</h4>';
 			html += '<dl class="memName">';
@@ -604,17 +621,47 @@ function detail(auctionNo, auctionType, no){
 			html += '<dt>희망장소 : </dt>';
 			html += '<dd>'+data.dress.dressPlace+'</dd>';
 			html += '</dl>';
-			html += '<dl class="budget">';
-			html += '<dt>예상견적 : </dt>';
-			html += '<dd>'+data.dress.dressPrice+'</dd>';
-			html += '</dl>';
 			html += '<dl class="neckline">';
 			html += '<dt>넥라인 : </dt>';
-			html += '<dd>'+data.dress.dressNeckline+'</dd>';
+			if (data.dress.dressNeckline == "All") {
+				html += '<dd>상관없음</dd>';
+			} else if (data.dress.dressNeckline == "Sweetheart") {
+				html += '<dd>스윗하트 넥</dd>';
+			} else if (data.dress.dressNeckline == "Scoop") {
+				html += '<dd>스쿱 넥</dd>';
+			} else if (data.dress.dressNeckline == "StraightAcross") {
+				html += '<dd>일자 넥</dd>';
+			} else if (data.dress.dressNeckline == "V") {
+				html += '<dd>브이 넥</dd>';
+			} else if (data.dress.dressNeckline == "Illusion") {
+				html += '<dd>일루젼 넥</dd>';
+			} else if (data.dress.dressNeckline == "Boat") {
+				html += '<dd>보트 넥</dd>';
+			} else {
+				html += '<dd>홀터 넥</dd>';
+			}
 			html += '</dl>';
 			html += '<dl class="dressType">';
 			html += '<dt>드레스타입 : </dt>';
-			html += '<dd>'+data.dress.dressType+'</dd>';
+			if (data.dress.dressType == "All") {
+				html += '<dd>상관없음</dd>';
+			} else if (data.dress.dressType == "Mermaid") {
+				html += '<dd>머메이드 라인</dd>';
+			} else if (data.dress.dressType == "ALine") {
+				html += '<dd>A 라인</dd>';
+			} else if (data.dress.dressType == "Empire") {
+				html += '<dd>엠파이어 라인</dd>';
+			} else if (data.dress.dressType == "Princess") {
+				html += '<dd>프린세스 라인</dd>';
+			} else if (data.dress.dressType == "Sheath") {
+				html += '<dd>시스 라인</dd>';
+			} else {
+				html += '<dd>벨 라인</dd>';
+			}
+			html += '</dl>';
+			html += '<dl class="budget">';
+			html += '<dt>예상견적 : </dt>';
+			html += '<dd>'+data.dress.dressPrice+'만원</dd>';
 			html += '</dl>';
 			html += '<dl class="dressMore">';
 			html += '<dt>희망사항 : </dt>';
@@ -654,7 +701,7 @@ function detail(auctionNo, auctionType, no){
 			html += '</dl>';	
 			html += '<dl class="budget">';
 			html += '<dt>예상견적 : </dt>';
-			html += '<dd>'+data.makeup.mkuBudget+'</dd>';
+			html += '<dd>'+data.makeup.mkuBudget+'만원</dd>';
 			html += '</dl>';	
 			html += '<dl class="more">';
 			html += '<dt>희망사항 : </dt>';
@@ -925,15 +972,7 @@ function writeFormShow(index) {
 					  	<div class="form-group">
 					  		<div class="col-md-4">
 							  	<div class="panel-heading">
-		                        	<input class="form-control" type="text" id="tenderTitle" name="tenderTitle" placeholder="제목을 입력 해 주세요" />   
-		                        </div>
-					  		</div>
-					  	</div><br> 
-					  	<h2>입찰예산</h2>
-					  	<div class="form-group">
-					  		<div class="col-md-4">
-							  	<div class="panel-heading">
-		                        	<input class="form-control" type="text" id="tenderBudget" name="tenderBudget" placeholder="제목을 입력 해 주세요" />   
+		                        	<input class="form-control" type="text" id="tenderTitle" name="tenderTitle" placeholder="제목을 입력해 주세요" />   
 		                        </div>
 					  		</div>
 					  	</div><br> 
@@ -941,10 +980,18 @@ function writeFormShow(index) {
 					  	<div class="form-group">
 					  		<div class="col-md-4">
 							  	<div class="panel-heading">
-		                        	<input class="form-control" type="text" id="tenderInfo" name="tenderInfo" placeholder="제목을 입력 해 주세요" />   
+		                        	<input class="form-control" type="text" id="tenderInfo" name="tenderInfo" placeholder="내용을 입력해 주세요" />   
 		                        </div>
 					  		</div>
-					  	</div>
+					  	</div><br>
+					  	<h2>입찰예산(만원)</h2>
+					  	<div class="form-group">
+					  		<div class="col-md-4">
+							  	<div class="panel-heading">
+		                        	<input class="form-control" type="text" id="tenderBudget" name="tenderBudget" placeholder="예산을 입력해 주세요" />   
+		                        </div>
+					  		</div>
+					  	</div> 
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
