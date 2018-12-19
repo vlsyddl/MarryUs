@@ -120,7 +120,12 @@
 									  	<h2>희망 예산</h2>
 									  	<div class="form-group">
 									  		<div class="col-md-4">
-									  			<input type="text" id="weddingBudget" name="weddingBudget" class="form-control"/>만원
+									  			<input type="text" id="weddingBudget" name="weddingBudget" class="form-control"/>
+									  		</div>
+									  		<div class="col-md-8">
+									  			<p style="padding-top: 7px;">
+									  				만원
+									  			</p>
 									  		</div>
 									  	</div>
 							      </div>
@@ -134,6 +139,15 @@
 						</div>
                         
                    <table class="table table-hover serviceTable">
+                   		<colgroup>
+                   			<col width="10%"/>
+                   			<col width="*"/>
+                   			<col width="10%"/>
+                   			<col width="10%"/>
+                   			<col width="10%"/>
+                   			<col width="10%"/>
+                   		</colgroup>
+                   		<thead>                   		
                             <tr>
                                 <th>경매번호</th>
                                 <th>경매 신청자</th>
@@ -142,10 +156,12 @@
                                 <th>역경매 시작일</th>
                                 <th>역경매 종료일</th>
                             </tr>
+                   		</thead>
+                   		<tbody>                   			
                          <c:forEach var="a" items="${auctionList}">
                             <tr>
                                 <td>${a.auctionNo}</td>
-                                <td><a href="#" data-href="${a.auctionNo}" data-type="${a.auctionType}" data-no="${a.member.no}" class="col-md-4 weddingBox">${a.member.name}</a></td>
+                                <td><a href="#" data-href="${a.auctionNo}" data-type="${a.auctionType}" data-no="${a.member.no}" class="weddingBox">${a.member.name}</a></td>
                                  <c:if test="${a.auctionType eq 'v'}">
                                 <td>웨딩홀</td>
                                 </c:if>
@@ -161,6 +177,7 @@
                                 <td><fmt:formatDate value="${a.auctionEdate}" pattern="yyyy-MM-dd" /></td>
                             </tr>
 						</c:forEach>
+                   		</tbody>
                     </table>
                       <nav>
 		                    	<div class="text-center">

@@ -41,7 +41,7 @@
 						</button>
 						
 						<!-- Modal -->
-						<div class="modal fade" id="insertAuctionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal fade insertModal" id="insertAuctionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 						  <div class="modal-dialog">
 						    <div class="modal-content">
 						      <div class="modal-header">
@@ -49,11 +49,13 @@
 						        <h4 class="modal-title" id="myModalLabel">스.드.메 역경매 신청서</h4>
 						      </div>
 							  <div id="select">
-							  	<select id="choice" onchange="writeFormShow(this.options[this.selectedIndex].value)" >
-						            <option value="1">스튜디오</option>
-						            <option value="2">드레스</option>
-						            <option value="3">메이크업</option>
-						        </select>
+							  	<div class="col-md-6">							  		
+								  	<select id="choice" onchange="writeFormShow(this.options[this.selectedIndex].value)" class="form-control">
+							            <option value="1">스튜디오</option>
+							            <option value="2">드레스</option>
+							            <option value="3">메이크업</option>
+							        </select>
+							  	</div>
 							  </div>
 							  <div id="studioForm">
 						      <form action="writeStudio.do" onsubmit="return sformCheck()" name="sform"  method="post" enctype="multipart/form-data">
@@ -72,30 +74,62 @@
 								        </div>
 							        	<h2 class="studioOutdoor">야외촬영여부</h2>
 								        <div class="form-group">
-								        	<div class="col-md-10">
-								        		<input type="radio" name="studioOutdoor" class="form-control" value="Y"/>예
-								        		<input type="radio" name="studioOutdoor" class="form-control" value="N"/>아니오
+								        	<div class="col-md-3">
+								        		<div class="radio radio-custom radio-inline">
+									        		<input type="radio" name="studioOutdoor" class="form-control" value="Y" id="studioOutdoorY"/>
+								        			<label for="studioOutdoorY">예</label>
+								        		</div>
 								        	</div>
-								            </div>
+								        	<div class="col-md-3">
+								        		<div class="radio radio-custom radio-inline">
+									        		<input type="radio" name="studioOutdoor" class="form-control" value="N" id="studioOutdoorN"/>
+								        			<label for="studioOutdoorN">아니오</label>
+								        		</div>
+								        	</div>
+							            </div>
 							        	<h2 class="studioSnapshot">스냅샷촬영여부</h2>
 								        <div class="form-group">
-								        	<div class="col-md-10">
-								        		<input type="radio" name="studioSnapshot" class="form-control" value="Y"/>예
-								        		<input type="radio" name="studioSnapshot" class="form-control" value="N"/>아니오
+								        	<div class="col-md-3">
+								        		<div class="radio radio-custom radio-inline">
+									        		<input type="radio" name="studioSnapshot" class="form-control" value="Y" id="studioSnapshotY"/>
+								        			<label for="studioSnapshotY">예</label>
+								        		</div>
+								        	</div>
+								        	<div class="col-md-3">
+								        		<div class="radio radio-custom radio-inline">
+									        		<input type="radio" name="studioSnapshot" class="form-control" value="N" id="studioSnapshotN"/>
+								        			<label for="studioSnapshotN">아니오</label>
+								        		</div>
 								        	</div>
 								        </div>
 							        	<h2 class="studioVideo">비디오촬영여부</h2>
 								        <div class="form-group">
-								        	<div class="col-md-10">
-								        		<input type="radio" name="studioVideo" class="form-control" value="Y"/>예
-								        		<input type="radio" name="studioVideo" class="form-control" value="N"/>아니오
+								        	<div class="col-md-3">
+								        		<div class="radio radio-custom radio-inline">
+									        		<input type="radio" name="studioVideo" class="form-control" value="Y" id="studioVideoY"/>
+								        			<label for="studioVideoY">예</label>
+								        		</div>
+								        	</div>
+								        	<div class="col-md-3">
+								        		<div class="radio radio-custom radio-inline">
+									        		<input type="radio" name="studioVideo" class="form-control" value="N" id="studioVideoN"/>
+								        			<label for="studioVideoN">아니오</label>
+								        		</div>
 								        	</div>
 								        </div>
 							        	<h2 class="studioPickup">픽업여부</h2>
 								        <div class="form-group">
-								        	<div class="col-md-10">
-								        		<input type="radio" name="studioPickup" class="form-control" value="Y"/>예
-								        		<input type="radio" name="studioPickup" class="form-control" value="N"/>아니오
+								        	<div class="col-md-3">
+								        		<div class="radio radio-custom radio-inline">
+									        		<input type="radio" name="studioPickup" class="form-control" value="Y" id="studioPickupY"/>
+								        			<label for="studioPickupY">예</label>
+								        		</div>
+								        	</div>
+								        	<div class="col-md-3">
+								        		<div class="radio radio-custom radio-inline">
+									        		<input type="radio" name="studioPickup" class="form-control" value="N" id="studioPickupN"/>
+								        			<label for="studioPickupN">아니오</label>
+								        		</div>
 								        	</div>
 								        </div>
 									  	<h2 class="studioBudget">희망 예산</h2>
@@ -134,38 +168,110 @@
 								        </div>
 							        	<h2 class="dressNeckline">넥라인</h2>
 								        <div class="form-group">
-								        	<div class="col-md-10">
-								        		<input type="radio" name="dressNeckline" class="form-control" value="All"/>상관없음.
-								        		<input type="radio" name="dressNeckline" class="form-control" value="Sweetheart"/>스윗하트 넥
-								        		<input type="radio" name="dressNeckline" class="form-control" value="Scoop"/>스쿱 넥
-								        		<input type="radio" name="dressNeckline" class="form-control" value="StraightAcross"/>일자 넥
-								        		<input type="radio" name="dressNeckline" class="form-control" value="V"/>브이 넥
-								        		<input type="radio" name="dressNeckline" class="form-control" value="Illusion"/>일루젼 넥
-								        		<input type="radio" name="dressNeckline" class="form-control" value="Boat"/>보트 넥
-								        		<input type="radio" name="dressNeckline" class="form-control" value="Halter "/>홀터 넥
+								        	<div class="col-md-4">
+								        		<div class="radio radio-custom radio-inline">
+									        		<input type="radio" name="dressNeckline" class="form-control" value="All" id="dressNecklineAll"/>
+								        			<label for="dressNecklineAll">상관없음.</label>
+								        		</div>
 								        	</div>
+								        	<div class="col-md-4">
+								        		<div class="radio radio-custom radio-inline">
+									        		<input type="radio" name="dressNeckline" class="form-control" value="Sweetheart"  id="dressNecklineSweetheart"/>
+								        			<label for="dressNecklineSweetheart">스윗하트 넥</label>
+								        		</div>
+								        	</div>
+								        	<div class="col-md-4">
+								        		<div class="radio radio-custom radio-inline">
+									        		<input type="radio" name="dressNeckline" class="form-control" value="Scoop"  id="dressNecklineScoop"/>
+								        			<label for="dressNecklineScoop">스쿱 넥</label>
+								        		</div>
+								        	</div>
+								        	<div class="col-md-4">
+								        		<div class="radio radio-custom radio-inline">
+									        		<input type="radio" name="dressNeckline" class="form-control" value="StraightAcross" id="dressNecklineStraightAcross"/>
+								        			<label for="dressNecklineStraightAcross">일자 넥</label>
+								        		</div>
+								        	</div>
+								        	<div class="col-md-4">
+								        		<div class="radio radio-custom radio-inline">
+									        		<input type="radio" name="dressNeckline" class="form-control" value="V" id="dressNecklineV"/>
+								        			<label for="dressNecklineV">브이 넥</label>
+								        		</div>
+								        	</div>
+								        	<div class="col-md-4">
+								        		<div class="radio radio-custom radio-inline">
+									        		<input type="radio" name="dressNeckline" class="form-control" value="Illusion" id="dressNecklineIllusion"/>
+								        			<label for="dressNecklineIllusion">일루전 넥</label>
+								        		</div>
+								        	</div>
+								        	<div class="col-md-4">
+								        		<div class="radio radio-custom radio-inline">
+									        		<input type="radio" name="dressNeckline" class="form-control" value="Boat" id="dressNecklineBoat"/>
+								        			<label for="dressNecklineBoat">보트 넥</label>
+								        		</div>
+								        	</div>
+								        	<div class="col-md-4">
+								        		<div class="radio radio-custom radio-inline">
+									        		<input type="radio" name="dressNeckline" class="form-control" value="Halter" id="dressNecklineHalter"/>
+								        			<label for="dressNecklineHalter">홀터 넥</label>
+								        		</div>
+								        	</div>
+								        	
 								        </div>
 							        	<h2 class="dressType">드레스타입</h2>
 								        <div class="form-group">
-								        	<div class="col-md-10">
-								        		<input type="radio" name="dressType" class="form-control" value="All"/>상관없음
-								        		<input type="radio" name="dressType" class="form-control" value="Mermaid"/>머메이드라인
-								        		<input type="radio" name="dressType" class="form-control" value="ALine"/>A라인
-								        		<input type="radio" name="dressType" class="form-control" value="Empire"/>엠파이어라인
-								        		<input type="radio" name="dressType" class="form-control" value="Princess"/>프린세스라인
-								        		<input type="radio" name="dressType" class="form-control" value="Sheath"/>시스라인
-								        		<input type="radio" name="dressType" class="form-control" value="Bell"/>벨라인
+								        	<div class="col-md-4">
+								        		<div class="radio radio-custom radio-inline">
+									        		<input type="radio" name="dressType" class="form-control" value="All" id="dressTypeAll"/>
+								        			<label for="dressTypeAll">상관없음</label>
+								        		</div>
+								        	</div>
+								        	<div class="col-md-4">
+								        		<div class="radio radio-custom radio-inline">
+									        		<input type="radio" name="dressType" class="form-control" value="Mermaid" id="dressTypeMermaid"/>
+								        			<label for="dressTypeMermaid">머메이드라인</label>
+								        		</div>
+								        	</div>
+								        	<div class="col-md-4">
+								        		<div class="radio radio-custom radio-inline">
+									        		<input type="radio" name="dressType" class="form-control" value="ALine" id="dressTypeALine"/>
+								        			<label for="dressTypeALine">A라인</label>
+								        		</div>
+								        	</div>
+								        	<div class="col-md-4">
+								        		<div class="radio radio-custom radio-inline">
+									        		<input type="radio" name="dressType" class="form-control" value="Empire" id="dressTypeEmpire"/>
+								        			<label for="dressTypeEmpire">엠파이어라인</label>
+								        		</div>
+								        	</div>
+								        	<div class="col-md-4">
+								        		<div class="radio radio-custom radio-inline">
+									        		<input type="radio" name="dressType" class="form-control" value="Princess" id="dressTypePrincess"/>
+								        			<label for="dressTypePrincess">프린세스라인</label>
+								        		</div>
+								        	</div>
+								        	<div class="col-md-4">
+								        		<div class="radio radio-custom radio-inline">
+									        		<input type="radio" name="dressType" class="form-control" value="Sheath" id="dressTypeSheath"/>
+								        			<label for="dressTypeSheath">시스라인</label>
+								        		</div>
+								        	</div>
+								        	<div class="col-md-4">
+								        		<div class="radio radio-custom radio-inline">
+									        		<input type="radio" name="dressType" class="form-control" value="Bell" id="dressTypeBell"/>
+								        			<label for="dressTypeBell">벨라인</label>
+								        		</div>
 								        	</div>
 								        </div>
 							        	<h2 class="dressPrice">예상견적</h2>
 								        <div class="form-group">
-								        	<div class="col-md-10">
+								        	<div class="col-md-4">
 									  			<input type="text" name="dressPrice" class="form-control"/>
 								        	</div>
 								        </div>
 									  	<h2 class="dressMore">희망 사항</h2>
 									  	<div class="form-group">
-									  		<div class="col-md-4">
+									  		<div class="col-md-12">
 									  			<input type="text" name="dressMore" class="form-control"/>
 									  		</div>
 									  	</div>
@@ -192,23 +298,47 @@
 								        </div>
 							        	<h2 class=mkuMakeup>신부화장</h2>
 								        <div class="form-group">
-								        	<div class="col-md-10">
-								        		<input type="radio" name="mkuMakeup" class="form-control" value="Y"/>예
-								        		<input type="radio" name="mkuMakeup" class="form-control" value="N"/>아니오
+								        	<div class="col-md-3">
+								        		<div class="radio radio-custom radio-inline">
+									        		<input type="radio" name="mkuMakeup" class="form-control" value="Y" id="mkuMakeupY"/>
+								        			<label for="mkuMakeupY">예</label>
+								        		</div>
+								        	</div>
+								        	<div class="col-md-3">
+								        		<div class="radio radio-custom radio-inline">
+									        		<input type="radio" name="mkuMakeup" class="form-control" value="N" id="mkuMakeupN"/>
+								        			<label for="mkuMakeupN">아니오</label>
+								        		</div>
 								        	</div>
 								        </div>
 							        	<h2 class="mkuMom">혼주화장</h2>
 								        <div class="form-group">
-								        	<div class="col-md-10">
-								        		<input type="radio" name="mkuMom" class="form-control" value="Y"/>예
-								        		<input type="radio" name="mkuMom" class="form-control" value="N"/>아니오
+								        	<div class="col-md-3">
+								        		<div class="radio radio-custom radio-inline">
+									        		<input type="radio" name="mkuMom" class="form-control" value="Y" id="mkuMomY"/>
+								        			<label for="mkuMomY">예</label>
+								        		</div>
+								        	</div>
+								        	<div class="col-md-3">
+								        		<div class="radio radio-custom radio-inline">
+									        		<input type="radio" name="mkuMom" class="form-control" value="N" id="mkuMomN"/>
+								        			<label for="mkuMomN">아니오</label>
+								        		</div>
 								        	</div>
 								        </div>
 							        	<h2 class="mkuWorkout">출장희망</h2>
 								        <div class="form-group">
-								        	<div class="col-md-10">
-								        		<input type="radio" name="mkuWorkout" class="form-control" value="Y"/>예
-								        		<input type="radio" name="mkuWorkout" class="form-control" value="N"/>아니오
+								        	<div class="col-md-3">
+								        		<div class="radio radio-custom radio-inline">
+									        		<input type="radio" name="mkuWorkout" class="form-control" value="Y" id="mkuWorkoutY"/>
+								        			<label for="mkuWorkoutY">예</label>
+								        		</div>
+								        	</div>
+								        	<div class="col-md-3">
+								        		<div class="radio radio-custom radio-inline">
+									        		<input type="radio" name="mkuWorkout" class="form-control" value="N" id="mkuWorkoutN"/>
+								        			<label for="mkuWorkoutN">아니오</label>
+								        		</div>
 								        	</div>
 								        </div>
 									  	<h2 class="mkuBudget">희망 예산</h2>
@@ -235,6 +365,15 @@
 						</div>
                         
                    <table class="table table-hover serviceTable">
+                   		<colgroup>
+                   			<col width="10%"/>
+                   			<col width="*"/>
+                   			<col width="10%"/>
+                   			<col width="10%"/>
+                   			<col width="10%"/>
+                   			<col width="10%"/>
+                   		</colgroup>
+                   		<thead>
                             <tr>
                                 <th>경매번호</th>
                                 <th>경매신청인</th>
@@ -242,7 +381,9 @@
                                 <th>경매상태</th>
                                 <th>역경매 시작일</th>
                                 <th>역경매 종료일</th>
-                            </tr>
+                            </tr>                   			
+                   		</thead>
+                   		<tbody>                   			
                          <c:forEach var="s" items="${sdmeAuctionList}">
                             <tr class="itemBox" data-href="${s.auctionNo}" data-type="${s.auctionType}", data-no="${s.member.no}">
                                 <td>${s.auctionNo}</td>
@@ -268,6 +409,7 @@
                                 <td><fmt:formatDate value="${s.auctionEdate}" pattern="yyyy-MM-dd" /></td>
                             </tr>
 						</c:forEach>
+                   		</tbody>
                     </table>
                       <nav>
 		                    	<div class="text-center">

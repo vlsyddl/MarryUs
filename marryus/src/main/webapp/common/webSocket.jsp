@@ -51,13 +51,14 @@ $(document).ready(function(){
    	
    	$(function () {
    		if(user != "" ){   			
-		    ws = new WebSocket('ws://192.168.0.88:8000/marryus/websocket.do');
+		    ws = new WebSocket('ws://192.168.0.16:8000/marryus/websocket.do');
 			
 		    ws.onopen = function() {
 		   	    console.log('웹소켓 서버 접속 성공');
 		    };
 		 // 메세지 받기
 		    ws.onmessage = function(evt) {
+			 	console.log(evt)
 		    	textBox.append('<div class="chatAdmin"><dl><dt><img src="/marryus/resources/img/chat_adm.png" alt="" class="img-responsive center-block"></dt><dd>'+evt.data.split(":")[1]+'</dd></dl></div>')
 		    	textBox.animate({scrollTop: textBox.prop("scrollHeight")}, 500);
 		    };
@@ -78,6 +79,8 @@ $(document).ready(function(){
    	
     $("#chatBot .title").click(function(){
         $("#chatBot").addClass("on")
+        $(".inputChatbot").css({"display":"block"})
+        $(".inputWebSocket").css({"display":"none"})
     	if("${user.name}"==""){
     		setTimeout(function(){
    	         sendAdmin("안녕하세요 고객님</br>어떤 점이 궁금하신가요?")
@@ -174,9 +177,13 @@ $(document).ready(function(){
 	$("#startWebSocket").click(function(e){
 		e.preventDefault();
 		btnBox.fadeOut(300)
-		sendAdmin("담당자와 연결 되었습니다")
-		$(".inputChatbot").css({"display":"none"})
-        $(".inputWebSocket").css({"display":"block"})
+		if(user!=""){			
+			sendAdmin("담당자와 연결 되었습니다")
+			$(".inputChatbot").css({"display":"none"})
+	        $(".inputWebSocket").css({"display":"block"})
+		}else{
+			sendAdmin("실시간 상담은 로그인후 이용 가능합니다")
+		}
 	})
 	
 	$("#returnChatBot").click(function(e){

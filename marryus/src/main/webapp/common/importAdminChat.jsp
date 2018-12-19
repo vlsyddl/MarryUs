@@ -45,7 +45,7 @@
    		
 $(function () {	
 	if(admin != "" ){   			
-	    ws = new WebSocket('ws://192.168.0.88:8000/marryus/websocket.do');
+	    ws = new WebSocket('ws://192.168.0.16:8000/marryus/websocket.do');
 		
 	    ws.onopen = function() {
 	   	    console.log('웹소켓 서버 접속 성공');

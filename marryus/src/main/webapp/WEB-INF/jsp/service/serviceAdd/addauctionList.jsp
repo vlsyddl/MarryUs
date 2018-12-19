@@ -46,7 +46,7 @@
 						</button>
 						
 						<!-- Modal -->
-						<div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal fade insertModal" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 						  <div class="modal-dialog">
 						    <div class="modal-content">
 						      <div class="modal-header">
@@ -66,7 +66,7 @@
 									  	</div>
 									  	<h2>기타서비스 상세</h2>
 									  	<div class="form-group">
-									  		<div class="col-md-4">
+									  		<div class="col-md-12">
 									  			<textarea name="serviceDetail" id="" class="wish form-control" rows="3" cols="30"></textarea>
 									  		</div>
 									  	</div>
@@ -81,6 +81,15 @@
 						</div>
                         
                    <table class="table table-hover serviceTable">
+                   		<colgroup>
+                   			<col width="10%"/>
+                   			<col width="*"/>
+                   			<col width="10%"/>
+                   			<col width="10%"/>
+                   			<col width="10%"/>
+                   			<col width="10%"/>
+                   		</colgroup>
+                   		<thead>                   			
                             <tr>
                                 <th>경매번호</th>
                                 <th>경매신청인</th>
@@ -89,6 +98,8 @@
                                 <th>역경매 시작일</th>
                                 <th>역경매 종료일</th>
                             </tr>
+                   		</thead>
+                   		<tbody>
                          <c:forEach var="a" items="${auctionList}">
                             <tr>
                                 <td>${a.auctionNo}</td>
@@ -108,6 +119,7 @@
                                 <td><fmt:formatDate value="${a.auctionEdate}" pattern="yyyy-MM-dd" /></td>
                             </tr>
 						</c:forEach>
+                   		</tbody>
                     </table>
                       <nav>
 		                    	<div class="text-center">

@@ -57,24 +57,37 @@
 							      <div class="modal-body">
 								        <input type="hidden" name="memNo" value="${user.no}" />
 								        <input type="hidden" name="auctionType" value="h" />
+								        <h2>희망 여행지</h2>
 						        <div class="form-group">
 						        	<div class="col-md-6">
-								        <br>
-											희망여행지: <input class="form-control" type="text" name="honeyPlace">
-											<br>
+										<input class="form-control" type="text" name="honeyPlace" class="form-control">
 									</div>
 								</div>
+								<h2>희망 여행 날짜 : </h2>
+								<div class="form-group">
+									<div class="col-md-4">
+										<input class="form-control" type="text" name="honeyDate" id="date_pretty"/> 
+									</div>
+									<div class="col-md-1">
+										<label style=" text-align: center; font-size: 1.2em; font-weight: bold; padding-top: 7px;">~</label>
+									</div>
+									<div class="col-md-4">
+										<input type="text" class="form-control" name="honeyDate" id="datepicker1"> 
+									</div>
+								</div>
+								 <h2>기타의견사항</h2>
 								 <div class="form-group">
-						        	<div class="col-md-4">
-		                                  	희망여행날짜 :  <input class="form-control" type="text" name="honeyDate" id="date_pretty"/> ~  <input type="text" class="form-control" name="honeyDate" id="datepicker1">
-                                  	</div>
-                                  </div>
-                                   <div class="form-group">
-							        	<div class="col-md-2">
-				                                                              기타의견사항: <textarea name="honeyHope" class="form-control" id="honeyM"  rows="3" cols="30"></textarea><br>
-				                                                             희망예산:<input type="text" class="form-control" id="honeyBudget" name="honeyBudget">만원
-							      		</div>
-							      </div>
+								 	<div class="col-md-12">
+								 		<textarea name="honeyHope" class="form-control" id="honeyM"  rows="3" cols="30"></textarea>
+								 	</div>
+								 </div>
+								 <h2>희망예산</h2>
+								 <div class="form-group">
+								 	<div class="col-md-4">
+								 		<input type="text" class="form-control" id="honeyBudget" name="honeyBudget">
+								 	</div>
+								 </div>
+                                   
 							      </div>
 							      <div class="modal-footer">
 							        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
@@ -86,6 +99,15 @@
 						</div>
                         
                    <table class="table table-hover serviceTable">
+                  	 	<colgroup>
+                   			<col width="10%"/>
+                   			<col width="*"/>
+                   			<col width="10%"/>
+                   			<col width="10%"/>
+                   			<col width="10%"/>
+                   			<col width="10%"/>
+                   		</colgroup>
+                   		<thead>                   			
                             <tr>
                                 <th>경매번호</th>
                                 <th>경매신청자</th>
@@ -94,6 +116,8 @@
                                 <th>역경매 시작일</th>
                                 <th>역경매 종료일</th>
                             </tr>
+                   		</thead>
+                   		<tbody>                   			
                           <c:forEach var="a" items="${auctionList}">
                             <tr>
                                 <td>${a.auctionNo}</td>
@@ -113,6 +137,7 @@
                                 <td><fmt:formatDate value="${a.auctionEdate}" pattern="yyyy-MM-dd" /></td>
                             </tr>
                             </c:forEach>
+                   		</tbody>
                     </table>
                       <nav>
 		                    	<div class="text-center">

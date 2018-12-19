@@ -46,7 +46,7 @@
 						</button>
 						
 						<!-- Modal -->
-						<div class="modal fade" id="insertAuctionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal fade insertModal" id="insertAuctionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 						  <div class="modal-dialog">
 						    <div class="modal-content">
 						      <div class="modal-header">
@@ -68,12 +68,31 @@
 								        </div>
 							        	<h2 class="jewelryType">예물 종류</h2>
 								        <div class="form-group">
-								        	<div class="col-md-10">
-								        		<input type="radio" name="jewelryType" class="form-control" value="dm"/>다이아몬드
-								        		<input type="radio" name="jewelryType" class="form-control" value="gd"/>금
-								        		<input type="radio" name="jewelryType" class="form-control" value="wg"/>백금
-								        		<input type="radio" name="jewelryType" class="form-control" value="jw"/>보석
+								        	<div class="col-md-4">
+								        		<div class="radio radio-custom radio-inline">
+									        		<input type="radio" name="jewelryType" class="form-control" value="dm" id="jewelryTypeDm"/>
+								        			<label for="dressTypeAll">다이아몬드</label>
+								        		</div>
 								        	</div>
+								        	<div class="col-md-4">
+								        		<div class="radio radio-custom radio-inline">
+									        		<input type="radio" name="jewelryType" class="form-control" value="gd" id="jewelryTypeGd"/>
+								        			<label for="dressTypeGd">금</label>
+								        		</div>
+								        	</div>
+								        	<div class="col-md-4">
+								        		<div class="radio radio-custom radio-inline">
+									        		<input type="radio" name="jewelryType" class="form-control" value="wg" id="jewelryTypeWg"/>
+								        			<label for="dressTypeWg">금</label>
+								        		</div>
+								        	</div>
+								        	<div class="col-md-4">
+								        		<div class="radio radio-custom radio-inline">
+									        		<input type="radio" name="jewelryType" class="form-control" value="wg" id="jewelryTypeJw"/>
+								        			<label for="dressTypeJw">보석</label>
+								        		</div>
+								        	</div>
+								        	
 							            </div>
 									  	<h2 class="jewelryBudget">희망 예산</h2>
 									  	<div class="form-group">
@@ -98,6 +117,15 @@
 						</div>
                         
                    <table class="table table-hover serviceTable">
+                   		<colgroup>
+                   			<col width="10%"/>
+                   			<col width="*"/>
+                   			<col width="10%"/>
+                   			<col width="10%"/>
+                   			<col width="10%"/>
+                   			<col width="10%"/>
+                   		</colgroup>
+                   		<thead>
                             <tr>
                                 <th>경매번호</th>
                                 <th>경매신청인</th>
@@ -105,7 +133,9 @@
                                 <th>경매상태</th>
                                 <th>역경매 시작일</th>
                                 <th>역경매 종료일</th>
-                            </tr>
+                            </tr>                   			
+                   		</thead>
+                   		<tbody>                   			
                          <c:forEach var="j" items="${jewelryAuctionList}">
                             <tr class="itemBox" data-href="${j.auctionNo}" data-type="${j.auctionType}", data-no="${j.member.no}">
                                 <td>${j.auctionNo}</td>
@@ -125,6 +155,7 @@
                                 <td><fmt:formatDate value="${j.auctionEdate}" pattern="yyyy-MM-dd" /></td>
                             </tr>
 						</c:forEach>
+                   		</tbody>
                     </table>
                       <nav>
 		                    	<div class="text-center">
