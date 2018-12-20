@@ -184,6 +184,8 @@ function serviceAddAuctionDetail(auctionNo, auctionType){
 		url : "<c:url value='/service/serviceAdd/serviceAddAuctionDetail.do'/>",
 		data : "auctionNo="+auctionNo
 	}).done(function(data){
+		modal.find(".modal-title").html(data.memName + "님의 역경매 신청내역입니다.");
+		$("#insertAuction .modal-title").html(data.memName + "님의 역경매 신청내역입니다.");
 		console.log("auctiondetail ======== " + data)
         modal.find(".ServiceAdd").find(".OtherTitle").children("dd").html(data.auction.serviceTitle)
         modal.find(".ServiceAdd").find(".OtherDetail").children("dd").html(data.auction.serviceDetail)
@@ -446,7 +448,7 @@ $(function(){
 
 
      
-	<div class="modal fade" id="insertAuction" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade insertModal" id="insertAuction" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	  <div class="modal-dialog  modal-lg">
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -465,14 +467,15 @@ $(function(){
 					  	</div>
 					  	<div class="comInfo-no">
 					  	</div>
+					  	<h2>서비스 제목</h2>
 					  	<div class="form-group">
-					  		<div class="col-md-4">
-					  			제목:<textarea class="form-control" id="tenderTitle" type="text" name="tenderTitle" placeholder="제목을 입력해 주세요" /></textarea>	
+					  		<div class="col-md-12">
+					  			<input class="form-control" type="text" id="tenderTitle" name="tenderTitle" class="form-control" placeholder="제목을 입력해 주세요" />
 					  		</div>
 					  	</div><br>
 					  	<h2>서비스 소개</h2>
 					  	<div class="form-group">
-					  		<div class="col-md-6">	
+					  		<div class="col-md-12">	
 					  			<textarea  name="tenderInfo" id="tenderInfo" class="wish form-control" rows="3" cols="30" placeholder="내용을 입력해 주세요" ></textarea>
 					  		</div>
 					  	</div><br>
@@ -480,7 +483,7 @@ $(function(){
 					  	<h2>입찰 예산(만원)</h2>
 					  	<div class="form-group">
 					  		<div class="col-md-4">
-					  			<input type="text" class="form-control" id="tenderBudget" name="tenderBudget" class="form-control" placeholder="예산을 입력해 주세요" />
+					  			<input class="form-control" type="text" id="tenderBudget" name="tenderBudget" class="form-control" placeholder="예산을 입력해 주세요" />
 					  		</div>
 					  	</div>
 				      </div>

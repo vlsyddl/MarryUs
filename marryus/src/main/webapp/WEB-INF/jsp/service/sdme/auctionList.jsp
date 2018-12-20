@@ -952,7 +952,7 @@ function writeFormShow(index) {
   </div>
 </div>
 
-	<div class="modal fade" id="insertTenderModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade insertModal" id="insertTenderModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	  <div class="modal-dialog  modal-lg">
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -971,27 +971,22 @@ function writeFormShow(index) {
 					  	<h2>서비스 제목</h2>
 					  	<div class="form-group">
 					  		<div class="col-md-12">
-							  	<div >
-		                        	<input class="form-control" type="text" id="tenderTitle" name="tenderTitle" placeholder="제목을 입력해 주세요" />   
-		                        </div>
-					  		</div>
-					  	</div><br> 
-					  	<h2>서비스 상세</h2>
-					  	<div class="form-group">
-					  		<div class="col-md-6">
-							  	<div >
-		                        	<input class="form-control" type="text" id="tenderInfo" name="tenderInfo" placeholder="내용을 입력해 주세요" />   
-		                        </div>
+					  			<input class="form-control" type="text" id="tenderTitle" name="tenderTitle" class="form-control" placeholder="제목을 입력해 주세요" />
 					  		</div>
 					  	</div><br>
-					  	<h2>입찰예산(만원)</h2>
+					  	<h2>서비스 소개</h2>
+					  	<div class="form-group">
+					  		<div class="col-md-12">	
+					  			<textarea  name="tenderInfo" id="tenderInfo" class="wish form-control" rows="3" cols="30" placeholder="내용을 입력해 주세요" ></textarea>
+					  		</div>
+					  	</div><br>
+					  	
+					  	<h2>입찰 예산(만원)</h2>
 					  	<div class="form-group">
 					  		<div class="col-md-4">
-							  	<div >
-		                        	<input class="form-control" type="text" id="tenderBudget" name="tenderBudget" placeholder="예산을 입력해 주세요" />   
-		                        </div>
+					  			<input class="form-control" type="text" id="tenderBudget" name="tenderBudget" class="form-control" placeholder="예산을 입력해 주세요" />
 					  		</div>
-					  	</div> 
+					  	</div>
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

@@ -550,23 +550,13 @@
 	display: inline-grid;
 }
 
-#tenderTitle{
-	margin: 0px;
-    width: 811px;
-    height: 96px;
-}
 
 #tenderInfo{
 	margin: 0px;
     width: 811px;
     height: 96px;
 }
-#weddingAu{
-	display: inline-grid;
-}
-#addservice{
-	display: inline-grid;
-}
+
 
 /*******************************
 2018.12.18개정

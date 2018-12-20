@@ -35,8 +35,8 @@
             <div class="container">
                 <div class="contentsTab">
                     <ul>
-                        <li data-target="tab1" class="on"><a href="<c:url value='/service/honeymoon/honeymoonCompanyList.do' />">업체리스트</a></li>
-                        <li data-target="tab2"><a href="<c:url value='/service/honeymoon/honeymoonAuctionList.do'/>">경매리스트</a></li>
+                        <li data-target="tab1"> <a href="<c:url value='/service/honeymoon/honeymoonCompanyList.do' />">업체리스트</a></li>
+                        <li data-target="tab2" class="on"><a href="<c:url value='/service/honeymoon/honeymoonAuctionList.do'/>">경매리스트</a></li>
                     </ul>
                     <div class="tabContents">
                         <div class="tab2 on">
@@ -241,6 +241,8 @@ function detail(comInfoNo){
 		data : "comInfoNo="+comInfoNo
 	}).done(function(data){
 		console.log(data)
+		modal.find(".modal-title").html(data.memName + "님의 역경매 신청내역입니다.");
+		$("#insertAuction .modal-title").html(data.memName + "님의 역경매 신청내역입니다.");
 		modal.find(".modal-title").html(data.info.comInfoName)
         modal.find(".infoBox").find(".adress").children("dd").html(data.info.comInfoAddr+" "+data.info.comInfoAddrDetail)
         modal.find(".infoBox").find(".phone").children("dd").html(data.info.comInfoPhone)
@@ -535,7 +537,7 @@ function formCheck(){
 
 
 
-	<div class="modal fade" id="insertAuction" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade insertModal" id="insertAuction" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	  <div class="modal-dialog  modal-lg">
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -552,15 +554,15 @@ function formCheck(){
 					  	</div>
 					  	<div class="comInfo-no">
 					  	</div>
-						<div class="form-group">
+						<h2>서비스 제목</h2>
+					  	<div class="form-group">
 					  		<div class="col-md-12">
-					  			제목:<textarea class="form-control" id="tenderTitle" type="text" name="tenderTitle" placeholder="제목을 입력해 주세요" /></textarea>	
+					  			<input class="form-control" type="text" id="tenderTitle" name="tenderTitle" class="form-control" placeholder="제목을 입력해 주세요" />
 					  		</div>
 					  	</div><br>
-						
 					  	<h2>서비스 소개</h2>
 					  	<div class="form-group">
-					  		<div class="col-md-6">	
+					  		<div class="col-md-12">	
 					  			<textarea  name="tenderInfo" id="tenderInfo" class="wish form-control" rows="3" cols="30" placeholder="내용을 입력해 주세요" ></textarea>
 					  		</div>
 					  	</div><br>
@@ -568,7 +570,7 @@ function formCheck(){
 					  	<h2>입찰 예산(만원)</h2>
 					  	<div class="form-group">
 					  		<div class="col-md-4">
-					  			<input class="form-control" type="text" id="tenderBudget" name="tenderBudget" placeholder="예산을 입력해 주세요" />
+					  			<input class="form-control" type="text" id="tenderBudget" name="tenderBudget" class="form-control" placeholder="예산을 입력해 주세요" />
 					  		</div>
 					  	</div>
 				      </div>
