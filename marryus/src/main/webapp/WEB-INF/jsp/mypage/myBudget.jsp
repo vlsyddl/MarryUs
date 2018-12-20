@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,6 +9,7 @@
 <title>Insert title here</title>
    <c:import url="/common/importCss.jsp"/>
 	 <c:import url="/common/importJs.jsp"/>
+	 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/printThis/1.14.0/printThis.js"></script>
     <style>
 /*            * { margin: 0px; padding: 0px; box-sizing: border-box; }
         body {
@@ -331,49 +333,160 @@ tbody tr:hover {
   }
 }
 		
+
+    	a {
+		    text-decoration: none;
+		    color: #333;
+		}
+		.mypage .info_left{
+		    height: 200px;
+		    background: url(../resources/img/mypage_image.png)no-repeat center center/cover;
+		}
 		
+		
+		.mypage .info_left .time{
+		    text-align: right;
+		    position: absolute;
+		    bottom: 10px;
+		    right: 120px;
+		}
+		
+		.mypage .info_right{
+		    padding: 0px 50px;
+		    height: 200px;
+		}
+		.infoBox{
+			margin: 30px 0px;
+			border: 1px solid #efeeee;
+		}
+		button{
+		 margin : 10px 10px 0px 10px;
+		 padding : 10px;
+		 text-align: right;
+		}
+		.progress-bar {
+		background-color: #ffbfce;
+		}
+		
+		#outer_budget{
+			width: 1170px;
+			margin: auto;
+		}
+
     </style>
 
 </head>
 <body>
 	<c:import url="/common/importHeader.jsp" />
     <div id="wrap" class="mypage">
- <nav class="myPageNav">
+<nav class="myPageNav">
+           <nav class="myPageNav">
             <div class="container">
                     <ul>
-                         <li>
+                        <li class="on">
                             <a href="<c:url value='/mypage/mywedding.do'/>">
                                     <img src="<c:url value="/resources/"/>img/hall_ico.png" alt="" class="img-responsive center-block">
-                                My Wedding
+                                나의 웨딩
                             </a>
                         </li>
                         <li>
                             <a href="<c:url value='/mypage/myTodo.do'/>">
                                     <img src="<c:url value="/resources/"/>img/chk_ico.png" alt="" class="img-responsive center-block">
-                                Check List
+                                체크리스트
                             </a>
                         </li>
-                        <li >
-                            <a href="<c:url value='/mypage/myAuction.do?choo=tab1&memNo=${user.no}&auctionType=v'/>">
-                                <img src="<c:url value="/resources/"/>img/auction_ico.png" alt="" class="img-responsive center-block">
-                                Auction List
-                            </a>
-                        </li>
-                        <li class="on">
+                        <li>
                             <a href="<c:url value='/mypage/myBudget.do'/>">
                                 <img src="<c:url value="/resources/"/>img/budget_ico.png" alt="" class="img-responsive center-block">
-                                Budget Spent
+                                예산
+                            </a>
+                        </li>
+                         <li>
+                            <a href="<c:url value='/mypage/myAuction.do?choo=tab1&memNo=${user.no}&auctionType=v'/>">
+                                <img src="<c:url value="/resources/"/>img/auction_ico.png" alt="" class="img-responsive center-block">
+                                역경매 현황
                             </a>
                         </li>
                         <li>
                             <a href="<c:url value='/mypage/likeCompany.do?memNo=${user.no}'/>">
                                 <img src="<c:url value="/resources/"/>img/bookmark_ico.png" alt="" class="img-responsive center-block">
-                                Bookmark
+                                북마크
                             </a>
                         </li>
                     </ul>
             </div>
         </nav>
+	 <div id="outer_budget">
+	            <form action="downExcel2.do">
+	   			<input type="hidden" id="memNo" name="memNo" value="${user.no}">
+	            <button class="downLoadBtn" style="float:left;">download</button>
+	       </form>
+	             <button class="printBtn">Print</button>
+	             
+	             
+	             
+	             
+                 <div class="infoBox cf">
+                    <div class="col-md-6 no-padding info_left">
+                        <div class="time cf">
+                            <dl class="day">
+                                <dt>Days</dt>
+                                <dd>0</dd>
+                            </dl>
+                            <dl class="hours">
+                                <dt>Hours</dt>
+                                <dd>0</dd>
+                            </dl>
+                            <dl class="min">
+                                <dt>Min</dt>
+                                <dd>0</dd>
+                            </dl>
+                            <dl class="sec">
+                                <dt>Sec</dt>
+                                <dd>0</dd>
+                            </dl>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="col-md-6 no-padding info_right">
+                        <div class="progressBar">
+                            <p style=" font-size: 23px;  font-family:맑은고딕; font-weight: 700;">예산 진행도</p>
+                           		<c:choose>
+                           			<c:when test="${spendBudget==0 && totalBudget==0}">
+                           				<c:set  var="t" value="0" />
+                           			</c:when>
+                           			<c:when test="${totalBudget==0 && spendBudget!=0}">
+                           				<c:set  var="t" value="${totalBudget}" />
+                           			</c:when>
+                           			<c:when test="${totalBudget!=0 && spendBudget==0}">
+                           				<c:set  var="t" value="${totalBudget}" />
+                           			</c:when>
+                           			<c:otherwise>
+                           				<fmt:parseNumber var="t" value="${spendBudget/totalBudget*100}" integerOnly="true" />
+                           			</c:otherwise>
+                           		</c:choose>
+
+                            <div class="progress" style="height: 20px;">
+  								<div class="progress-bar" role="progressbar" style="width: ${t}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+							</div>
+                            <p style=" font-size: 22px; text-align: right; ">${spendBudget} out of ${totalBudget}</p>
+                            <c:choose>
+	                            <c:when test="${totalBudget!=0 && spendBudget==0}">
+	                            <p style=" font-size: 17px; font-style: italic; font-family:맑은고딕; text-align: right; font-weight: 900;"><span style=" font-size: 45px;font-weight: 900; ">${totalBudget}</span>만원</p>
+	                            </c:when>
+	                            <c:when test="${t<=100}">
+	                             <p style=" font-size: 17px; font-style: italic; font-family:맑은고딕; text-align: right; font-weight: 900;"><span style=" font-size: 45px;font-weight: 900; ">${t} </span>%</p>
+	                            </c:when>
+	                            <c:when test="${t>100}">
+	                             <p style=" font-size: 17px; font-style: italic; font-family:맑은고딕; text-align: right; font-weight: 400;"><span style=" font-size: 25px;font-weight: 900; line-height: 2em">예산이 지출을 넘었어요</span><%-- ${t}% --%></p>
+	                            </c:when>
+                            </c:choose>
+                        </div>
+                    </div>
+                </div>  
+        
+        
 	<div class="limiter">
 		<div class="container-table100">
 			<div class="wrap-table100">
@@ -395,8 +508,8 @@ tbody tr:hover {
         <tr id="${bList.budgNo}">
             <td class="category">${bList.codeValue}</td>
             <td class="content">${bList.budgContent}</td>
-            <td class="budget">${bList.budgBudget}원</td>
-            <td class="expenses">${bList.budgExpenses}원</td>
+            <td class="budget">${bList.budgBudget}만원</td>
+            <td class="expenses">${bList.budgExpenses}만원</td>
             <td>
 				<a href="#" class="updateIcon" data-budgno="${bList.budgNo}"><i class="fas fa-pen"></i></a>
 				<a href="#" onclick="deleteBudget(${bList.budgNo})"><i class="fas fa-trash-alt"></i></a>
@@ -418,9 +531,9 @@ tbody tr:hover {
                 </select>
             </td>
             <td><input type="text" id="budgContent" name="budgContent" placeholder="항목을 입력하세요."></td>
-            <td><input type="text" id="budgBudget" name="budgBudget" placeholder="예산을 입력하세요.">원</td>
+            <td><input type="text" id="budgBudget" name="budgBudget" placeholder="예산을 입력하세요.">만원</td>
             <td>
-                <input type="text" id="budgExpenses" name="budgExpenses" placeholder="지출을 입력하세요.">원
+                <input type="text" id="budgExpenses" name="budgExpenses" placeholder="지출을 입력하세요.">만원
             </td>
             <td>
                 <a href="#" id="writeBtn"><i class="fas fa-pen"></i></a>
@@ -433,9 +546,26 @@ tbody tr:hover {
 			</div>
 		</div>
 	</div>
+</div>
 
     
 	<script>
+	
+	   $(function(){
+	        $(document).ready(function(){
+	          	var memNo  = $("#memNo").val();
+	          	  $.ajax({
+	                    url:"/marryus/mypage/MyproFileWeddingDate.json",
+	                    data:{memNo:memNo },
+	                    type:"post"
+	                 })
+	                 .done(function(result){
+	                    var wd = moment(result.wedDate).format('YYYY-MM-DD');
+	                    $.fn.CountDownTimer(wd); 
+	                 });
+	                
+	          });
+	        });
 	
 		$("#writeBtn").click(function () {
 		    if($("#budgCategory").val() == "") {
@@ -517,6 +647,16 @@ tbody tr:hover {
 		    	location.href='/marryus/mypage/myBudget.do?memNo=${user.no}';
 			});
 		};
+		
+		
+
+				
+				$(".printBtn").on("click", function(){
+					$('.table100').printThis({
+						
+					});
+				});
+
 		
 	</script>
 </body>

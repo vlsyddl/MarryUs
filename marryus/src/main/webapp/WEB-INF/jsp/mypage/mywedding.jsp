@@ -33,31 +33,31 @@
                         <li class="on">
                             <a href="<c:url value='/mypage/mywedding.do'/>">
                                     <img src="<c:url value="/resources/"/>img/hall_ico.png" alt="" class="img-responsive center-block">
-                                My Wedding
+                                나의 웨딩
                             </a>
                         </li>
                         <li>
                             <a href="<c:url value='/mypage/myTodo.do'/>">
                                     <img src="<c:url value="/resources/"/>img/chk_ico.png" alt="" class="img-responsive center-block">
-                                Check List
+                                체크리스트
                             </a>
                         </li>
                         <li>
                             <a href="<c:url value='/mypage/myBudget.do'/>">
                                 <img src="<c:url value="/resources/"/>img/budget_ico.png" alt="" class="img-responsive center-block">
-                                Budget Spent
+                                예산
                             </a>
                         </li>
                          <li>
                             <a href="<c:url value='/mypage/myAuction.do?choo=tab1&memNo=${user.no}&auctionType=v'/>">
                                 <img src="<c:url value="/resources/"/>img/auction_ico.png" alt="" class="img-responsive center-block">
-                                Auction List
+                                역경매 현황
                             </a>
                         </li>
                         <li>
                             <a href="<c:url value='/mypage/likeCompany.do?memNo=${user.no}'/>">
                                 <img src="<c:url value="/resources/"/>img/bookmark_ico.png" alt="" class="img-responsive center-block">
-                                Bookmark
+                                북마크
                             </a>
                         </li>
                     </ul>
@@ -127,7 +127,7 @@
                                                 <span>out of ${auctionTotal}</span>
                                             </dd>
                                         </dl>
-                                        <p>Auction List</p>
+                                        <p>경매 리스트</p>
                                     </a>
                                 </li>
                                 <li>
@@ -139,7 +139,7 @@
                                                 <span>out of ${todoTotal}</span>
                                             </dd>
                                         </dl>
-                                        <p>Tasks Completed</p>
+                                        <p>체크리스트</p>
                                     </a>
                                 </li>
                                 <li>
@@ -151,7 +151,7 @@
                                                 <span>I like that!</span>
                                             </dd>
                                         </dl>
-                                        <p>Like Companies</p>
+                                        <p>관심업체</p>
                                     </a>
                                 </li>
                                 <li>
@@ -163,7 +163,7 @@
                                                 <span> out of ${totalBudget}</span>
                                             </dd>
                                         </dl>
-                                        <p>Budget spent</p>
+                                        <p>예산 관리</p>
                                     </a>
                                 </li>
                             </ul>
@@ -229,9 +229,9 @@
                     <div class="col-md-4">
                         <div class="budget">
                             <ul>
-                                <li class="maxBudget">총예산 : <span>${totalBudget}</span></li>
-                                <li class="spendBudget">쓴예산 : <span>${spendBudget}</span></li>
-                                <li class="remainBudget">남은예산 : <span>${totalBudget-spendBudget}</span></li>
+                                <li class="maxBudget">총예산 : <span>${totalBudget}만원</span></li>
+                                <li class="spendBudget">쓴예산 : <span>${spendBudget}만원</span></li>
+                                <li class="remainBudget">남은예산 : <span>${totalBudget-spendBudget}만원</span></li>
                             </ul>
                         </div>
                     </div>

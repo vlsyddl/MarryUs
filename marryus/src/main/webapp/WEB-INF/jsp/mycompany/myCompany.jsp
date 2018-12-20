@@ -17,7 +17,7 @@
 	 <c:import url="/common/importJs.jsp"/>
   </head>
   <body>
-   <c:import url="/common/importHeader.jsp"/>
+	<c:import url="/common/importHeader.jsp" />
     <div id="wrap" class="myCompany">
         <nav class="myCompanyNav">
             <div class="container">
@@ -25,25 +25,25 @@
                         <li class="on">
                             <a href="<c:url value='/mycompany/myCompany.do'/>">
                                 <img src="<c:url value="/resources/"/>img/company_ico.png" alt="" class="img-responsive center-block">
-                                My Company
+                                업체 정보
                             </a>
                         </li>
                         <li>
                             <a href="<c:url value='/mycompany/service.do'/>">
                                     <img src="<c:url value="/resources/"/>img/card_ico.png" alt="" class="img-responsive center-block">
-                                My Service
+                               업체 등록
                             </a>
                         </li>
                         <li>
                             <a href="<c:url value='/mycompany/auctionList.do'/>">
                                 <img src="<c:url value="/resources/"/>img/graph_ico.png" alt="" class="img-responsive center-block">
-                                Auction List
+                                입찰 현황
                             </a>
                         </li>
                         <li>
                             <a href="<c:url value='/mycompany/reservationView.do'/>">
                                 <img src="<c:url value="/resources/"/>img/reservation_icon2.png" alt="" class="img-responsive center-block" style="padding: 5px;">
-                                My Reservation
+                                예약 현황
                             </a>
                         </li> 
                     </ul>
@@ -68,13 +68,13 @@
                                 <li class="price">
                                     <dl>
                                         <dt>총 낙찰 액수</dt>
-                                        <dd><span><fmt:formatNumber type='currency' value='${tenderCal.sumTenderBudget}' pattern='###,###'/>원</span></dd>
+                                        <dd><span><fmt:formatNumber type='currency' value='${tenderCal.sumTenderBudget}' pattern='###,###'/>만원</span></dd>
                                     </dl>
                                 </li>
                                 <li class="auction">
                                     <dl>
                                         <dt>평균 견적가</dt>
-                                        <dd><span><fmt:formatNumber type='currency' value='${tenderCal.avgTenderBudget}' pattern='###,###'/>원</span></dd>
+                                        <dd><span><fmt:formatNumber type='currency' value='${tenderCal.avgTenderBudget}' pattern='###,###'/>만원</span></dd>
                                     </dl>
                                 </li>
                                 <li class="auction">

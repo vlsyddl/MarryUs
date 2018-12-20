@@ -105,32 +105,32 @@
                     <ul>
                         <li class="on">
                             <a href="<c:url value='/mypage/mywedding.do'/>">
-                                    <img src="img/hall_ico.png" alt="" class="img-responsive center-block">
-                                My Wedding
+                                    <img src="<c:url value="/resources/"/>img/hall_ico.png" alt="" class="img-responsive center-block">
+                                나의 웨딩
                             </a>
                         </li>
                         <li>
                             <a href="<c:url value='/mypage/myTodo.do'/>">
-                                    <img src="img/chk_ico.png" alt="" class="img-responsive center-block">
-                                Check List
+                                    <img src="<c:url value="/resources/"/>img/chk_ico.png" alt="" class="img-responsive center-block">
+                                체크리스트
                             </a>
                         </li>
                         <li>
                             <a href="<c:url value='/mypage/myBudget.do'/>">
-                                <img src="img/budget_ico.png" alt="" class="img-responsive center-block">
-                                Budget Spent
+                                <img src="<c:url value="/resources/"/>img/budget_ico.png" alt="" class="img-responsive center-block">
+                                예산
                             </a>
                         </li>
-                                                <li>
+                         <li>
                             <a href="<c:url value='/mypage/myAuction.do?choo=tab1&memNo=${user.no}&auctionType=v'/>">
-                                <img src="img/auction_ico.png" alt="" class="img-responsive center-block">
-                                Auction List
+                                <img src="<c:url value="/resources/"/>img/auction_ico.png" alt="" class="img-responsive center-block">
+                                역경매 현황
                             </a>
                         </li>
                         <li>
                             <a href="<c:url value='/mypage/likeCompany.do?memNo=${user.no}'/>">
-                                <img src="img/bookmark_ico.png" alt="" class="img-responsive center-block">
-                                Bookmark
+                                <img src="<c:url value="/resources/"/>img/bookmark_ico.png" alt="" class="img-responsive center-block">
+                                북마크
                             </a>
                         </li>
                     </ul>

@@ -129,31 +129,31 @@
 <header>
  <c:import url="/common/importHeader.jsp"/>
     <div id="wrap" class="myCompany">
-        <nav class="myCompanyNav">
+   <nav class="myCompanyNav">
             <div class="container">
                     <ul>
-                        <li>
+                        <li class="on">
                             <a href="<c:url value='/mycompany/myCompany.do'/>">
                                 <img src="<c:url value="/resources/"/>img/company_ico.png" alt="" class="img-responsive center-block">
-                                My Company
+                                업체 정보
                             </a>
                         </li>
-                        <li class="on">
+                        <li>
                             <a href="<c:url value='/mycompany/service.do'/>">
                                     <img src="<c:url value="/resources/"/>img/card_ico.png" alt="" class="img-responsive center-block">
-                                My Service
+                               업체 등록
                             </a>
                         </li>
                         <li>
                             <a href="<c:url value='/mycompany/auctionList.do'/>">
                                 <img src="<c:url value="/resources/"/>img/graph_ico.png" alt="" class="img-responsive center-block">
-                                Auction List
+                                입찰 현황
                             </a>
                         </li>
                         <li>
                             <a href="<c:url value='/mycompany/reservationView.do'/>">
                                 <img src="<c:url value="/resources/"/>img/reservation_icon2.png" alt="" class="img-responsive center-block" style="padding: 5px;">
-                                My Reservation
+                                예약 현황
                             </a>
                         </li> 
                     </ul>
@@ -181,7 +181,7 @@
 	        	<td class="highlight">서비스 카테소리</td>
 	        	<td>
 	        	<c:forEach var="CT" items="${comInfoType}">
-	        		<button type="button" class="comInfoTypeDisable" onclick="selectDisable('${CT}')">${CT}</button>
+	        		<input type="hidden" class="comInfoTypeDisable" onclick="selectDisable('${CT}')">
 	        	</c:forEach>
 	        	<select name="comInfoType" id="comInfoType" class="select-field__menu">
 	        			<option value="v">웨딩홀</option>
@@ -410,11 +410,9 @@
     
     
     function selectDisable (comInfoType){
-		alert(comInfoType,"예식타입");
-		alert($("select[name='comInfoType'] option").val());
-		alert($("select[name='comInfoType'] option[value='"+comInfoType+"']").val());
-		//$("select[name='comInfoType'] option[vlaue='"+comInfoType+"']").prop("disabled",true);
-	}
+    			$("select[name='comInfoType']").children("[value='"+comInfoType+"']").attr( 'disabled', true );
+    			$("select[name='comInfoType']").children("[value='"+comInfoType+"']").next().attr( 'selected', true );
+    		}
 
         
         

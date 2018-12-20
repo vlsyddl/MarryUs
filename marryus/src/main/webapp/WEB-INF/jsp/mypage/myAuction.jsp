@@ -292,6 +292,14 @@ h4{
  	margin: 30px;
  }
  
+ 
+ #Done{
+ 	padding: 10px;
+ 	background-color: rgb(151, 186, 190);;
+ 	color: black;
+ 	border: 2px solid black;
+ }
+ 
 
   </style>
   
@@ -305,36 +313,37 @@ h4{
 	<c:import url="/common/importHeader.jsp" />
     <div id="wrap" class="mypage">
  <nav class="myPageNav">
+     <nav class="myPageNav">
             <div class="container">
                     <ul>
-                        <li>
+                        <li class="on">
                             <a href="<c:url value='/mypage/mywedding.do'/>">
                                     <img src="<c:url value="/resources/"/>img/hall_ico.png" alt="" class="img-responsive center-block">
-                                My Wedding
+                                나의 웨딩
                             </a>
                         </li>
                         <li>
                             <a href="<c:url value='/mypage/myTodo.do'/>">
                                     <img src="<c:url value="/resources/"/>img/chk_ico.png" alt="" class="img-responsive center-block">
-                                Check List
-                            </a>
-                        </li>
-                        <li class="on">
-                            <a href="<c:url value='/mypage/myAuction.do?choo=tab1&memNo=${user.no}&auctionType=v'/>">
-                                <img src="<c:url value="/resources/"/>img/auction_ico.png" alt="" class="img-responsive center-block">
-                                Auction List
+                                체크리스트
                             </a>
                         </li>
                         <li>
                             <a href="<c:url value='/mypage/myBudget.do'/>">
                                 <img src="<c:url value="/resources/"/>img/budget_ico.png" alt="" class="img-responsive center-block">
-                                Budget Spent
+                                예산
+                            </a>
+                        </li>
+                         <li>
+                            <a href="<c:url value='/mypage/myAuction.do?choo=tab1&memNo=${user.no}&auctionType=v'/>">
+                                <img src="<c:url value="/resources/"/>img/auction_ico.png" alt="" class="img-responsive center-block">
+                                역경매 현황
                             </a>
                         </li>
                         <li>
                             <a href="<c:url value='/mypage/likeCompany.do?memNo=${user.no}'/>">
                                 <img src="<c:url value="/resources/"/>img/bookmark_ico.png" alt="" class="img-responsive center-block">
-                                Bookmark
+                                북마크
                             </a>
                         </li>
                     </ul>
@@ -398,12 +407,12 @@ h4{
               <div class="detail">
                 <div>${auction.comInfoAddr} </div>
                 <div>${auction.comInfoPhone}</div>
-                <div><fmt:formatNumber type='currency' value='${auction.tenderBudget}' pattern='###,###'/>원</div>
+                <div><fmt:formatNumber type='currency' value='${auction.tenderBudget}' pattern='###,###'/>만원</div>
                 <div><button class="btn1 more_detail" type="button" data-href="${auction.comInfoNo}" >상세보기</button>
 				
 				
 				
-				
+				 
 				
 
                 <c:if test="${myAuction[0].dday>0}">
@@ -412,6 +421,9 @@ h4{
                 </c:if>
                 <c:if test="${auction.tenderStatus=='choo'&& myAuction[0].auctionStatus=='ing'}">
                 <button class=" btn1" type="button" onclick="purchase(${myAuction[0].auctionNo}, ${auction.tenderNo})"  >결정하기</button>
+                </c:if>
+                <c:if test="${ myAuction[0].auctionStatus=='done'}">
+                <button class="Done" type="button"  >선택됨</button>
                 </c:if>
                 </c:if>
                 </div>
@@ -578,6 +590,7 @@ function resSubmit(){
 		if(no>0){
 			alert("예약이 완료되었습니다.")
    			$('#ModalReservation').modal('hide');
+			location.reload();
 		}
 	});
 } 

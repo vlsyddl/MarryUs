@@ -30,37 +30,38 @@
 <body>
   	<c:import url="/common/importHeader.jsp" />
     <div id="wrap" class="mypage">
- <nav class="myPageNav">
+<nav class="myPageNav">
+      <nav class="myPageNav">
             <div class="container">
                     <ul>
-                        <li>
+                        <li class="on">
                             <a href="<c:url value='/mypage/mywedding.do'/>">
                                     <img src="<c:url value="/resources/"/>img/hall_ico.png" alt="" class="img-responsive center-block">
-                                My Wedding
+                                나의 웨딩
                             </a>
                         </li>
                         <li>
                             <a href="<c:url value='/mypage/myTodo.do'/>">
                                     <img src="<c:url value="/resources/"/>img/chk_ico.png" alt="" class="img-responsive center-block">
-                                Check List
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<c:url value='/mypage/myAuction.do?choo=tab1&memNo=${user.no}&auctionType=v'/>">
-                                <img src="<c:url value="/resources/"/>img/auction_ico.png" alt="" class="img-responsive center-block">
-                                Auction List
+                                체크리스트
                             </a>
                         </li>
                         <li>
                             <a href="<c:url value='/mypage/myBudget.do'/>">
                                 <img src="<c:url value="/resources/"/>img/budget_ico.png" alt="" class="img-responsive center-block">
-                                Budget Spent
+                                예산
                             </a>
                         </li>
-                        <li class="on">
+                         <li>
+                            <a href="<c:url value='/mypage/myAuction.do?choo=tab1&memNo=${user.no}&auctionType=v'/>">
+                                <img src="<c:url value="/resources/"/>img/auction_ico.png" alt="" class="img-responsive center-block">
+                                역경매 현황
+                            </a>
+                        </li>
+                        <li>
                             <a href="<c:url value='/mypage/likeCompany.do?memNo=${user.no}'/>">
                                 <img src="<c:url value="/resources/"/>img/bookmark_ico.png" alt="" class="img-responsive center-block">
-                                Bookmark
+                                북마크
                             </a>
                         </li>
                     </ul>
@@ -85,6 +86,7 @@
                                         <div class="textBox">
                                             <h5><a href="#">${l.comInfoName}</a></h5>
                                             <p>
+                                            	<%-- ${l.comInfoType} <br/> --%>
                                                 ${l.comInfoAddr} <br/>
                                                 ${l.comInfoAddrDetail}
                                             </p>

@@ -109,25 +109,25 @@
                         <li class="on">
                             <a href="<c:url value='/mycompany/myCompany.do'/>">
                                 <img src="<c:url value="/resources/"/>img/company_ico.png" alt="" class="img-responsive center-block">
-                                My Company
+                                업체 정보
                             </a>
                         </li>
                         <li>
                             <a href="<c:url value='/mycompany/service.do'/>">
                                     <img src="<c:url value="/resources/"/>img/card_ico.png" alt="" class="img-responsive center-block">
-                                My Service
+                               업체 등록
                             </a>
                         </li>
                         <li>
                             <a href="<c:url value='/mycompany/auctionList.do'/>">
                                 <img src="<c:url value="/resources/"/>img/graph_ico.png" alt="" class="img-responsive center-block">
-                                Auction List
+                                입찰 현황
                             </a>
                         </li>
                         <li>
                             <a href="<c:url value='/mycompany/reservationView.do'/>">
                                 <img src="<c:url value="/resources/"/>img/reservation_icon2.png" alt="" class="img-responsive center-block" style="padding: 5px;">
-                                My Reservation
+                                예약 현황
                             </a>
                         </li> 
                     </ul>
