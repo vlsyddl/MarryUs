@@ -97,13 +97,13 @@ public class MainSocketHandler extends TextWebSocketHandler{
         if(messageVO.getType().equals("message")) {        	
         	if(messageVO.getTo().equals("admin")) {
         		if(connectedUser.get("admin")!=null) {
-        			connectedUser.get("admin").sendMessage(new TextMessage(messageVO.getFrom()+":"+messageVO.getFrom()+"님의 메세지"+messageVO.getMessage()));
+        			connectedUser.get("admin").sendMessage(new TextMessage(messageVO.getFrom()+":"+messageVO.getMessage()));
         		}else {
         			connectedUser.get(messageVO.getFrom()).sendMessage(new TextMessage("admin:관리자가 자리를 비웠습니다 전화 혹은 이메일을 보내주세요"));
         		}
         	}else {
         		if(connectedUser.get(messageVO.getTo())!=null) {
-        			connectedUser.get(messageVO.getTo()).sendMessage(new TextMessage(messageVO.getFrom()+":"+messageVO.getFrom()+"님의 메세지"+messageVO.getMessage()));
+        			connectedUser.get(messageVO.getTo()).sendMessage(new TextMessage(messageVO.getFrom()+":"+messageVO.getMessage()));
         		}else {
         			connectedUser.get(messageVO.getFrom()).sendMessage(new TextMessage("사용자:사용자가 자리를 비웠습니다 전화 혹은 이메일을 보내주세요"));
         		}

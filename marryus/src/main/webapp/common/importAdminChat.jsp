@@ -72,12 +72,14 @@ $(function () {
 				   	    "<div>" +
 				   	      "<div class='clearfix'>" +
 				   	        "<div class='name' data-notify-html='title' data-href='"+userName+"'/>" +
+				   	        "<div class='content' data-notify-html='content' data-href='"+userName+"'/>" +
 				   	      "</div>" +
 				   	    "</div>"
 				   	});
 					
 					$.notify({
-			    		title : data.split(":")[1]
+			    		title : data.split(":")[0],
+			    		content : data.split(":")[1],
 			    	}, {
 			    		style:"foo",
 			    		autoHide: false,
@@ -90,13 +92,15 @@ $(function () {
 			   	  html: 
 			   	    "<div>" +
 			   	      "<div class='clearfix'>" +
-			   	        "<div class='name' data-notify-html='title' data-href='"+userName+"'/>" +
+			   		 	 "<div class='name' data-notify-html='title' data-href='"+userName+"'/>" +
+		   	       		 "<div class='content' data-notify-html='content' data-href='"+userName+"'/>" +
 			   	      "</div>" +
 			   	    "</div>"
 			   	});
 				
 				$.notify({
-		    		title : data.split(":")[1]
+					title : data.split(":")[0],
+		    		content : data.split(":")[1],
 		    	}, {
 		    		style:"foo",
 		    		autoHide: false,

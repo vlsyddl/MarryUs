@@ -25,7 +25,6 @@
                 <c:if test="${admin.admType eq 'sadm'}">
                 	<li><a href="<c:url value="/admin/user.do"/>"><i class="fas fa-user-cog"></i> User</a></li>
                 </c:if>
-                <li><a href="#"><i class="fas fa-gift"></i> Event</a></li>
             </ul>
         </nav>
     </aside>
@@ -303,7 +302,11 @@
 					html +="<td><a href='#' data-href='"+b.boardNo+"' data-toggle='modal' data-target='#detailModal'>"+b.title+"</a></td>"
 					html +="<td>"+b.writer+"</td>"
 					if(category=="mm"){
-						html +="<td>"+b.answer+"</td>"
+						if(b.answer == 'y'){
+							html +="<td><i class='fas fa-check' style='color: #22B14C;'></i></td>"
+						}else{
+							html +='<td><i class="fas fa-times" style="color: #FF0000;"></i></td>'
+						}
 					}
 					html +="<td>"+b.viewCnt+"</td>"
 					html +="<td>"+new Date(b.regDate).format("yyyy-MM-dd")+"</td>"

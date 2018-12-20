@@ -46,7 +46,7 @@
 						<c:choose>
                             	<c:when test="${fn:length(list) eq 0}">
                             		<tr>
-                            			<td colspan="5" style="text-align: center;">게시물이 존재하지 않습니다.</td>
+                            			<td colspan="6" style="text-align: center;">게시물이 존재하지 않습니다.</td>
                             		</tr>
                             	</c:when>
                             	<c:otherwise>
@@ -64,7 +64,16 @@
 			                                <td>${b.writer}</td>
 			                                <td><fmt:formatDate value="${b.regDate}" pattern="yyyy-MM-dd" /></td>
 			                                <td>${b.viewCnt}</td>
-			                                <td style="text-transform: uppercase;">${b.answer}</td>
+			                                <td style="text-transform: uppercase;">
+			                                	<c:choose>
+			                                		<c:when test="${b.answer eq 'y' }">
+														<i class="fas fa-check" style="color: #22B14C;"></i>				                                			
+			                                		</c:when>
+			                                		<c:otherwise>
+			                                			<i class="fas fa-times" style="color: #FF0000;"></i>
+			                                		</c:otherwise>
+			                                	</c:choose>
+		                                	</td>
 			                            </tr>
 									</c:forEach>
                             	</c:otherwise>

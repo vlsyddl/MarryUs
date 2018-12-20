@@ -37,7 +37,6 @@
                 <c:if test="${admin.admType eq 'sadm'}">
                 	<li><a href="<c:url value="/admin/user.do"/>"><i class="fas fa-user-cog"></i> User</a></li>
                 </c:if>
-                <li><a href="#"><i class="fas fa-gift"></i> Event</a></li>
             </ul>
         </nav>
        
