@@ -552,7 +552,7 @@ $(function(){
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button"   class="btn btn-primary insertBox"><a href="#">입찰하기</a></button>
+        <button type="button"   class="btn btn-primary insertBox">입찰하기</button>
       </div>
     </div>
   </div>

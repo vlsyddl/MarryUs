@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/wedding.css"/>">
     
 <style>
-	.btn-recom {
+	.btn-recom ,.btn-recom:focus,.btn-recom:active{
 		background-color: rgb(232, 210, 34);
 		color: #fff;
 	}
@@ -66,7 +66,9 @@
                                     </div>
                                     </div>
                             </c:forEach>
-                            <nav>
+                          
+                        </div>
+                            <nav style="text-align: center;">
 		                    	<div class="text-center">
 		                    	<ul class="pagination">
 								<li><a
@@ -102,8 +104,6 @@
 							</div>
 						 </nav>
 		                    
-                          
-                        </div>
                         <div class="searchWrap">
                           	 <form action="weddingsearch.do" id="searchForm">
 	                                <select class="form-control" name="type" id="searchType">

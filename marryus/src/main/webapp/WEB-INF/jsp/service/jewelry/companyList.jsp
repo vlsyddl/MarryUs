@@ -15,7 +15,7 @@
 	<c:import url="/common/importJs.jsp"/>
     <link rel="stylesheet" href="<c:url value="/resources/css/wedding.css"/>">
 <style>
-	.btn-recom {
+	.btn-recom ,.btn-recom:focus,.btn-recom:active{
 		background-color: rgb(232, 210, 34);
 		color: #fff;
 	}
@@ -63,7 +63,9 @@
                                     </div>
                                     </div>
                             </c:forEach>
-                            <nav>
+                           
+                        </div>
+                         <nav>
 		                    	<div class="text-center">
 		                    	<ul class="pagination">
 								<li><a
@@ -111,7 +113,6 @@
 	                                </span>
                                </form>
                           </div>
-                        </div>
                   		</div>
                         </div>
                     </div>

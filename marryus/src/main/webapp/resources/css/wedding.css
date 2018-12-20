@@ -371,18 +371,20 @@
 	content:'';
 }
 #detailModal .infoBox dl dt{
-	width: 10%;
+	width: 15%;
 	float: left;
 	font-size: 1.2em;
 	font-weight: bold;
 }
 #detailModal .infoBox dl dd{
-	width: 90%;
+	width: 85%;
 	float: left;
 	font-size: 1.2em;
 }
 #detailModal .contentsBox{
 	border-top: 2px solid #000;
+	padding: 10px ;
+	min-height: 150px;
 }
 #detailModal .contentsBox img{
 	max-width: 100%;
@@ -442,13 +444,13 @@
 	content:'';
 }
 #weddingDetailModal .wedVenue dl dt{
-	width: 10%;
+	width: 15%;
 	float: left;
 	font-size: 1.2em;
 	font-weight: bold;
 }
 #weddingDetailModal .wedVenue dl dd{
-	width: 90%;
+	width: 85%;
 	float: left;
 	font-size: 1.2em;
 }
