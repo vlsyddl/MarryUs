@@ -960,7 +960,7 @@ function writeFormShow(index) {
 	        <h4 class="modal-title" id="myModalLabel"></h4>
 	      	</div>
 				<form action="writeTender.do"  method="post" name="auctionForm" onsubmit="return doAction()" enctype="multipart/form-data">
-				      <div class="modal-body">
+				      <div class="modal-body" id="sdmAu">
 				      <div class="form-group">
 				      <input type="hidden" name="memNo" value="${user.no}" />
 					  	</div>
@@ -970,16 +970,16 @@ function writeFormShow(index) {
 					  	</div>
 					  	<h2>서비스 제목</h2>
 					  	<div class="form-group">
-					  		<div class="col-md-4">
-							  	<div class="panel-heading">
+					  		<div class="col-md-12">
+							  	<div >
 		                        	<input class="form-control" type="text" id="tenderTitle" name="tenderTitle" placeholder="제목을 입력해 주세요" />   
 		                        </div>
 					  		</div>
 					  	</div><br> 
 					  	<h2>서비스 상세</h2>
 					  	<div class="form-group">
-					  		<div class="col-md-4">
-							  	<div class="panel-heading">
+					  		<div class="col-md-6">
+							  	<div >
 		                        	<input class="form-control" type="text" id="tenderInfo" name="tenderInfo" placeholder="내용을 입력해 주세요" />   
 		                        </div>
 					  		</div>
@@ -987,7 +987,7 @@ function writeFormShow(index) {
 					  	<h2>입찰예산(만원)</h2>
 					  	<div class="form-group">
 					  		<div class="col-md-4">
-							  	<div class="panel-heading">
+							  	<div >
 		                        	<input class="form-control" type="text" id="tenderBudget" name="tenderBudget" placeholder="예산을 입력해 주세요" />   
 		                        </div>
 					  		</div>
