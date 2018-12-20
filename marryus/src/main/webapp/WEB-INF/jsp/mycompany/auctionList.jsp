@@ -10,17 +10,11 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Page Title</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
         <c:import url="/common/importCss.jsp"/>
 	 <c:import url="/common/importJs.jsp"/>
     
     <style>
-@font-face {
-  font-family: OpenSans-Regular;
-  src: url('../fonts/OpenSans/OpenSans-Regular.ttf'); 
-}
 
 
 
@@ -34,7 +28,6 @@
 
 body, html {
 	height: 100%;
-	font-family: sans-serif;
 }
 
 /* ------------------------------------ */
@@ -180,7 +173,7 @@ table td, table th {
 }
 table thead tr {
   height: 60px;
-  background: #36304a;
+  background: #ffbfde;
 }
 table tbody tr {
   height: 50px;
@@ -205,7 +198,6 @@ table td.r, table th.r {
 
 
 .table100-head th{
-  font-family: OpenSans-Regular;
   font-size: 18px;
   color: #fff;
   line-height: 1.2;
@@ -217,7 +209,6 @@ tbody tr:nth-child(even) {
 }
 
 tbody tr {
-  font-family: OpenSans-Regular;
   font-size: 15px;
   color: #808080;
   line-height: 1.2;
@@ -301,7 +292,7 @@ nav{ text-align: center;}
         <nav class="myCompanyNav">
             <div class="container">
                     <ul>
-                        <li class="on">
+                        <li>
                             <a href="<c:url value='/mycompany/myCompany.do'/>">
                                 <img src="<c:url value="/resources/"/>img/company_ico.png" alt="" class="img-responsive center-block">
                                 My Company
@@ -313,7 +304,7 @@ nav{ text-align: center;}
                                 My Service
                             </a>
                         </li>
-                        <li>
+                        <li class="on">
                             <a href="<c:url value='/mycompany/auctionList.do'/>">
                                 <img src="<c:url value="/resources/"/>img/graph_ico.png" alt="" class="img-responsive center-block">
                                 Auction List

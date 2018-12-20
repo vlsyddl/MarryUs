@@ -1,0 +1,55 @@
+/*	태블릿	*/
+@media screen and (max-width:991px) {
+  
+}
+
+/*	모바일	*/
+@media screen and (max-width:776px) {
+	header .logo img{
+		max-width: 100%;
+	}
+    .mGnb{
+    	position: absolute;
+	    top: 25px;
+	    right: 0;
+    }
+    #menu_btn{position: relative;  z-index: 99999; color: #fff; display:block;}
+	#menu_btn a span{color: #333; font-size: 3em; width: 36px; height: 5px; background: #333; display:block; position: absolute; transition: all 0.5s; top: 20px; right:20px; border-radius: 10px;}
+	#menu_btn a span:before{content:''; width: 36px; height: 5px; background: #333; display:block; bottom: 10px; position: absolute; transition: all 0.5s;  border-radius: 10px;}
+	#menu_btn a span:after{content:''; width: 36px; height: 5px; background: #333; display:block; top: 10px; position: absolute; transition: all 0.5s;  border-radius: 10px;}
+	#menu_btn a:hover span{background: #2741b2; transition: all 0.5s;}
+	#menu_btn a:hover span:before{background: #2741b2; transition: all 0.5s;}
+	#menu_btn a:hover span:after{background: #2741b2; transition: all 0.5s;}
+	#menu_btn.active a span{background: transparent; transition: all 0.5s;}
+	#menu_btn.active a span:before{transform: rotate(45deg); transform-origin: center; top: 0; background-color:#2741b2; transition: all 0.5s;}
+	#menu_btn.active a span:after{transform: rotate(-45deg); transform-origin: center; top: 0; background-color:#2741b2; transition: all 0.5s;}
+    
+    
+    .main_visual .btnBox a{
+        width: 80%;
+    }
+    /* .main .contents01{
+        height: auto;
+    } */
+    .main .contents01 .recommList{
+    	display: none;
+    }
+    .main .contents01 .statusList> li{
+    	width: 100vw;	
+    }
+    .main .contents01 .recommList li{
+    	width: 50%;
+    }
+    .main .contents01 .statusIndi li{
+    	width: calc(20% - 30px);
+    }
+    .main .contents01 .statusIndi li a{
+        font-size: 0.7em;
+    }
+    .main .contents01 .statusIndi{
+    	right: 0; 
+    }
+    
+    
+    
+}

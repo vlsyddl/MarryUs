@@ -6,13 +6,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="/marryus/resources/se2/js/HuskyEZCreator.js" charset="utf-8"></script>
-<script type="text/javascript" src="/marryus/resources/se2/photo_uploader/plugin/hp_SE2M_AttachQuickPhoto.js" charset="utf-8"></script>
 <!-- 합쳐지고 최소화된 최신 CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <!-- 부가적인 테마 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <link rel="stylesheet"
 		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 		<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
@@ -35,10 +31,9 @@
     	body{
     		width: 100%;
     	}
-    	#outer_box{
-    		display: inline-block;
-    		width: 1000px ;
-    		margin: auto;
+    	
+    	#profile_box{
+    		padding: 30px 0;
     	}
         #profile_box #profile_img,  #profile_box #profile_text{
             width: 30%; 
@@ -58,7 +53,6 @@
         }
         
         table{
-        	width: 1200px;
         	border: 2px solid #333333;
         	margin: 10px;
         }
@@ -118,14 +112,14 @@
 		
 		
 		
-		img {
+		#profile_box img {
 			-webkit-filter: grayscale(0) blur(0);
 			filter: grayscale(0) blur(0);
 			-webkit-transition: .3s ease-in-out;
 			transition: .3s ease-in-out;
 			margin-top: 20px; margin-bottom: 40px; 
 		}
-		img:hover {
+		#profile_box img:hover {
 			-webkit-filter: grayscale(50%) blur(2px);
 			filter: grayscale(50%) blur(2px);
 		}
@@ -138,13 +132,13 @@
         <nav class="myCompanyNav">
             <div class="container">
                     <ul>
-                        <li class="on">
+                        <li>
                             <a href="<c:url value='/mycompany/myCompany.do'/>">
                                 <img src="<c:url value="/resources/"/>img/company_ico.png" alt="" class="img-responsive center-block">
                                 My Company
                             </a>
                         </li>
-                        <li>
+                        <li class="on">
                             <a href="<c:url value='/mycompany/service.do'/>">
                                     <img src="<c:url value="/resources/"/>img/card_ico.png" alt="" class="img-responsive center-block">
                                 My Service
@@ -174,11 +168,10 @@
 
         
         
-	<div id="outer_box">
 		 <div id="profile_box">
-			
+			<div class="container">
 	        <form id="myServiceInsertFrom" action="<c:url value='/myCompany/insertComInfoProfile.do'/>" method="post"  enctype="multipart/form-data" acceptcharset="UTF-8">
-	        <table>
+	        <table class="table">
 	       	<tr>
 	        	<td class="highlight">업체 이름</td>
 	        	<td><input type="text" name="comInfoName" required/>
@@ -262,13 +255,12 @@
 			</tr>
 			</table>
 				</form>		
-				<div class="form-btn">
+				<div class="form-btn text-right">
 	                 <a href="service.do" class="cancle btn">취소</a>
 	                 <a href="#" class="save btn" id="savebutton">등록</a>
 	            </div>
-	       
+	       		</div>
 	    </div>
-    </div>
     
     
     

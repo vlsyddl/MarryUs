@@ -33,6 +33,21 @@ $(document).ready(function(){
         })
     })
 
+    $('#menu_btn').click(function(){
+		var btn = $('#menu_btn')
+		var menu = $('.menu_mobile')
+		if(btn.hasClass('active')){
+			menu.stop(true,true).animate({left:"-100%"},300,'linear')
+			btn.removeClass('active')
+			menu.removeClass('active')
+		}else{
+			btn.addClass('active')
+			menu.addClass('active')
+			menu.stop(true,true).animate({left:"0"},300,'linear')
+		}
+	  return false;
+	})
+    
     $(window).ready(function(){
         var len = $(".contentsTab >ul > li").length
         $(".contentsTab >ul > li").css({"width":(100/len)+"%"})

@@ -45,7 +45,7 @@
    		
 $(function () {	
 	if(admin != "" ){   			
-	    ws = new WebSocket('ws://192.168.0.16:8000/marryus/websocket.do');
+	    ws = new WebSocket('ws://192.168.0.88:8000/marryus/websocket.do');
 		
 	    ws.onopen = function() {
 	   	    console.log('웹소켓 서버 접속 성공');
@@ -114,7 +114,7 @@ $(function () {
 	    	var data = evt.data
 	    	var userName = data.split(":")[0]
 	    	var html = '<div class="chatAdmin" data-href="'+userName+'">'+
-	    					'<div class="btnClosed">'+
+	    					'<div class="btnClosed" onclick="closeChat(\''+userName+'\')">'+
 	    						'<a href="#"><i class="fas fa-times"></i></a>'+
 	    					'</div>'+
 	    					'<div class="textWrap">'+
@@ -151,14 +151,14 @@ $(function () {
 	  $('.chatAdmin[data-href="'+target+'"]').animate({"right":"100px"},300) 
 	});
 	
-$(".btnClosed").click(function(e){
-    e.preventDefault();
-     sendCustom("실시간 상담 을 종료합니다.")
-    setTimeout(function(){
-     $("#chatBot").removeClass("on")
-     textBox.html("");
-    },1500)
-})
+	function closeChat(target){
+	    setTimeout(function(){
+	   	 $('.chatAdmin[data-href="'+target+'"]').animate({"right":"-100%"},300) 	
+	     $("#chatBot").removeClass("on")
+	    },1500)
+		
+	}
+
   
  function sendAdmin(userName){
 	 var $msg = $('.chatAdmin[data-href="'+userName+'"] .webSocketInput') 
