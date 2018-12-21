@@ -23,8 +23,7 @@
     		width: 100%;
     	}
     	#outer_box{
-    		display: inline-block;
-    		width: 60% auto;
+    		padding: 30px 0;
     	}
         #profile_box #profile_img,  #profile_box #profile_text{
             width: 30%; 
@@ -143,9 +142,10 @@
 
 
 
-    <div id="wrap" class="mypage">
      
 	<div id="outer_box">
+		<div class="container">
+	
 		 <div id="profile_box">
 
 	        <form action=<c:url value="insertComInfo.do"/>  method="post" id="frm"  enctype="multipart/form-data" acceptcharset="UTF-8">
@@ -225,11 +225,12 @@
 			</tr>
 			</table>
 				</form>		
-				<div class="form-btn">
+				<div class="form-btn text-right">
 	                 <a href=<c:url value="myServiceDelete.do?comInfoNo=${auctionList.comInfoNo}"/> class="cancle btn">삭제</a>
 	                 <a href="#" class="save btn" id="savebutton">수정</a>
 	            </div>
 	       
+	    </div>
 	    </div>
     </div>
     

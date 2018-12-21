@@ -105,6 +105,7 @@ public class MycompanyController {
 	@RequestMapping("/service.do")
 	public void service(HttpSession session, Model model) {
 		model.addAttribute("autionList", service.selectComInfoList(((Member)session.getAttribute("user")).getNo()));
+		System.out.println("moeld : "+model.toString());
 	}
 	
 	

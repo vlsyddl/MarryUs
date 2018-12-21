@@ -59,6 +59,37 @@ button{
 .progress-bar {
 background-color: #ffbfce;
 }
+#lobilist-examples .btnBox{
+	margin-top: 15px;
+}
+#lobilist-examples .btnBox:after{
+	display: block;
+	clear: both;
+	content: '';
+}
+#lobilist-examples .btnBox a{
+    display: block;
+    float: left;
+    width: 180px;
+    padding: 10px 0;
+    background: #ffc7c7;
+    text-align: center;
+    font-size: 1.2em;
+    border: 1px solid #d9d9d9;
+    letter-spacing: 5px;
+    transition: all 0.5s;
+}
+#lobilist-examples .btnBox a:hover{
+	background: #fff;
+	color: #333;
+    text-decoration: none;
+}
+#lobilist-examples .btnBox a.downLoadBtn{
+	border-radius: 10px 0 0 10px;
+}
+#lobilist-examples .btnBox a.printBtn{
+	border-radius: 0 10px 10px 0;
+}
 
     </style>
 </head>
@@ -68,13 +99,13 @@ background-color: #ffbfce;
 <nav class="myPageNav">
             <div class="container">
                     <ul>
-                        <li class="on">
+                        <li >
                             <a href="<c:url value='/mypage/mywedding.do'/>">
                                     <img src="<c:url value="/resources/"/>img/hall_ico.png" alt="" class="img-responsive center-block">
                                 나의 웨딩
                             </a>
                         </li>
-                        <li>
+                        <li class="on">
                             <a href="<c:url value='/mypage/myTodo.do'/>">
                                     <img src="<c:url value="/resources/"/>img/chk_ico.png" alt="" class="img-responsive center-block">
                                 체크리스트
@@ -112,11 +143,13 @@ background-color: #ffbfce;
     <div id="lobilist">
         <!--Examples-->
         <div id="lobilist-examples">
-	                        <form action="downExcel.do">
+	                        <form id="downForm" action="downExcel.do">
 	        				 <input type="hidden" id="memNo" name="memNo" value="${user.no}">
-	                       	 <button class="downLoadBtn" style="float:left;">download</button>
 	                        </form>
-	                         <button class="printBtn">Print</button>
+	                        <div class="btnBox">	                        	
+		                        <a href="#" class="downLoadBtn">DownLoad</a>
+		                        <a href="#" class="printBtn">Print</a>
+	                        </div>
                <div class="infoBox cf">
                     <div class="col-md-6 no-padding info_left">
                         <div class="time cf">
@@ -213,7 +246,10 @@ background-color: #ffbfce;
 			});
 		});
 
- 
+ $(".downLoadBtn").click(function(e){
+	 e.preventDefault();
+	 $("#downForm").submit();
+ })
  
 $(function () {
     Lobibox.notify.DEFAULTS = $.extend({}, Lobibox.notify.DEFAULTS, {
