@@ -142,10 +142,10 @@ public class HoneymoonController {
 	
 	@RequestMapping("/honeyAuctionDetail.do")
 	@ResponseBody
-	public HashMap<String, Object> honeyAuctionDetail(int auctionNo){
+	public HashMap<String, Object> honeyAuctionDetail(Auction auction){
 		HashMap<String, Object> listMap = new HashMap();
-		System.out.println("auction ========= " + service.HoneyAuctionDetail(auctionNo));
-		listMap.put("auction", service.HoneyAuctionDetail(auctionNo));
+		System.out.println("auction ========= " + service.HoneyAuctionDetail(auction));
+		listMap.put("auction", service.HoneyAuctionDetail(auction));
 		return listMap;
 	}
 	

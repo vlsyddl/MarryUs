@@ -241,8 +241,7 @@ function detail(comInfoNo){
 		data : "comInfoNo="+comInfoNo
 	}).done(function(data){
 		console.log(data)
-		modal.find(".modal-title").html(data.memName + "님의 역경매 신청내역입니다.");
-		$("#insertAuction .modal-title").html(data.memName + "님의 역경매 신청내역입니다.");
+
 		modal.find(".modal-title").html(data.info.comInfoName)
         modal.find(".infoBox").find(".adress").children("dd").html(data.info.comInfoAddr+" "+data.info.comInfoAddrDetail)
         modal.find(".infoBox").find(".phone").children("dd").html(data.info.comInfoPhone)
@@ -270,10 +269,11 @@ function honeyDetail(auctionNo, auctionType){
 		data : "auctionNo="+auctionNo
 	}).done(function(data){
 		console.log(data)
-        modal.find(".Teavel").find(".hopeTravel").children("dd").html(data.auction.honeyPlace)
-        modal.find(".Teavel").find(".TravelDate").children("dd").html(data.auction.honeyDate)
-        modal.find(".Teavel").find(".Hope").children("dd").html(data.auction.honeyHope)
-        modal.find(".contentsBox").html(data.auction.comInfoContent)
+		modal.find(".modal-title").html(data.auction.member.name + "님의 역경매 신청내역입니다.");
+        modal.find(".Teavel").find(".hopeTravel").children("dd").html(data.auction.honeyMoon.honeyPlace)
+        modal.find(".Teavel").find(".TravelDate").children("dd").html(data.auction.honeyMoon.honeyDate)
+        modal.find(".Teavel").find(".Hope").children("dd").html(data.auction.honeyMoon.honeyHope)
+        modal.find(".contentsBox").html(data.auction.honeyMoon.comInfoContent)
         slideBox.find("dd").html()
         $(".insertBox").attr('data-href', auctionNo);
 		$(".insertBox").attr("data-auctype", auctionType);

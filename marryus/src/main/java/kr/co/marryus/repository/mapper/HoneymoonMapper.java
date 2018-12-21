@@ -33,7 +33,7 @@ public interface HoneymoonMapper {
 	List<CompanyFile> comInfoFiles(int comInfoNo);
 	
 	// 허니문 역경매 리스트 디테일
-	Honeymoon HoneyAuctionDetail(int auctionNo);
+	Auction HoneyAuctionDetail(Auction auction);
 	
 	
 	void insertTender(Tender tender);

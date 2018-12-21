@@ -34,6 +34,7 @@
 		<result property="auctionSdate" column="auction_sdate" />
 		<result property="auctionEdate" column="auction_edate" />
 		<collection property="member" resultMap="memberMap"></collection>
+		<collection property="honeyMoon" resultMap="honeymoonMap"></collection>
 	</resultMap>
 	
 	<resultMap id="memberMap" type="Member">
@@ -192,10 +193,14 @@
 	
 	
 	<!-- 허니문 역경매 리스트 디테일 -->
-	<select id="HoneyAuctionDetail" parameterType="int" resultMap="honeymoonMap">
-		select *
-		 from mu_honeymoon
-		 where auction_no = #{auctionNo}
+	<select id="HoneyAuctionDetail" parameterType="Auction" resultMap="auctionMap">
+		select a.*, m.*, h.*
+		  from mu_auction a
+		 inner join mu_member m
+		    on a.mem_no = m.mem_no
+	 	 inner join mu_honeymoon h
+		    on a.auction_no = h.auction_no
+		 where a.auction_no = #{auctionNo}
 	</select>
 	
 	

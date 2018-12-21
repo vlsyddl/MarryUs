@@ -77,8 +77,8 @@ public class HoneymoonServiceImpl implements HoneymoonService{
 	}
 
 	@Override
-	public Honeymoon HoneyAuctionDetail(int auctionNo) {
-		return mapper.HoneyAuctionDetail(auctionNo);
+	public Auction HoneyAuctionDetail(Auction auction) {
+		return mapper.HoneyAuctionDetail(auction);
 	}
 	
 	
