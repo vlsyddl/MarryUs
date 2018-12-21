@@ -19,6 +19,7 @@ import kr.co.marryus.repository.domain.Tender;
 import kr.co.marryus.repository.domain.Todo;
 import kr.co.marryus.repository.domain.Todolist;
 import kr.co.marryus.repository.domain.Venue;
+import kr.co.marryus.repository.domain.WeddingPlan;
 import kr.co.marryus.repository.domain.Page;
 import kr.co.marryus.repository.domain.Reservation;
 import kr.co.marryus.repository.domain.ServiceAdd;
@@ -94,12 +95,14 @@ public interface MypageMapper {
 	public int updateTodo(Todo todo);	
 	public int updateCheckTodo(Todo todo);	
 	public int deleteTodo(int todoNo);
+	public List<Todo> selectTodoExcel(int memNo);
 	
 	//내 예산
 	List<Budget> selectBudget(int memNo);
 	void insertBudget(Budget budget);
 	void updateBudget(Budget budget);
 	void deleteBudget(int budgNo);
+	WeddingPlan selectWeddingPlan (int memNo);
 	
 	  //메인(개인)
 	   String getWedDate(int memNo);

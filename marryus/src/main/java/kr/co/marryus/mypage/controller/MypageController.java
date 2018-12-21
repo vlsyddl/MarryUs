@@ -4,16 +4,20 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 
+import kr.co.marryus.main.controller.MakeExcel;
 import kr.co.marryus.member.service.MemberService;
 import kr.co.marryus.mypage.service.MypageService;
 import kr.co.marryus.repository.domain.Auction;
@@ -61,6 +66,7 @@ public class MypageController {
 	@RequestMapping("/mywedding.do")
 	public void mywedding(Model model,HttpSession session) throws Exception   {
 		int memNo= (((Member)session.getAttribute("user")).getNo());
+		System.out.println(memNo);
 		model.addAttribute("todo",service.selectTodoThree(memNo));
 		   String[] auctionList= {"v","sdm","h","j","e"};
 		    Map<String, Integer> list=new HashMap<>();
@@ -335,7 +341,10 @@ public class MypageController {
 	
 	@RequestMapping("/myTodo.do")
 	public void myTodo(Model model, HttpSession session) {
-		model.addAttribute("todo", "lists:"+new Gson().toJson(service.selectTodoSortByCategory(((Member)session.getAttribute("user")).getNo())));
+		int memNo= (((Member)session.getAttribute("user")).getNo());
+		model.addAttribute("todo", "lists:"+new Gson().toJson(service.selectTodoSortByCategory(memNo)));
+		model.addAttribute("todoTotal",service.MycountTotalTODO(memNo));
+		model.addAttribute("todoDone",service.MycountTODOdone(memNo));
 	}
 	
 	@RequestMapping("/myTodolist.do")
@@ -374,6 +383,22 @@ public class MypageController {
 	public void myTodoDelete(Item item) throws Exception{
 		System.out.println(item.getTodo().getTodoNo());
 		int no = service.deleteTodo(item.getTodo().getTodoNo());
+	}
+	
+	
+	@RequestMapping("/downExcel.do")
+	public void listExcel(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap modelmap) throws Exception {
+		
+		List<Todo> todoList = service.selectTodoExcel(((Member)session.getAttribute("user")).getNo());
+		
+		//받은 데이터를 맵에 담는다. 
+		Map<String, Object> beans = new HashMap<String, Object>();
+		beans.put("todoList", todoList);
+		
+		//엑셀 다운로드 메소드가 담겨 있는 객체
+		MakeExcel me = new MakeExcel();
+		
+		me.download(request, response, beans, "todoList", "todo.xlsx", "무시가능");
 	}
 	
 	
@@ -425,8 +450,19 @@ public class MypageController {
 	 * @param memNo
 	 */
 	@RequestMapping("/myBudget.do")
-	public void myBudget(Model model, HttpSession session) {
-		model.addAttribute("budgetList", service.selectBudget(((Member)session.getAttribute("user")).getNo()));
+	public void myBudget(Model model, HttpSession session) throws Exception{
+		int memNo = ((Member)session.getAttribute("user")).getNo();
+		model.addAttribute("budgetList", service.selectBudget(memNo));
+		   model.addAttribute("totalBudget",service.MytotalBudget(memNo));
+		   model.addAttribute("spendBudget",service.MyspendBudget(memNo));
+		   
+		/*   System.out.println( service.selectWeddingPlan(memNo).getPlanBudget().);*/
+		   
+/*		   if(service.selectWeddingPlan(memNo).getPlanPartner().isEmpty()) {
+			   model.addAttribute("totalBudget",service.MytotalBudget(memNo));
+		   }else {
+			   model.addAttribute("totalBudget", service.selectWeddingPlan(memNo).getPlanBudget().substring(0, service.selectWeddingPlan(memNo).getPlanBudget().length()-2));
+		   }*/
 	}
 	
 	@RequestMapping("/writeMyBudget.do")
@@ -446,6 +482,23 @@ public class MypageController {
 	public void deleteMyBudget(int budgNo) {
 		service.deleteBudget(budgNo);
 	}
+	
+	@RequestMapping("/downExcel2.do")
+	public void listExcel2(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap modelmap) throws Exception {
+		
+		List<Budget> budget = service.selectBudget(((Member)session.getAttribute("user")).getNo());
+		
+		//받은 데이터를 맵에 담는다. 
+		Map<String, Object> beans = new HashMap<String, Object>();
+		beans.put("budget", budget);
+		
+		//엑셀 다운로드 메소드가 담겨 있는 객체
+		MakeExcel me = new MakeExcel();
+		
+		me.download(request, response, beans, "budget", "budget.xlsx", "무시가능");
+	}
+	
+	
 	/**
 	 *  Mypage profile Detail 오수진 
 	 * mypage profile Detail

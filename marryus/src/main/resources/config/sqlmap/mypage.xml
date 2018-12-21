@@ -289,6 +289,16 @@
 	</resultMap>
 	
 	
+	<resultMap type="WeddingPlan" id="weddingPlanMap">
+		<result column="mem_no" property="memNo" />
+		<result column="plan_partner" property="planPartner" />
+		<result column="plan_place" property="planPlace" />
+		<result column="plan_wed_date" property="planWedDate" />
+		<result column="plan_visitor" property="planVisitor" />
+		<result column="plan_budget" property="planBudget" />
+	</resultMap>
+	
+	
 
 
 	
@@ -782,9 +792,18 @@
 	</update> 
 	
 	
+	<select id="selectTodoExcel" parameterType="Todo" resultMap="todoMap">
+	  	select * 
+		 from mu_todo 
+		 where mem_no = #{memNo}
+		   and (todo_delete= 'n' or todo_delete= 'N')
+		 order by todo_dday desc
+	</select>
+	
+	
 	
 
-	
+
 
 
 	
@@ -821,6 +840,12 @@
 		where budg_no=#{budgNo}
 	</delete>
 	
+	<select id="selectWeddingPlan" parameterType="int" resultMap="weddingPlanMap">
+		select *
+		from mu_wedding_plan
+		where mem_no = #{memNo}
+	</select>
+	
 	
 	
 	
@@ -854,12 +879,20 @@
 	</select>
 		
 	<select id="MycountAuctiondone" parameterType="int" resultType="int">
-			select ifnull(count(*),0)
+ 			select ifnull(count(*),0)
 		  from mu_auction a
           right outer join mu_member m
           on m.mem_no = a.mem_no
 	     where m.mem_no = #{memNo}
-		   and auction_status = 'done'
+		   and auction_status = 'done' 
+<!-- 		   select ifnull(count(*),0)
+		  from mu_auction a
+		  left join mu_tender t
+		  on a.auction_no = t.auction_no
+          right outer join mu_member m
+          on m.mem_no = a.mem_no
+	      where m.mem_no = #{memNo}
+		   and t.tender_status= 'choo'  -->
 	</select>
 	
 		<!-- wedding date  -->

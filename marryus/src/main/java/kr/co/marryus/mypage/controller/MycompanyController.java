@@ -190,6 +190,7 @@ public class MycompanyController {
 	/** 업체회원 정보 보기(정보수정)*/	
 	@RequestMapping("/companyUpdateForm.do")
 	public void companyUpdateForm(HttpSession session,  Model model) {
+		System.out.println(((Member)session.getAttribute("user")).getNo());
 		model.addAttribute("member",service.selectCompanyMember(((Member)session.getAttribute("user")).getNo()));
 	}
 	

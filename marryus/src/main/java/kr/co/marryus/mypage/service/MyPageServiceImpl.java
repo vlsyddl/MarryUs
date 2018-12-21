@@ -26,6 +26,7 @@ import kr.co.marryus.repository.domain.Tender;
 import kr.co.marryus.repository.domain.Todo;
 import kr.co.marryus.repository.domain.Todolist;
 import kr.co.marryus.repository.domain.Venue;
+import kr.co.marryus.repository.domain.WeddingPlan;
 
 
 @Service
@@ -367,6 +368,19 @@ public class MyPageServiceImpl implements MypageService{
 	@Override
 	public int updateCheckTodo(Todo todo) {
 		return mapper.updateCheckTodo(todo);
+	}
+
+
+	@Override
+	public List<Todo> selectTodoExcel(int memNo) {
+		return mapper.selectTodoExcel(memNo);
+	}
+
+
+	@Override
+	public WeddingPlan selectWeddingPlan(int memNo) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
