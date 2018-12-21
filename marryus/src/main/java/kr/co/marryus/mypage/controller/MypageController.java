@@ -483,6 +483,7 @@ public class MypageController {
 		service.deleteBudget(budgNo);
 	}
 	
+	
 	@RequestMapping("/downExcel2.do")
 	public void listExcel2(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap modelmap) throws Exception {
 		
