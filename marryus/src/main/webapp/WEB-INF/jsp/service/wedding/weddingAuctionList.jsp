@@ -317,16 +317,16 @@ function weddingAuctionDetail(auctionNo, auctionType){
 		url : "<c:url value='/service/wedding/weddingAuctionDetail.do'/>",
 		data : "auctionNo="+auctionNo
 	}).done(function(data){
-		console.log("auctiondetail ======== " + data)
-		modal.find(".modal-title").html(data.memName + "님의 역경매 신청내역입니다.");
-		$("#insertAuction .modal-title").html(data.memName + "님의 역경매 신청내역입니다.");
-        modal.find(".wedVenue").find(".venue").children("dd").html(data.wedList.weddingVenue)
-        modal.find(".wedVenue").find(".wedDate").children("dd").html(data.wedList.weddingDate)
-        modal.find(".wedVenue").find(".wedTime").children("dd").html(data.wedList.weddingTime)
-        modal.find(".wedVenue").find(".wedType").children("dd").html(data.wedList.weddingType)
-        modal.find(".wedVenue").find(".wedVisitor").children("dd").html(data.wedList.weddingVistor)
-        modal.find(".wedVenue").find(".wedWish").children("dd").html(data.wedList.weddingWish)
-        modal.find(".wedVenue").find(".wedBudget").children("dd").html(data.wedList.weddingBudget)
+		console.log(data);
+		modal.find(".modal-title").html(data.wedList.memName + "님의 역경매 신청내역입니다.");
+		$("#insertAuction .modal-title").html(data.wedList.memName + "님의 역경매 신청내역입니다.");
+        modal.find(".wedVenue").find(".venue").children("dd").html(data.wedList.venue.weddingVenue)
+        modal.find(".wedVenue").find(".wedDate").children("dd").html(data.wedList.venue.weddingDate)
+        modal.find(".wedVenue").find(".wedTime").children("dd").html(data.wedList.venue.weddingTime)
+        modal.find(".wedVenue").find(".wedType").children("dd").html(data.wedList.venue.weddingType)
+        modal.find(".wedVenue").find(".wedVisitor").children("dd").html(data.wedList.venue.weddingVistor)
+        modal.find(".wedVenue").find(".wedWish").children("dd").html(data.wedList.venue.weddingWish)
+        modal.find(".wedVenue").find(".wedBudget").children("dd").html(data.wedList.venue.weddingBudget)
        
         slideBox.find("dd").html()
         $(".insertBox").attr('data-href', auctionNo);

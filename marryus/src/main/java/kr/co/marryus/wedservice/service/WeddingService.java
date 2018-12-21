@@ -28,7 +28,7 @@ public interface WeddingService {
 	CompanyInfo comInfoDetail(int comInfoNo);
 	List<CompanyFile> comInfoFiles(int comInfoNo);
 	
-	Venue WeddingAuctionDetail(int auctionNo);
+	Auction WeddingAuctionDetail(Auction auction);
 	
 	//입찰서 등록
 	void insertTender(Tender tender);

@@ -70,8 +70,8 @@ public class WeddingServiceImpl implements WeddingService{
 
 	//웨딩홀 역경매 리스트 디테일
 	@Override
-	public Venue WeddingAuctionDetail(int auctionNo) {
-		return mapper.WeddingAuctionDetail(auctionNo);
+	public Auction WeddingAuctionDetail(Auction auction) {
+		return mapper.WeddingAuctionDetail(auction);
 	}
 	
 	//입찰서 등록

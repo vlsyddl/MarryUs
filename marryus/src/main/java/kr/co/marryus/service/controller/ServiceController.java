@@ -173,9 +173,9 @@ public class ServiceController {
 	//웨딩홀 역경매 리스트 디테일
 	@RequestMapping("/weddingAuctionDetail.do")
 	@ResponseBody
-	public HashMap<String, Object> weddingAuctionDetail(int auctionNo){
+	public HashMap<String, Object> weddingAuctionDetail(Auction auction){
 		HashMap<String, Object> listMap = new HashMap();
-		listMap.put("wedList", service.WeddingAuctionDetail(auctionNo));
+		listMap.put("wedList", service.WeddingAuctionDetail(auction));
 		return listMap;
 	}
 	
