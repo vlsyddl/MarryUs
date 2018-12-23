@@ -170,7 +170,7 @@
 						<label  class="label">이메일</label>${reservation.resEmail}
 					</div>
 					<div class="signup__field">
-						<label  class="label">추가사항</label>${reservation.resMassage}
+						<label  class="label">추가사항</label>${reservation.resMessage}
 					</div>
 					<hr>
 					

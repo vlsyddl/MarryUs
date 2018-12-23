@@ -372,6 +372,47 @@ tbody tr:hover {
 			width: 1170px;
 			margin: auto;
 		}
+		button{
+ margin : 10px 10px 0px 10px;
+ padding : 10px;
+ text-align: right;
+}
+.progress-bar {
+background-color: #ffbfce;
+}
+#outer_budget .btnBox{
+	margin-top: 15px;
+}
+#outer_budget .btnBox:after{
+	display: block;
+	clear: both;
+	content: '';
+}
+#outer_budget .btnBox a{
+    display: block;
+    float: left;
+    width: 180px;
+    padding: 10px 0;
+    background: #ffc7c7;
+    text-align: center;
+    font-size: 1.2em;
+    border: 1px solid #d9d9d9;
+    letter-spacing: 5px;
+    transition: all 0.5s;
+}
+#outer_budget .btnBox a:hover{
+	background: #fff;
+	color: #333;
+    text-decoration: none;
+}
+#outer_budget .btnBox a.downLoadBtn{
+	border-radius: 10px 0 0 10px;
+}
+#outer_budget .btnBox a.printBtn{
+	border-radius: 0 10px 10px 0;
+}
+		
+		
 
     </style>
 
@@ -417,11 +458,18 @@ tbody tr:hover {
             </div>
         </nav>
 	 <div id="outer_budget">
-	            <form action="downExcel2.do">
+	                      <form id="downForm" action="downExcel2.do">
+	        				 <input type="hidden" id="memNo" name="memNo" value="${user.no}">
+	                        </form>
+	                        <div class="btnBox">	                        	
+		                        <a href="#" class="downLoadBtn">DownLoad</a>
+		                        <a href="#" class="printBtn">Print</a>
+	                        </div>
+<%-- 	            <form action="downExcel2.do">
 	   			<input type="hidden" id="memNo" name="memNo" value="${user.no}">
 	            <button class="downLoadBtn" style="float:left;">download</button>
 	       </form>
-	             <button class="printBtn">Print</button>
+	             <button class="printBtn">Print</button> --%>
 	             
 	             
 	             
@@ -450,40 +498,60 @@ tbody tr:hover {
                     
                     
                     <div class="col-md-6 no-padding info_right">
-                        <div class="progressBar">
+                    <%--     <div class="progressBar">
                             <p style=" font-size: 23px;  font-family:맑은고딕; font-weight: 700;">예산 진행도</p>
                            		<c:choose>
+                           			<c:when test="${spendBudget==0}">
+                           				<c:set  var="t" value="0" />
+                           			</c:when>
                            			<c:when test="${spendBudget==0 && totalBudget==0}">
                            				<c:set  var="t" value="0" />
                            			</c:when>
-                           			<c:when test="${totalBudget==0 && spendBudget!=0}">
+                            			<c:when test="${totalBudget==0 && spendBudget!=0}">
                            				<c:set  var="t" value="${totalBudget}" />
                            			</c:when>
                            			<c:when test="${totalBudget!=0 && spendBudget==0}">
                            				<c:set  var="t" value="${totalBudget}" />
-                           			</c:when>
+                           			</c:when> 
                            			<c:otherwise>
-                           				<fmt:parseNumber var="t" value="${spendBudget/totalBudget*100}" integerOnly="true" />
+                           				<fmt:parseNumber var="t" value="${3000/spendBudget*100}" integerOnly="true" />
                            			</c:otherwise>
                            		</c:choose>
 
                             <div class="progress" style="height: 20px;">
   								<div class="progress-bar" role="progressbar" style="width: ${t}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 							</div>
-                            <p style=" font-size: 22px; text-align: right; ">${spendBudget} out of ${totalBudget}</p>
-                            <c:choose>
-	                            <c:when test="${totalBudget!=0 && spendBudget==0}">
+                            <p style=" font-size: 22px; text-align: right; ">3000 out of </p>
+                             <c:choose>
+	                            <c:when test="${totalBudget!=0 && spendBudget==0}">  
 	                            <p style=" font-size: 17px; font-style: italic; font-family:맑은고딕; text-align: right; font-weight: 900;"><span style=" font-size: 45px;font-weight: 900; ">${totalBudget}</span>만원</p>
-	                            </c:when>
+ 	                            </c:when>
 	                            <c:when test="${t<=100}">
 	                             <p style=" font-size: 17px; font-style: italic; font-family:맑은고딕; text-align: right; font-weight: 900;"><span style=" font-size: 45px;font-weight: 900; ">${t} </span>%</p>
 	                            </c:when>
 	                            <c:when test="${t>100}">
-	                             <p style=" font-size: 17px; font-style: italic; font-family:맑은고딕; text-align: right; font-weight: 400;"><span style=" font-size: 25px;font-weight: 900; line-height: 2em">예산이 지출을 넘었어요</span><%-- ${t}% --%></p>
-	                            </c:when>
-                            </c:choose>
+	                             <p style=" font-size: 17px; font-style: italic; font-family:맑은고딕; text-align: right; font-weight: 400;"><span style=" font-size: 25px;font-weight: 900; line-height: 2em">예산이 지출을 넘었어요</span>${t}%</p>
+	                            </c:when> 
+                            </c:choose> 
                         </div>
-                    </div>
+                    </div> --%>
+                        <div class="progressBar">
+                            <p style=" font-size: 23px;  font-family:맑은고딕; font-weight: 700;">예산 진행도</p>
+                             <c:choose>
+	                            <c:when test="${spendBudget==0}">
+	                                <c:set  var="t" value="0" />
+	                            </c:when>
+	                            <c:otherwise>
+	                            	<fmt:parseNumber var="t" value="${spendBudget/3000*100}" integerOnly="true" />
+	                            </c:otherwise>
+	                         </c:choose>
+                            <div class="progress" style="height: 20px;">
+  								<div class="progress-bar" role="progressbar" style="width: ${t}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+							</div>
+                            <p style=" font-size: 22px; text-align: right; ">${spendBudget} out of 3000</p>
+                            <p style=" font-size: 17px; font-style: italic; font-family:맑은고딕; text-align: right; font-weight: 900;"><span style=" font-size: 45px;font-weight: 900; ">${t}</span>%</p>
+                        </div>
+                    </div> 
                 </div>  
         
         
@@ -656,6 +724,14 @@ tbody tr:hover {
 						
 					});
 				});
+				
+				
+				
+				 $(".downLoadBtn").click(function(e){
+					 e.preventDefault();
+					 $("#downForm").submit();
+				 })
+				 
 
 		
 	</script>

@@ -50,6 +50,7 @@
     text-decoration: none;
     outline: none;
   }
+  
 
   /*Fun begins*/
   .tab_container {
@@ -57,6 +58,7 @@
     position: relative;
     font-size: 12px;
     background: rgba(255,191,222,0.3);
+/*     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0); */
   }
   
   input[type=radio], section {
@@ -185,11 +187,15 @@
 
 button{
   background: #fff;
-  padding: 3px 14px;
-  border:2.2px double rgb(151, 186, 190);
-  color: rgb(151, 186, 190);
+  padding: 5px 14px;
+  border:2.2px double #82aaaf;
+  color: #82aaaf;
+  /* border:2.2px double #595e64; 
+  color: #595e64;  */
   font-weight: 800;
-}
+  font-family: 맑은 고딕;
+  font-size: 17px;
+} 
 
 .btn1{
   margin: 0px 10px 0px 0px;
@@ -245,11 +251,25 @@ h4{
 	margin-bottom: 10px;
 }
 .auction_box{  	padding-top: 70px;}
- .more_btn, .inner_box{
- 	width: 1100px;
+ .more_btn{
+  	background: #f9f9f8;
+ 	width: 1000px;
  	margin: 18px 40px;
  	padding : 10px 30px;
  	clear:  both;
+ }
+ .inner_box{
+ 	width: 1000px;
+ 	margin: 18px 40px;
+ 	padding : 10px 30px;
+ }
+ 
+ .close_btn{
+ 	text-align: right;
+ 	position: relative;
+ 	left: 920px; 
+ 	font-size: 30px;
+ 	font-weight: 900;
  }
 
  
@@ -257,9 +277,9 @@ h4{
  	dispaly : hidden;
  }
  #title_area{
- 	font-size: 17px;
+ 	font-size: 20px;
  	font-weight: 800;
- 	line-height: 3em;
+ 	line-height: 2em;
  }
  
  .paging{
@@ -295,7 +315,7 @@ h4{
  
  #Done{
  	padding: 10px;
- 	background-color: rgb(151, 186, 190);;
+ 	background-color: rgb(151, 186, 190);
  	color: black;
  	border: 2px solid black;
  }
@@ -373,7 +393,7 @@ h4{
 			
 			
 			<input id="tab5" type="radio" name="tabs"  onClick="window.location.href='myAuction.do?choo=tab5&auctionType=h&memNo=${user.no}'" ${choose == 'tab5' ? 'checked="checked"' : '' } >
-			<label for="tab5"><span>허니</span></label>
+			<label for="tab5"><span>허니문</span></label>
 			
 			
 			<input id="tab6" type="radio" name="tabs"  onClick="window.location.href='myAuction.do?choo=tab6&auctionType=j&memNo=${user.no}'" ${choose == 'tab6' ? 'checked="checked"' : '' }>
@@ -400,31 +420,30 @@ h4{
             
              <c:forEach var="auction" items="${myAuction[0].tenderList}" varStatus="status">
              <div class="simple_box">
-     		<h4><h class="highlight">${status.count}</h>  ${auction.comInfoName}<span class="left">      <fmt:formatDate value='${auction.tenderRegdate}' pattern='yyyy-MM-dd' /></span></h4>
+     		<h4><h class="highlight">${status.count}</h>  ${auction.comInfoName}&emsp;                  <span class="left">      <fmt:formatDate value='${auction.tenderRegdate}' pattern='yyyy-MM-dd' /></span></h4>
               <div class="picture">
                 <img class="img_eff" src="<c:url value="/${auction.comFilePath}/${auction.comFileName}"/>" />
               </div>
               <div class="detail">
                 <div>${auction.comInfoAddr} </div>
-                <div>${auction.comInfoPhone}</div>
+                <div id="com_phone" onclick="comPhone('${auction.comInfoPhone}')">${auction.comInfoPhone}</div>
                 <div><fmt:formatNumber type='currency' value='${auction.tenderBudget}' pattern='###,###'/>만원</div>
                 <div><button class="btn1 more_detail" type="button" data-href="${auction.comInfoNo}" >상세보기</button>
 				
 				
 				
 				 
-				
-
-                <c:if test="${myAuction[0].dday>0}">
-                <c:if test="${auction.tenderStatus=='ing'  && myAuction[0].auctionStatus=='ing'}">
-                <button class="more_reservation btn1" type="button" data-href="${auction.tenderNo}" >예약하기</button>
+				<!-- 번호 추가해서 가져오기 --> 
+                <c:if test="${myAuction[0].dday>0  && myAuction[0].auctionStatus=='ing'}">
+                <c:if test="${auction.tenderStatus=='ing'  }">
+                <button class="more_reservation more_reservation${status.count} btn1" type="button" data-href="${auction.tenderNo}"  onclick="gen_reservation(${auction.tenderNo},${status.count})"  >예약하기</button>
                 </c:if>
-                <c:if test="${auction.tenderStatus=='choo'&& myAuction[0].auctionStatus=='ing'}">
-                <button class=" btn1" type="button" onclick="purchase(${myAuction[0].auctionNo}, ${auction.tenderNo})"  >결정하기</button>
+                <c:if test="${auction.tenderStatus=='choo'}">
+                <button class=" btn1" type="button" id="res_com" onclick="purchase(${myAuction[0].auctionNo}, ${auction.tenderNo},${status.count})"  >결정하기</button>
                 </c:if>
-                <c:if test="${ myAuction[0].auctionStatus=='done'}">
+                </c:if>
+                 <c:if test="${ myAuction[0].auctionStatus=='done' && auction.tenderStatus=='done'}">
                 <button class="Done" type="button"  >선택됨</button>
-                </c:if>
                 </c:if>
                 </div>
               </div>
@@ -448,7 +467,7 @@ h4{
                   <div class="inner_box" >
               <div id="title_area">${auction.tenderTitle}</div>
               <div id="content_area">${auction.tenderInfo}
-                <p><a class="more_btn" data-toggle="collapse" href="#collapseExample${status.count}" role="button" aria-expanded="false" aria-controls="collapseExample${status.count}">접기</a></p>
+                <p><a class="close_btn" data-toggle="collapse" href="#collapseExample${status.count}" role="button" aria-expanded="false" aria-controls="collapseExample${status.count}">^</a></p>
               </div>
               </div>
   </div>
@@ -520,12 +539,10 @@ $(function(){
 		    }
 		  });
 	});
+	
 
  	$(".more_reservation").click(function(e){
 		  e.preventDefault();
-		  //detail($(this).data("href"))
-		  var dataHref=$(".more_reservation").data("href");
-		  $("input[name='tenderNo']").val(dataHref); 
 	      $('#ModalReservation').modal('show')
 	      var bx;
 		  $('#ModalReservation').on('shown.bs.modal', function () {
@@ -534,18 +551,24 @@ $(function(){
 	    
 	  }); 
  	
+ 	
  	$(".auctionDetail").click(function(e){
 		  e.preventDefault();
-		 /*  alert($(".auctionDetail").data("href1"),"href1");
-		  alert($(".auctionDetail").data("href2"),"href2"); */
 		  auctionDetailModal($(".auctionDetail").data("href1"),$(".auctionDetail").data("href2"))
 	      $('#auctionDetailModal').modal('show')
 		  $('#auctionDetailModal').on('shown.bs.modal', function () {
 
 		  });
 	});
+ 	
+ 	$("#com_phone").trigger("click");
 	
 });//즉시 실행 함수
+
+function gen_reservation(auctionNo, no){
+	 $("input[name='tenderNo']").val(auctionNo); 
+}
+
 function purchase(auctionNo, tenderNo){
     msg = "이 업체를 최종 선택하시겠습니까??";
     if (confirm(msg)!=0) {
@@ -563,6 +586,27 @@ function purchase(auctionNo, tenderNo){
     	  location.reload();
 }
 } // myconfirm
+
+
+//전화번호 -
+function comPhone(textinput) {
+		textinput = textinput.replace(/[^0-9]/g, '');
+		var tmp = ""
+
+		if (textinput.length > 3 && textinput.length <= 7) {
+			tmp += textinput.substr(0, 3);
+			tmp += '-';
+			tmp += textinput.substr(3);
+			$("#com_phone").html(tmp);
+		} else if (textinput.length > 7) {
+			tmp += textinput.substr(0, 3);
+			tmp += '-';
+			tmp += textinput.substr(3, 4);
+			tmp += '-';
+			tmp += textinput.substr(7);
+			$("#com_phone").html(tmp);
+		}
+};
 
 
 function openForm (NY){
@@ -625,7 +669,6 @@ function auctionDetailModal(auctionNo, auctionType){
 		url : "<c:url value='/mypage/auctionView.do'/>",
 		data : {"auctionNo":auctionNo, "auctionType" : auctionType}
 	}).done(function(data){
-		alert(auctionType);
 		var div ="";
 		if(auctionType=='v'){
 			div+="<p><span class='title'>희망예식장소</span> "+data.hopeVenue!=undefined ? data.hopeVenue : ""+"</p>";

@@ -1467,7 +1467,8 @@ $(function () {
         // Whether to make lists and todos sortable
         sortable: true,
         // Default action buttons for all lists
-        controls: ['edit', 'add', 'remove', 'styleChange'],
+       /* controls: ['edit', 'add', 'remove', 'styleChange'],*/
+        controls: [],
         //List style
         defaultStyle: 'lobilist-default',
         // Whether to show lists on single line or not

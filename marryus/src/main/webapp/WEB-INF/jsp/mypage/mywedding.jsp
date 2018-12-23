@@ -11,6 +11,11 @@
     <title>Marry Us</title>
    <c:import url="/common/importCss.jsp"/>
     <c:import url="/common/importJs.jsp"/>
+    <style type="text/css">
+/*     .progress-bar {
+	background-color: #ffbfce;
+	} */
+    </style>
 </head>
 <body>
 
@@ -113,8 +118,19 @@
                             </a>
                         </div>
                         <div class="progressBar">
-                            TODO 진행도 <fmt:parseNumber var="t" value="${todoDone/todoTotal*100}" integerOnly="true" />${t}%
-                            <progress value="${todoDone/todoTotal*100}" max="100"></progress>
+                                                    <fmt:parseNumber var="t" value="${todoDone/todoTotal*100}" integerOnly="true" />
+                            <p style=" font-size: 15px;  font-family:맑은고딕; font-weight: 600; line-height: 2em;">TODO 진행도 ${t}%</p>
+                             <c:choose>
+	                            <c:when test="${todoDone==0}">
+	                                <c:set  var="t" value="0" />
+	                            </c:when>
+	                            <c:otherwise>
+	                            	<fmt:parseNumber var="t" value="${todoDone/todoTotal*100}" integerOnly="true" />
+	                            </c:otherwise>
+	                         </c:choose>
+                            <div class="progress" style="height: 20px;">
+  								<div class="progress-bar" role="progressbar" style="width: ${t}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+							</div>
                         </div>
                         <div class="infoCount">
                             <ul>

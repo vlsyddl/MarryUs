@@ -409,11 +409,34 @@ nav{ text-align: center;}
         
         
 
-    
-    
- 
-		
-    </div>
+<script>
+//전화번호 -
+function comPhone(textinput) {
+		textinput = textinput.replace(/[^0-9]/g, '');
+		var tmp = ""
+
+		if (textinput.length > 3 && textinput.length <= 7) {
+			tmp += textinput.substr(0, 3);
+			tmp += '-';
+			tmp += textinput.substr(3);
+			$("#com_phone").html(tmp);
+		} else if (textinput.length = 10) {
+			tmp += textinput.substr(0, 2);
+			tmp += '-';
+			tmp += textinput.substr(2, 4);
+			tmp += '-';
+			tmp += textinput.substr(7);
+			$("#com_phone").html(tmp);
+		}else if (textinput.length > 7 && textinput.length = 10) {
+			tmp += textinput.substr(0, 3);
+			tmp += '-';
+			tmp += textinput.substr(3, 4);
+			tmp += '-';
+			tmp += textinput.substr(7);
+			$("#com_phone").html(tmp);
+		}
+};
+</script>
     
     
 

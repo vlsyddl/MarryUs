@@ -337,6 +337,7 @@
         inner join mu_tender t
 		on a.auction_no = t.auction_no
 		and t.mem_no=#{memNo}
+		order by tender_regdate desc
         limit #{begin}, 10
 	</select>
 
@@ -430,6 +431,7 @@
         on a.mem_no = m.mem_no
 		where t.mem_no=#{memNo}
         and res_no is not null
+        order by res_no desc 
 	</select>
 	
 	
