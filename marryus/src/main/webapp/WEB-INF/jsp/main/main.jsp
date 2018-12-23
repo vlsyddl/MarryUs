@@ -265,7 +265,7 @@ margin-block-start: 2em;
 						</div>
 						<div class="col-md-6" id="venueAuctionDone">
 							<h5 class="v-roll-title">
-								<a href="#">입찰중 역경매</a>
+								<a href="#">낙찰된 역경매</a>
 							</h5>
 							<ul class="v-roll">
 							
@@ -345,7 +345,7 @@ margin-block-start: 2em;
 					</div>
 						<div class="col-md-6" id="sdmAuctionDone">
 							<h5 class="v-roll-title">
-								<a href="#">입찰중 역경매</a>
+								<a href="#">낙찰된 역경매</a>
 							</h5>
 							<ul class="v-roll">
 							<c:forEach var="auction" items="${totalauctionList}">
@@ -418,7 +418,7 @@ margin-block-start: 2em;
 						</div>
 						<div class="col-md-6" id="honeyAuctionDone">
 							<h5 class="v-roll-title">
-								<a href="#">입찰중 역경매</a>
+								<a href="#">낙찰된 역경매</a>
 							</h5>
 							<ul class="v-roll">
 							<c:forEach var="auction" items="${totalauctionList}">
@@ -553,7 +553,7 @@ margin-block-start: 2em;
 						</div>
 						<div class="col-md-6" id="eventAuctionDone">
 							<h5 class="v-roll-title">
-								<a href="#">입찰중 역경매</a>
+								<a href="#">낙찰된 역경매</a>
 							</h5>
 							<ul class="v-roll">
 							<c:forEach var="auction" items="${totalauctionList}">
