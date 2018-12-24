@@ -134,7 +134,7 @@
 		inner join mu_member m 
 		 on a.mem_no = m.mem_no, (select @rownum:=0) TMP
 		 where a.auction_type = 'v'
-		 order by a.mem_no desc
+		 order by a.auction_no desc
 		 limit #{begin}, 10
 	</select>
 	
