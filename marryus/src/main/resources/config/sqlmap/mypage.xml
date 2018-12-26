@@ -512,10 +512,12 @@
 	<!-- 나의 역경매 현황보기(개인) -->
 	<select id="selectGeneralAuction" parameterType="Auction" resultMap="auctionMap">
 		select *, auction_edate-now() as dday
-		from mu_auction
-		where mem_no=#{memNo} 
-		and auction_type=#{auctionType}
-		order by auction_no desc
+		from mu_auction a
+		left join mu_tender t
+		on a.auction_no = t.tender_no
+		where a.mem_no=#{memNo} 
+		and a.auction_type=#{auctionType}
+		order by t.tender_regdate desc
 		limit #{pageNo}, 1
 
 	</select>
@@ -716,6 +718,7 @@
 		select *
         from mu_tender
 		where tender_no=#{tenderNo}
+		order by tender_regdate desc
 	</select>
 
 	
@@ -885,22 +888,9 @@
           on m.mem_no = a.mem_no
 	     where m.mem_no = #{memNo}
 		   and auction_status = 'done' 
-<!-- 		   select ifnull(count(*),0)
-		  from mu_auction a
-		  left join mu_tender t
-		  on a.auction_no = t.auction_no
-          right outer join mu_member m
-          on m.mem_no = a.mem_no
-	      where m.mem_no = #{memNo}
-		   and t.tender_status= 'choo'  -->
 	</select>
 	
-		<!-- wedding date  -->
-<!-- 	<select id="getWedDate" parameterType="int" resultType="String">
-		select plan_wed_date
-		  from mu_wedding_plan 
-		 where mem_no= #{memNo}
-	</select> -->
+
  	<select id="getWedDate" parameterType="int" resultType="String">
 		select ifnull(plan_wed_date,DATE_ADD(now(), INTERVAL 365 DAY) )
 		  from mu_wedding_plan wp

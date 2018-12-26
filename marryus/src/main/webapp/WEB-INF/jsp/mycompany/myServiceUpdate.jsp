@@ -271,13 +271,11 @@
  	        } 
  		   		formData.append("file", $("input[name=file]")[0].files[0]);
  		   		
- 		   		console.log(rep_file);
  		   		if(!rep_file){
  		   			alert("대표사진을 꼭 설정해야 합니다.");
  		   			return false;
  		   		}
  		   		
- 		   		console.log(sel_files.length);
   			 $.ajax({
  		    	   url:"insertComInfo.do",
  		    	   type:"POST",
@@ -322,52 +320,39 @@
     function deleteImagesAction(index) { 
     	
 
-       console.log("index : "+index);
        sel_files.splice(index, 1);
 
         var img_box = "#img_box_"+index;
         $(img_box).remove();
 
-        //console.log(sel_files);
     }   
     
     
     function deleteImagesActions(index){
-    	console.log(index);
     	if(index){
     		$.ajax({
     			url : "deleteImg.do",
     			data: {"comInfoNo" : index},
 				type : "POST"
     		}).done(function(){
-    			console.log("대표사진"+index+"번째가 삭제됨...")
-    		}).fail(function(){
-    			console.log("실패함....")
     		});
     	}
     	
     	
     	
-        //console.log("index : "+index);
-        //sel_files.splice(index, 1);
 
         var img_box = "#img_box_"+index;
-        console.log(img_box);
         $(img_box).remove();
-		console.log("세부사진")
-        //console.log(sel_files);
     }
     
     
     function deleteImageAction(index) {   
-    	console.log("대표사진....")
     	if(index){
     		$.ajax({
     			url : "deleteImg.do",
     			data: {"comInfoNo" : index},
 				type : "POST"
     		}).done(function(){
-    			console.log("대표사진"+index+"번째가 삭제됨...")
     		});
     	}
     	$(".imgs_wrap").empty();

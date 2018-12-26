@@ -357,13 +357,11 @@
     
     
     function deleteImagesAction(index) {            
-        console.log("index : "+index);
         sel_files.splice(index, 1);
 
         var img_box = "#img_box_"+index;
         $(img_box).remove();
 
-        console.log(sel_files);
     }   
     function deleteImageAction(index) {   
     	$(".imgs_wrap").empty();
@@ -476,105 +474,6 @@
 				}).open();
 			};
 			
-			
-			
-			
-
-
-			
-
- 
-			/**********************************************************************************
-			validation 플러그인 사용 
-		**********************************************************************************/
-
-
- 	/* 	$.validator.addMethod("phone", function(phone_number, element) {
-			phone_number = phone_number.replace(/\s+/g, ""); 
-			return this.optional(element) || phone_number.length > 9 &&
-				phone_number.match(/^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/);
-		}, "Please specify a valid phone number");
-
-
-		$(document).ready(function(){
-			console.log(${comInfoType});
-		}
-
-		$( "#myServiceInsertFrom" ).validate({
-			onkeyup:true, 
-			rules: {
-				comInfoName: {
-			      required: true,
-			      minlength: 5,
-			    },
-			    comInfoType:{
-			      required : true,
-			      minlength: 2 ,
-			    },
-				comInfoPhone:{
-					required : true,
-					phone:true
-				},
-				comInfoAddr:{
-				    required : true,
-				    minlength: 2 ,
-				},
-				comInfoAddrDetail:{
-				    required : true,
-				    minlength: 2 ,
-				},
-				comInfoProfile:{
-				    required : true,
-				    minlength: 2 ,
-				},
-				comInfoContent:{
-				    required : true,
-				    minlength: 2 ,
-				 }
-			  },
-			  messages:{
-				  comInfoName:{
-		              required : "필수로입력하세요",
-		              minlength : "최소 {0}글자이상이어야 합니다",
-		                       
-		        },
-		        comInfoType:{
-		        	required : "필수로입력하세요",
-		            minlength : "최소 {0}글자이상이어야 합니다"
-		  	      
-		  	    },
-				comInfoPhone:{
-					required: "연락처를 입력하세요.",
-					phone: "잘못된 문자가 입력되었습니다."
-				},
-				comInfoAddr:{
-		        	required : "필수로입력하세요",
-		            minlength : "최소 {0}글자이상이어야 합니다"
-				},
-				comInfoAddrDetail:{
-		        	required : "필수로입력하세요",
-		            minlength : "최소 {0}글자이상이어야 합니다"
-				},
-				comInfoProfile:{
-		        	required : "필수로입력하세요",
-		            minlength : "최소 {0}글자이상이어야 합니다"
-				},
-				comInfoContent:{
-		        	required : "필수로입력하세요",
-		            minlength : "최소 {0}글자이상이어야 합니다"
-				 }
-				
-			  },
-			  onsubmit: true,
-
-			  errorClass : "validation-error",
-
-			 validClass : "validation-valid", 
-			  success: function(label) {
-				   label.addClass("validation-valid").text("Ok!")
-			  } 
-			});
-		}); */
  
 		
 		</script>

@@ -249,11 +249,9 @@ function fileUploadAction() {
 
 
 function handleImgFileSelect(e) {
-	console.log("sdjfldsjflkdsjfl");
 	var rep_file= $("input[name=file]")[0].files[0];
 	var reader = new FileReader();
 	 reader.onload= function (e) {
-		 console.log($("#genProfile").html());
          $("#genProfile").attr("src",e.target.result);
 	 }
 	 
@@ -264,13 +262,11 @@ function handleImgFileSelect(e) {
 
 
 function updateProfile(){
-	console.log("들어옴....");
 	 $.ajax({
 	   	   url:"validMember.do",
 		   type : "POST",
 	   	   data: $("#UpdateProfileForm").serialize()
 	      }).done(function (result){
-	    	  console.log(result);
 	    	  if(result=="success"){
 	    		var formData = new FormData(document.getElementById('UpdateProfileForm'));
 	    		formData.append("file", $("input[name=file]")[0].files[0]);

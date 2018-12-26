@@ -306,13 +306,11 @@
 	
 	
 	function updateProfile(){
-		console.log("들어옴....");
 		 $.ajax({
 		   	   url:"validMember.do",
 			   type : "POST",
 		   	   data: $("#UpdateProfileForm").serialize()
 		      }).done(function (result){
-		    	  console.log(result);
 		    	  if(result=="success"){
 		    		  
 			    	  $.ajax({
@@ -329,8 +327,7 @@
 		      	}
 		      }).fail(function(e){
 		    	  console.log(e);
-		    	  console.log(e.status);
-		    	     
+		    	  console.log(e.status);	     
 		      });
 	}
 	

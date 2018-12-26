@@ -286,7 +286,7 @@ body.lobibox-open {
   color: #eeeeee;
 }
 .lobibox .lobibox-header .btn-close {
-  /* float: right; */
+  float: right;
   background-color: transparent;
   cursor: pointer;
   border: none;
@@ -788,7 +788,7 @@ fieldset[disabled] .lobibox .lobibox-btn.lobibox-btn-default.active {
   left: 0px;
 }
 .lobibox-notify-wrapper-large.left .lb-notify-tabs > li {
-  /* float: left; */
+  float: left;
   margin-left: 0;
   margin-right: 2px;
 }

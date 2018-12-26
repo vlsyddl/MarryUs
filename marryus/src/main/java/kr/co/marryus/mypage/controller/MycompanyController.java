@@ -105,7 +105,6 @@ public class MycompanyController {
 	@RequestMapping("/service.do")
 	public void service(HttpSession session, Model model) {
 		model.addAttribute("autionList", service.selectComInfoList(((Member)session.getAttribute("user")).getNo()));
-		System.out.println("moeld : "+model.toString());
 	}
 	
 	
@@ -164,7 +163,6 @@ public class MycompanyController {
 	/** 업체 서비스 정보 수정하기(작성글 보기)*/
 	@RequestMapping("/myServiceUpdate.do")
 	public void myServiceUpdate(Model model, CompanyInfo comInfo, HttpSession session) {
-		System.out.println(comInfo.getComInfoNo()+comInfo.getMemNo());
 		model.addAttribute("comInfoType", service.selectComInfoType(((Member)session.getAttribute("user")).getNo()));
 		model.addAttribute("auctionList", service.selectComInfoDetail(comInfo));
 		model.addAttribute("file", service.selectComFile(comInfo));
@@ -191,7 +189,6 @@ public class MycompanyController {
 	/** 업체회원 정보 보기(정보수정)*/	
 	@RequestMapping("/companyUpdateForm.do")
 	public void companyUpdateForm(HttpSession session,  Model model) {
-		System.out.println(((Member)session.getAttribute("user")).getNo());
 		model.addAttribute("member",service.selectCompanyMember(((Member)session.getAttribute("user")).getNo()));
 	}
 	

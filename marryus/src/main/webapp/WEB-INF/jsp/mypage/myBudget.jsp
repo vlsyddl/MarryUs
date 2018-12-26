@@ -645,7 +645,6 @@ background-color: #ffbfce;
 		    } else if ($("#budgExpenses").val() == "") {
 		    	alert("지출을 입력해주세요.");
 		    } else {
-		    	console.log($("#writeBudgetForm").serialize());
 			    $.ajax({
 			        url : '<c:url value="/mypage/writeMyBudget.do" />',
 			        data : $("#writeBudgetForm").serialize(),
@@ -658,10 +657,8 @@ background-color: #ffbfce;
 		
 		
 		$(".updateIcon").click(function () {
-			console.log($(this).data("budgno"));
 			var budgNo = $(this).data("budgno");
 			var parent = document.getElementById(budgNo);
-			console.log(parent);
 			
 			
 			
@@ -706,7 +703,6 @@ background-color: #ffbfce;
 		});
 		
 		function deleteBudget(budgNo) {
-			console.log(budgNo);
 			$.ajax({
 		        url : '<c:url value="/mypage/deleteMyBudget.do" />',
 		        data : "budgNo="+budgNo,

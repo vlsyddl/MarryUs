@@ -303,8 +303,12 @@ h4{
 	line-height: 2em;
 	margin-bottom: 10px;
 }
-#resSubmitForm select,  #resSubmitForm input{
+#resSubmitForm input, select{
 	line-height: 1.5em;
+}
+
+#resSubmitForm select{
+	padding: 5px;
 }
 
 
@@ -625,7 +629,6 @@ function openForm (NY){
 
 
 function resSubmit(){
-	console.log($(".more_reservation").data("href"));
 	$.ajax({
 		url : "<c:url value='/mypage/reservation.do'/>",
 		type : "POST",
@@ -647,7 +650,6 @@ function detail(comInfoNo){
 		url : "<c:url value='/service/wedding/comDetail.do'/>",
 		data : "comInfoNo="+comInfoNo
 	}).done(function(data){
-		console.log(data)
 		modal.find(".modal-title").html(data.info.comInfoName)
         modal.find(".infoBox").find(".adress").children("dd").html(data.info.comInfoAddr+" "+data.info.comInfoAddrDetail)
         modal.find(".infoBox").find(".phone").children("dd").html(data.info.comInfoPhone)
@@ -794,7 +796,7 @@ function auctionDetailModal(auctionNo, auctionType){
 				<select name="resTime">
 				<option value=''>--선택안함--</option>
 				<c:forEach var="i" begin="8" end="20">
-					<option value='${i}'>${i}:00시</option>
+					<option value='${i}'>${i}시</option>
 				</c:forEach>
 				</select>
 				</div>

@@ -66,7 +66,6 @@ public class MypageController {
 	@RequestMapping("/mywedding.do")
 	public void mywedding(Model model,HttpSession session) throws Exception   {
 		int memNo= (((Member)session.getAttribute("user")).getNo());
-		System.out.println(memNo);
 		model.addAttribute("todo",service.selectTodoThree(memNo));
 		   String[] auctionList= {"v","sdm","h","j","e"};
 		    Map<String, Integer> list=new HashMap<>();
@@ -92,12 +91,6 @@ public class MypageController {
 			
 			model.addAttribute("wedDate", date);
 		   
-		   
-		   
-		   
-			/*
-			proFileMap.put("auctionTotal", service.MycountTotalAuction(memNo));
-			proFileMap.put("auctionDone", service.MycountAuctiondone(memNo));*/
 	}
 	
 	@RequestMapping("/myService.do")
@@ -249,19 +242,14 @@ public class MypageController {
         if(filePath.exists()==false) {
         	filePath.mkdirs();}
         
-        System.out.println(file);
         if(!(file.isEmpty())) {
           String fileName = file.getOriginalFilename();
           String ext = fileName.substring(fileName.indexOf("."),fileName.length());
           fileName =UUID.randomUUID().toString()+ext;
           genMem.setGenProfilepath("img/genProfile");
           genMem.setGenProfilename(fileName);
-          System.out.println(file.getOriginalFilename());
-          System.out.println(fileName);
           file.transferTo(new File(imgPath, fileName));
         }
-        System.out.println(genMem.getGenProfilename()+"프로필 이름");
-        System.out.println(genMem.getGenProfilepath()+"프로필 경로");
 		service.updateGeneralMember(genMem);
 		service.updateMember(member);
 
@@ -381,7 +369,6 @@ public class MypageController {
 	@RequestMapping("/myTodoDelete.do")	
 	@ResponseBody 
 	public void myTodoDelete(Item item) throws Exception{
-		System.out.println(item.getTodo().getTodoNo());
 		int no = service.deleteTodo(item.getTodo().getTodoNo());
 	}
 	
@@ -421,7 +408,6 @@ public class MypageController {
 	@RequestMapping("/auctionView.do")	
 	@ResponseBody 
 	public Object auctionView(int auctionNo, String auctionType) throws Exception{
-		System.out.println(auctionNo+auctionType);
 		if(auctionType.equals("v")) {
 			return service.selectVenue(auctionNo);
 		}else if(auctionType.equals("s")) {
@@ -453,16 +439,9 @@ public class MypageController {
 	public void myBudget(Model model, HttpSession session) throws Exception{
 		int memNo = ((Member)session.getAttribute("user")).getNo();
 		model.addAttribute("budgetList", service.selectBudget(memNo));
-		   model.addAttribute("totalBudget",service.MytotalBudget(memNo));
-		   model.addAttribute("spendBudget",service.MyspendBudget(memNo));
+		model.addAttribute("totalBudget",service.MytotalBudget(memNo));
+		model.addAttribute("spendBudget",service.MyspendBudget(memNo));
 		   
-		/*   System.out.println( service.selectWeddingPlan(memNo).getPlanBudget().);*/
-		   
-/*		   if(service.selectWeddingPlan(memNo).getPlanPartner().isEmpty()) {
-			   model.addAttribute("totalBudget",service.MytotalBudget(memNo));
-		   }else {
-			   model.addAttribute("totalBudget", service.selectWeddingPlan(memNo).getPlanBudget().substring(0, service.selectWeddingPlan(memNo).getPlanBudget().length()-2));
-		   }*/
 	}
 	
 	@RequestMapping("/writeMyBudget.do")
@@ -500,86 +479,7 @@ public class MypageController {
 	}
 	
 	
-	/**
-	 *  Mypage profile Detail 오수진 
-	 * mypage profile Detail
-	 * @param memNo
-	 * @return
-	 * @throws Exception
-	 */
-	/*@RequestMapping(value="/MyproFileDetail.json",method= RequestMethod.POST)
-	@ResponseBody
-	public myMain TodoList(int memNo)throws Exception {
-		myMain main = new myMain();
-		main.setTodoTotal(service.MycountTotalTODO(memNo));
-		main.setTodoDone(service.MycountTODOdone(memNo));
-		main.setAuctionTotal(service.MycountTotalAuction(memNo));
-		main.setAuctionDone(service.MycountAuctiondone(memNo));
-		main.setLikeCompany(service.MycountCompanyLike(memNo));
-		System.out.println(service.MytotalBudget(memNo).getAvgTenderBudget());
-		if(service.MytotalBudget(memNo).getAvgTenderBudget()!=0) {
-			main.setTotalBudget(service.MytotalBudget(memNo));
-		}
-	    String[] auctionList= {"v","sdm","h","j","e"};
-	    Map<String, Integer> list=new HashMap<>();
-	    for(String li:auctionList) {
-	    	Auction auction = new Auction();
-	    	auction.setMemNo(memNo);
-	    	auction.setAuctionType(li);
-	    	list.put(li, service.selectByTenderCnt(auction));
-	    }
-	    main.setTenderCnt(list);
-	    main.setTodoThree(service.selectTodoThree(memNo));
-	    
-	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-		String weddingDate=service.getWedDate(memNo);  
-		Date date=sdf.parse(weddingDate);
-		main.setWedDate(date);
-		
-		return main;
-	}*/
-	/**
-	 *  Mypage profile Detail 오수진 
-	 *  mypage profile - 카운트 다운
-	 * @param memNo
-	 * @return
-	 * @throws Exception
-	 */
-/*	@RequestMapping(value="/MyproFileWeddingDate.json",method= RequestMethod.POST)
-	@ResponseBody
-	public HashMap<String, Object> MygetWeddingDate(int memNo) throws Exception{
-		HashMap<String, Object> wdMap= new HashMap<>();
-		
-		//String 값 Date로 parse
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-			String weddingDate=service.getWedDate(memNo);  
-			Date date=sdf.parse(weddingDate);
-		wdMap.put("wedDate", date);
-		return wdMap;
-	}*/
 	
-	
-	/**
-	 *  Mypage profile Detail 오수진 
-	 * mypage profile Detail
-	 * @param memNo
-	 * @return
-	 * @throws Exception
-	 */
-	@RequestMapping(value="/MyproFileDetail.json",method= RequestMethod.POST)
-	@ResponseBody
-	public HashMap<String, Integer> TodoList(int memNo)throws Exception {
-		HashMap<String, Integer> proFileMap = new HashMap<>();
-		proFileMap.put("todoTotal", service.MycountTotalTODO(memNo));
-		proFileMap.put("todoDone", service.MycountTODOdone(memNo));
-		proFileMap.put("auctionTotal", service.MycountTotalAuction(memNo));
-		proFileMap.put("auctionDone", service.MycountAuctiondone(memNo));
-		proFileMap.put("likeCompany", service.MycountCompanyLike(memNo));
-		
-		
-		return proFileMap;
-	}
 	/**
 	 *  Mypage profile Detail 오수진 
 	 *  mypage profile - 카운트 다운
