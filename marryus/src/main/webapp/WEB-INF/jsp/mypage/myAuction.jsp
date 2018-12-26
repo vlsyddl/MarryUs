@@ -1,531 +1,563 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 
-   <c:import url="/common/importCss.jsp"/>
-	 <c:import url="/common/importJs.jsp"/>
-	 <head>
-  <script type="text/javascript" src="/scripts/bootstrap-datetimepicker.*js"></script>
-  <!-- include your less or built css files  -->
-  <!-- 
-  bootstrap-datetimepicker-build.less will pull in "../bootstrap/variables.less" and "bootstrap-datetimepicker.less";
-  or
-  <link rel="stylesheet" href="/Content/bootstrap-datetimepicker.css" />
-  -->
+<c:import url="/common/importCss.jsp" />
+<c:import url="/common/importJs.jsp" />
+<head>
+<script type="text/javascript"
+	src="/scripts/bootstrap-datetimepicker.*js"></script>
 </head>
 
- <style>
-  @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css');
+<style>
+@import
+	url('https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css')
+	;
 
-  *,
-  *:after,
-  *:before {
-  	-webkit-box-sizing: border-box;
-  	-moz-box-sizing: border-box;
-  	box-sizing: border-box;
-  }
+*, *:after, *:before {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
 
-  .clearfix:before,
-  .clearfix:after {
-  	content: " ";
-  	display: table;
-  }
+.clearfix:before, .clearfix:after {
+	content: " ";
+	display: table;
+}
 
-  .clearfix:after {
-  	clear: both;
-  }
+.clearfix:after {
+	clear: both;
+}
 
-  h1 {
-  	text-align: center;
-  }
+h1 {
+	text-align: center;
+}
 
-  a {
-    color: black;
-    text-decoration: none;
-    outline: none;
-  }
-  
+a {
+	color: black;
+	text-decoration: none;
+	outline: none;
+}
 
-  /*Fun begins*/
-  .tab_container {
-  	margin: 0 auto;
-    position: relative;
-    font-size: 12px;
-    background: rgba(255,191,222,0.3);
-/*     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0); */
-  }
-  
-  input[type=radio], section {
-    clear: both;
-    padding-top: 10px;
-    display: none;
-  }
+/*Fun begins*/
+.tab_container {
+	margin: 0 auto;
+	position: relative;
+	font-size: 12px;
+	background: rgba(255, 191, 222, 0.3);
+	/*     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0); */
+}
 
-  label {
-    font-weight: 900;
-    font-size: 16px;
-    display: block;
-    float: left;
-    width: 12.5%;
-    padding: 1.5em;
-    color: rgb(81, 91, 95);
-    cursor: pointer;
-    text-decoration: none;
-    text-align: center;
-/*     background: #f0f0f0; */
-  }
-  label span{
-  font-weight: 700;}
+input[type=radio], section {
+	clear: both;
+	padding-top: 10px;
+	display: none;
+}
 
-  #tab1:checked ~ #content,
-  #tab2:checked ~ #content,
-  #tab3:checked ~ #content,
-  #tab4:checked ~ #content,
-  #tab5:checked ~ #content,
-  #tab6:checked ~ #content,
-  #tab7:checked ~ #content {
-    display: block;
-    padding: 20px;
-    background: #fff;
-    color: rgb(73, 78, 80);
-    border-bottom: 2px solid #f0f0f0;
-  }
-	
-  .tab_container .tab-content p,
-  .tab_container .tab-content h3 {
-    -webkit-animation: fadeInScale 0.7s ease-in-out;
-    -moz-animation: fadeInScale 0.7s ease-in-out;
-    animation: fadeInScale 0.7s ease-in-out;
-  }
-  .tab_container .tab-content h3  {
-    text-align: center;
-  }
+label {
+	font-weight: 900;
+	font-size: 16px;
+	display: block;
+	float: left;
+	width: 12.5%;
+	padding: 1.5em;
+	color: rgb(81, 91, 95);
+	cursor: pointer;
+	text-decoration: none;
+	text-align: center;
+	/*     background: #f0f0f0; */
+}
 
-  .tab_container [id^="tab"]:checked + label {
-    background: rgba(255,191,222,1);
-    /* box-shadow: inset 0 5px rgb(176, 203, 207); */
-    border-bottom: 5px solid #8c8880 ;
-    
-  }
-  .tab_container [id^="tab"] + label{
-  	transition: all 0.5s;
-  }
-	.tab_container [id^="tab"] + label:hover{
-		background: rgba(255,191,222,0.5);
+label span {
+	font-weight: 700;
+}
+
+#tab1:checked ~ #content, #tab2:checked ~ #content, #tab3:checked ~
+	#content, #tab4:checked ~ #content, #tab5:checked ~ #content, #tab6:checked 
+	~ #content, #tab7:checked ~ #content {
+	display: block;
+	padding: 20px;
+	background: #fff;
+	color: rgb(73, 78, 80);
+	border-bottom: 2px solid #f0f0f0;
+}
+
+.tab_container .tab-content p, .tab_container .tab-content h3 {
+	-webkit-animation: fadeInScale 0.7s ease-in-out;
+	-moz-animation: fadeInScale 0.7s ease-in-out;
+	animation: fadeInScale 0.7s ease-in-out;
+}
+
+.tab_container .tab-content h3 {
+	text-align: center;
+}
+
+.tab_container [id^="tab"]:checked+label {
+	background: rgba(255, 191, 222, 1);
+	/* box-shadow: inset 0 5px rgb(176, 203, 207); */
+	border-bottom: 5px solid #8c8880;
+}
+
+.tab_container [id^="tab"]+label {
+	transition: all 0.5s;
+}
+
+.tab_container [id^="tab"]+label:hover {
+	background: rgba(255, 191, 222, 0.5);
+}
+
+.tab_container [id^="tab"]:checked+label .fa {
+	color: rgb(176, 203, 207);
+}
+
+label .fa {
+	font-size: 1.3em;
+	margin: 0 0.4em 0 0;
+}
+
+/*Media query*/
+@media only screen and (max-width: 900px) {
+	label span {
+		display: none;
 	}
-  .tab_container [id^="tab"]:checked + label .fa {
-    color: rgb(176, 203, 207);
-  }
+}
 
-  label .fa {
-    font-size: 1.3em;
-    margin: 0 0.4em 0 0;
-  }
+/*Content Animation*/
+@
+keyframes fadeInScale { 0% {
+	transform: scale(0.9);
+	opacity: 0;
+}
 
-  /*Media query*/
-  @media only screen and (max-width: 900px) {
-    label span {
-      display: none;
-    }
-    
-  
-  }
+100%
+{
+transform
+:
+ 
+scale
+(1);
 
-  /*Content Animation*/
-  @keyframes fadeInScale {
-    0% {
-    	transform: scale(0.9);
-    	opacity: 0;
-    }
-    
-    100% {
-    	transform: scale(1);
-    	opacity: 1;
-    }
-  }
+    	
+opacity
+:
+ 
+1;
+}
+}
+.no_wrap {
+	text-align: center;
+	color: rgb(176, 203, 207);
+}
 
-  .no_wrap {
-    text-align:center;
-    color: rgb(176, 203, 207);
-  }
-  .link {
-    text-align:center;
-  }
+.link {
+	text-align: center;
+}
 
-
-  body{
+body {
 	color: rgb(112, 112, 112);
-	line-height:30px;
+	line-height: 30px;
 	font-weight: 500;
 	font-size: 18px;
 }
-.simple_box h.highlight{
-  background: #f1d6d6; 
-  padding: 3px 9px;
-  font-weight: 800;
-  color: rgb(78, 78, 78);
-  clear: both;
-}
-.simple_box .picture{
-	float: left;
-}
-.simple_box .detail div{
-  font-weight: 500;
-  text-indent: 30px;
+
+.simple_box h.highlight {
+	background: #f1d6d6;
+	padding: 3px 9px;
+	font-weight: 800;
+	color: rgb(78, 78, 78);
+	clear: both;
 }
 
-.simple_box .red{
+.simple_box .picture {
+	float: left;
+}
+
+.simple_box .detail div {
+	font-weight: 500;
+	text-indent: 30px;
+}
+
+.simple_box .red {
 	font-size: 12px;
 	color: rgb(212, 37, 37);
 }
 
-button{
-  background: #fff;
-  padding: 5px 14px;
-  border:2.2px double #82aaaf;
-  color: #82aaaf;
-  /* border:2.2px double #595e64; 
+button {
+	background: #fff;
+	padding: 5px 14px;
+	border: 2.2px double #82aaaf;
+	color: #82aaaf;
+	/* border:2.2px double #595e64; 
   color: #595e64;  */
-  font-weight: 800;
-  font-family: 맑은 고딕;
-  font-size: 17px;
-} 
-
-.btn1{
-  margin: 0px 10px 0px 0px;
+	font-weight: 800;
+	font-family: 맑은 고딕;
+	font-size: 17px;
 }
 
-.btn2{
-  font-size: 14px;
-  border: none;
+.btn1 {
+	margin: 0px 10px 0px 0px;
 }
 
+.btn2 {
+	font-size: 14px;
+	border: none;
+}
 
-.img_eff{
-  height: 130px;
-  width: 200px;
-   object-fit:contain;
-   max-height: 100%;
-   max-width: 100%;    
-   display: block;
-   margin: auto auto;
-   -webkit-filter: grayscale(0) blur(0);
+.img_eff {
+	height: 130px;
+	width: 200px;
+	object-fit: contain;
+	max-height: 100%;
+	max-width: 100%;
+	display: block;
+	margin: auto auto;
+	-webkit-filter: grayscale(0) blur(0);
 	filter: grayscale(0) blur(0);
 	-webkit-transition: .3s ease-in-out;
-  transition: .3s ease-in-out;
-  border: 1px solid rgb(243, 243, 243);
+	transition: .3s ease-in-out;
+	border: 1px solid rgb(243, 243, 243);
 }
 
 .img_eff:hover {
-  opacity: 1;
+	opacity: 1;
 	-webkit-filter: grayscale(30%) blur(1px);
 	filter: grayscale(30%) blur(1px);
 }
 
-
-
-
-body .left{
+body .left {
 	text-align: right;
 }
 
-
-.info_box div, .simple_box div{
+.info_box div, .simple_box div {
 	font-size: 16px;
 	line-height: 1.5em;
 }
-.simple_box{
-	height: 130px;
-	vertical-align: bottom;}
 
-h4{
+.simple_box {
+	height: 130px;
+	vertical-align: bottom;
+}
+
+h4 {
 	font-size: 22px;
 	font-weight: 600;
 	margin-top: 80px;
 	margin-bottom: 10px;
 }
-.auction_box{  	padding-top: 70px;}
- .more_btn{
-  	background: #f9f9f8;
- 	width: 1000px;
- 	margin: 18px 40px;
- 	padding : 10px 30px;
- 	clear:  both;
- }
- .inner_box{
- 	width: 1000px;
- 	margin: 18px 40px;
- 	padding : 10px 30px;
- }
- 
- .close_btn{
- 	text-align: right;
- 	position: relative;
- 	left: 920px; 
- 	font-size: 30px;
- 	font-weight: 900;
- }
 
- 
- .hidden{
- 	dispaly : hidden;
- }
- #title_area{
- 	font-size: 20px;
- 	font-weight: 800;
- 	line-height: 2em;
- }
- 
- .paging{
- 	text-align: right;
- }
- .paging li{
- 	background-color: #334455;
- 	margin: 10px;
- }
- 
- .title{
- 	font-size: 17px;
- 	font-weight: 700;
- 	line-height: 2em;
- 	display: inline-block;
- 	margin-right: 10px;
- }
-#resSubmitForm p{
+.auction_box {
+	padding-top: 70px;
+}
+
+.more_btn {
+	background: #f9f9f8;
+	width: 1000px;
+	margin: 18px 40px;
+	padding: 10px 30px;
+	clear: both;
+}
+
+.inner_box {
+	width: 1000px;
+	margin: 18px 40px;
+	padding: 10px 30px;
+}
+
+.close_btn {
+	text-align: right;
+	position: relative;
+	left: 920px;
+	font-size: 30px;
+	font-weight: 900;
+}
+
+.hidden {
+	dispaly: hidden;
+}
+
+#title_area {
+	font-size: 20px;
+	font-weight: 800;
+	line-height: 2em;
+}
+
+.paging {
+	text-align: right;
+}
+
+.paging li {
+	background-color: #334455;
+	margin: 10px;
+}
+
+.title {
+	font-size: 17px;
+	font-weight: 700;
+	line-height: 2em;
+	display: inline-block;
+	margin-right: 10px;
+}
+
+#resSubmitForm p {
 	font-size: 18px;
 	font-weight: 700;
 	line-height: 2em;
 	margin-bottom: 10px;
 }
-#resSubmitForm input, select{
+
+#resSubmitForm input, select {
 	line-height: 1.5em;
 }
 
-#resSubmitForm select{
+#resSubmitForm select {
 	padding: 5px;
 }
 
+#auction_detail {
+	margin: 30px;
+}
 
- #auction_detail{
- 	margin: 30px;
- }
- 
- 
- #Done{
- 	padding: 10px;
- 	background-color: rgb(151, 186, 190);
- 	color: black;
- 	border: 2px solid black;
- }
- 
-
-  </style>
-  
-  
+#Done {
+	padding: 10px;
+	background-color: rgb(151, 186, 190);
+	color: black;
+	border: 2px solid black;
+}
+</style>
 
 
-  
+
+
+
 </head>
 
 <body>
 	<c:import url="/common/importHeader.jsp" />
-    <div id="wrap" class="mypage">
- <nav class="myPageNav">
-     <nav class="myPageNav">
-            <div class="container">
-                    <ul>
-                        <li class="on">
-                            <a href="<c:url value='/mypage/mywedding.do'/>">
-                                    <img src="<c:url value="/resources/"/>img/hall_ico.png" alt="" class="img-responsive center-block">
-                                나의 웨딩
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<c:url value='/mypage/myTodo.do'/>">
-                                    <img src="<c:url value="/resources/"/>img/chk_ico.png" alt="" class="img-responsive center-block">
-                                체크리스트
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<c:url value='/mypage/myBudget.do'/>">
-                                <img src="<c:url value="/resources/"/>img/budget_ico.png" alt="" class="img-responsive center-block">
-                                예산
-                            </a>
-                        </li>
-                         <li>
-                            <a href="<c:url value='/mypage/myAuction.do?choo=tab1&memNo=${user.no}&auctionType=v'/>">
-                                <img src="<c:url value="/resources/"/>img/auction_ico.png" alt="" class="img-responsive center-block">
-                                역경매 현황
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<c:url value='/mypage/likeCompany.do?memNo=${user.no}'/>">
-                                <img src="<c:url value="/resources/"/>img/bookmark_ico.png" alt="" class="img-responsive center-block">
-                                북마크
-                            </a>
-                        </li>
-                    </ul>
-            </div>
-        </nav>
+	<div id="wrap" class="mypage">
+		<nav class="myPageNav"> <nav class="myPageNav">
+		<div class="container">
+			<ul>
+				<li class="on"><a href="<c:url value='/mypage/mywedding.do'/>">
+						<img src="<c:url value="/resources/"/>img/hall_ico.png" alt=""
+						class="img-responsive center-block"> 나의 웨딩
+				</a></li>
+				<li><a href="<c:url value='/mypage/myTodo.do'/>"> <img
+						src="<c:url value="/resources/"/>img/chk_ico.png" alt=""
+						class="img-responsive center-block"> 체크리스트
+				</a></li>
+				<li><a href="<c:url value='/mypage/myBudget.do'/>"> <img
+						src="<c:url value="/resources/"/>img/budget_ico.png" alt=""
+						class="img-responsive center-block"> 예산
+				</a></li>
+				<li><a
+					href="<c:url value='/mypage/myAuction.do?choo=tab1&memNo=${user.no}&auctionType=v'/>">
+						<img src="<c:url value="/resources/"/>img/auction_ico.png" alt=""
+						class="img-responsive center-block"> 역경매 현황
+				</a></li>
+				<li><a
+					href="<c:url value='/mypage/likeCompany.do?memNo=${user.no}'/>">
+						<img src="<c:url value="/resources/"/>img/bookmark_ico.png" alt=""
+						class="img-responsive center-block"> 북마크
+				</a></li>
+			</ul>
+		</div>
+		</nav>
 
 
 
 
-<div class="auction_box">
-	<div class="container">
-		<div class="tab_container">
-		
-			<input id="tab1" type="radio" name="tabs" onClick="window.location.href='myAuction.do?choo=tab1&auctionType=v&memNo=${user.no}'" ${choose == 'tab1' ? 'checked="checked"' : '' } checked="checked"/>
-			<label for="tab1"><span>예식장</span></label>
+		<div class="auction_box">
+			<div class="container">
+				<div class="tab_container">
 
-			<input id="tab2" type="radio" name="tabs"  onClick="window.location.href='myAuction.do?choo=tab2&auctionType=s&memNo=${user.no}'" ${choose == 'tab2' ? 'checked="checked"' : '' }>
-			<label for="tab2"><span>스튜디오</span></label>
-			
+					<input id="tab1" type="radio" name="tabs"
+						onClick="window.location.href='myAuction.do?choo=tab1&auctionType=v&memNo=${user.no}'"
+						${choose == 'tab1' ? 'checked="checked"' : '' } checked="checked" />
+					<label for="tab1"><span>예식장</span></label> <input id="tab2"
+						type="radio" name="tabs"
+						onClick="window.location.href='myAuction.do?choo=tab2&auctionType=s&memNo=${user.no}'"
+						${choose == 'tab2' ? 'checked="checked"' : '' }> <label
+						for="tab2"><span>스튜디오</span></label> <input id="tab3" type="radio"
+						name="tabs"
+						onClick="window.location.href='myAuction.do?choo=tab3&auctionType=d&memNo=${user.no}'"
+						${choose == 'tab3' ? 'checked="checked"' : '' }> <label
+						for="tab3"><span>드레스</span></label> <input id="tab4" type="radio"
+						name="tabs"
+						onClick="window.location.href='myAuction.do?choo=tab4&auctionType=m&memNo=${user.no}'"
+						${choose == 'tab4' ? 'checked="checked"' : '' }> <label
+						for="tab4"><span>메이크업</span></label> <input id="tab5" type="radio"
+						name="tabs"
+						onClick="window.location.href='myAuction.do?choo=tab5&auctionType=h&memNo=${user.no}'"
+						${choose == 'tab5' ? 'checked="checked"' : '' }> <label
+						for="tab5"><span>허니문</span></label> <input id="tab6" type="radio"
+						name="tabs"
+						onClick="window.location.href='myAuction.do?choo=tab6&auctionType=j&memNo=${user.no}'"
+						${choose == 'tab6' ? 'checked="checked"' : '' }> <label
+						for="tab6"><span>예물</span></label> <input id="tab7" type="radio"
+						name="tabs"
+						onClick="window.location.href='myAuction.do?choo=tab7&auctionType=e&memNo=${user.no}'"
+						${choose == 'tab7' ? 'checked="checked"' : '' }> <label
+						for="tab7"><span>기타 서비스</span></label>
 
-			<input id="tab3" type="radio" name="tabs"  onClick="window.location.href='myAuction.do?choo=tab3&auctionType=d&memNo=${user.no}'" ${choose == 'tab3' ? 'checked="checked"' : '' }>
-			<label for="tab3"><span>드레스</span></label>
-			
-			
-			<input id="tab4" type="radio" name="tabs"  onClick="window.location.href='myAuction.do?choo=tab4&auctionType=m&memNo=${user.no}'" ${choose == 'tab4' ? 'checked="checked"' : '' } >
-			<label for="tab4"><span>메이크업</span></label>
-			
-			
-			<input id="tab5" type="radio" name="tabs"  onClick="window.location.href='myAuction.do?choo=tab5&auctionType=h&memNo=${user.no}'" ${choose == 'tab5' ? 'checked="checked"' : '' } >
-			<label for="tab5"><span>허니문</span></label>
-			
-			
-			<input id="tab6" type="radio" name="tabs"  onClick="window.location.href='myAuction.do?choo=tab6&auctionType=j&memNo=${user.no}'" ${choose == 'tab6' ? 'checked="checked"' : '' }>
-			<label for="tab6"><span>예물</span></label>
-			
-			
-			<input id="tab7" type="radio" name="tabs"  onClick="window.location.href='myAuction.do?choo=tab7&auctionType=e&memNo=${user.no}'" ${choose == 'tab7' ? 'checked="checked"' : '' } >
-			<label for="tab7"><span>기타 서비스</span></label>
-			
-			
-			<section id="content" class="tab-content">
-    		<c:choose>
-			<c:when test="${not empty myAuction[0].auctionNo}">
-            <div class="info_box left">
-               <div><fmt:formatDate value='${myAuction[0].auctionSdate}' pattern='yyyy-MM-dd' />~<fmt:formatDate value='${myAuction[0].auctionEdate}' pattern='yyyy-MM-dd' /></div>
-             <div>${myAuction[0].tenderCnt}개의 입찰서</div>
-              <div><button class="btn1 auctionDetail" type="button"  data-href1="${myAuction[0].auctionNo}" data-href2="${myAuction[0].auctionType}">> 내 경매 조건 보기</button></div>
-              <div></div>
-            </div>
-            </c:when>
-            <c:otherwise><h3>입찰한 내역이 없습니다.</h3></c:otherwise>
-          </c:choose> 
-            
-            
-             <c:forEach var="auction" items="${myAuction[0].tenderList}" varStatus="status">
-             <div class="simple_box">
-     		<h4><h class="highlight">${status.count}</h>  ${auction.comInfoName}&emsp;                  <span class="left">      <fmt:formatDate value='${auction.tenderRegdate}' pattern='yyyy-MM-dd' /></span></h4>
-              <div class="picture">
-                <img class="img_eff" src="<c:url value="/${auction.comFilePath}/${auction.comFileName}"/>" />
-              </div>
-              <div class="detail">
-                <div>${auction.comInfoAddr} </div>
-                <div id="com_phone" onclick="comPhone('${auction.comInfoPhone}')">${auction.comInfoPhone}</div>
-                <div><fmt:formatNumber type='currency' value='${auction.tenderBudget}' pattern='###,###'/>만원</div>
-                <div><button class="btn1 more_detail" type="button" data-href="${auction.comInfoNo}" >상세보기</button>
-				
-				
-				
-				 
-				<!-- 번호 추가해서 가져오기 --> 
-                <c:if test="${myAuction[0].dday>0  && myAuction[0].auctionStatus=='ing'}">
-                <c:if test="${auction.tenderStatus=='ing'  }">
-                <button class="more_reservation more_reservation${status.count} btn1" type="button" data-href="${auction.tenderNo}"  onclick="gen_reservation(${auction.tenderNo},${status.count})"  >예약하기</button>
-                </c:if>
-                <c:if test="${auction.tenderStatus=='choo'}">
-                <button class=" btn1" type="button" id="res_com" onclick="purchase(${myAuction[0].auctionNo}, ${auction.tenderNo},${status.count})"  >결정하기</button>
-                </c:if>
-                </c:if>
-                 <c:if test="${ myAuction[0].auctionStatus=='done' && auction.tenderStatus=='done'}">
-                <button class="Done" type="button"  >선택됨</button>
-                </c:if>
-                </div>
-              </div>
-              <button class="btn2"></button>
-              </div>
-              
-              
-              
-              
-              <p>
-  <button class="more_btn" data-toggle="collapse" href="#collapseExample${status.count}" role="button" aria-expanded="false" aria-controls="collapseExample${status.count}">
-     경매 상세사항 보기
-  </button>
-</p>
+
+					<section id="content" class="tab-content"> <c:choose>
+						<c:when test="${not empty myAuction[0].auctionNo}">
+							<div class="info_box left">
+								<div>
+									<fmt:formatDate value='${myAuction[0].auctionSdate}'
+										pattern='yyyy-MM-dd' />
+									~
+									<fmt:formatDate value='${myAuction[0].auctionEdate}'
+										pattern='yyyy-MM-dd' />
+								</div>
+								<div>${myAuction[0].tenderCnt}개의입찰서</div>
+								<div>
+									<button class="btn1 auctionDetail" type="button"
+										data-href1="${myAuction[0].auctionNo}"
+										data-href2="${myAuction[0].auctionType}">> 내 경매 조건 보기</button>
+								</div>
+								<div></div>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<h3>입찰한 내역이 없습니다.</h3>
+						</c:otherwise>
+					</c:choose> <c:forEach var="auction" items="${myAuction[0].tenderList}"
+						varStatus="status">
+						<div class="simple_box">
+							<h4>
+								<h class="highlight">${status.count}</h>
+								${auction.comInfoName}&emsp; <span class="left"> <fmt:formatDate
+										value='${auction.tenderRegdate}' pattern='yyyy-MM-dd' /></span>
+							</h4>
+							<div class="picture">
+								<img class="img_eff"
+									src="<c:url value="/${auction.comFilePath}/${auction.comFileName}"/>" />
+							</div>
+							<div class="detail">
+								<div>${auction.comInfoAddr}</div>
+								<div id="com_phone"
+									onclick="comPhone('${auction.comInfoPhone}')">${auction.comInfoPhone}</div>
+								<div>
+									<fmt:formatNumber type='currency'
+										value='${auction.tenderBudget}' pattern='###,###' />
+									만원
+								</div>
+								<div>
+									<button class="btn1 more_detail" type="button"
+										data-href="${auction.comInfoNo}">상세보기</button>
 
 
 
 
-<div class="collapse" id="collapseExample${status.count}">
-  <div class="card card-body">
-                  <div class="inner_box" >
-              <div id="title_area">${auction.tenderTitle}</div>
-              <div id="content_area">${auction.tenderInfo}
-                <p><a class="close_btn" data-toggle="collapse" href="#collapseExample${status.count}" role="button" aria-expanded="false" aria-controls="collapseExample${status.count}">^</a></p>
-              </div>
-              </div>
-  </div>
-</div>
-
-          	</c:forEach> 
-          	 <c:if test="${count != 0}">
-			<nav class="paging">
-			  <ul class="pagination">
-			    <li <c:if test="${pageNo==1||pageNo==null}">class="disabled"</c:if> >
-			    <c:choose>
-			    	<c:when test="${pageNo!=1}">
-			    		<a href="myAuction.do?choo=${choose}&memNo=${user.no}&auctionType=${myAuction[0].auctionType}&pageNo=${pageNo-1}" aria-label="Previous">
-			    	</c:when>
-			    	<c:otherwise><a href="#" aria-label="Previous"></c:otherwise>
-			    </c:choose>
-			      
-			        <span aria-hidden="true">이전</span>
-			      </a>
-			    </li>
-			    
-			    <li <c:if test="${pageNo==count}">class="disabled"</c:if> >
-			        <c:choose>
-				    	<c:when test="${pageNo!=count}">
-				    		<a href="myAuction.do?choo=${choose}&memNo=${user.no}&auctionType=${myAuction[0].auctionType}&pageNo=${pageNo+ 1}" aria-label="Next">
-				    	</c:when>
-				    	<c:otherwise><a href="#" aria-label="Next"></c:otherwise>
-			    	</c:choose>
-			    	<span aria-hidden="true">다음</span>
-			      </a>
-			    </li>
-			  </ul>
-			</nav>
-		</c:if>
+									<!-- 번호 추가해서 가져오기 -->
+									<c:if
+										test="${myAuction[0].dday>0  && myAuction[0].auctionStatus=='ing'}">
+										<c:if test="${auction.tenderStatus=='ing'  }">
+											<button
+												class="more_reservation more_reservation${status.count} btn1"
+												type="button" data-href="${auction.tenderNo}"
+												onclick="gen_reservation(${auction.tenderNo},${status.count})">예약하기</button>
+										</c:if>
+										<c:if test="${auction.tenderStatus=='choo'}">
+											<button class=" btn1" type="button" id="res_com"
+												onclick="purchase(${myAuction[0].auctionNo}, ${auction.tenderNo},${status.count})">결정하기</button>
+										</c:if>
+									</c:if>
+									<c:if
+										test="${ myAuction[0].auctionStatus=='done' && auction.tenderStatus=='done'}">
+										<button class="Done" type="button">선택됨</button>
+									</c:if>
+								</div>
+							</div>
+							<button class="btn2"></button>
+						</div>
 
 
-              </div>
 
 
-			
-			</section>
+						<p>
+							<button class="more_btn" data-toggle="collapse"
+								href="#collapseExample${status.count}" role="button"
+								aria-expanded="false"
+								aria-controls="collapseExample${status.count}">경매 상세사항
+								보기</button>
+						</p>
+
+
+
+
+						<div class="collapse" id="collapseExample${status.count}">
+							<div class="card card-body">
+								<div class="inner_box">
+									<div id="title_area">${auction.tenderTitle}</div>
+									<div id="content_area">${auction.tenderInfo}
+										<p>
+											<a class="close_btn" data-toggle="collapse"
+												href="#collapseExample${status.count}" role="button"
+												aria-expanded="false"
+												aria-controls="collapseExample${status.count}">^</a>
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</c:forEach> <c:if test="${count != 0}">
+						<nav class="paging">
+						<ul class="pagination">
+							<li
+								<c:if test="${pageNo==1||pageNo==null}">class="disabled"</c:if>>
+								<c:choose>
+									<c:when test="${pageNo!=1}">
+										<a
+											href="myAuction.do?choo=${choose}&memNo=${user.no}&auctionType=${myAuction[0].auctionType}&pageNo=${pageNo-1}"
+											aria-label="Previous">
+									</c:when>
+									<c:otherwise>
+										<a href="#" aria-label="Previous">
+									</c:otherwise>
+								</c:choose> <span aria-hidden="true">이전</span> </a>
+							</li>
+
+							<li <c:if test="${pageNo==count}">class="disabled"</c:if>>
+								<c:choose>
+									<c:when test="${pageNo!=count}">
+										<a
+											href="myAuction.do?choo=${choose}&memNo=${user.no}&auctionType=${myAuction[0].auctionType}&pageNo=${pageNo+ 1}"
+											aria-label="Next">
+									</c:when>
+									<c:otherwise>
+										<a href="#" aria-label="Next">
+									</c:otherwise>
+								</c:choose> <span aria-hidden="true">다음</span> </a>
+							</li>
+						</ul>
+						</nav>
+					</c:if>
+				</div>
+
+
+
+				</section>
 			</div>
-			</div>
-
+		</div>
 	</div>
 
 
-    
-      
 
 
 
 
-<script>
+
+
+	<script>
 $(function(){
 	$(".more_detail").click(function(e){
 		  e.preventDefault();
@@ -730,112 +762,113 @@ function auctionDetailModal(auctionNo, auctionType){
 
 </script>
 
-  <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog  modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel"></h4>
-      </div>
-      <div class="modal-body">
-        <div class="slideBox">
-        	<ul>
-        		<li>1</li>
-        		<li>2</li>
-        		<li>3</li>
-        	</ul>
-        </div>
-        <div class="infoBox">
-            <dl class="adress">
-                <dt>주소 : </dt>
-                <dd></dd>
-            </dl>
-            <dl class="phone">
-                <dt>연락처 : </dt>
-                <dd></dd>
-            </dl>
-            <dl class="Profile">
-                <dt>정보 : </dt>
-                <dd></dd>
-            </dl>
-        </div>
-        <div class="contentsBox">
-        </div>
-        <div id="detailBtn">
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-  
- <div class="modal fade" id="ModalReservation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog  modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">예약하기</h4>
-      </div>
-      <div class="modal-body">
-      		<form id="resSubmitForm" method="POST">
-      		<input type="hidden" name="tenderNo" value="" >
-      		<input type="hidden" name="tenderStatus" value="choo" >
-        	<p>방문을 해보시겠습니까?</p>
-			<select name="resVisit" onchange="openForm(this.value)">
-				<option value="N" >아니오</option>
-				<option value="Y" >네</option>
-			</select>
-			
-			<div id="res_date_time" class="hidden">
-			<p>방문을 예정일과 요청시간</p>
-			<input type="Date" name="resDate" />
-				<select name="resTime">
-				<option value=''>--선택안함--</option>
-				<c:forEach var="i" begin="8" end="20">
-					<option value='${i}'>${i}시</option>
-				</c:forEach>
-				</select>
+	<div class="modal fade" id="detailModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog  modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel"></h4>
 				</div>
-			<hr>
-			<p>연락받으실 수단을 선택해주세요</p>
-			<p>이메일 : <input type="text" class="" name="resEmail" /></p>
-			<p>연락처 : <input type="text" class="" name="resPhone" /></p>
-			<hr>
-			<p>요청사항 또는 추가로 궁금하신 사항이 있으면 알려주세요.</p>
-			<textarea cols="3000" rows="7" name="resMessage" style="width: 850px"></textarea>
-			</form>
-		
-      </div>
-      <div class="modal-footer">
-        <button type="button" onclick="resSubmit()" class="btn btn-default"  >보내기</button>
-      </div>
-    </div>
-  </div>
-</div>
-    
+				<div class="modal-body">
+					<div class="slideBox">
+						<ul>
+							<li>1</li>
+							<li>2</li>
+							<li>3</li>
+						</ul>
+					</div>
+					<div class="infoBox">
+						<dl class="adress">
+							<dt>주소 :</dt>
+							<dd></dd>
+						</dl>
+						<dl class="phone">
+							<dt>연락처 :</dt>
+							<dd></dd>
+						</dl>
+						<dl class="Profile">
+							<dt>정보 :</dt>
+							<dd></dd>
+						</dl>
+					</div>
+					<div class="contentsBox"></div>
+					<div id="detailBtn"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
-<div class="modal fade" id="auctionDetailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog ">
-    <div class="modal-content">
-    <div id="auction_detail">
-  
-    </div>
-    </div>
-    </div>
-  
+
+	<div class="modal fade" id="ModalReservation" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog  modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">예약하기</h4>
+				</div>
+				<div class="modal-body">
+					<form id="resSubmitForm" method="POST">
+						<input type="hidden" name="tenderNo" value=""> <input
+							type="hidden" name="tenderStatus" value="choo">
+						<p>방문을 해보시겠습니까?</p>
+						<select name="resVisit" onchange="openForm(this.value)">
+							<option value="N">아니오</option>
+							<option value="Y">네</option>
+						</select>
+
+						<div id="res_date_time" class="hidden">
+							<p>방문을 예정일과 요청시간</p>
+							<input type="Date" name="resDate" /> <select name="resTime">
+								<option value=''>--선택안함--</option>
+								<c:forEach var="i" begin="8" end="20">
+									<option value='${i}'>${i}시</option>
+								</c:forEach>
+							</select>
+						</div>
+						<hr>
+						<p>연락받으실 수단을 선택해주세요</p>
+						<p>
+							이메일 : <input type="text" class="" name="resEmail" />
+						</p>
+						<p>
+							연락처 : <input type="text" class="" name="resPhone" />
+						</p>
+						<hr>
+						<p>요청사항 또는 추가로 궁금하신 사항이 있으면 알려주세요.</p>
+						<textarea cols="3000" rows="7" name="resMessage"
+							style="width: 850px"></textarea>
+					</form>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" onclick="resSubmit()" class="btn btn-default">보내기</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 
-
-
-
+	<div class="modal fade" id="auctionDetailModal" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog ">
+			<div class="modal-content">
+				<div id="auction_detail"></div>
+			</div>
+		</div>
 </body>
 
 </html>
 
-  

@@ -1,243 +1,279 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="/marryus/resources/se2/js/HuskyEZCreator.js" charset="utf-8"></script>
-<script type="text/javascript" src="/marryus/resources/se2/photo_uploader/plugin/hp_SE2M_AttachQuickPhoto.js" charset="utf-8"></script>
+<script type="text/javascript"
+	src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript"
+	src="/marryus/resources/se2/js/HuskyEZCreator.js" charset="utf-8"></script>
+<script type="text/javascript"
+	src="/marryus/resources/se2/photo_uploader/plugin/hp_SE2M_AttachQuickPhoto.js"
+	charset="utf-8"></script>
 <!-- 합쳐지고 최소화된 최신 CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<!-- 부가적인 테마 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <link rel="stylesheet"
-		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-		<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-    <c:import url="/common/importCss.jsp"/>
-	 <c:import url="/common/importJs.jsp"/>
-    <style>
-    	body{
-    		width: 100%;
-    	}
-    	#outer_box{
-    		padding: 30px 0;
-    	}
-        #profile_box #profile_img,  #profile_box #profile_text{
-            width: 30%; 
-            height: 250px;
-            border-radius: 10px;
-            float: left;
-            margin: 10px;
-            background-color: rgb(245, 243, 243);
-            text-align: center;
-        }
-        #company_info{
-            width: 60%;
-            float: none;
-        }
-        p{
-        	text-align: left;
-        }
-        
-        table{
-        	width: 1200px;
-        }
-        table tr, td{
-        	border-collapse: collapse;
-        	border: 3.2px solid #f1d5e3;
-        	padding: 20px 15px;
-        }
-        table td:first-child {
-			width: 170px;
-		}
-		.highlight{
-			font-size: 20px;
-			font-weight: 700;
-			vertical-align: top;
-		}
-		
-		.x{	font-size: 20px;
-			position: relative;
-			left: -12px;
-			top : -185px;
-			background: black;
-			color: white;
-		}
-		.selProductFiles{
-			width: 300px;
-			height: 200px;
-		}
-		
-		.xx{	font-size: 20px;
-			position: relative;
-			left: -12px;
-			top : -390px;
-			background: black;
-			color: white;
-		}
-		
-		.selProductFile{
-		   width: 500px;
-		   height: 400px;
-		}
-		.label{
-			color: black;
-			font-size: 20px;
-			font-weight: 700;
-		}
-		.hidden{
-			display: hidden;
-		}
-		input, select{
-			height: 26px;
-		}
-		.btn{
-			background: #d4deec;
-			margin-top: 20px;
-		}
-		
-    </style>
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<!-- 부가적인 테마 -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<c:import url="/common/importCss.jsp" />
+<c:import url="/common/importJs.jsp" />
+<style>
+body {
+	width: 100%;
+}
+
+#outer_box {
+	padding: 30px 0;
+}
+
+#profile_box #profile_img, #profile_box #profile_text {
+	width: 30%;
+	height: 250px;
+	border-radius: 10px;
+	float: left;
+	margin: 10px;
+	background-color: rgb(245, 243, 243);
+	text-align: center;
+}
+
+#company_info {
+	width: 60%;
+	float: none;
+}
+
+p {
+	text-align: left;
+}
+
+table {
+	width: 1200px;
+}
+
+table tr, td {
+	border-collapse: collapse;
+	border: 3.2px solid #f1d5e3;
+	padding: 20px 15px;
+}
+
+table td:first-child {
+	width: 170px;
+}
+
+.highlight {
+	font-size: 20px;
+	font-weight: 700;
+	vertical-align: top;
+}
+
+.x {
+	font-size: 20px;
+	position: relative;
+	left: -12px;
+	top: -185px;
+	background: black;
+	color: white;
+}
+
+.selProductFiles {
+	width: 300px;
+	height: 200px;
+}
+
+.xx {
+	font-size: 20px;
+	position: relative;
+	left: -12px;
+	top: -390px;
+	background: black;
+	color: white;
+}
+
+.selProductFile {
+	width: 500px;
+	height: 400px;
+}
+
+.label {
+	color: black;
+	font-size: 20px;
+	font-weight: 700;
+}
+
+.hidden {
+	display: hidden;
+}
+
+input, select {
+	height: 26px;
+}
+
+.btn {
+	background: #d4deec;
+	margin-top: 20px;
+}
+</style>
 </head>
 <body>
 	<c:import url="/common/importHeader.jsp" />
-    <div id="wrap" class="mypage">
-       <nav class="myCompanyNav">
-            <div class="container">
-                    <ul>
-                        <li class="on">
-                            <a href="<c:url value='/mycompany/myCompany.do'/>">
-                                <img src="<c:url value="/resources/"/>img/company_ico.png" alt="" class="img-responsive center-block">
-                                업체 정보
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<c:url value='/mycompany/service.do'/>">
-                                    <img src="<c:url value="/resources/"/>img/card_ico.png" alt="" class="img-responsive center-block">
-                               업체 등록
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<c:url value='/mycompany/auctionList.do'/>">
-                                <img src="<c:url value="/resources/"/>img/graph_ico.png" alt="" class="img-responsive center-block">
-                                입찰 현황
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<c:url value='/mycompany/reservationView.do'/>">
-                                <img src="<c:url value="/resources/"/>img/reservation_icon2.png" alt="" class="img-responsive center-block" style="padding: 5px;">
-                                예약 현황
-                            </a>
-                        </li> 
-                    </ul>
-            </div>
-        </nav>
-
-
-
-
-
-
-
-
-     
-	<div id="outer_box">
+	<div id="wrap" class="mypage">
+		<nav class="myCompanyNav">
 		<div class="container">
-	
-		 <div id="profile_box">
+			<ul>
+				<li class="on"><a
+					href="<c:url value='/mycompany/myCompany.do'/>"> <img
+						src="<c:url value="/resources/"/>img/company_ico.png" alt=""
+						class="img-responsive center-block"> 업체 정보
+				</a></li>
+				<li><a href="<c:url value='/mycompany/service.do'/>"> <img
+						src="<c:url value="/resources/"/>img/card_ico.png" alt=""
+						class="img-responsive center-block"> 업체 등록
+				</a></li>
+				<li><a href="<c:url value='/mycompany/auctionList.do'/>"> <img
+						src="<c:url value="/resources/"/>img/graph_ico.png" alt=""
+						class="img-responsive center-block"> 입찰 현황
+				</a></li>
+				<li><a href="<c:url value='/mycompany/reservationView.do'/>">
+						<img src="<c:url value="/resources/"/>img/reservation_icon2.png"
+						alt="" class="img-responsive center-block" style="padding: 5px;">
+						예약 현황
+				</a></li>
+			</ul>
+		</div>
+		</nav>
 
-	        <form action=<c:url value="insertComInfo.do"/>  method="post" id="frm"  enctype="multipart/form-data" acceptcharset="UTF-8">
-	        <table>
-	       	<tr>
-	        	<td class="highlight">업체 이름</td>
-	        	<td><input type="text" name="comInfoName" value="${auctionList.comInfoName}"/>
-	        	<input type="hidden" name="comInfoNo" value="${auctionList.comInfoNo}"/>
-	        	<input type="hidden" name="type" value="update"/></td>
-	        </tr>
 
-	        <tr>
-	        	<td class="highlight">연락처</td>
-	        	<td><input type="text" name="comInfoPhone" value="${auctionList.comInfoPhone}"/></td>
-	        </tr>
-	        
-	        
-	        <tr>
-	        	<td class="highlight">회사 주소</td>
-	        	<td>
-	        	<input type="text" id="sample4_postcode" placeholder="우편번호"> 
-	        	<input type="text" name="comInfoAddr" id="sample4_roadAddress" placeholder="도로명주소" value="${auctionList.comInfoAddr}" > 
-	        	<input type="text" id="sample4_jibunAddress" placeholder="지번주소" class="hidden">
-	        	<input type="button" onclick="address()" value="우편번호 찾기" size="50"><br> <span id="guide" style="color: #999"></span></td>
-	        </tr>
-	        <tr>
-	        	<td class="highlight">회사 상세주소</td>
-	        	<td><input type="text" name="comInfoAddrDetail" id="com_addr_detail" class="input-field" value="${auctionList.comInfoAddrDetail}" required></td>
-	        </tr>
-	        
-	        
-	        
-	        
-	        
-	        
-	        
-	        <tr>
-	        	<td class="highlight"> 업체 소개</td>
-	        	<td><textarea name="comInfoProfile" cols="200" rows="8" style=" width:90%; resize: none; font-size: 18px; " >${auctionList.comInfoProfile}</textarea></td>
-	        </tr>
-			<tr>
-				
-					<td class="highlight"><input name="memNo" id=memNo value="${user.no}" type="hidden">	서비스 소개</td>  				
-					<td><textarea name="comInfoContent" id="smarteditor" rows="10" cols="100" style="width:100%; height:350px;">${auctionList.comInfoContent}</textarea></td>
-			</tr>
-			<tr>
-				<td class="highlight"><a href="javascript:" onclick="fileUploadAction();" class="my_button highlight" >업체 대표  이미지</a></td>
-				<td>
-				   <div class="input_wrap">
-				   		<input type="file" id="input_img" name="file"/>
-        			</div>
-			        <div class="imgs_wrap">
-			            <c:if test="${not empty file.comFileNo}">
-			            	<span id='img_rep' class="db_img">
-			            		<img src="<c:url value="/${file.comFilePath}/${file.comFileName}"/>" data-file="${file.comFileNo}" class='selProductFile' title='Click to remove'/>
-			            		<a href="javascript:void(0);"  onclick="deleteImageAction(${file.comFileNo})" class="xx" >X</a>
-			            	</span>
-			            </c:if>
-			        </div>
-				</td>
-			</tr>
-			<tr>
-				<td class="highlight"><a href="javascript:" onclick="filesUploadAction();" class="my_button highlight" >업체 이미지 등록</a></td>
-				<td>
-				   <div class="input_wraps">
-				   		<input type="file" id="input_imgs" multiple/>
-        			</div>
-			        <div class="imgs_wraps">
-			            <c:forEach var="f" items="${files}" varStatus="status">
-			            	<span id="img_box_${f.comFileNo}" class="db_imgs">
-			            		<img src="<c:url value="/${f.comFilePath}/${f.comFileName}"/>" data-file="${f.comFileNo}"  class='selProductFiles' title='주의! 삭제된 사진은 복구가 불가능 합니다.'/>
-			            		<a href="javascript:void(0);"  onclick="deleteImagesActions(${f.comFileNo})" class="x" class="img_box_${f.comFileNo}">X</a>
-			            	</span>
-			            </c:forEach>
-			        </div>
-				</td>
-			</tr>
-			</table>
-				</form>		
-				<div class="form-btn text-right">
-	                 <a href=<c:url value="myServiceDelete.do?comInfoNo=${auctionList.comInfoNo}"/> class="cancle btn">삭제</a>
-	                 <a href="#" class="save btn" id="savebutton">수정</a>
-	            </div>
-	       
-	    </div>
-	    </div>
-    </div>
-    
-    
-    
-    </div>
-    <script>
+
+
+
+
+
+
+
+		<div id="outer_box">
+			<div class="container">
+
+				<div id="profile_box">
+
+					<form action=<c:url value="insertComInfo.do"/> method="post"
+						id="frm" enctype="multipart/form-data" acceptcharset="UTF-8">
+						<table>
+							<tr>
+								<td class="highlight">업체 이름</td>
+								<td><input type="text" name="comInfoName"
+									value="${auctionList.comInfoName}" /> <input type="hidden"
+									name="comInfoNo" value="${auctionList.comInfoNo}" /> <input
+									type="hidden" name="type" value="update" /></td>
+							</tr>
+
+							<tr>
+								<td class="highlight">연락처</td>
+								<td><input type="text" name="comInfoPhone"
+									value="${auctionList.comInfoPhone}" /></td>
+							</tr>
+
+
+							<tr>
+								<td class="highlight">회사 주소</td>
+								<td><input type="text" id="sample4_postcode"
+									placeholder="우편번호"> <input type="text"
+									name="comInfoAddr" id="sample4_roadAddress" placeholder="도로명주소"
+									value="${auctionList.comInfoAddr}"> <input type="text"
+									id="sample4_jibunAddress" placeholder="지번주소" class="hidden">
+									<input type="button" onclick="address()" value="우편번호 찾기"
+									size="50"><br> <span id="guide"
+									style="color: #999"></span></td>
+							</tr>
+							<tr>
+								<td class="highlight">회사 상세주소</td>
+								<td><input type="text" name="comInfoAddrDetail"
+									id="com_addr_detail" class="input-field"
+									value="${auctionList.comInfoAddrDetail}" required></td>
+							</tr>
+
+
+
+
+
+
+
+							<tr>
+								<td class="highlight">업체 소개</td>
+								<td><textarea name="comInfoProfile" cols="200" rows="8"
+										style="width: 90%; resize: none; font-size: 18px;">${auctionList.comInfoProfile}</textarea></td>
+							</tr>
+							<tr>
+
+								<td class="highlight"><input name="memNo" id=memNo
+									value="${user.no}" type="hidden"> 서비스 소개</td>
+								<td><textarea name="comInfoContent" id="smarteditor"
+										rows="10" cols="100" style="width: 100%; height: 350px;">${auctionList.comInfoContent}</textarea></td>
+							</tr>
+							<tr>
+								<td class="highlight"><a href="javascript:"
+									onclick="fileUploadAction();" class="my_button highlight">업체
+										대표 이미지</a></td>
+								<td>
+									<div class="input_wrap">
+										<input type="file" id="input_img" name="file" />
+									</div>
+									<div class="imgs_wrap">
+										<c:if test="${not empty file.comFileNo}">
+											<span id='img_rep' class="db_img"> <img
+												src="<c:url value="/${file.comFilePath}/${file.comFileName}"/>"
+												data-file="${file.comFileNo}" class='selProductFile'
+												title='Click to remove' /> <a href="javascript:void(0);"
+												onclick="deleteImageAction(${file.comFileNo})" class="xx">X</a>
+											</span>
+										</c:if>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td class="highlight"><a href="javascript:"
+									onclick="filesUploadAction();" class="my_button highlight">업체
+										이미지 등록</a></td>
+								<td>
+									<div class="input_wraps">
+										<input type="file" id="input_imgs" multiple />
+									</div>
+									<div class="imgs_wraps">
+										<c:forEach var="f" items="${files}" varStatus="status">
+											<span id="img_box_${f.comFileNo}" class="db_imgs"> <img
+												src="<c:url value="/${f.comFilePath}/${f.comFileName}"/>"
+												data-file="${f.comFileNo}" class='selProductFiles'
+												title='주의! 삭제된 사진은 복구가 불가능 합니다.' /> <a
+												href="javascript:void(0);"
+												onclick="deleteImagesActions(${f.comFileNo})" class="x"
+												class="img_box_${f.comFileNo}">X</a>
+											</span>
+										</c:forEach>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</form>
+					<div class="form-btn text-right">
+						<a
+							href=<c:url value="myServiceDelete.do?comInfoNo=${auctionList.comInfoNo}"/>
+							class="cancle btn">삭제</a> <a href="#" class="save btn"
+							id="savebutton">수정</a>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+
+
+	</div>
+	<script>
     $(function(){
 	    //전역변수선언
 	    var editor_object = [];

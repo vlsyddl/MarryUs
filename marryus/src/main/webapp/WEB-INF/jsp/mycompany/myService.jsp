@@ -1,271 +1,293 @@
- <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="/marryus/resources/se2/js/HuskyEZCreator.js" charset="utf-8"></script>
-<!-- 합쳐지고 최소화된 최신 CSS -->
-<!-- 부가적인 테마 -->
+<script type="text/javascript"
+	src="/marryus/resources/se2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <link rel="stylesheet"
-		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-		<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-		
-		
-		
-		
-		
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/additional-methods.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/localization/messages_ko.js"></script>	
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 
 
 
 
-    <c:import url="/common/importCss.jsp"/>
-	 <c:import url="/common/importJs.jsp"/>
-    <style>
-    	body{
-    		width: 100%;
-    	}
-    	
-    	#profile_box{
-    		padding: 30px 0;
-    	}
-        #profile_box #profile_img,  #profile_box #profile_text{
-            width: 30%; 
-            height: 250px;
-            border-radius: 10px;
-            float: left;
-            background-color: rgb(245, 243, 243);
-            text-align: center;
-            margin: auto;
-        }
-        #company_info{
-            width: 60%;
-            float: none;
-        }
-        p{
-        	text-align: left;
-        }
-        
-        table{
-        	border: 2px solid #333333;
-        	margin: 10px;
-        }
-        table tr, td{
-        	border-collapse: collapse;
-        	border: 3.2px solid #f1d5e3;
-        	padding: 20px 15px;
-        }
-        table td:first-child {
-			width: 170px;
-		}
-		.highlight{
-			font-size: 20px;
-			font-weight: 700;
-			vertical-align: top;
-		}
-		
-		.x{	font-size: 20px;
-			position: relative;
-			left: -12px;
-			top : -185px;
-			background: black;
-			color: white;
-		}
-		.selProductFiles{
-			width: 300px;
-			height: 200px;
-		}
-		
-		.xx{	font-size: 20px;
-			position: relative;
-			left: -12px;
-			top : -390px;
-			background: black;
-			color: white;
-		}
-		
-		.selProductFile{
-		   width: 500px;
-		   height: 400px;
-		}
-		.label{
-			color: black;
-			font-size: 20px;
-			font-weight: 700;
-		}
-		.hidden{
-			display: hidden;
-		}
-		input, select{
-			height: 26px;
-		}
-		.btn{
-			background: #d4deec;
-			margin-top: 20px;
-		}
-		
-		
-		
-		#profile_box img {
-			-webkit-filter: grayscale(0) blur(0);
-			filter: grayscale(0) blur(0);
-			-webkit-transition: .3s ease-in-out;
-			transition: .3s ease-in-out;
-			margin-top: 20px; margin-bottom: 40px; 
-		}
-		#profile_box img:hover {
-			-webkit-filter: grayscale(50%) blur(2px);
-			filter: grayscale(50%) blur(2px);
-		}
-    </style>
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/additional-methods.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/localization/messages_ko.js"></script>
+
+
+
+
+<c:import url="/common/importCss.jsp" />
+<c:import url="/common/importJs.jsp" />
+<style>
+body {
+	width: 100%;
+}
+
+#profile_box {
+	padding: 30px 0;
+}
+
+#profile_box #profile_img, #profile_box #profile_text {
+	width: 30%;
+	height: 250px;
+	border-radius: 10px;
+	float: left;
+	background-color: rgb(245, 243, 243);
+	text-align: center;
+	margin: auto;
+}
+
+#company_info {
+	width: 60%;
+	float: none;
+}
+
+p {
+	text-align: left;
+}
+
+table {
+	border: 2px solid #333333;
+	margin: 10px;
+}
+
+table tr, td {
+	border-collapse: collapse;
+	border: 3.2px solid #f1d5e3;
+	padding: 20px 15px;
+}
+
+table td:first-child {
+	width: 170px;
+}
+
+.highlight {
+	font-size: 20px;
+	font-weight: 700;
+	vertical-align: top;
+}
+
+.x {
+	font-size: 20px;
+	position: relative;
+	left: -12px;
+	top: -185px;
+	background: black;
+	color: white;
+}
+
+.selProductFiles {
+	width: 300px;
+	height: 200px;
+}
+
+.xx {
+	font-size: 20px;
+	position: relative;
+	left: -12px;
+	top: -390px;
+	background: black;
+	color: white;
+}
+
+.selProductFile {
+	width: 500px;
+	height: 400px;
+}
+
+.label {
+	color: black;
+	font-size: 20px;
+	font-weight: 700;
+}
+
+.hidden {
+	display: hidden;
+}
+
+input, select {
+	height: 26px;
+}
+
+.btn {
+	background: #d4deec;
+	margin-top: 20px;
+}
+
+#profile_box img {
+	-webkit-filter: grayscale(0) blur(0);
+	filter: grayscale(0) blur(0);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+	margin-top: 20px;
+	margin-bottom: 40px;
+}
+
+#profile_box img:hover {
+	-webkit-filter: grayscale(50%) blur(2px);
+	filter: grayscale(50%) blur(2px);
+}
+</style>
 </head>
 <body>
-<header>
- <c:import url="/common/importHeader.jsp"/>
-    <div id="wrap" class="myCompany">
-   <nav class="myCompanyNav">
-            <div class="container">
-                    <ul>
-                        <li class="on">
-                            <a href="<c:url value='/mycompany/myCompany.do'/>">
-                                <img src="<c:url value="/resources/"/>img/company_ico.png" alt="" class="img-responsive center-block">
-                                업체 정보
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<c:url value='/mycompany/service.do'/>">
-                                    <img src="<c:url value="/resources/"/>img/card_ico.png" alt="" class="img-responsive center-block">
-                               업체 등록
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<c:url value='/mycompany/auctionList.do'/>">
-                                <img src="<c:url value="/resources/"/>img/graph_ico.png" alt="" class="img-responsive center-block">
-                                입찰 현황
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<c:url value='/mycompany/reservationView.do'/>">
-                                <img src="<c:url value="/resources/"/>img/reservation_icon2.png" alt="" class="img-responsive center-block" style="padding: 5px;">
-                                예약 현황
-                            </a>
-                        </li> 
-                    </ul>
-            </div>
-        </nav>
-        
-        
+	<header> <c:import url="/common/importHeader.jsp" />
+	<div id="wrap" class="myCompany">
+		<nav class="myCompanyNav">
+		<div class="container">
+			<ul>
+				<li class="on"><a
+					href="<c:url value='/mycompany/myCompany.do'/>"> <img
+						src="<c:url value="/resources/"/>img/company_ico.png" alt=""
+						class="img-responsive center-block"> 업체 정보
+				</a></li>
+				<li><a href="<c:url value='/mycompany/service.do'/>"> <img
+						src="<c:url value="/resources/"/>img/card_ico.png" alt=""
+						class="img-responsive center-block"> 업체 등록
+				</a></li>
+				<li><a href="<c:url value='/mycompany/auctionList.do'/>"> <img
+						src="<c:url value="/resources/"/>img/graph_ico.png" alt=""
+						class="img-responsive center-block"> 입찰 현황
+				</a></li>
+				<li><a href="<c:url value='/mycompany/reservationView.do'/>">
+						<img src="<c:url value="/resources/"/>img/reservation_icon2.png"
+						alt="" class="img-responsive center-block" style="padding: 5px;">
+						예약 현황
+				</a></li>
+			</ul>
+		</div>
+		</nav>
 
-        
-        
-        
 
-        
-        
-		 <div id="profile_box">
+
+
+
+
+
+
+
+		<div id="profile_box">
 			<div class="container">
-	        <form id="myServiceInsertFrom" action="<c:url value='/myCompany/insertComInfoProfile.do'/>" method="post"  enctype="multipart/form-data" acceptcharset="UTF-8">
-	        <table class="table">
-	       	<tr>
-	        	<td class="highlight">업체 이름</td>
-	        	<td><input type="text" name="comInfoName" required/>
-	        	<input type="hidden" name="type" value="insert"/></td>
-	        </tr>
-	       	<tr>
-	        	<td class="highlight">서비스 카테소리</td>
-	        	<td>
-	        	<c:forEach var="CT" items="${comInfoType}">
-	        		<input type="hidden" class="comInfoTypeDisable" onclick="selectDisable('${CT}')">
-	        	</c:forEach>
-	        	<select name="comInfoType" id="comInfoType" class="select-field__menu">
-	        			<option value="v">웨딩홀</option>
-	        			<option value="s">스트디오</option>
-	        			<option value="d">드레스</option>
-	        			<option value="m">메이크업</option>
-	        			<option value="h">허니문</option>
-	        			<option value="j">예물</option>
-	        			<option value="e">기타</option>
-				</select>
-				</td>
-	        </tr>
-	        <tr>
-	        	<td class="highlight">연락처</td>
-	        	<td><input type="text" name="comInfoPhone" required/></td>
-	        </tr>
-	        
-	        
-	        <tr>
-	        	<td class="highlight">회사 주소</td>
-	        	<td>
-	        	<input type="text" id="sample4_postcode" placeholder="우편번호" class="hidden"> 
-	        	<input type="text" name="comInfoAddr" id="sample4_roadAddress" placeholder="도로명주소" required> 
-	        	<input type="text" id="sample4_jibunAddress" placeholder="지번주소" class="hidden" required>
-	        	<input type="button" onclick="address()" value="우편번호 찾기" size="50"><br> <span id="guide" style="color: #999"></span></td>
-	        </tr>
-	        <tr>
-	        	<td class="highlight">회사 상세주소</td>
-	        	<td><input type="text" name="comInfoAddrDetail" id="com_addr_detail" class="input-field" required></td>
-	        </tr>
-	        
-	        
-	       
-	        
-	        
-	        
-	        
-	        
-	        
-	        
-	        <tr>
-	        	<td class="highlight"> 업체 소개</td>
-	        	<td><textarea name="comInfoProfile" cols="200" rows="8" style=" width:90%; resize: none; font-size: 18px; " required></textarea></td>
-	        </tr>
-			<tr>
-				
-					<td class="highlight"><input name="memNo" id=memNo value="${user.no}" type="hidden">	서비스 소개</td>  				
-					<td><textarea name="comInfoContent" id="smarteditor" rows="10" cols="100" style="width:100%; height:350px;" required></textarea></td>
-			</tr>
-			<tr>
-				<td class="highlight"><a href="javascript:" onclick="fileUploadAction();" class="my_button highlight" >업체 대표  이미지</a></td>
-				<td>
-				   <div class="input_wrap">
-				   		<input type="file" id="input_img" name="file"/>
-        			</div>
-			        <div class="imgs_wrap">
-			            <img id="img" />
-			        </div>
-				</td>
-			</tr>
-			<tr>
-				<td class="highlight"><a href="javascript:" onclick="filesUploadAction();" class="my_button highlight" >업체 이미지 등록</a></td>
-				<td>
-				   <div class="input_wraps">
-				   		<input type="file" id="input_imgs" multiple/>
-        			</div>
-			        <div class="imgs_wraps">
-			            <img id="img" />
-			        </div>
-				</td>
-			</tr>
-			</table>
-				</form>		
+				<form id="myServiceInsertFrom"
+					action="<c:url value='/myCompany/insertComInfoProfile.do'/>"
+					method="post" enctype="multipart/form-data" acceptcharset="UTF-8">
+					<table class="table">
+						<tr>
+							<td class="highlight">업체 이름</td>
+							<td><input type="text" name="comInfoName" required /> <input
+								type="hidden" name="type" value="insert" /></td>
+						</tr>
+						<tr>
+							<td class="highlight">서비스 카테소리</td>
+							<td><c:forEach var="CT" items="${comInfoType}">
+									<input type="hidden" class="comInfoTypeDisable"
+										onclick="selectDisable('${CT}')">
+								</c:forEach> <select name="comInfoType" id="comInfoType"
+								class="select-field__menu">
+									<option value="v">웨딩홀</option>
+									<option value="s">스트디오</option>
+									<option value="d">드레스</option>
+									<option value="m">메이크업</option>
+									<option value="h">허니문</option>
+									<option value="j">예물</option>
+									<option value="e">기타</option>
+							</select></td>
+						</tr>
+						<tr>
+							<td class="highlight">연락처</td>
+							<td><input type="text" name="comInfoPhone" required /></td>
+						</tr>
+
+
+						<tr>
+							<td class="highlight">회사 주소</td>
+							<td><input type="text" id="sample4_postcode"
+								placeholder="우편번호" class="hidden"> <input type="text"
+								name="comInfoAddr" id="sample4_roadAddress" placeholder="도로명주소"
+								required> <input type="text" id="sample4_jibunAddress"
+								placeholder="지번주소" class="hidden" required> <input
+								type="button" onclick="address()" value="우편번호 찾기" size="50"><br>
+								<span id="guide" style="color: #999"></span></td>
+						</tr>
+						<tr>
+							<td class="highlight">회사 상세주소</td>
+							<td><input type="text" name="comInfoAddrDetail"
+								id="com_addr_detail" class="input-field" required></td>
+						</tr>
+
+
+
+
+
+
+
+
+
+
+						<tr>
+							<td class="highlight">업체 소개</td>
+							<td><textarea name="comInfoProfile" cols="200" rows="8"
+									style="width: 90%; resize: none; font-size: 18px;" required></textarea></td>
+						</tr>
+						<tr>
+
+							<td class="highlight"><input name="memNo" id=memNo
+								value="${user.no}" type="hidden"> 서비스 소개</td>
+							<td><textarea name="comInfoContent" id="smarteditor"
+									rows="10" cols="100" style="width: 100%; height: 350px;"
+									required></textarea></td>
+						</tr>
+						<tr>
+							<td class="highlight"><a href="javascript:"
+								onclick="fileUploadAction();" class="my_button highlight">업체
+									대표 이미지</a></td>
+							<td>
+								<div class="input_wrap">
+									<input type="file" id="input_img" name="file" />
+								</div>
+								<div class="imgs_wrap">
+									<img id="img" />
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td class="highlight"><a href="javascript:"
+								onclick="filesUploadAction();" class="my_button highlight">업체
+									이미지 등록</a></td>
+							<td>
+								<div class="input_wraps">
+									<input type="file" id="input_imgs" multiple />
+								</div>
+								<div class="imgs_wraps">
+									<img id="img" />
+								</div>
+							</td>
+						</tr>
+					</table>
+				</form>
 				<div class="form-btn text-right">
-	                 <a href="service.do" class="cancle btn">취소</a>
-	                 <a href="#" class="save btn" id="savebutton">등록</a>
-	            </div>
-	       		</div>
-	    </div>
-    
-    
-    
-    </div>
-    <script>
+					<a href="service.do" class="cancle btn">취소</a> <a href="#"
+						class="save btn" id="savebutton">등록</a>
+				</div>
+			</div>
+		</div>
+
+
+
+	</div>
+	<script>
     $(function(){
 
     	 $(".comInfoTypeDisable").trigger("click");
