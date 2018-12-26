@@ -34,15 +34,7 @@ public class MainServiceImpl implements MainService{
 	public void insertWedPlan(WeddingPlan weddingPlan) {
 		mapper.insertWedPlan(weddingPlan);
 	}
-//
-//	/**
-//	 * 마감
-//	 */
-//	@Override
-//	public List<Auction> selectDuedate(Auction auction) {
-//		
-//		return mapper.selectDuedate(auction);
-//	}
+
 
 	/**
 	 * 역경매 리스트 불러오기 
@@ -199,25 +191,33 @@ public class MainServiceImpl implements MainService{
 	public List<Integer> countDday() {
 		return mapper.countDday();
 	}
-
+	/**
+	 *  추천업체- 스드메
+	 */
 	@Override
 	public List<CompanyInfo> recSDM() {
 		
 		return mapper.recSDM();
 	}
-
+	/**
+	 *  추천업체- 허니문
+	 */
 	@Override
 	public List<CompanyInfo> recHoney() {
 		// TODO Auto-generated method stub
 		return mapper.recHoney();
 	}
-
+	/**
+	 *  추천업체- 예물
+	 */
 	@Override
 	public List<CompanyInfo> recJewelry() {
 		// TODO Auto-generated method stub
 		return mapper.recJewelry();
 	}
-
+	/**
+	 *  추천업체- 추천
+	 */
 	@Override
 	public List<CompanyInfo> recEvent() {
 		// TODO Auto-generated method stub

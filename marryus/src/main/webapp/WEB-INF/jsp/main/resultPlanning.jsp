@@ -508,7 +508,6 @@ $(document).ready(function(){
 		data:"memNo="+no
 	})
 	.done(function(reuslt){
-		alert(reuslt);
 		
 	});
 		
@@ -524,7 +523,6 @@ function openList(){
 		data:"memNo="+no
 	})
 	.done(function(result){
-		console.log(result);
 /****************************************************************************************
  *     list 뽑기
  ***************************************************************************************/
@@ -671,7 +669,6 @@ $(".printBtn").on("click", function(){
     				type: "post"
     			})
     			.done(function(member){
-    				console.log(member)
     				if(member == ""){
     					alert("아이디 또는 비밀번호를 잘못 입력했습니다.");
     					
@@ -707,7 +704,6 @@ $(".printBtn").on("click", function(){
 			type: "post"
 		})
 		.done(function(member){
-			console.log(member)
 			if(member == ""){
 				alert("아이디 또는 비밀번호를 잘못 입력했습니다.");
 				

@@ -67,17 +67,28 @@ public interface MainMapper {
 	
 	//total Auction List
 	List<Auction> totalAuctionList();
-	//
-	List<CompanyInfo> recVenue();
+	
 	//count d day
 	List<Integer> countDday();
 	
+	// 추천업체 웨딩홀
+	List<CompanyInfo> recVenue();
+	
+	// 추천업체 스드메
 	List<CompanyInfo> recSDM();
+	
+	// 추천업체 허니문
 	List<CompanyInfo> recHoney();
+	
+	// 추천업체 예물
 	List<CompanyInfo> recJewelry();
+	
+	// 추천업체 추가서비스
 	List<CompanyInfo> recEvent();
+	
 	// 업데이트 
 	void updateWedPlan(WeddingPlan weddingPlan);
+	
 	// wedding plan 확인용 
 	int myWedingPlan(int memNo);
 }

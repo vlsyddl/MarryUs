@@ -16,12 +16,7 @@ import kr.co.marryus.repository.domain.WeddingPlan;
  *
  */
 public interface MainService {
-//	/**
-//	 * 마감기한 
-//	 * @param auction
-//	 * @return
-//	 */
-//	List<Auction> selectDuedate(Auction auction);
+
 	/**
 	 * 나만의 웨딩 플랜
 	 * @param weddingPlan

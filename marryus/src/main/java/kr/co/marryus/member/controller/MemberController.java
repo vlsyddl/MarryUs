@@ -69,7 +69,6 @@ public class MemberController {
 				
 			}else {
 				
-				System.out.println(member.getPass());//기업 회원
 				member = service.loginCompany(member); 
 			}
 			
@@ -137,7 +136,6 @@ public class MemberController {
 		
 		// session에 담긴 코드와 사용자가 입력한 code의 value 확인 
 		if(!inputCode.equals(keyCode)) {
-			System.out.println("실패!");
 			return "{\"result\":1}";
 		};
 		
@@ -202,4 +200,4 @@ public class MemberController {
 	 
 	
 	 } 
-}//end class
+}

@@ -82,6 +82,7 @@
 		  from mu_member
 		 where mem_email = #{email}
 	</select>
+	<!-- 로그인 - 일반회원 -->
 	<select id="loginGeneral" parameterType="Member" resultMap="memberMap">
 		select * 
 		  from mu_member 
@@ -89,6 +90,7 @@
 		    on mem_no = gen_no 
 		 where mem_email = #{email}
 	</select>
+	<!-- 로그인 - 기업회원 -->	
 	<select id="loginCompany" parameterType="Member" resultMap="memberMap">
 		select m.mem_email, m.mem_pass, m.mem_type, m.mem_status, m.mem_name, m.mem_phone, m.mem_no,
 		c.com_no, c.com_addr, c.com_addr_detail, c.com_type, c.com_okay,i.com_info_name, i.com_info_phone, i.com_info_addr,f.com_file_name, f.com_file_path

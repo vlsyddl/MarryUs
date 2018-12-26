@@ -106,20 +106,7 @@
 						</section>
 
 					</main>
-				<!-- 네이버아이디로로그인 버튼 노출 영역 -->
-				<!-- 	
-					  <div id="naver_id_login"></div>
-					  //네이버아이디로로그인 버튼 노출 영역
-					  <script type="text/javascript">
-					  	var naver_id_login = new naver_id_login("80pYiQzDzkdBypcTxTyp", "http://localhost:8000/marryus/main/main.do");
-					  	var state = naver_id_login.getUniqState();
-					  	naver_id_login.setButton("white", 2,40);
-					  	naver_id_login.setDomain("YOUR_SERVICE_URL");
-					  	naver_id_login.setState(state);
-					  	naver_id_login.setPopup();
-					  	naver_id_login.init_naver_id_login();
-					  </script>
-				-->
+				
 					<footer class="Login-footer"> Made with <i
 						class="fa fa-heart"></i> </footer>
 				</div>
@@ -154,7 +141,6 @@
 			type: "post"
 		})
 		.done(function(member){
-			console.log(member)
 			if(member == ""){
 				alert("아이디 또는 비밀번호를 잘못 입력했습니다.");
 				
